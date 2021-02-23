@@ -26,34 +26,41 @@ def get_openpose_params():
     """
 
     params = dict()
-    params["model_folder"] = os.environ['OPENPOSE_PARENT_DIR'] + "/openpose/models"
+    params["model_folder"] = os.environ['OPENPOSE_DIR'] + "/models"
     params["disable_blending"] = False
     params["display"] = 0
 
+    params["num_gpu"] = -1
+    params["num_gpu_start"] = 0
+
     #params["output_resolution"] = "-1x-1"
     params["alpha_pose"] = 0.6
-    params["scale_gap"] = 0.3
+    params["scale_gap"] = 0.25
     params["scale_number"] = 1
     params["render_threshold"] = 0.05
 
+    params["number_people_max"] = -1
+
     # params for body keypoints
     params["model_pose"] = "BODY_25"  # "BODY_25", "COCO", "MPI"
-    params["net_resolution"] = "-1x64"  # Lower res needed for COCO and MPI?
+    params["net_resolution"] = "-1x320"  # Lower res needed for COCO and MPI?
 
     # params for face keypoints
-    params["face"] = False
-    params["face_net_resolution"] = "368x368"
+    #params["face"] = False
+    #params["face_net_resolution"] = "368x368"
 
     # params for hand keypoints
-    params["hand"] = False
-    params["hand_net_resolution"] = "368x368"
+    #params["hand"] = False
+    #params["hand_net_resolution"] = "368x368"
 
     return params
 
 
-def extract_keypoints(media_path=None, media_type='image'):
+def extract_keypoints(media_path=None, media_type='image', should_extract=False):
     """
 
+    :param should_extract:
+    :param media_type:
     :param media_path:
     :return:
     """
@@ -71,7 +78,7 @@ def extract_keypoints(media_path=None, media_type='image'):
             else:
                 # If you run `make install` (default path is `/usr/local/python` for Ubuntu)
 
-                sys.path.append(os.environ['OPENPOSE_PARENT_DIR'] + '/openpose/build/python')
+                sys.path.append(os.environ['OPENPOSE_DIR'] + '/build/python')
                 from openpose import pyopenpose as op
         except ImportError as e:
             print('Error: OpenPose library could not be found. Did you enable `BUILD_PYTHON` in CMake and have this Python script in the right folder?')
@@ -83,7 +90,7 @@ def extract_keypoints(media_path=None, media_type='image'):
         default_media_path = media_path
 
         if media_path is None:
-            default_media_path = os.environ['OPENPOSE_PARENT_DIR'] + "openpose/examples/media/COCO_val2014_000000000241.jpg"
+            default_media_path = os.environ['OPENPOSE_DIR'] + "/examples/media/COCO_val2014_000000000241.jpg"
 
         parser.add_argument("--media_path", default=default_media_path, help="Process an image. Read all standard formats (jpg, png, bmp, etc.).")
         parser.add_argument("--should_display", default=True, help="Disable to not display visually.")
@@ -118,6 +125,11 @@ def extract_keypoints(media_path=None, media_type='image'):
 
         start = time.time()
         datum = op.Datum()
+        extracted_keypoints = []
+
+        # Check if the pose should be extracted
+        def is_extractable():
+            return should_extract and datum.poseKeypoints.size > 1 and datum.poseKeypoints.size == 75
 
         if media_type == 'image':
             # Process Image
@@ -125,11 +137,11 @@ def extract_keypoints(media_path=None, media_type='image'):
             datum.cvInputData = frame
             op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
 
-            # Display Image
-            print("Body keypoints: \n" + str(datum.poseKeypoints))
-            print("Face keypoints: \n" + str(datum.faceKeypoints))
-            print("Left hand keypoints: \n" + str(datum.handKeypoints[0]))
-            print("Right hand keypoints: \n" + str(datum.handKeypoints[1]))
+            if is_extractable:
+                extracted_keypoints.append(datum.poseKeypoints)
+                #print(datum.poseKeypoints.size)
+                #print("Body keypoints: \n" + str(datum.poseKeypoints))
+
             if args[0].should_display:
                 cv2.imshow("OpenPose 1.7.0 - Single Image", datum.cvOutputData)
                 cv2.waitKey(0)
@@ -140,9 +152,11 @@ def extract_keypoints(media_path=None, media_type='image'):
                 has_frame, frame = stream.read()
                 if has_frame:
                     datum.cvInputData = frame
-                    op_wrapper.emplaceAndPop(op.VectorDatum([datum]))  # op_wrapper.emplaceAndPop([datum])
-                    #if datum.poseKeypoints.size > 1 and datum.poseKeypoints.size == 75:
-                        #keypoints.append(datum.poseKeypoints)
+                    op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
+
+                    if is_extractable:
+                        extracted_keypoints.append(datum.poseKeypoints)
+
                     if args[0].should_display:
                         cv2.imshow("OpenPose 1.7.0 - Video Stream", datum.cvOutputData)
                         key = cv2.waitKey(1)
@@ -156,7 +170,7 @@ def extract_keypoints(media_path=None, media_type='image'):
 
         elif media_type == 'images':
             # Read frames on directory
-            image_paths = op.get_images_on_directory(args[0].media_path);
+            image_paths = op.get_images_on_directory(args[0].media_path)
 
             # Process and display images
             for image_path in image_paths:
@@ -164,7 +178,9 @@ def extract_keypoints(media_path=None, media_type='image'):
                 datum.cvInputData = frame
                 op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
 
-                print("Body keypoints: \n" + str(datum.poseKeypoints))
+                if is_extractable:
+                    extracted_keypoints.append(datum.poseKeypoints)
+
                 if args[0].should_display:
                     cv2.imshow("OpenPose 1.7.0 - Multiple Images", datum.cvOutputData)
                     key = cv2.waitKey(15)
@@ -177,6 +193,8 @@ def extract_keypoints(media_path=None, media_type='image'):
         end = time.time()
         print('Pose extraction of {} was {}. Run time: {:.2f} seconds'.format(media_type, extraction_status, (end - start)))
 
+        return extracted_keypoints
+
     except Exception as e:
         print(e)
         sys.exit(-1)
@@ -186,4 +204,6 @@ if __name__ == "__main__":
     #extract_keypoints()
     #extract_keypoints("/home/isaeng/Exjobb/media/mini.jpg", 'image')
     #extract_keypoints("/home/isaeng/Exjobb/media/tompa_flip_0_25.MOV", 'video')
-    extract_keypoints("/home/isaeng/Exjobb/media/dir", 'images')
+    #extract_keypoints("/home/isaeng/Exjobb/media/front.mp4", 'video')
+    #extract_keypoints("/home/isaeng/Exjobb/media/dir", 'images')
+    extract_keypoints(os.environ['DATASET_DIR'] + "/VIDEO/SUBJECT_0/SEQ_0/skew.MTS", 'video')
