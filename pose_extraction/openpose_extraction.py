@@ -1,6 +1,6 @@
 """
 This file contains the code for pose extraction using OpenPose.
-The code is heavily inspired by the examples from the Python examples that OpenPose provides:
+The code is heavily inspired by the Python examples that OpenPose provides:
 https://github.com/CMU-Perceptual-Computing-Lab/openpose/tree/master/examples/tutorial_api_python
 """
 
@@ -10,6 +10,7 @@ import os
 from sys import platform
 import argparse
 import time
+import numpy as np
 
 
 def get_openpose_params():
@@ -22,43 +23,64 @@ def get_openpose_params():
     A full list of flags can be found here:
     https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/advanced/demo_advanced.md#all-flags
 
+    The maximum accuracy configuration can be found here:
+    https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/01_demo.md#maximum-accuracy-configuration
+
     :return: params: Dict[str, Union[str, bool]] = dict()
     """
 
     params = dict()
+
+    # Misc params
     params["model_folder"] = os.environ['OPENPOSE_DIR'] + "/models"
     params["disable_blending"] = False
     params["display"] = 0
-
     params["num_gpu"] = -1
     params["num_gpu_start"] = 0
-
     #params["output_resolution"] = "-1x-1"
     params["alpha_pose"] = 0.6
     params["scale_gap"] = 0.25
     params["scale_number"] = 1
-    params["render_threshold"] = 0.05
-
-    params["number_people_max"] = -1
+    params["render_threshold"] = 0.1
+    params["number_people_max"] = 1  # If the data contains more than one person,
 
     # params for body keypoints
     params["model_pose"] = "BODY_25"  # "BODY_25", "COCO", "MPI"
-    params["net_resolution"] = "-1x320"  # Lower res needed for COCO and MPI?
+    params["net_resolution"] = "-1x368"  # Lower res needed for COCO and MPI?
 
     # params for face keypoints
-    #params["face"] = False
-    #params["face_net_resolution"] = "368x368"
+    params["face"] = False
+    params["face_net_resolution"] = "256x256"
 
     # params for hand keypoints
-    #params["hand"] = False
-    #params["hand_net_resolution"] = "368x368"
+    params["hand"] = False
+    params["hand_net_resolution"] = "256x256"
+
+    # Flags
+    parser = argparse.ArgumentParser()
+    args = parser.parse_known_args()
+
+    # Add potential OpenPose params from path
+    for i in range(0, len(args[1])):
+        curr_item = args[1][i]
+        if i != len(args[1]) - 1:
+            next_item = args[1][i + 1]
+        else:
+            next_item = "1"
+        if "--" in curr_item and "--" in next_item:
+            key = curr_item.replace('-', '')
+            if key not in params:  params[key] = "1"
+        elif "--" in curr_item and "--" not in next_item:
+            key = curr_item.replace('-', '')
+            if key not in params: params[key] = next_item
 
     return params
 
 
-def extract_keypoints(media_path=None, media_type='image', should_extract=False):
+def extract_poses(media_path=None, media_type='video', should_extract=True, should_display=True):
     """
 
+    :param should_display:
     :param should_extract:
     :param media_type:
     :param media_path:
@@ -84,33 +106,8 @@ def extract_keypoints(media_path=None, media_type='image', should_extract=False)
             print('Error: OpenPose library could not be found. Did you enable `BUILD_PYTHON` in CMake and have this Python script in the right folder?')
             raise e
 
-        # Flags
-        parser = argparse.ArgumentParser()
-
-        default_media_path = media_path
-
         if media_path is None:
-            default_media_path = os.environ['OPENPOSE_DIR'] + "/examples/media/COCO_val2014_000000000241.jpg"
-
-        parser.add_argument("--media_path", default=default_media_path, help="Process an image. Read all standard formats (jpg, png, bmp, etc.).")
-        parser.add_argument("--should_display", default=True, help="Disable to not display visually.")
-
-        args = parser.parse_known_args()
-
-        # Custom Params (refer to include/openpose/flags.hpp for more parameters)
-        params = get_openpose_params()
-
-        # Add others in path?
-        for i in range(0, len(args[1])):
-            curr_item = args[1][i]
-            if i != len(args[1])-1: next_item = args[1][i+1]
-            else: next_item = "1"
-            if "--" in curr_item and "--" in next_item:
-                key = curr_item.replace('-','')
-                if key not in params:  params[key] = "1"
-            elif "--" in curr_item and "--" not in next_item:
-                key = curr_item.replace('-','')
-                if key not in params: params[key] = next_item
+            media_path = os.environ['OPENPOSE_DIR'] + "/examples/media/video.avi"
 
         # Construct it from system arguments
         # op.init_argv(args[1])
@@ -118,31 +115,28 @@ def extract_keypoints(media_path=None, media_type='image', should_extract=False)
 
         # Starting OpenPose
         op_wrapper = op.WrapperPython()
-        op_wrapper.configure(params)
+        op_wrapper.configure(get_openpose_params())
         op_wrapper.start()
-
-        extraction_status = 'successful'
 
         start = time.time()
         datum = op.Datum()
-        extracted_keypoints = []
+        extracted_poses = []
 
         # Check if the pose should be extracted
         def is_extractable():
-            return should_extract and datum.poseKeypoints.size > 1 and datum.poseKeypoints.size == 75
+            return should_extract and datum.poseKeypoints.size > 1 #and datum.poseKeypoints.size == 75
+
+        extraction_status = 'successful'
 
         if media_type == 'image':
-            # Process Image
-            frame = cv2.imread(args[0].media_path)
+            frame = cv2.imread(media_path)
             datum.cvInputData = frame
             op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
 
-            if is_extractable:
-                extracted_keypoints.append(datum.poseKeypoints)
-                #print(datum.poseKeypoints.size)
-                #print("Body keypoints: \n" + str(datum.poseKeypoints))
+            if is_extractable():
+                extracted_poses.append(datum.poseKeypoints)
 
-            if args[0].should_display:
+            if should_display:
                 cv2.imshow("OpenPose 1.7.0 - Single Image", datum.cvOutputData)
                 cv2.waitKey(0)
 
@@ -154,10 +148,10 @@ def extract_keypoints(media_path=None, media_type='image', should_extract=False)
                     datum.cvInputData = frame
                     op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
 
-                    if is_extractable:
-                        extracted_keypoints.append(datum.poseKeypoints)
+                    if is_extractable():
+                        extracted_poses.append(datum.poseKeypoints)
 
-                    if args[0].should_display:
+                    if should_display:
                         cv2.imshow("OpenPose 1.7.0 - Video Stream", datum.cvOutputData)
                         key = cv2.waitKey(1)
 
@@ -170,7 +164,7 @@ def extract_keypoints(media_path=None, media_type='image', should_extract=False)
 
         elif media_type == 'images':
             # Read frames on directory
-            image_paths = op.get_images_on_directory(args[0].media_path)
+            image_paths = op.get_images_on_directory(media_path)
 
             # Process and display images
             for image_path in image_paths:
@@ -178,10 +172,10 @@ def extract_keypoints(media_path=None, media_type='image', should_extract=False)
                 datum.cvInputData = frame
                 op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
 
-                if is_extractable:
-                    extracted_keypoints.append(datum.poseKeypoints)
+                if is_extractable():
+                    extracted_poses.append(datum.poseKeypoints)
 
-                if args[0].should_display:
+                if should_display:
                     cv2.imshow("OpenPose 1.7.0 - Multiple Images", datum.cvOutputData)
                     key = cv2.waitKey(15)
 
@@ -193,7 +187,7 @@ def extract_keypoints(media_path=None, media_type='image', should_extract=False)
         end = time.time()
         print('Pose extraction of {} was {}. Run time: {:.2f} seconds'.format(media_type, extraction_status, (end - start)))
 
-        return extracted_keypoints
+        return extracted_poses
 
     except Exception as e:
         print(e)
@@ -201,9 +195,9 @@ def extract_keypoints(media_path=None, media_type='image', should_extract=False)
 
 
 if __name__ == "__main__":
-    #extract_keypoints()
-    #extract_keypoints("/home/isaeng/Exjobb/media/mini.jpg", 'image')
-    #extract_keypoints("/home/isaeng/Exjobb/media/tompa_flip_0_25.MOV", 'video')
-    #extract_keypoints("/home/isaeng/Exjobb/media/front.mp4", 'video')
-    #extract_keypoints("/home/isaeng/Exjobb/media/dir", 'images')
-    extract_keypoints(os.environ['DATASET_DIR'] + "/VIDEO/SUBJECT_0/SEQ_0/skew.MTS", 'video')
+    #extract_poses()
+    #extract_poses("/home/isaeng/Exjobb/media/mini.jpg", 'image')
+    extract_poses("/home/isaeng/Exjobb/media/tompa_flip_0_25.MOV", 'video')
+    #extract_poses("/home/isaeng/Exjobb/media/front.mp4", 'video')
+    #extract_poses("/home/isaeng/Exjobb/media/dir", 'images')
+    #extract_poses(media_path=os.environ['DATASET_DIR'] + "/VIDEO/SUBJECT_0/SEQ_0/skew.MTS", media_type='video')
