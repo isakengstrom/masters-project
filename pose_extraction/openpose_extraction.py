@@ -12,6 +12,8 @@ import argparse
 import time
 import numpy as np
 
+from extraction_config import DEV
+
 
 def get_openpose_params():
     """
@@ -141,6 +143,7 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
                 cv2.waitKey(0)
 
         elif media_type == 'video':
+            frame_idx = 0
             stream = cv2.VideoCapture(media_path)
             while stream.isOpened():
                 has_frame, frame = stream.read()
@@ -150,6 +153,11 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
 
                     if is_extractable():
                         extracted_poses.append(datum.poseKeypoints)
+
+                    if DEV:
+                        frame_idx += 1
+                        if frame_idx > 10:
+                            break
 
                     if should_display:
                         cv2.imshow("OpenPose 1.7.0 - Video Stream", datum.cvOutputData)

@@ -1,0 +1,7 @@
+import os
+
+DEV = False
+TRIMMED_SEQUENCE_FLAG = "_T"
+SHOULD_DISPLAY = True
+SHOULD_EXTRACT = True
+DATASET_PATH = os.environ['DATASET_DIR'] + "/VIDEO/"
