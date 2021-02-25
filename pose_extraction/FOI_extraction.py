@@ -2,7 +2,7 @@ import os
 import numpy as np
 
 from openpose_extraction import extract_poses
-from extraction_config import DEV, TRIMMED_SEQUENCE_FLAG, SHOULD_DISPLAY, SHOULD_EXTRACT
+from extraction_config import DEV, in_dev_limits, TRIMMED_SEQUENCE_FLAG, SHOULD_DISPLAY, SHOULD_EXTRACT
 
 
 def extract_from_sequence(sequence_dir):
@@ -17,16 +17,14 @@ def extract_from_sequence(sequence_dir):
         return
 
     extracted_sequence = []
-    angle_idx = 0
+
     _, _, camera_angles = next(os.walk(sequence_dir))
-    for angle in sorted(camera_angles):
+    for i in range(len(sorted(camera_angles))):
+        # Move to the next camera angle if i is not in given limits during DEV
+        if DEV and not in_dev_limits(i, "angle"):
+            continue
 
-        if DEV:
-            angle_idx += 1
-            if angle_idx > 2:
-                break
-
-        path = os.path.join(sequence_dir, angle)
+        path = os.path.join(sequence_dir, camera_angles[i])
 
         # Extract the keypoints using OpenPose
         extracted_angle = extract_poses(media_path=path, should_extract=SHOULD_EXTRACT, should_display=SHOULD_DISPLAY)
@@ -35,7 +33,7 @@ def extract_from_sequence(sequence_dir):
     return extracted_sequence
 
 
-def extract_from_subject(subject_dir, sequence_name):
+def extract_from_subject(subject_dir):
     """
     Extract the poses from a single subject, either from all sequences or a specific one
 
@@ -47,30 +45,22 @@ def extract_from_subject(subject_dir, sequence_name):
 
     extracted_subject = []
 
-    # If no sequence is specified, loop over all available sequences, else just extract the given sequence
-    if sequence_name is None:
-        sequence_idx = 0
-        _, sequence_names, _ = next(os.walk(subject_dir))
+    # Get the sequence names (child folder names of a subject)
+    _, sequence_names, _ = next(os.walk(subject_dir))
 
-        # Remove un-trimmed sequences before extraction if they have trimmed counterparts
-        # Some sequences are trimmed in the beginning and end to remove frames containing more than one individual
-        for sequence_name in sequence_names:
-            if TRIMMED_SEQUENCE_FLAG in sequence_name:
-                deprecate_sequence_name = sequence_name.replace(TRIMMED_SEQUENCE_FLAG, "")
-                sequence_names.remove(deprecate_sequence_name)
+    # Remove un-trimmed sequences before extraction if they have trimmed counterparts
+    # Some sequences are trimmed in the beginning and end to remove frames containing more than one individual
+    for sequence_name in sequence_names:
+        if TRIMMED_SEQUENCE_FLAG in sequence_name:
+            deprecate_sequence_name = sequence_name.replace(TRIMMED_SEQUENCE_FLAG, "")
+            sequence_names.remove(deprecate_sequence_name)
 
-        for sequence_name in sorted(sequence_names):
+    for i in range(len(sorted(sequence_names))):
+        # Move to the next sequence name if i is not in given limits during DEV
+        if DEV and not in_dev_limits(i, "seq"):
+            continue
 
-            if DEV:
-                sequence_idx += 1
-                if sequence_idx > 2:
-                    break
-
-            sequence_dir = os.path.join(subject_dir, sequence_name)
-            extracted_sequence = extract_from_sequence(sequence_dir)
-            extracted_subject.append(extracted_sequence)
-    else:
-        sequence_dir = os.path.join(subject_dir, sequence_name)
+        sequence_dir = os.path.join(subject_dir, sequence_names[i])
         extracted_sequence = extract_from_sequence(sequence_dir)
         extracted_subject.append(extracted_sequence)
 
@@ -89,15 +79,14 @@ def extract_from_foi_dataset(root_dir, sequence_name=None):
 
     # Loop through the dir containing all the subjects
     _, subject_names, _ = next(os.walk(root_dir))
-    for subject_name in sorted(subject_names):
 
-        if DEV:
-            subject_idx += 1
-            if subject_idx > 3:
-                break
+    for i in range(len(sorted(subject_names))):
+        # Move to the next subject name if i is not in given limits during DEV
+        if DEV and not in_dev_limits(i, "sub"):
+            continue
 
-        subject_dir = os.path.join(root_dir, subject_name)
-        extracted_subject = extract_from_subject(subject_dir, sequence_name)
+        subject_dir = os.path.join(root_dir, subject_names[i])
+        extracted_subject = extract_from_subject(subject_dir)
         extracted_dataset.append(extracted_subject)
 
     return extracted_dataset

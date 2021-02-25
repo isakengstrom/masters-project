@@ -7,76 +7,12 @@ https://github.com/CMU-Perceptual-Computing-Lab/openpose/tree/master/examples/tu
 import sys
 import cv2  # OpenCV installed for python
 import os
-from sys import platform
-import argparse
 import time
 import numpy as np
+from sys import platform
 
-from extraction_config import DEV
-
-
-def get_openpose_params():
-    """
-    get the OpenPose flags/parameters
-
-    A list over the main flags can be found here:
-    https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/01_demo.md#main-flags
-
-    A full list of flags can be found here:
-    https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/advanced/demo_advanced.md#all-flags
-
-    The maximum accuracy configuration can be found here:
-    https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/01_demo.md#maximum-accuracy-configuration
-
-    :return: params: Dict[str, Union[str, bool]] = dict()
-    """
-
-    params = dict()
-
-    # Misc params
-    params["model_folder"] = os.environ['OPENPOSE_DIR'] + "/models"
-    params["disable_blending"] = False
-    params["display"] = 0
-    params["num_gpu"] = -1
-    params["num_gpu_start"] = 0
-    #params["output_resolution"] = "-1x-1"
-    params["alpha_pose"] = 0.6
-    params["scale_gap"] = 0.25
-    params["scale_number"] = 1
-    params["render_threshold"] = 0.1
-    params["number_people_max"] = 1  # If the data contains more than one person,
-
-    # params for body keypoints
-    params["model_pose"] = "BODY_25"  # "BODY_25", "COCO", "MPI"
-    params["net_resolution"] = "-1x368"  # Lower res needed for COCO and MPI?
-
-    # params for face keypoints
-    params["face"] = False
-    params["face_net_resolution"] = "256x256"
-
-    # params for hand keypoints
-    params["hand"] = False
-    params["hand_net_resolution"] = "256x256"
-
-    # Flags
-    parser = argparse.ArgumentParser()
-    args = parser.parse_known_args()
-
-    # Add potential OpenPose params from path
-    for i in range(0, len(args[1])):
-        curr_item = args[1][i]
-        if i != len(args[1]) - 1:
-            next_item = args[1][i + 1]
-        else:
-            next_item = "1"
-        if "--" in curr_item and "--" in next_item:
-            key = curr_item.replace('-', '')
-            if key not in params:  params[key] = "1"
-        elif "--" in curr_item and "--" not in next_item:
-            key = curr_item.replace('-', '')
-            if key not in params: params[key] = next_item
-
-    return params
+from extraction_config import DEV, DEV_PARAMS
+from extraction_config import get_openpose_params
 
 
 def extract_poses(media_path=None, media_type='video', should_extract=True, should_display=True):
@@ -124,6 +60,7 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
         datum = op.Datum()
         extracted_poses = []
 
+        # TODO: decide when pose should be extracted, this seems to work
         # Check if the pose should be extracted
         def is_extractable():
             return should_extract and datum.poseKeypoints.size > 1 #and datum.poseKeypoints.size == 75
@@ -148,16 +85,19 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
             while stream.isOpened():
                 has_frame, frame = stream.read()
                 if has_frame:
+                    if DEV:
+                        frame_idx += 1
+                        if frame_idx < DEV_PARAMS["frame_lower_lim"]:
+                            continue
+                        if frame_idx > DEV_PARAMS["frame_upper_lim"]:
+                            break
+
                     datum.cvInputData = frame
                     op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
 
                     if is_extractable():
                         extracted_poses.append(datum.poseKeypoints)
 
-                    if DEV:
-                        frame_idx += 1
-                        if frame_idx > 10:
-                            break
 
                     if should_display:
                         cv2.imshow("OpenPose 1.7.0 - Video Stream", datum.cvOutputData)

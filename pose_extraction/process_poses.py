@@ -22,6 +22,26 @@ def filter_poses_to_xy(_poses):
     return filtered_poses
 
 
+def process_poses(dataset_poses):
+
+    """
+
+    :param dataset_poses:
+    :return:
+    """
+
+    '''
+    
+    print("Number of subjects: {}".format(len(dataset_poses)))
+    for subject_poses in dataset_poses:
+        print("\tNumber of sequences: {}".format(len(subject_poses)))
+        for sequence_poses in subject_poses:
+            print("\t\t Number of angles {}".format(len(sequence_poses)))
+            for angle_poses in sequence_poses:
+                print("\t\t\t Number of frames {}".format(len(angle_poses)))
+
+    '''
+
 if __name__ == "__main__":
     #poses = extract_poses("/home/isaeng/Exjobb/media/mini.jpg", 'image')
     #poses = extract_poses("/home/isaeng/Exjobb/media/dir", 'images')
