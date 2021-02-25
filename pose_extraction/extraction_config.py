@@ -14,11 +14,14 @@ DEV_PARAMS = {
     "sub_nr": None,
     "seq_nr": None,
     "angle_nr": 2,
-    "frame_nr": 4,
+    "frame_nr": 1000,
+
+    # Set one of the following params to 'None' to disable the limits
+    # E.g: "seq_lower_lim" being 'None' disables the seq limits, not the others (sub, angle, frame)
 
     # Used if 'sub_nr' is 'None'
-    "sub_lower_lim": 0,
-    "sub_upper_lim": 6,
+    "sub_lower_lim": None,
+    "sub_upper_lim": None,
 
     # Used if 'seq_nr' is 'None'
     "seq_lower_lim": 0,
@@ -35,18 +38,22 @@ DEV_PARAMS = {
 }
 
 
-def in_dev_limits(ind, param_limit):
+def in_dev_limits(ind, param):
     """
     Check if dev index is in the specified DEV_PARAMS boundaries
 
     :param ind: Index to check
-    :param param_limit: Which limit to check against
+    :param param: Which limit to check against
     :return: bool
     """
-    if DEV_PARAMS[param_limit + "_nr"] is None:
-        return DEV_PARAMS[param_limit + "_lower_lim"] <= ind < DEV_PARAMS[param_limit + "_upper_lim"]
+    if DEV_PARAMS[param + "_nr"] is None:
+        # If one of the limits connected to the param is 'None', those two limits will be disabled
+        if DEV_PARAMS[param + "_lower_lim"] is None or DEV_PARAMS[param + "_upper_lim"] is None:
+            return True
+
+        return DEV_PARAMS[param + "_lower_lim"] <= ind < DEV_PARAMS[param + "_upper_lim"]
     else:
-        return DEV_PARAMS[param_limit + "_nr"] == ind
+        return DEV_PARAMS[param + "_nr"] == ind
 
 
 def get_openpose_params():
@@ -98,11 +105,12 @@ def get_openpose_params():
 
     # Add potential OpenPose params from path, overrides previously set flags
     for i in range(0, len(args[1])):
-        curr_item = args[1][i]
         if i != len(args[1]) - 1:
             next_item = args[1][i + 1]
         else:
             next_item = "1"
+
+        curr_item = args[1][i]
         if "--" in curr_item and "--" in next_item:
             key = curr_item.replace('-', '')
             params[key] = "1"

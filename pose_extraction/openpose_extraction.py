@@ -87,17 +87,18 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
                 if has_frame:
                     if DEV:
                         frame_idx += 1
-                        if frame_idx < DEV_PARAMS["frame_lower_lim"]:
-                            continue
-                        if frame_idx > DEV_PARAMS["frame_upper_lim"]:
-                            break
+                        # TODO: fix these limits 
+                        if DEV_PARAMS["frame_nr"] is None:
+                            if frame_idx < DEV_PARAMS["frame_lower_lim"]:
+                                continue
+                            if frame_idx > DEV_PARAMS["frame_upper_lim"]:
+                                break
 
                     datum.cvInputData = frame
                     op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
 
                     if is_extractable():
                         extracted_poses.append(datum.poseKeypoints)
-
 
                     if should_display:
                         cv2.imshow("OpenPose 1.7.0 - Video Stream", datum.cvOutputData)

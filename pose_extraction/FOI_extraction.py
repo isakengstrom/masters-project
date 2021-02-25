@@ -67,7 +67,7 @@ def extract_from_subject(subject_dir):
     return extracted_subject
 
 
-def extract_from_foi_dataset(root_dir, sequence_name=None):
+def extract_from_foi_dataset(root_dir):
     """
     Extract the poses from all the subjects
 
