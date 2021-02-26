@@ -23,16 +23,6 @@ def print_dataset_structure(dataset_poses, flag=1):
 
 
 if __name__ == "__main__":
-    '''
-    test = {
-        "hej": {
-            "da": "två",
-            "aa": "one"
-        },
-        "pos": 1
-    }
-    print(test["hej"]["da"])
-    '''
 
     foi_dataset_poses = extract_from_foi_dataset(root_dir=DATASET_PATH)
 

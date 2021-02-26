@@ -2,26 +2,26 @@ import os
 import argparse
 
 
-SHOULD_DISPLAY = True                                   # OpenPose: If the stream should be displayed during pose extraction
+SHOULD_DISPLAY = False                                   # OpenPose: If the stream should be displayed during pose extraction
 SHOULD_EXTRACT = True                                   # OpenPose: If extraction should take place
 DATASET_PATH = os.environ['DATASET_DIR'] + "/VIDEO/"    # Path to the dataset that should be extracted from
-SAVE_PATH = "/home/isaeng/Exjobb/json_dumps/"  # os.environ['DATASET_DIR'] + "/isaeng_extr/" #
+SAVE_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/" #
 TRIMMED_SEQUENCE_FLAG = "_T"                            # Some sequences have trimmed versions, indicating by this flag in the name
 
 # DEV parameters and functions
-DEV = True
+DEV = False
 DEV_PARAMS = {
     # Run extraction on a specific subject/sequence/camera_angle/video_frame
-    "sub_nr": 2,
+    "sub_nr": None,
     "seq_nr": None,
-    "angle_nr": 2,
+    "angle_nr": None,
     "frame_nr": None,
 
     # Set one of the following params to 'None' to disable the limits
     # E.g: "seq_lower_lim" being 'None' disables the seq limits, not the others (sub, angle, frame)
 
     # Used if 'sub_nr' is 'None'
-    "sub_lower_lim": 0,
+    "sub_lower_lim": None,
     "sub_upper_lim": 11,
 
     # Used if 'seq_nr' is 'None'
@@ -29,7 +29,7 @@ DEV_PARAMS = {
     "seq_upper_lim": 10,
 
     # Used if 'angle_nr' is 'None'
-    "angle_lower_lim": 0,
+    "angle_lower_lim": None,
     "angle_upper_lim": 6,
 
     # TODO: does not work well with frames, take a while if low limit is high

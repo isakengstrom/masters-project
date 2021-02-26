@@ -15,7 +15,7 @@ def save_processed_poses(poses):
             for angle_idx in range(len(sequence_poses)):
                 angle_poses = sequence_poses[angle_idx]
                 name = "SUB{}_SEQ{}_ANG{}".format(sub_idx, seq_idx, angle_idx)
-                json_name = SAVE_PATH + "/json_dumps_0/{}.json".format(name)
+                json_name = SAVE_PATH + "/json_dumps_1/{}.json".format(name)
 
                 for frame_idx in range(len(angle_poses)):
                     inputs[frame_idx] = angle_poses[frame_idx]
