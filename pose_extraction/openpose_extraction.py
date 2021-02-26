@@ -87,7 +87,7 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
                 if has_frame:
                     if DEV:
                         frame_idx += 1
-                        # TODO: fix these limits 
+                        # TODO: fix these limits
                         if DEV_PARAMS["frame_nr"] is None:
                             if frame_idx < DEV_PARAMS["frame_lower_lim"]:
                                 continue
