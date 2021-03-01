@@ -60,7 +60,6 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
         datum = op.Datum()
         extracted_poses = []
 
-        # TODO: decide when pose should be extracted, this seems to work
         # Check if the pose should be extracted
         def is_extractable():
             return should_extract and datum.poseKeypoints.size > 1

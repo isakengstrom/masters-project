@@ -2,7 +2,7 @@ import os
 import numpy as np
 
 from openpose_extraction import extract_poses
-from extraction_config import DEV, in_dev_limits, SHOULD_DISPLAY, SHOULD_EXTRACT, SHOULD_SAVE
+from extraction_config import DEV, in_dev_limits, TRIMMED_SEQUENCE_FLAG, SHOULD_DISPLAY, SHOULD_EXTRACT, SHOULD_SAVE
 from process_poses import process_poses, save_processed_poses
 
 
@@ -40,7 +40,8 @@ def extract_from_sequence(sequence_dir, subject_idx, sequence_idx):
         if SHOULD_SAVE:
             print("Saving {}..".format(file_name))
             save_processed_poses(processed_poses, subject_idx, sequence_idx, angle_idx=i)
-        print("----------")
+
+        print("--------")
 
 
 def extract_from_subject(subject_dir, subject_idx):
@@ -55,14 +56,13 @@ def extract_from_subject(subject_dir, subject_idx):
 
     # Get the sequence names (child folder names of a subject)
     _, sequence_names, _ = next(os.walk(subject_dir))
-    '''
+
     # Remove un-trimmed sequences before extraction if they have trimmed counterparts
     # Some sequences are trimmed in the beginning and end to remove frames containing more than one individual
     for sequence_name in sequence_names:
         if TRIMMED_SEQUENCE_FLAG in sequence_name:
             deprecate_sequence_name = sequence_name.replace(TRIMMED_SEQUENCE_FLAG, "")
             sequence_names.remove(deprecate_sequence_name)
-    '''
 
     for i in range(len(sorted(sequence_names))):
 
