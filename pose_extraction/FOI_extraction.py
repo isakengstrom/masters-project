@@ -2,10 +2,11 @@ import os
 import numpy as np
 
 from openpose_extraction import extract_poses
-from extraction_config import DEV, in_dev_limits, TRIMMED_SEQUENCE_FLAG, SHOULD_DISPLAY, SHOULD_EXTRACT
+from extraction_config import DEV, in_dev_limits, TRIMMED_SEQUENCE_FLAG, SHOULD_DISPLAY, SHOULD_EXTRACT, SHOULD_SAVE
+from process_poses import process_poses, save_processed_poses
 
 
-def extract_from_sequence(sequence_dir):
+def extract_from_sequence(sequence_dir, subject_idx, sequence_idx):
     """
     Extract the poses from a sequence and save it to JSON. A sequence can consist of many videos covering different
     angles.
@@ -16,9 +17,9 @@ def extract_from_sequence(sequence_dir):
     if not os.path.exists(sequence_dir):
         return
 
-    extracted_sequence = []
-
+    # Get the angle names (child file names of a sequence)
     _, _, camera_angles = next(os.walk(sequence_dir))
+
     for i in range(len(sorted(camera_angles))):
         # Move to the next camera angle if i is not in given limits during DEV
         if DEV and not in_dev_limits(i, "angle"):
@@ -26,14 +27,15 @@ def extract_from_sequence(sequence_dir):
 
         path = os.path.join(sequence_dir, camera_angles[i])
 
-        # Extract the keypoints using OpenPose
+        # Extract the poses using OpenPose
         extracted_angle = extract_poses(media_path=path, should_extract=SHOULD_EXTRACT, should_display=SHOULD_DISPLAY)
-        extracted_sequence.append(extracted_angle)
+        # Process the poses
+        processed_poses = process_poses(extracted_angle)
+        if SHOULD_SAVE:
+            save_processed_poses(processed_poses, subject_idx, sequence_idx, angle_idx=i)
 
-    return extracted_sequence
 
-
-def extract_from_subject(subject_dir):
+def extract_from_subject(subject_dir, subject_idx):
     """
     Extract the poses from a single subject, either from all sequences or a specific one
 
@@ -42,8 +44,6 @@ def extract_from_subject(subject_dir):
 
     if not os.path.exists(subject_dir):
         return
-
-    extracted_subject = []
 
     # Get the sequence names (child folder names of a subject)
     _, sequence_names, _ = next(os.walk(subject_dir))
@@ -61,10 +61,7 @@ def extract_from_subject(subject_dir):
             continue
 
         sequence_dir = os.path.join(subject_dir, sequence_names[i])
-        extracted_sequence = extract_from_sequence(sequence_dir)
-        extracted_subject.append(extracted_sequence)
-
-    return extracted_subject
+        extract_from_sequence(sequence_dir, subject_idx, sequence_idx=i)
 
 
 def extract_from_foi_dataset(root_dir):
@@ -73,9 +70,6 @@ def extract_from_foi_dataset(root_dir):
 
     :return:
     """
-
-    extracted_dataset = []
-    subject_idx = 0
 
     # Loop through the dir containing all the subjects
     _, subject_names, _ = next(os.walk(root_dir))
@@ -86,14 +80,12 @@ def extract_from_foi_dataset(root_dir):
             continue
 
         subject_dir = os.path.join(root_dir, subject_names[i])
-        extracted_subject = extract_from_subject(subject_dir)
-        extracted_dataset.append(extracted_subject)
+        extract_from_subject(subject_dir, subject_idx=i)
 
-    return extracted_dataset
 
 
 if __name__ == "__main__":
-    extracted_subjects = extract_from_foi_dataset(root_dir=os.environ['DATASET_DIR'] + "/VIDEO/")
+    extract_from_foi_dataset(root_dir=os.environ['DATASET_DIR'] + "/VIDEO/")
     #extract_from_sequence(root_dir=os.environ['DATASET_DIR'] + "/VIDEO/", subject_name="SUBJECT_0", sequence_name="SEQ_0")
 
 

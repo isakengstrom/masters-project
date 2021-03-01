@@ -1,7 +1,6 @@
 import numpy as np
 
 from FOI_extraction import extract_from_foi_dataset
-from process_poses import process_poses, save_processed_poses
 from extraction_config import DATASET_PATH
 
 # TODO fix the output in this function
@@ -23,12 +22,5 @@ def print_dataset_structure(dataset_poses, flag=1):
 
 
 if __name__ == "__main__":
-
-    foi_dataset_poses = extract_from_foi_dataset(root_dir=DATASET_PATH)
-
-    #print_dataset_structure(foi_dataset_poses)
-
-    processed_poses = process_poses(foi_dataset_poses)
-        #print_dataset_structure(processed_poses, flag=1)
-    save_processed_poses(processed_poses)
+    extract_from_foi_dataset(root_dir=DATASET_PATH)
 
