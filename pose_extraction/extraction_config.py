@@ -1,20 +1,20 @@
 import os
 import argparse
 
-SHOULD_DISPLAY = False  # OpenPose: If the stream should be displayed during pose extraction
+SHOULD_DISPLAY = True  # OpenPose: If the stream should be displayed during pose extraction
 SHOULD_EXTRACT = True  # OpenPose: If extraction should take place
-SHOULD_SAVE = True  # If the poses should be saved tp JSON
+SHOULD_SAVE = False  # If the poses should be saved tp JSON
 DATASET_PATH = os.environ['DATASET_DIR'] + "/VIDEO/"  # Path to the dataset that should be extracted from
-SAVE_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_1"  # Path to the directory to save the JSON files
+SAVE_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_2"  # Path to the directory to save the JSON files
 TRIMMED_SEQUENCE_FLAG = "_T"  # Some sequences have trimmed versions, indicating by this flag in the name
 
 # DEV parameters and functions
-DEV = False
+DEV = True
 DEV_PARAMS = {
     # Run extraction on a specific subject/sequence/camera_angle/video_frame
-    "sub_nr": 2,
-    "seq_nr": 0,
-    "angle_nr": 2,
+    "sub_nr": None,
+    "seq_nr": None,
+    "angle_nr": None,
     "frame_nr": None,
 
     # Set one of the following params to 'None' to disable the limits
@@ -29,13 +29,12 @@ DEV_PARAMS = {
     "seq_upper_lim": 10,
 
     # Used if 'angle_nr' is 'None'
-    "angle_lower_lim": None,
-    "angle_upper_lim": 6,
+    "angle_lower_lim": 1,
+    "angle_upper_lim": 10,
 
-    # TODO: does not work well with frames, take a while if low limit is high
     # Used if 'frame_nr' is 'None'
-    "frame_lower_lim": 0,
-    "frame_upper_lim": 20,
+    "frame_lower_lim": -1,
+    "frame_upper_lim": -1,
 }
 
 
@@ -47,6 +46,8 @@ def in_dev_limits(ind, param):
     :param param: Which limit to check against
     :return: bool
     """
+
+
     if DEV_PARAMS[param + "_nr"] is None:
         # If one of the limits connected to the param is 'None', those two limits will be disabled
         if DEV_PARAMS[param + "_lower_lim"] is None or DEV_PARAMS[param + "_upper_lim"] is None:
@@ -85,7 +86,7 @@ def get_openpose_params():
     params["alpha_pose"] = 0.6
     params["scale_gap"] = 0.25
     params["scale_number"] = 1
-    params["render_threshold"] = 0.1
+    params["render_threshold"] = 0.075
 
 
     #params["number_people_max"] = 1  # If the data contains more than one person,

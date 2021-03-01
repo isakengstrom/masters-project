@@ -1,7 +1,8 @@
 import numpy as np
-
+import os
 from FOI_extraction import extract_from_foi_dataset
 from extraction_config import DATASET_PATH
+from json_helpfile import read_from_json
 
 # TODO fix the output in this function
 def print_dataset_structure(dataset_poses, flag=1):
@@ -23,4 +24,5 @@ def print_dataset_structure(dataset_poses, flag=1):
 
 if __name__ == "__main__":
     extract_from_foi_dataset(root_dir=DATASET_PATH)
-
+    #data = read_from_json(os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_1/SUB0_SEQ0_ANG0.json")
+    #print(data)

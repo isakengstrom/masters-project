@@ -63,11 +63,50 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
         # TODO: decide when pose should be extracted, this seems to work
         # Check if the pose should be extracted
         def is_extractable():
-            return should_extract and datum.poseKeypoints.size > 1 #and datum.poseKeypoints.size == 75
+            return should_extract and datum.poseKeypoints.size > 1
 
         extraction_status = 'successful'
 
-        if media_type == 'image':
+        if media_type == 'video':
+            stream = cv2.VideoCapture(media_path)
+            total_frames = int(stream.get(cv2.CAP_PROP_FRAME_COUNT))
+
+            if DEV and DEV_PARAMS["frame_nr"] is None and DEV_PARAMS["frame_upper_lim"] != -1:
+                stream.set(cv2.CAP_PROP_POS_FRAMES, DEV_PARAMS["frame_lower_lim"])
+
+            frame_idx = int(stream.get(cv2.CAP_PROP_POS_FRAMES))
+
+            while stream.isOpened():
+                has_frame, frame = stream.read()
+
+                if not has_frame:
+                    break
+
+                if DEV and DEV_PARAMS["frame_nr"] is None:
+                    if DEV_PARAMS["frame_upper_lim"] != -1 and frame_idx > DEV_PARAMS["frame_upper_lim"]:
+                        break
+
+                datum.cvInputData = frame
+                op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
+
+                if is_extractable():
+                    extracted_poses.append(datum.poseKeypoints)
+
+                if should_display:
+                    cv2.imshow("OpenPose 1.7.0 - Video Stream", datum.cvOutputData)
+                    key = cv2.waitKey(1)
+
+                    # Press "Esc", 'q' or 'Q' to exit stream
+                    if key == 27 or key == ord('q') or key == ord('Q'):
+                        extraction_status = 'interrupted by user'
+                        break
+
+                if frame_idx % 250 == 0:
+                    print('\r', "Progress: {:.1f}%, at frame {} / {}".format(frame_idx / total_frames * 100, frame_idx, total_frames), end='')
+
+                frame_idx += 1
+
+        elif media_type == 'image':
             frame = cv2.imread(media_path)
             datum.cvInputData = frame
             op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
@@ -78,38 +117,6 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
             if should_display:
                 cv2.imshow("OpenPose 1.7.0 - Single Image", datum.cvOutputData)
                 cv2.waitKey(0)
-
-        elif media_type == 'video':
-            frame_idx = 0
-            stream = cv2.VideoCapture(media_path)
-            while stream.isOpened():
-                has_frame, frame = stream.read()
-                if has_frame:
-                    if DEV:
-                        frame_idx += 1
-                        # TODO: fix these limits
-                        if DEV_PARAMS["frame_nr"] is None:
-                            if frame_idx < DEV_PARAMS["frame_lower_lim"]:
-                                continue
-                            if frame_idx > DEV_PARAMS["frame_upper_lim"]:
-                                break
-
-                    datum.cvInputData = frame
-                    op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
-
-                    if is_extractable():
-                        extracted_poses.append(datum.poseKeypoints)
-
-                    if should_display:
-                        cv2.imshow("OpenPose 1.7.0 - Video Stream", datum.cvOutputData)
-                        key = cv2.waitKey(1)
-
-                        # Press "Esc", 'q' or 'Q' to exit stream
-                        if key == 27 or key == ord('q') or key == ord('Q'):
-                            extraction_status = 'interrupted by user'
-                            break
-                else:
-                    break
 
         elif media_type == 'images':
             # Read frames on directory
@@ -146,7 +153,7 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
 if __name__ == "__main__":
     #extract_poses()
     #extract_poses("/home/isaeng/Exjobb/media/mini.jpg", 'image')
-    extract_poses("/home/isaeng/Exjobb/media/tompa_flip_0_25.MOV", 'video')
-    #extract_poses("/home/isaeng/Exjobb/media/front.mp4", 'video')
+    #extract_poses("/home/isaeng/Exjobb/media/tompa_flip_0_25.MOV", 'video')
+    extract_poses("/home/isaeng/Exjobb/media/front.mp4", 'video')
     #extract_poses("/home/isaeng/Exjobb/media/dir", 'images')
     #extract_poses(media_path=os.environ['DATASET_DIR'] + "/VIDEO/SUBJECT_0/SEQ_0/skew.MTS", media_type='video')
