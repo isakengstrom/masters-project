@@ -8,15 +8,15 @@ import sys
 import cv2  # OpenCV installed for python
 import os
 import time
-import numpy as np
 from sys import platform
 
-from extraction_config import DEV, DEV_PARAMS
+from extraction_config import SHOULD_LIMIT, LIMIT_PARAMS, upper_lim_check
 from extraction_config import get_openpose_params
 
 
 def extract_poses(media_path=None, media_type='video', should_extract=True, should_display=True):
     """
+    Extract the poses of a media file or directory using OpenPose
 
     :param should_display:
     :param should_extract:
@@ -44,6 +44,7 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
             print('Error: OpenPose library could not be found. Did you enable `BUILD_PYTHON` in CMake and have this Python script in the right folder?')
             raise e
 
+        # Default media path
         if media_path is None:
             media_path = os.environ['OPENPOSE_DIR'] + "/examples/media/video.avi"
 
@@ -61,19 +62,23 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
         extracted_poses = []
 
         # Check if the pose should be extracted
-        def is_extractable():
+        def extractable():
             return should_extract and datum.poseKeypoints.size > 1
 
         extraction_status = 'successful'
 
         if media_type == 'video':
             stream = cv2.VideoCapture(media_path)
-            total_frames = int(stream.get(cv2.CAP_PROP_FRAME_COUNT))
 
-            if DEV and DEV_PARAMS["frame_nr"] is None and DEV_PARAMS["frame_upper_lim"] != -1:
-                stream.set(cv2.CAP_PROP_POS_FRAMES, DEV_PARAMS["frame_lower_lim"])
+            if SHOULD_LIMIT and LIMIT_PARAMS["frame_lower_lim"] is not None and LIMIT_PARAMS["frame_lower_lim"] >= 0:
+                stream.set(cv2.CAP_PROP_POS_FRAMES, LIMIT_PARAMS["frame_lower_lim"])
 
             frame_idx = int(stream.get(cv2.CAP_PROP_POS_FRAMES))
+
+            if SHOULD_LIMIT and LIMIT_PARAMS["frame_upper_lim"] is not None:
+                total_frames = min(int(stream.get(cv2.CAP_PROP_FRAME_COUNT)), LIMIT_PARAMS["frame_upper_lim"])
+            else:
+                total_frames = int(stream.get(cv2.CAP_PROP_FRAME_COUNT))
 
             while stream.isOpened():
                 has_frame, frame = stream.read()
@@ -81,14 +86,13 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
                 if not has_frame:
                     break
 
-                if DEV and DEV_PARAMS["frame_nr"] is None:
-                    if DEV_PARAMS["frame_upper_lim"] != -1 and frame_idx > DEV_PARAMS["frame_upper_lim"]:
-                        break
+                if SHOULD_LIMIT and upper_lim_check(frame_idx, "frame"):
+                    break
 
                 datum.cvInputData = frame
                 op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
 
-                if is_extractable():
+                if extractable():
                     extracted_poses.append(datum.poseKeypoints)
 
                 if should_display:
@@ -110,7 +114,7 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
             datum.cvInputData = frame
             op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
 
-            if is_extractable():
+            if extractable():
                 extracted_poses.append(datum.poseKeypoints)
 
             if should_display:
@@ -127,7 +131,7 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
                 datum.cvInputData = frame
                 op_wrapper.emplaceAndPop(op.VectorDatum([datum]))
 
-                if is_extractable():
+                if extractable():
                     extracted_poses.append(datum.poseKeypoints)
 
                 if should_display:
@@ -140,7 +144,7 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
                         break
 
         end = time.time()
-        print('Pose extraction of {} was {}. Run time: {:.2f} seconds'.format(media_type, extraction_status, (end - start)))
+        print('\nPose extraction of {} was {}. Run time: {:.2f} seconds'.format(media_type, extraction_status, (end - start)))
 
         return extracted_poses
 

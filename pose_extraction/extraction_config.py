@@ -1,61 +1,50 @@
 import os
 import argparse
 
-SHOULD_DISPLAY = False  # OpenPose: If the stream should be displayed during pose extraction
-SHOULD_EXTRACT = True  # OpenPose: If extraction should take place
-SHOULD_SAVE = True  # If the poses should be saved tp JSON
+# Path constants
 DATASET_PATH = os.environ['DATASET_DIR'] + "/VIDEO/"  # Path to the dataset that should be extracted from
-SAVE_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_2"  # Path to the directory to save the JSON files
+SAVE_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_test"  # Path to the directory to save the JSON files
+
+# Flags
 TRIMMED_SEQUENCE_FLAG = "_T"  # Some sequences have trimmed versions, indicating by this flag in the name
 
-# DEV parameters and functions
-DEV = True
-DEV_PARAMS = {
-    # Run extraction on a specific subject/sequence/camera_angle/video_frame
-    "sub_nr": None,
-    "seq_nr": None,
-    "angle_nr": None,
-    "frame_nr": None,
+# Settings
+SHOULD_DISPLAY = True  # OpenPose: If the stream should be displayed during pose extraction
+SHOULD_EXTRACT = True  # OpenPose: If extraction should take place
+SHOULD_SAVE = False  # If the poses should be saved tp JSON
+SHOULD_LIMIT = True # If false, runs through the whole FOI dataset, else it runs through the intervals specified in LIMIT_PARAMS
 
-    # Set one of the following params to 'None' to disable the limits
-    # E.g: "seq_lower_lim" being 'None' disables the seq limits, not the others (sub, angle, frame)
 
-    # Used if 'sub_nr' is 'None'
+# Setting a limit to 'None' or '0<' will disable that limit
+# These limits work like this: "lower_lim" <= param < "upper_lim"
+LIMIT_PARAMS = {
+    # Limits for the subjects
     "sub_lower_lim": None,
-    "sub_upper_lim": 11,
-
-    # Used if 'seq_nr' is 'None'
+    "sub_upper_lim": None,
+    # Limits for the sequences
     "seq_lower_lim": None,
-    "seq_upper_lim": 10,
-
-    # Used if 'angle_nr' is 'None'
-    "angle_lower_lim": 1,
-    "angle_upper_lim": 10,
-
-    # Used if 'frame_nr' is 'None'
-    "frame_lower_lim": -1,
-    "frame_upper_lim": -1,
+    "seq_upper_lim": None,
+    # Limits for the angles
+    "ang_lower_lim": 3,
+    "ang_upper_lim": 4,
+    # Limits for the frames
+    "frame_lower_lim": 1000,
+    "frame_upper_lim": 1500,
 }
 
 
-def in_dev_limits(ind, param):
-    """
-    Check if dev index is in the specified DEV_PARAMS boundaries
-
-    :param ind: Index to check
-    :param param: Which limit to check against
-    :return: bool
-    """
-
-
-    if DEV_PARAMS[param + "_nr"] is None:
-        # If one of the limits connected to the param is 'None', those two limits will be disabled
-        if DEV_PARAMS[param + "_lower_lim"] is None or DEV_PARAMS[param + "_upper_lim"] is None:
-            return True
-
-        return DEV_PARAMS[param + "_lower_lim"] <= ind < DEV_PARAMS[param + "_upper_lim"]
+def lower_lim_check(ind, param):
+    if LIMIT_PARAMS[param + "_lower_lim"] is None or LIMIT_PARAMS[param + "_lower_lim"] < 0:
+        return False
     else:
-        return DEV_PARAMS[param + "_nr"] == ind
+        return LIMIT_PARAMS[param + "_lower_lim"] >= ind
+
+
+def upper_lim_check(ind, param):
+    if LIMIT_PARAMS[param + "_upper_lim"] is None or LIMIT_PARAMS[param + "_upper_lim"] < 0:
+        return False
+    else:
+        return LIMIT_PARAMS[param + "_upper_lim"] < ind
 
 
 def get_openpose_params():

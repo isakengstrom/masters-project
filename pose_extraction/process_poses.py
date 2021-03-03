@@ -6,11 +6,8 @@ from openpose_extraction import extract_poses  # Only for testing in main functi
 from json_helpfile import save_to_json
 
 
-def save_processed_poses(poses, subject_idx, sequence_idx, angle_idx):
-
-    name = "SUB{}_SEQ{}_ANG{}".format(subject_idx, sequence_idx, angle_idx)
-    json_name = SAVE_PATH + "/{}.json".format(name)
-
+def save_processed_poses(poses, file_name):
+    json_name = SAVE_PATH + "/{}.json".format(file_name)
     save_to_json(poses, json_name)
 
 
@@ -28,52 +25,66 @@ def filter_skeleton_to_xy(skeleton):
     return filtered_skeleton
 
 
-def euclid_dist(p, q):
+def euclidean_distance(p, q):
     return math.dist(p, q)
 
 
 def remove_skeletons(prev_skeleton, skeletons):
+    """
+    Removes the least likely skeletons from each frame, by comparing the distance from a skeletal joint in the previous
+    frame's skeleton to the current frame's skeletons. The joint used is the central hip joint (Nr 8 from OpenPose).
+
+    :param prev_skeleton:
+    :param skeletons:
+    :return:
+    """
+
     distances = []
 
+    # Extract the hip joint coordinates of the previous skeleton
+    q = prev_skeleton[8, :].tolist()
+
+    # Loop over all of the current frame's skeletons
     for skel_idx in range(skeletons.shape[0]):
+        # Extract the hip joint of a current skeleton
         p = skeletons[skel_idx, 8, 0:2].tolist()
-        q = prev_skeleton[8, :].tolist()
 
-        distances.append(euclid_dist(p, q))
+        distances.append(euclidean_distance(p, q))
 
+    # Get the index of the skeleton who is closest to that of the previous frame
     correct_idx = distances.index(min(distances))
 
     return skeletons[correct_idx, :, :]
 
 
-def process_skeletons_to_one(media_poses):
-
-    processed_angle = []
-    prev_skeleton = np.empty((25, 2))
-
-    for skeletons in media_poses:
-        skeletons = np.array(skeletons)
-        if skeletons.shape[0] == 1:
-            skeleton = np.squeeze(skeletons, axis=0)
-        else:
-            skeleton = remove_skeletons(prev_skeleton, skeletons)
-
-        filtered_skeleton = filter_skeleton_to_xy(skeleton)
-        processed_angle.append(filtered_skeleton)
-        prev_skeleton = filtered_skeleton
-
-    return processed_angle
-
-
 def process_poses(media_poses):
-
     """
+    Process the poses in a media file.
 
     :param media_poses:
     :return:
     """
+    processed_skeleton = []
+    prev_skeleton = np.empty((25, 2))
 
-    return process_skeletons_to_one(media_poses)
+    # For each
+    for skeletons in media_poses:
+        skeletons = np.array(skeletons)
+
+        # Remove unnecessary dimension if there's only one skeleton per frame
+        if skeletons.shape[0] == 1:
+            skeleton = np.squeeze(skeletons, axis=0)
+        # Else, remove the least likely skeletons from each frame
+        else:
+            skeleton = remove_skeletons(prev_skeleton, skeletons)
+
+        # Remove the confidence measure of each joint in a skeleton
+        filtered_skeleton = filter_skeleton_to_xy(skeleton)
+        processed_skeleton.append(filtered_skeleton)
+        prev_skeleton = filtered_skeleton
+
+    return processed_skeleton
+
 
 if __name__ == "__main__":
     #poses = extract_poses("/home/isaeng/Exjobb/media/mini.jpg", 'image')
