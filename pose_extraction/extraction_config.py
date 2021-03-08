@@ -12,7 +12,7 @@ TRIMMED_SEQUENCE_FLAG = "_T"  # Some sequences have trimmed versions, indicating
 SHOULD_DISPLAY = True  # OpenPose: If the stream should be displayed during pose extraction
 SHOULD_EXTRACT = True  # OpenPose: If extraction should take place
 SHOULD_SAVE = False  # If the poses should be saved tp JSON
-SHOULD_LIMIT = True # If false, runs through the whole FOI dataset, else it runs through the intervals specified in LIMIT_PARAMS
+SHOULD_LIMIT = False # If false, runs through the whole FOI dataset, else it runs through the intervals specified in LIMIT_PARAMS
 
 
 # Setting a limit to 'None' or '0<' will disable that limit
@@ -25,11 +25,11 @@ LIMIT_PARAMS = {
     "seq_lower_lim": None,
     "seq_upper_lim": None,
     # Limits for the angles
-    "ang_lower_lim": 3,
-    "ang_upper_lim": 4,
+    "ang_lower_lim": None,
+    "ang_upper_lim": None,
     # Limits for the frames
-    "frame_lower_lim": 1000,
-    "frame_upper_lim": 1500,
+    "frame_lower_lim": None,
+    "frame_upper_lim": None,
 }
 
 
