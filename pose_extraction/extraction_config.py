@@ -43,6 +43,8 @@ def lower_lim_check(ind, param):
 def upper_lim_check(ind, param):
     if LIMIT_PARAMS[param + "_upper_lim"] is None or LIMIT_PARAMS[param + "_upper_lim"] < 0:
         return False
+    elif LIMIT_PARAMS[param + "_lower_lim"] > LIMIT_PARAMS[param + "_upper_lim"]:
+        return False
     else:
         return LIMIT_PARAMS[param + "_upper_lim"] < ind
 
