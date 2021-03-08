@@ -3,7 +3,7 @@ import os
 from openpose_extraction import extract_poses
 from extraction_config import SHOULD_LIMIT, TRIMMED_SEQUENCE_FLAG, SHOULD_DISPLAY, SHOULD_EXTRACT, SHOULD_SAVE
 from extraction_config import lower_lim_check, upper_lim_check
-from process_poses import process_poses, save_processed_poses
+from pre_save_process_poses import process_poses, save_processed_poses
 
 
 def extract_from_sequence(sequence_dir, subject_idx, sequence_idx):
