@@ -1,9 +1,9 @@
 import numpy as np
 import math
 
-from extraction_config import SAVE_PATH
+from pose_extraction.extraction_config import SAVE_PATH
 from openpose_extraction import extract_poses  # Only for testing in main function
-from json_helpfile import save_to_json
+from helper_files.json_helpfile import save_to_json
 
 
 def save_processed_poses(poses, file_name):
