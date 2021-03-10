@@ -174,7 +174,6 @@ def synchronise_sequence(sequence_dir, subject_idx, sequence_idx, sequence_angle
             offset = 90
             stream.set(cv2.CAP_PROP_POS_MSEC, offset)
 
-
         starting_frames.append(stream.get(cv2.CAP_PROP_POS_FRAMES))
         streams.append(stream)
 

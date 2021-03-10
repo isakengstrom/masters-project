@@ -5,8 +5,8 @@ Starting point for the pose extraction, using OpenPose.
 import os
 
 from helper_files.project_config import SHOULD_LIMIT, lower_lim_check, upper_lim_check, TRIMMED_SEQUENCE_FLAG
-from extraction_config import DATASET_PATH
-from FOI_extraction import extract_sequence
+from pose_extraction.extraction_config import DATASET_PATH
+from pose_extraction.FOI_extraction import extract_sequence
 from network_modelling.sync_sequences import synchronise_sequence
 
 
@@ -82,10 +82,11 @@ if __name__ == "__main__":
     """""""""""
     For extraction of the FOI dataset
     """""""""""
-    #func = extract_sequence
+
+    #loop_over_foi_dataset(root_dir=DATASET_PATH, action=extract_sequence)
 
     """""""""""
     For syncing the sequences
     """""""""""
-    func = synchronise_sequence
-    loop_over_foi_dataset(root_dir=DATASET_PATH, action=func)
+
+    loop_over_foi_dataset(root_dir=DATASET_PATH, action=synchronise_sequence)

@@ -1,8 +1,8 @@
 import numpy as np
 import math
 
-from pose_extraction.extraction_config import SAVE_PATH
-from openpose_extraction import extract_poses  # Only for testing in main function
+from pre_processing.pose_extraction.extraction_config import SAVE_PATH
+from pre_processing.pose_extraction.openpose_extraction import extract_poses  # Only for testing in main function
 from helper_files.json_helpfile import save_to_json
 
 

@@ -10,7 +10,8 @@ import os
 import time
 from sys import platform
 
-from extraction_config import get_openpose_params
+
+from .extraction_config import get_openpose_params
 from helper_files.project_config import SHOULD_LIMIT, LIMIT_PARAMS, upper_lim_check
 
 
