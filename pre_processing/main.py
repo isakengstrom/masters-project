@@ -17,6 +17,8 @@ def loop_over_sequence(sequence_dir, subject_idx, sequence_idx, action):
     :param sequence_dir:
     :param subject_idx:
     :param sequence_idx:
+    :param action:
+    :return:
     """
 
     if not os.path.exists(sequence_dir):
@@ -33,6 +35,8 @@ def loop_over_subject(subject_dir, subject_idx, action=None):
 
     :param subject_dir:
     :param subject_idx:
+    :param action:
+    :return:
     """
 
     if not os.path.exists(subject_dir):
@@ -61,8 +65,9 @@ def loop_over_subject(subject_dir, subject_idx, action=None):
 def loop_over_foi_dataset(root_dir, action=None):
     """
     Extract the poses from all the subjects
-
     :param root_dir:
+    :param action:
+    :return:
     """
 
     # Loop through the dir containing all the subjects

@@ -1,6 +1,5 @@
-import os
 '''
-
+import os
 from .extraction_config import *
 from .FOI_extraction import *
 from .openpose_extraction import *

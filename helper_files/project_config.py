@@ -1,9 +1,7 @@
 
 # Flags
 TRIMMED_SEQUENCE_FLAG = "_T"  # Some sequences have trimmed versions, indicating by this flag in the name
-
-
-SHOULD_LIMIT = False # If false, runs through the whole FOI dataset, else it runs through the intervals specified in LIMIT_PARAMS
+SHOULD_LIMIT = True # If false, runs through the whole FOI dataset, else it runs through the intervals specified in LIMIT_PARAMS
 
 # Setting a limit to 'None' or '0<' will disable that limit
 # These limits work like this: "lower_lim" <= param < "upper_lim"

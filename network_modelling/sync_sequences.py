@@ -9,7 +9,6 @@ import numpy as np
 import cv2
 from glob import glob
 
-from helper_files.project_config import TRIMMED_SEQUENCE_FLAG
 from network_modelling.modelling_config import EXTRACT_OFFSET, USE_OFFSET, SHOULD_DISPLAY, OFFSETS_SAVE_PATH, FIX_BACK_CAMERA
 from helper_files.json_helpfile import save_to_json, read_from_json
 
@@ -35,7 +34,7 @@ def draw_label(img, text, pos=(20, 20), bg_color=(200, 200, 200)):
 
 def audio_offset(audio_file_1, audio_file_2):
     """
-    Get the audio offset between two WAV files
+    Get the audio offset between two WAV files, uses cross correlation
 
     Code influenced by https://github.com/rpuntaie/syncstart/blob/main/syncstart.py
 
@@ -97,11 +96,11 @@ def save_offset_to_json(sequence_dir, sequence_angles, subject_idx, sequence_idx
 
     reference_angle_name = None
 
-    for angle_idx in range(len(sequence_angles)):
+    for angle_idx, angle in enumerate(sequence_angles):
 
-        angle_dir = os.path.join(sequence_dir, sequence_angles[angle_idx])
+        angle_dir = os.path.join(sequence_dir, angle)
         angle_dir = angle_dir.replace(" ", '\ ')
-        angle_name = sequence_angles[angle_idx].split(".")[0]
+        angle_name = angle.split(".")[0]
 
         if angle_idx == 0:
             reference_angle_name = angle_name
@@ -111,21 +110,18 @@ def save_offset_to_json(sequence_dir, sequence_angles, subject_idx, sequence_idx
         cmd_create_wav = "ffmpeg -i {0} -map 0:1 -acodec pcm_s16le -ac 2 {1} -hide_banner -loglevel error".format(angle_dir, angle_name + ".wav")
         os.system(command=cmd_create_wav)
 
-
         # Use the audio to find the offset
         print("Retrieving audio offset between '{}' and '{}'..".format(reference_angle_name + ".wav", angle_name + ".wav" ))
         relative_file, offset = audio_offset(reference_angle_name + ".wav", angle_name + ".wav")
 
         relative_file_name = relative_file.split(".")[0]
-        angle_name = sequence_angles[angle_idx].split(".")[0]
+        angle_name = angle.split(".")[0]
 
         offset_results["offsets"][name]["angles"][angle_name] = {}
-        offset_results["offsets"][name]["angles"][angle_name]["video_name"] = sequence_angles[angle_idx]
+        offset_results["offsets"][name]["angles"][angle_name]["video_name"] = angle
         offset_results["offsets"][name]["angles"][angle_name]["relative_name"] = relative_file_name
         offset_results["offsets"][name]["angles"][angle_name]["offset_reference"] = reference_angle_name
         offset_results["offsets"][name]["angles"][angle_name]["offset_msec"] = offset
-
-        #print("'{}' with the offset: {}".format(angle_names[angle_idx], offset))
 
     # Save the result of the sequence to json
     print("Saving sequence offsets..")
@@ -163,18 +159,21 @@ def synchronise_sequence(sequence_dir, subject_idx, sequence_idx, sequence_angle
 
     streams = []
     starting_frames = []
+    starting_msec = []
     for angle_idx in range(len(sequence_paths)):
         stream = cv2.VideoCapture(sequence_paths[angle_idx])
         angle_name = sequence_angles[angle_idx].split("/")[-1].split(".")[0]
+
         if USE_OFFSET:
             name = "sub" + str(subject_idx) + "_seq" + str(sequence_idx)
             offset = offsets_data["offsets"][name]["angles"][angle_name]["offset_msec"]
             stream.set(cv2.CAP_PROP_POS_MSEC, offset)
         elif FIX_BACK_CAMERA and angle_name == "back":
-            offset = 90
-            stream.set(cv2.CAP_PROP_POS_MSEC, offset)
+            offset = 100
+            stream.set(cv2.CAP_PROP_POS_FRAMES, offset)
 
-        starting_frames.append(stream.get(cv2.CAP_PROP_POS_FRAMES))
+        starting_frames.append(int(stream.get(cv2.CAP_PROP_POS_FRAMES)))
+        starting_msec.append(stream.get(cv2.CAP_PROP_POS_MSEC))
         streams.append(stream)
 
     while True:
@@ -183,11 +182,11 @@ def synchronise_sequence(sequence_dir, subject_idx, sequence_idx, sequence_angle
         imgs = []
         dims = []
 
-        for stream_idx in range(len(streams)):
-            if not streams[stream_idx].isOpened():
+        for stream_idx, stream in enumerate(streams):
+            if not stream.isOpened():
                 break
 
-            ret, img = streams[stream_idx].read()
+            ret, img = stream.read()
             rets.append(ret)
 
             if stream_idx == 0:
@@ -201,9 +200,17 @@ def synchronise_sequence(sequence_dir, subject_idx, sequence_idx, sequence_angle
 
             img = cv2.resize(img, dim)
 
-            draw_label(img, text="Angle: {}".format(sequence_angles[stream_idx]))
-            draw_label(img, text="FPS: {}".format(streams[stream_idx].get(cv2.CAP_PROP_FPS)), pos=(20, 40))
-            draw_label(img, text="Start frame: {}".format(starting_frames[stream_idx]), pos=(20, 60))
+            labels = [
+                "Angle: {}".format(sequence_angles[stream_idx]),
+                "FPS: {}".format(stream.get(cv2.CAP_PROP_FPS)),
+                "Start frame: {}".format(starting_frames[stream_idx]),
+                "Curr frame {}".format(int(stream.get(cv2.CAP_PROP_POS_FRAMES))),
+                "Start ms: {:.1f}".format(starting_msec[stream_idx]),
+                "Curr ms: {:.1f}".format(stream.get(cv2.CAP_PROP_POS_MSEC)),
+            ]
+
+            for i, label in enumerate(labels):
+                draw_label(img, text=label, pos=(20, 20*(i+1)))
 
             imgs.append(img)
             dims.append(dim)
@@ -228,8 +235,6 @@ def synchronise_sequence(sequence_dir, subject_idx, sequence_idx, sequence_angle
         stream.release()
 
     cv2.destroyAllWindows()
-
-
 
 
 if __name__ == "__main__":
