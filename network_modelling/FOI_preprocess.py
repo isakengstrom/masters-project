@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-from pose_extraction.json_helpfile import read_from_json
+from helper_files.json_helpfile import read_from_json
 from modelling_config import DATA_PATH
 
 
