@@ -12,7 +12,7 @@ from sys import platform
 
 
 from .extraction_config import get_openpose_params
-from helper_files.project_config import SHOULD_LIMIT, LIMIT_PARAMS, upper_lim_check
+from helper_files.limits_helper import SHOULD_LIMIT, LIMIT_PARAMS, upper_lim_check
 
 
 def extract_poses(media_path=None, media_type='video', should_extract=True, should_display=True):

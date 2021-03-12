@@ -3,7 +3,7 @@ import math
 
 from pre_processing.pose_extraction.extraction_config import SAVE_PATH
 from pre_processing.pose_extraction.openpose_extraction import extract_poses  # Only for testing in main function
-from helper_files.json_helpfile import save_to_json
+from helper_files.json_helper import save_to_json
 
 
 def save_processed_poses(poses, file_name):

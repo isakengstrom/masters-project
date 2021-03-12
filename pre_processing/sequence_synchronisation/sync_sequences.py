@@ -9,8 +9,8 @@ import numpy as np
 import cv2
 from glob import glob
 
-from network_modelling.modelling_config import EXTRACT_OFFSET, USE_OFFSET, SHOULD_DISPLAY, OFFSETS_SAVE_PATH, FIX_BACK_CAMERA
-from helper_files.json_helpfile import save_to_json, read_from_json
+from .sync_config import EXTRACT_OFFSET, USE_OFFSET, SHOULD_DISPLAY, OFFSETS_SAVE_PATH, FIX_BACK_CAMERA
+from helper_files.json_helper import save_to_json, read_from_json
 
 
 def draw_label(img, text, pos=(20, 20), bg_color=(200, 200, 200)):
