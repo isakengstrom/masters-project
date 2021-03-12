@@ -42,7 +42,7 @@ def remove_skeletons(prev_skeleton, skeletons):
     distances = []
 
     # Extract the hip joint coordinates of the previous skeleton
-    q = prev_skeleton[8, :].tolist()
+    q = prev_skeleton[8, 0:2].tolist()
 
     # Loop over all of the current frame's skeletons
     for skel_idx in range(skeletons.shape[0]):

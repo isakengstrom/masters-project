@@ -6,7 +6,7 @@ SHOULD_LIMIT = True # If false, runs through the whole FOI dataset, else it runs
 # These limits work like this: "lower_lim" <= param < "upper_lim"
 LIMIT_PARAMS = {
     # Limits for the subjects
-    "sub_lower_lim": 5,
+    "sub_lower_lim": None,
     "sub_upper_lim": None,
     # Limits for the sessions
     "sess_lower_lim": None,

@@ -2,11 +2,11 @@ import os
 import argparse
 
 TRIMMED_SESSION_FLAG = "_T"  # Some sessions have trimmed versions, indicating by this flag in the name
-
+SHOULD_USE_TRIMMED = False
 # Settings
-SHOULD_DISPLAY = True  # OpenPose: If the stream should be displayed during pose extraction
+SHOULD_DISPLAY = False  # OpenPose: If the stream should be displayed during pose extraction
 SHOULD_EXTRACT = True  # OpenPose: If extraction should take place
-SHOULD_SAVE = False  # If the poses should be saved tp JSON
+SHOULD_SAVE = True  # If the poses should be saved tp JSON
 
 
 def get_openpose_params():
@@ -39,7 +39,7 @@ def get_openpose_params():
     params["scale_number"] = 1
     params["render_threshold"] = 0.075
 
-    #params["number_people_max"] = 1  # If the data contains more than one person,
+    params["number_people_max"] = 1  # If the data contains more than one person,
 
     # params for body keypoints
     params["model_pose"] = "BODY_25"  # "BODY_25", "COCO", "MPI"

@@ -6,7 +6,7 @@ import os
 
 from helpers import SHOULD_LIMIT, lower_lim_check, upper_lim_check
 from helpers.paths import DATASET_PATH
-from pose_extraction.extraction_config import TRIMMED_SESSION_FLAG
+from pose_extraction.extraction_config import TRIMMED_SESSION_FLAG, SHOULD_USE_TRIMMED
 
 from pose_extraction.foi_extraction import extract_session
 from session_synchronisation.sync_sessions import synchronise_session
@@ -50,12 +50,17 @@ def loop_over_subject(subject_dir, subject_idx, action=None):
     # Get the session names (child folder names of a subject)
     _, sess_names, _ = next(os.walk(subject_dir))
 
-    # Remove un-trimmed sessions (sess) before extraction if they have trimmed counterparts
-    # Some sessions are trimmed in the beginning and end to remove frames containing more than one individual
-    for sess_name in sess_names:
-        if TRIMMED_SESSION_FLAG in sess_name:
-            deprecate_session_name = sess_name.replace(TRIMMED_SESSION_FLAG, "")
-            sess_names.remove(deprecate_session_name)
+    if SHOULD_USE_TRIMMED:
+        # Remove un-trimmed sessions (sess) before extraction if they have trimmed counterparts
+        # Some sessions are trimmed in the beginning and end to remove frames containing more than one individual
+        for sess_name in sess_names:
+            if TRIMMED_SESSION_FLAG in sess_name:
+                deprecate_session_name = sess_name.replace(TRIMMED_SESSION_FLAG, "")
+                sess_names.remove(deprecate_session_name)
+    else:
+        for sess_name in sess_names:
+            if TRIMMED_SESSION_FLAG in sess_name:
+                sess_names.remove(sess_name)
 
     for sess_idx in range(len(sorted(sess_names))):
         if SHOULD_LIMIT and lower_lim_check(sess_idx, "sess"):
@@ -64,6 +69,7 @@ def loop_over_subject(subject_dir, subject_idx, action=None):
             break
 
         sess_dir = os.path.join(subject_dir, sess_names[sess_idx])
+
         loop_over_session(sess_dir, subject_idx, sess_idx, action)
 
 
@@ -93,7 +99,7 @@ if __name__ == "__main__":
     For extraction of the FOI dataset
     """""""""""
 
-    #loop_over_foi_dataset(root_dir=DATASET_PATH, action=extract_session)
+    loop_over_foi_dataset(root_dir=DATASET_PATH, action=extract_session)
 
     """""""""""
     For syncing the sessions
@@ -104,4 +110,4 @@ if __name__ == "__main__":
     """""""""""
     other
     """""""""""
-    preprocess()
+    #preprocess()

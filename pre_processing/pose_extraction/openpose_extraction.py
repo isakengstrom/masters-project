@@ -63,7 +63,7 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
 
         # Check if the pose should be extracted
         def extractable():
-            return should_extract and datum.poseKeypoints.size > 1
+            return should_extract and datum.poseKeypoints is not None and datum.poseKeypoints.size > 1
 
         extraction_status = 'successful'
 
