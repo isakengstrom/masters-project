@@ -10,26 +10,7 @@ import cv2
 from glob import glob
 
 from .sync_config import EXTRACT_OFFSET, USE_OFFSET, SHOULD_DISPLAY, OFFSETS_SAVE_PATH, FIX_BACK_CAMERA
-from helper_files.json_helper import save_to_json, read_from_json
-
-
-def draw_label(img, text, pos=(20, 20), bg_color=(200, 200, 200)):
-    """
-    Code from: https://stackoverflow.com/a/54616857/15354710
-    """
-    font_face = cv2.FONT_HERSHEY_SIMPLEX
-    scale = 0.4
-    color = (0, 0, 0)
-    thickness = cv2.FILLED
-    margin = 2
-
-    txt_size = cv2.getTextSize(text, font_face, scale, thickness)
-
-    end_x = pos[0] + txt_size[0][0] + margin
-    end_y = pos[1] - txt_size[0][1] - margin
-
-    cv2.rectangle(img, pos, (end_x, end_y), bg_color, thickness)
-    cv2.putText(img, text, pos, font_face, scale, color, 1, cv2.LINE_AA)
+from helpers import save_to_json, read_from_json, draw_label
 
 
 def audio_offset(audio_file_1, audio_file_2):
@@ -94,7 +75,7 @@ def save_offset_to_json(session_dir, views, subject_idx, session_idx, file_path=
     offset_results["offsets"][name]["session_dir"] = session_dir
     offset_results["offsets"][name]["views"] = {}
 
-    reference_view_name = None
+    ref_view_name = None
 
     for view_idx, view in enumerate(views):
 
@@ -103,7 +84,7 @@ def save_offset_to_json(session_dir, views, subject_idx, session_idx, file_path=
         view_name = view.split(".")[0]
 
         if view_idx == 0:
-            reference_view_name = view_name
+            ref_view_name = view_name
 
         # Extract audio from a video
         print("Creating '{}' file..".format(view_name + ".wav"))
@@ -111,8 +92,8 @@ def save_offset_to_json(session_dir, views, subject_idx, session_idx, file_path=
         os.system(command=cmd_create_wav)
 
         # Use the audio to find the offset
-        print("Retrieving audio offset between '{}' and '{}'..".format(reference_view_name + ".wav", view_name + ".wav"))
-        relative_file, offset = audio_offset(reference_view_name + ".wav", view_name + ".wav")
+        print("Retrieving audio offset between '{}' and '{}'..".format(ref_view_name + ".wav", view_name + ".wav"))
+        relative_file, offset = audio_offset(ref_view_name + ".wav", view_name + ".wav")
 
         relative_file_name = relative_file.split(".")[0]
         view_name = view.split(".")[0]
@@ -120,7 +101,7 @@ def save_offset_to_json(session_dir, views, subject_idx, session_idx, file_path=
         offset_results["offsets"][name]["views"][view_name] = {}
         offset_results["offsets"][name]["views"][view_name]["video_name"] = view
         offset_results["offsets"][name]["views"][view_name]["relative_name"] = relative_file_name
-        offset_results["offsets"][name]["views"][view_name]["offset_reference"] = reference_view_name
+        offset_results["offsets"][name]["views"][view_name]["offset_reference"] = ref_view_name
         offset_results["offsets"][name]["views"][view_name]["offset_msec"] = offset
 
     # Save the result of the session to json
@@ -212,6 +193,9 @@ def synchronise_session(session_dir, subject_idx, session_idx, views):
             for i, label in enumerate(labels):
                 draw_label(img, text=label, pos=(20, 20*(i+1)))
 
+            if stream_idx == 0:
+                draw_label(img, text="- REF VIEW", pos=(130, 20))
+
             imgs.append(img)
             dims.append(dim)
 
@@ -238,7 +222,4 @@ def synchronise_session(session_dir, subject_idx, session_idx, views):
 
 
 if __name__ == "__main__":
-    audio_offset("ref.wav", "back.wav")
-    #audio_offset("back.wav", "back.wav")
-    #audio_offset("back.wav", "ref.wav")
-    #audio_offset("ref.wav", "front.wav")
+    audio_offset("above.wav", "back.wav")

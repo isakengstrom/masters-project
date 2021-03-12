@@ -3,7 +3,7 @@ import os
 from .openpose_extraction import extract_poses
 from .extraction_config import SHOULD_DISPLAY, SHOULD_EXTRACT, SHOULD_SAVE
 from .pre_save_process import process_poses, save_processed_poses
-from helper_files.limits_helper import SHOULD_LIMIT, lower_lim_check, upper_lim_check
+from helpers.limits_helper import SHOULD_LIMIT, lower_lim_check, upper_lim_check
 
 
 def extract_session(session_dir, subject_idx, session_idx, views):

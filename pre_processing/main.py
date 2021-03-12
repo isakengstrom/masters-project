@@ -4,8 +4,8 @@ Starting point for the pose extraction, using OpenPose.
 
 import os
 
-from helper_files.limits_helper import SHOULD_LIMIT, lower_lim_check, upper_lim_check, TRIMMED_SESSION_FLAG
-from pose_extraction.extraction_config import DATASET_PATH
+from helpers import SHOULD_LIMIT, lower_lim_check, upper_lim_check
+from pose_extraction.extraction_config import DATASET_PATH, TRIMMED_SESSION_FLAG
 from pose_extraction.foi_extraction import extract_session
 from session_synchronisation.sync_sessions import synchronise_session
 
@@ -27,6 +27,7 @@ def loop_over_session(session_dir, subject_idx, session_idx, action):
 
     # Get the view names (child file names of a session)
     _, _, views = next(os.walk(session_dir))
+
     action(session_dir, subject_idx, session_idx, views)
 
 

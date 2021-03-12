@@ -1,6 +1,8 @@
 import os
 import argparse
 
+TRIMMED_SESSION_FLAG = "_T"  # Some sessions have trimmed versions, indicating by this flag in the name
+
 # Path constants
 DATASET_PATH = os.environ['DATASET_DIR'] + "/VIDEO/"  # Path to the dataset that should be extracted from
 SAVE_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_test"  # Path to the directory to save the JSON files

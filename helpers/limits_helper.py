@@ -1,6 +1,5 @@
 
 # Flags
-TRIMMED_SESSION_FLAG = "_T"  # Some sessions have trimmed versions, indicating by this flag in the name
 SHOULD_LIMIT = True # If false, runs through the whole FOI dataset, else it runs through the intervals specified in LIMIT_PARAMS
 
 # Setting a limit to 'None' or '0<' will disable that limit
