@@ -80,7 +80,7 @@ def audio_offset(audio_file_1, audio_file_2):
     return file, offset
 
 
-def save_offset_to_json(sequence_dir, sequence_angles, subject_idx, sequence_idx, file_path=OFFSETS_SAVE_PATH):
+def save_offset_to_json(session_dir, session_angles, subject_idx, session_idx, file_path=OFFSETS_SAVE_PATH):
 
     offset_results = dict()
 
@@ -89,16 +89,16 @@ def save_offset_to_json(sequence_dir, sequence_angles, subject_idx, sequence_idx
     else:
         offset_results["offsets"] = {}
 
-    name = "sub" + str(subject_idx) + "_seq" + str(sequence_idx)
+    name = "sub" + str(subject_idx) + "_sess" + str(session_idx)
     offset_results["offsets"][name] = {}
-    offset_results["offsets"][name]["sequence_dir"] = sequence_dir
+    offset_results["offsets"][name]["session_dir"] = session_dir
     offset_results["offsets"][name]["angles"] = {}
 
     reference_angle_name = None
 
-    for angle_idx, angle in enumerate(sequence_angles):
+    for angle_idx, angle in enumerate(session_angles):
 
-        angle_dir = os.path.join(sequence_dir, angle)
+        angle_dir = os.path.join(session_dir, angle)
         angle_dir = angle_dir.replace(" ", '\ ')
         angle_name = angle.split(".")[0]
 
@@ -123,19 +123,19 @@ def save_offset_to_json(sequence_dir, sequence_angles, subject_idx, sequence_idx
         offset_results["offsets"][name]["angles"][angle_name]["offset_reference"] = reference_angle_name
         offset_results["offsets"][name]["angles"][angle_name]["offset_msec"] = offset
 
-    # Save the result of the sequence to json
-    print("Saving sequence offsets..")
+    # Save the result of the session to json
+    print("Saving session offsets..")
     save_to_json(offset_results, file_path)
 
-    # Remove the audio file used for the sequence
+    # Remove the audio file used for the session
     print("Removing audio files..")
     cmd_remove_wav_files = "rm *wav"
     os.system(cmd_remove_wav_files)
 
 
-def synchronise_sequence(sequence_dir, subject_idx, sequence_idx, sequence_angles):
+def synchronise_session(session_dir, subject_idx, session_idx, session_angles):
     """"""
-    print("\n-------- Subject {} - Sequence {} --------".format(subject_idx, sequence_idx))
+    print("\n-------- Subject {} - Session {} --------".format(subject_idx, session_idx))
 
     if glob('*wav'):
         # Remove any remaining WAV files in the dir if a previous process was interrupted
@@ -145,7 +145,7 @@ def synchronise_sequence(sequence_dir, subject_idx, sequence_idx, sequence_angle
 
     if EXTRACT_OFFSET:
         print("Extracting offsets..")
-        save_offset_to_json(sequence_dir, sequence_angles, subject_idx, sequence_idx)
+        save_offset_to_json(session_dir, session_angles, subject_idx, session_idx)
 
     offsets_data = read_from_json(OFFSETS_SAVE_PATH)
     print(offsets_data)
@@ -153,19 +153,19 @@ def synchronise_sequence(sequence_dir, subject_idx, sequence_idx, sequence_angle
     if not SHOULD_DISPLAY:
         return
 
-    sequence_paths = []
-    for angle in sequence_angles:
-        sequence_paths.append(os.path.join(sequence_dir, angle))
+    session_paths = []
+    for angle in session_angles:
+        session_paths.append(os.path.join(session_dir, angle))
 
     streams = []
     starting_frames = []
     starting_msec = []
-    for angle_idx in range(len(sequence_paths)):
-        stream = cv2.VideoCapture(sequence_paths[angle_idx])
-        angle_name = sequence_angles[angle_idx].split("/")[-1].split(".")[0]
+    for angle_idx in range(len(session_paths)):
+        stream = cv2.VideoCapture(session_paths[angle_idx])
+        angle_name = session_angles[angle_idx].split("/")[-1].split(".")[0]
 
         if USE_OFFSET:
-            name = "sub" + str(subject_idx) + "_seq" + str(sequence_idx)
+            name = "sub" + str(subject_idx) + "_sess" + str(session_idx)
             offset = offsets_data["offsets"][name]["angles"][angle_name]["offset_msec"]
             stream.set(cv2.CAP_PROP_POS_MSEC, offset)
         elif FIX_BACK_CAMERA and angle_name == "back":
@@ -201,7 +201,7 @@ def synchronise_sequence(sequence_dir, subject_idx, sequence_idx, sequence_angle
             img = cv2.resize(img, dim)
 
             labels = [
-                "Angle: {}".format(sequence_angles[stream_idx]),
+                "Angle: {}".format(session_angles[stream_idx]),
                 "FPS: {}".format(stream.get(cv2.CAP_PROP_FPS)),
                 "Start frame: {}".format(starting_frames[stream_idx]),
                 "Curr frame {}".format(int(stream.get(cv2.CAP_PROP_POS_FRAMES))),
@@ -224,7 +224,7 @@ def synchronise_sequence(sequence_dir, subject_idx, sequence_idx, sequence_angle
         col1_col2 = cv2.vconcat([row1, row2])
         col1_col2_col3 = cv2.vconcat([col1_col2, imgs[0]])
 
-        cv2.imshow("Subject {} - Sequence {}".format(subject_idx, sequence_idx), col1_col2_col3)
+        cv2.imshow("Subject {} - Session {}".format(subject_idx, session_idx), col1_col2_col3)
         key = cv2.waitKey(1)
 
         # Press "Esc", 'q' or 'Q' to exit stream

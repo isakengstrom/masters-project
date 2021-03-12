@@ -1,6 +1,6 @@
 
 # Flags
-TRIMMED_SEQUENCE_FLAG = "_T"  # Some sequences have trimmed versions, indicating by this flag in the name
+TRIMMED_SESSION_FLAG = "_T"  # Some sessions have trimmed versions, indicating by this flag in the name
 SHOULD_LIMIT = True # If false, runs through the whole FOI dataset, else it runs through the intervals specified in LIMIT_PARAMS
 
 # Setting a limit to 'None' or '0<' will disable that limit
@@ -9,9 +9,9 @@ LIMIT_PARAMS = {
     # Limits for the subjects
     "sub_lower_lim": 5,
     "sub_upper_lim": None,
-    # Limits for the sequences
-    "seq_lower_lim": None,
-    "seq_upper_lim": None,
+    # Limits for the sessions
+    "sess_lower_lim": None,
+    "sess_upper_lim": None,
     # Limits for the angles
     "ang_lower_lim": None,
     "ang_upper_lim": None,

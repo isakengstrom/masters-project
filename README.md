@@ -34,5 +34,5 @@ is often common when talking about *Sequential learning*. Therefore, the followi
 to avoid any confusion:
 
 - "Subject" (sub) will mean the same this as in the dataset 
-- "*Session*" (sesh) will replace "sequence"
+- "*Session*" (sess) will replace "sequence"
 - "View" will be used instead of "angle" when referring to each camera capture. 

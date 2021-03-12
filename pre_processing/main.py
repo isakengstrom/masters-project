@@ -4,34 +4,35 @@ Starting point for the pose extraction, using OpenPose.
 
 import os
 
-from helper_files.limits_helper import SHOULD_LIMIT, lower_lim_check, upper_lim_check, TRIMMED_SEQUENCE_FLAG
+from helper_files.limits_helper import SHOULD_LIMIT, lower_lim_check, upper_lim_check, TRIMMED_SESSION_FLAG
 from pose_extraction.extraction_config import DATASET_PATH
-from pose_extraction.foi_extraction import extract_sequence
-from pre_processing.sequence_synchronisation.sync_sequences import synchronise_sequence
+from pose_extraction.foi_extraction import extract_session
+from session_synchronisation.sync_sessions import synchronise_session
 
 
-def loop_over_sequence(sequence_dir, subject_idx, sequence_idx, action):
+def loop_over_session(session_dir, subject_idx, session_idx, action):
     """
-    Extracts, processes and saves the poses from a sequence. A sequence can consist of many videos covering different angles.
+    Extracts, processes and saves the poses from a session. A session can consist of many videos covering different
+    views.
 
-    :param sequence_dir:
+    :param session_dir:
     :param subject_idx:
-    :param sequence_idx:
+    :param session_idx:
     :param action:
     :return:
     """
 
-    if not os.path.exists(sequence_dir):
+    if not os.path.exists(session_dir):
         return
 
-    # Get the angle names (child file names of a sequence)
-    _, _, camera_angles = next(os.walk(sequence_dir))
-    action(sequence_dir, subject_idx, sequence_idx, camera_angles)
+    # Get the angle names (child file names of a session)
+    _, _, camera_angles = next(os.walk(session_dir))
+    action(session_dir, subject_idx, session_idx, camera_angles)
 
 
 def loop_over_subject(subject_dir, subject_idx, action=None):
     """
-    Extract the poses from a single subject, either from all sequences or a specific one
+    Extract the poses from a single subject
 
     :param subject_dir:
     :param subject_idx:
@@ -42,24 +43,24 @@ def loop_over_subject(subject_dir, subject_idx, action=None):
     if not os.path.exists(subject_dir):
         return
 
-    # Get the sequence names (child folder names of a subject)
-    _, sequence_names, _ = next(os.walk(subject_dir))
+    # Get the session names (child folder names of a subject)
+    _, sess_names, _ = next(os.walk(subject_dir))
 
-    # Remove un-trimmed sequences before extraction if they have trimmed counterparts
-    # Some sequences are trimmed in the beginning and end to remove frames containing more than one individual
-    for sequence_name in sequence_names:
-        if TRIMMED_SEQUENCE_FLAG in sequence_name:
-            deprecate_sequence_name = sequence_name.replace(TRIMMED_SEQUENCE_FLAG, "")
-            sequence_names.remove(deprecate_sequence_name)
+    # Remove un-trimmed sessions (sesss) before extraction if they have trimmed counterparts
+    # Some sessions are trimmed in the beginning and end to remove frames containing more than one individual
+    for sess_name in sess_names:
+        if TRIMMED_SESSION_FLAG in sess_name:
+            deprecate_session_name = sess_name.replace(TRIMMED_SESSION_FLAG, "")
+            sess_names.remove(deprecate_session_name)
 
-    for sequence_idx in range(len(sorted(sequence_names))):
-        if SHOULD_LIMIT and lower_lim_check(sequence_idx, "seq"):
+    for sess_idx in range(len(sorted(sess_names))):
+        if SHOULD_LIMIT and lower_lim_check(sess_idx, "sess"):
             continue
-        if SHOULD_LIMIT and upper_lim_check(sequence_idx, "seq"):
+        if SHOULD_LIMIT and upper_lim_check(sess_idx, "sess"):
             break
 
-        sequence_dir = os.path.join(subject_dir, sequence_names[sequence_idx])
-        loop_over_sequence(sequence_dir, subject_idx, sequence_idx, action)
+        sess_dir = os.path.join(subject_dir, sess_names[sess_idx])
+        loop_over_session(sess_dir, subject_idx, sess_idx, action)
 
 
 def loop_over_foi_dataset(root_dir, action=None):
@@ -88,10 +89,10 @@ if __name__ == "__main__":
     For extraction of the FOI dataset
     """""""""""
 
-    loop_over_foi_dataset(root_dir=DATASET_PATH, action=extract_sequence)
+    loop_over_foi_dataset(root_dir=DATASET_PATH, action=extract_session)
 
     """""""""""
-    For syncing the sequences
+    For syncing the sessions
     """""""""""
 
-    loop_over_foi_dataset(root_dir=DATASET_PATH, action=synchronise_sequence)
+    loop_over_foi_dataset(root_dir=DATASET_PATH, action=synchronise_session)

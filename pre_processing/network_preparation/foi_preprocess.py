@@ -2,7 +2,7 @@ import os
 import numpy as np
 
 from helper_files.json_helper import read_from_json
-from ..sequence_synchronisation.sync_config import DATA_PATH
+from ..session_synchronisation.sync_config import DATA_PATH
 
 
 def filter_file_names(unfiltered_names):
