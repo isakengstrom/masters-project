@@ -25,9 +25,9 @@ def loop_over_session(session_dir, subject_idx, session_idx, action):
     if not os.path.exists(session_dir):
         return
 
-    # Get the angle names (child file names of a session)
-    _, _, camera_angles = next(os.walk(session_dir))
-    action(session_dir, subject_idx, session_idx, camera_angles)
+    # Get the view names (child file names of a session)
+    _, _, views = next(os.walk(session_dir))
+    action(session_dir, subject_idx, session_idx, views)
 
 
 def loop_over_subject(subject_dir, subject_idx, action=None):
@@ -46,7 +46,7 @@ def loop_over_subject(subject_dir, subject_idx, action=None):
     # Get the session names (child folder names of a subject)
     _, sess_names, _ = next(os.walk(subject_dir))
 
-    # Remove un-trimmed sessions (sesss) before extraction if they have trimmed counterparts
+    # Remove un-trimmed sessions (sess) before extraction if they have trimmed counterparts
     # Some sessions are trimmed in the beginning and end to remove frames containing more than one individual
     for sess_name in sess_names:
         if TRIMMED_SESSION_FLAG in sess_name:
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     For extraction of the FOI dataset
     """""""""""
 
-    loop_over_foi_dataset(root_dir=DATASET_PATH, action=extract_session)
+    #loop_over_foi_dataset(root_dir=DATASET_PATH, action=extract_session)
 
     """""""""""
     For syncing the sessions

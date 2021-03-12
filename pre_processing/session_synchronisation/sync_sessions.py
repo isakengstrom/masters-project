@@ -80,7 +80,7 @@ def audio_offset(audio_file_1, audio_file_2):
     return file, offset
 
 
-def save_offset_to_json(session_dir, session_angles, subject_idx, session_idx, file_path=OFFSETS_SAVE_PATH):
+def save_offset_to_json(session_dir, views, subject_idx, session_idx, file_path=OFFSETS_SAVE_PATH):
 
     offset_results = dict()
 
@@ -92,36 +92,36 @@ def save_offset_to_json(session_dir, session_angles, subject_idx, session_idx, f
     name = "sub" + str(subject_idx) + "_sess" + str(session_idx)
     offset_results["offsets"][name] = {}
     offset_results["offsets"][name]["session_dir"] = session_dir
-    offset_results["offsets"][name]["angles"] = {}
+    offset_results["offsets"][name]["views"] = {}
 
-    reference_angle_name = None
+    reference_view_name = None
 
-    for angle_idx, angle in enumerate(session_angles):
+    for view_idx, view in enumerate(views):
 
-        angle_dir = os.path.join(session_dir, angle)
-        angle_dir = angle_dir.replace(" ", '\ ')
-        angle_name = angle.split(".")[0]
+        view_dir = os.path.join(session_dir, view)
+        view_dir = view_dir.replace(" ", '\ ')
+        view_name = view.split(".")[0]
 
-        if angle_idx == 0:
-            reference_angle_name = angle_name
+        if view_idx == 0:
+            reference_view_name = view_name
 
         # Extract audio from a video
-        print("Creating '{}' file..".format(angle_name + ".wav"))
-        cmd_create_wav = "ffmpeg -i {0} -map 0:1 -acodec pcm_s16le -ac 2 {1} -hide_banner -loglevel error".format(angle_dir, angle_name + ".wav")
+        print("Creating '{}' file..".format(view_name + ".wav"))
+        cmd_create_wav = "ffmpeg -i {0} -map 0:1 -acodec pcm_s16le -ac 2 {1} -hide_banner -loglevel error".format(view_dir, view_name + ".wav")
         os.system(command=cmd_create_wav)
 
         # Use the audio to find the offset
-        print("Retrieving audio offset between '{}' and '{}'..".format(reference_angle_name + ".wav", angle_name + ".wav" ))
-        relative_file, offset = audio_offset(reference_angle_name + ".wav", angle_name + ".wav")
+        print("Retrieving audio offset between '{}' and '{}'..".format(reference_view_name + ".wav", view_name + ".wav"))
+        relative_file, offset = audio_offset(reference_view_name + ".wav", view_name + ".wav")
 
         relative_file_name = relative_file.split(".")[0]
-        angle_name = angle.split(".")[0]
+        view_name = view.split(".")[0]
 
-        offset_results["offsets"][name]["angles"][angle_name] = {}
-        offset_results["offsets"][name]["angles"][angle_name]["video_name"] = angle
-        offset_results["offsets"][name]["angles"][angle_name]["relative_name"] = relative_file_name
-        offset_results["offsets"][name]["angles"][angle_name]["offset_reference"] = reference_angle_name
-        offset_results["offsets"][name]["angles"][angle_name]["offset_msec"] = offset
+        offset_results["offsets"][name]["views"][view_name] = {}
+        offset_results["offsets"][name]["views"][view_name]["video_name"] = view
+        offset_results["offsets"][name]["views"][view_name]["relative_name"] = relative_file_name
+        offset_results["offsets"][name]["views"][view_name]["offset_reference"] = reference_view_name
+        offset_results["offsets"][name]["views"][view_name]["offset_msec"] = offset
 
     # Save the result of the session to json
     print("Saving session offsets..")
@@ -133,7 +133,7 @@ def save_offset_to_json(session_dir, session_angles, subject_idx, session_idx, f
     os.system(cmd_remove_wav_files)
 
 
-def synchronise_session(session_dir, subject_idx, session_idx, session_angles):
+def synchronise_session(session_dir, subject_idx, session_idx, views):
     """"""
     print("\n-------- Subject {} - Session {} --------".format(subject_idx, session_idx))
 
@@ -145,7 +145,7 @@ def synchronise_session(session_dir, subject_idx, session_idx, session_angles):
 
     if EXTRACT_OFFSET:
         print("Extracting offsets..")
-        save_offset_to_json(session_dir, session_angles, subject_idx, session_idx)
+        save_offset_to_json(session_dir, views, subject_idx, session_idx)
 
     offsets_data = read_from_json(OFFSETS_SAVE_PATH)
     print(offsets_data)
@@ -154,21 +154,21 @@ def synchronise_session(session_dir, subject_idx, session_idx, session_angles):
         return
 
     session_paths = []
-    for angle in session_angles:
-        session_paths.append(os.path.join(session_dir, angle))
+    for view in views:
+        session_paths.append(os.path.join(session_dir, view))
 
     streams = []
     starting_frames = []
     starting_msec = []
-    for angle_idx in range(len(session_paths)):
-        stream = cv2.VideoCapture(session_paths[angle_idx])
-        angle_name = session_angles[angle_idx].split("/")[-1].split(".")[0]
+    for view_idx in range(len(session_paths)):
+        stream = cv2.VideoCapture(session_paths[view_idx])
+        view_name = views[view_idx].split("/")[-1].split(".")[0]
 
         if USE_OFFSET:
             name = "sub" + str(subject_idx) + "_sess" + str(session_idx)
-            offset = offsets_data["offsets"][name]["angles"][angle_name]["offset_msec"]
+            offset = offsets_data["offsets"][name]["views"][view_name]["offset_msec"]
             stream.set(cv2.CAP_PROP_POS_MSEC, offset)
-        elif FIX_BACK_CAMERA and angle_name == "back":
+        elif FIX_BACK_CAMERA and view_name == "back":
             offset = 100
             stream.set(cv2.CAP_PROP_POS_FRAMES, offset)
 
@@ -201,12 +201,12 @@ def synchronise_session(session_dir, subject_idx, session_idx, session_angles):
             img = cv2.resize(img, dim)
 
             labels = [
-                "Angle: {}".format(session_angles[stream_idx]),
+                "View: {}".format(views[stream_idx]),
                 "FPS: {}".format(stream.get(cv2.CAP_PROP_FPS)),
                 "Start frame: {}".format(starting_frames[stream_idx]),
                 "Curr frame {}".format(int(stream.get(cv2.CAP_PROP_POS_FRAMES))),
                 "Start ms: {:.1f}".format(starting_msec[stream_idx]),
-                "Curr ms: {:.1f}".format(stream.get(cv2.CAP_PROP_POS_MSEC)),
+                "Curr ms: {:.0f}".format(stream.get(cv2.CAP_PROP_POS_MSEC)),
             ]
 
             for i, label in enumerate(labels):

@@ -12,9 +12,9 @@ LIMIT_PARAMS = {
     # Limits for the sessions
     "sess_lower_lim": None,
     "sess_upper_lim": None,
-    # Limits for the angles
-    "ang_lower_lim": None,
-    "ang_upper_lim": None,
+    # Limits for the views
+    "view_lower_lim": None,
+    "view_upper_lim": None,
     # Limits for the frames
     "frame_lower_lim": None,
     "frame_upper_lim": None,
