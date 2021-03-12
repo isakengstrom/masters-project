@@ -21,7 +21,7 @@ class NumpyEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
-def save_to_json(dic, target_dir):
+def write_to_json(dic, target_dir):
     """
     A function that saves JSON files.
     """

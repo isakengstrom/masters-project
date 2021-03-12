@@ -10,7 +10,7 @@ import cv2
 from glob import glob
 
 from .sync_config import EXTRACT_OFFSET, USE_OFFSET, SHOULD_DISPLAY, OFFSETS_SAVE_PATH, FIX_BACK_CAMERA
-from helpers import save_to_json, read_from_json, draw_label
+from helpers import write_to_json, read_from_json, draw_label
 
 
 def audio_offset(audio_file_1, audio_file_2):
@@ -106,7 +106,7 @@ def save_offset_to_json(session_dir, views, subject_idx, session_idx, file_path=
 
     # Save the result of the session to json
     print("Saving session offsets..")
-    save_to_json(offset_results, file_path)
+    write_to_json(offset_results, file_path)
 
     # Remove the audio file used for the session
     print("Removing audio files..")

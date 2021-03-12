@@ -3,12 +3,12 @@ import math
 
 from .extraction_config import SAVE_PATH
 from .openpose_extraction import extract_poses  # Only for testing in main function
-from helpers import save_to_json
+from helpers import write_to_json
 
 
 def save_processed_poses(poses, file_name):
     json_name = SAVE_PATH + "/{}.json".format(file_name)
-    save_to_json(poses, json_name)
+    write_to_json(poses, json_name)
 
 
 def filter_skeleton_to_xy(skeleton):

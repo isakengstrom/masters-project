@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-from helpers.json_helper import read_from_json
+from helpers import read_from_json
 from ..session_synchronisation.sync_config import DATA_PATH
 
 
