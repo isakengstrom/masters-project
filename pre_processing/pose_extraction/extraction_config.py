@@ -3,10 +3,6 @@ import argparse
 
 TRIMMED_SESSION_FLAG = "_T"  # Some sessions have trimmed versions, indicating by this flag in the name
 
-# Path constants
-DATASET_PATH = os.environ['DATASET_DIR'] + "/VIDEO/"  # Path to the dataset that should be extracted from
-SAVE_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_test"  # Path to the directory to save the JSON files
-
 # Settings
 SHOULD_DISPLAY = True  # OpenPose: If the stream should be displayed during pose extraction
 SHOULD_EXTRACT = True  # OpenPose: If extraction should take place
@@ -42,7 +38,6 @@ def get_openpose_params():
     params["scale_gap"] = 0.25
     params["scale_number"] = 1
     params["render_threshold"] = 0.075
-
 
     #params["number_people_max"] = 1  # If the data contains more than one person,
 

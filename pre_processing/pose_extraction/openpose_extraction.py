@@ -10,7 +10,6 @@ import os
 import time
 from sys import platform
 
-
 from .extraction_config import get_openpose_params
 from helpers import SHOULD_LIMIT, LIMIT_PARAMS, upper_lim_check
 

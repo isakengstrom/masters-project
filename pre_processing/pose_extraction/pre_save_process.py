@@ -1,13 +1,13 @@
 import numpy as np
 import math
 
-from .extraction_config import SAVE_PATH
 from .openpose_extraction import extract_poses  # Only for testing in main function
+from helpers.paths import OP_KP_SAVE_PATH
 from helpers import write_to_json
 
 
 def save_processed_poses(poses, file_name):
-    json_name = SAVE_PATH + "/{}.json".format(file_name)
+    json_name = OP_KP_SAVE_PATH + "/{}.json".format(file_name)
     write_to_json(poses, json_name)
 
 
@@ -87,7 +87,5 @@ def process_poses(media_poses):
 
 
 if __name__ == "__main__":
-    #poses = extract_poses("/home/isaeng/Exjobb/media/mini.jpg", 'image')
-    #poses = extract_poses("/home/isaeng/Exjobb/media/dir", 'images')
     poses = extract_poses("/home/isaeng/Exjobb/media/front.mp4", 'video', should_extract=True)
-    #filter_poses_to_xy(poses=poses)
+

@@ -9,8 +9,9 @@ import numpy as np
 import cv2
 from glob import glob
 
-from .sync_config import EXTRACT_OFFSET, USE_OFFSET, SHOULD_DISPLAY, OFFSETS_SAVE_PATH, FIX_BACK_CAMERA
+from .sync_config import EXTRACT_OFFSET, USE_OFFSET, SHOULD_DISPLAY, FIX_BACK_CAMERA
 from helpers import write_to_json, read_from_json, draw_label
+from helpers.paths import CC_OFFSETS_PATH
 
 
 def audio_offset(audio_file_1, audio_file_2):
@@ -61,7 +62,7 @@ def audio_offset(audio_file_1, audio_file_2):
     return file, offset
 
 
-def save_offset_to_json(session_dir, views, subject_idx, session_idx, file_path=OFFSETS_SAVE_PATH):
+def save_offset_to_json(session_dir, views, subject_idx, session_idx, file_path=CC_OFFSETS_PATH):
 
     offset_results = dict()
 
@@ -128,7 +129,7 @@ def synchronise_session(session_dir, subject_idx, session_idx, views):
         print("Extracting offsets..")
         save_offset_to_json(session_dir, views, subject_idx, session_idx)
 
-    offsets_data = read_from_json(OFFSETS_SAVE_PATH)
+    offsets_data = read_from_json(CC_OFFSETS_PATH)
     print(offsets_data)
 
     if not SHOULD_DISPLAY:

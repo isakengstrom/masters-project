@@ -5,9 +5,12 @@ Starting point for the pose extraction, using OpenPose.
 import os
 
 from helpers import SHOULD_LIMIT, lower_lim_check, upper_lim_check
-from pose_extraction.extraction_config import DATASET_PATH, TRIMMED_SESSION_FLAG
+from helpers.paths import DATASET_PATH
+from pose_extraction.extraction_config import TRIMMED_SESSION_FLAG
+
 from pose_extraction.foi_extraction import extract_session
 from session_synchronisation.sync_sessions import synchronise_session
+from network_preparation.final_preprocess import preprocess
 
 
 def loop_over_session(session_dir, subject_idx, session_idx, action):
@@ -96,4 +99,9 @@ if __name__ == "__main__":
     For syncing the sessions
     """""""""""
 
-    loop_over_foi_dataset(root_dir=DATASET_PATH, action=synchronise_session)
+    #loop_over_foi_dataset(root_dir=DATASET_PATH, action=synchronise_session)
+
+    """""""""""
+    other
+    """""""""""
+    preprocess()

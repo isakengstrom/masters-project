@@ -2,7 +2,7 @@ import os
 import numpy as np
 
 from helpers import read_from_json
-from ..session_synchronisation.sync_config import DATA_PATH
+from helpers.paths import OP_KEYPOINTS_PATH
 
 
 def filter_file_names(unfiltered_names):
@@ -18,10 +18,10 @@ def filter_file_names(unfiltered_names):
 def preprocess():
     print("preprocessing")
 
-    if not os.path.exists(DATA_PATH):
+    if not os.path.exists(OP_KEYPOINTS_PATH):
         return
 
-    dir_path, _, unfiltered_file_names = next(os.walk(DATA_PATH))
+    dir_path, _, unfiltered_file_names = next(os.walk(OP_KEYPOINTS_PATH))
     file_names = filter_file_names(unfiltered_file_names)
     file_names = sorted(file_names)
 
