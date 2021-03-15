@@ -1,0 +1,163 @@
+Comment:
+    This is the status for the second successful run. It ran on the trimmed versions of the dataset.
+OpenPose params:
+    params["alpha_pose"] = 0.6
+    params["scale_gap"] = 0.25
+    params["scale_number"] = 1
+    params["render_threshold"] = 0.075
+    params["number_people_max"] = -1
+    params["model_pose"] = "BODY_25"
+    params["net_resolution"] = "-1x368"
+
+    
+Details of the extraction run:
+
+	     Video 	  time
+	SUB0_SEQ0_ANG0 - 2354s
+	SUB0_SEQ0_ANG1 - 2372s
+	SUB0_SEQ0_ANG2 - 2301s
+	SUB0_SEQ0_ANG3 - 2304s
+	SUB0_SEQ0_ANG4 - 2298s
+
+	SUB0_SEQ1_ANG0 - 2254s - error, but saved
+	SUB0_SEQ1_ANG1 - 2218s
+	SUB0_SEQ1_ANG2 - 2225s
+	SUB0_SEQ1_ANG3 - 2222s
+	SUB0_SEQ1_ANG4 - 2218s
+	-
+	SUB1_SEQ0_ANG0 - 2272s
+	SUB1_SEQ0_ANG1 - 2222s
+	SUB1_SEQ0_ANG2 - 2225s
+	SUB1_SEQ0_ANG3 - 2223s
+	SUB1_SEQ0_ANG4 - 2218s
+
+	SUB1_SEQ1_ANG0 - 2546s
+	SUB1_SEQ1_ANG1 - 2431s
+	SUB1_SEQ1_ANG2 - 2437s
+	SUB1_SEQ1_ANG3 - 2434s
+	SUB1_SEQ1_ANG4 - 2429s
+	-
+	SUB2_SEQ0_ANG0 - 2308s
+	SUB2_SEQ0_ANG1 - 2270s
+	SUB2_SEQ0_ANG2 - 2275s
+	SUB2_SEQ0_ANG3 - 2270s
+	SUB2_SEQ0_ANG4 - 2265s
+	-
+	SUB3_SEQ0_ANG0 - 2308s - error, but saved
+	SUB3_SEQ0_ANG1 - 2273s
+	SUB3_SEQ0_ANG2 - 2279s
+	SUB3_SEQ0_ANG3 - 2483s
+	SUB3_SEQ0_ANG4 - 2715s
+	-
+	SUB4_SEQ0_ANG0 - 2298s
+	SUB4_SEQ0_ANG1 - 2333s - error, but saved
+	SUB4_SEQ0_ANG2 - 2317s
+	SUB4_SEQ0_ANG3 - 2317s - error, but saved
+	SUB4_SEQ0_ANG4 - 2496s
+	-
+	SUB5_SEQ0_ANG0 - 2272s
+	SUB5_SEQ0_ANG1 - 2503s - error, but saved
+	SUB5_SEQ0_ANG2 - 2280s
+	SUB5_SEQ0_ANG3 - 2281s
+	SUB5_SEQ0_ANG4 - 2535s
+	-
+	SUB6_SEQ0_ANG0 - 2251s - error, but saved
+	SUB6_SEQ0_ANG1 - 2432s
+	SUB6_SEQ0_ANG2 - 2281s
+	SUB6_SEQ0_ANG3 - 2275s
+	SUB6_SEQ0_ANG4 - 2291s
+	-
+	SUB7_SEQ0_ANG0 - 2267s
+	SUB7_SEQ0_ANG1 - 2262s
+	SUB7_SEQ0_ANG2 - 2271s
+	SUB7_SEQ0_ANG3 - 2264s
+	SUB7_SEQ0_ANG4 - 2258s
+	-
+	SUB8_SEQ0_ANG0 - 2204s
+	SUB8_SEQ0_ANG1 - 2206s
+	SUB8_SEQ0_ANG2 - 2210s - error, but saved
+	SUB8_SEQ0_ANG3 - 2206s
+	SUB8_SEQ0_ANG4 - 2203s
+	-
+	SUB9_SEQ0_ANG0 - 2207s
+	SUB9_SEQ0_ANG1 - 2206s
+	SUB9_SEQ0_ANG2 - 2213s
+	SUB9_SEQ0_ANG3 - 2211s
+	SUB9_SEQ0_ANG4 - 2208s
+
+- SUB4_SEQ0_ANG1 ran into an error, but continued without crashing. Investigate or run again to see if it's cleared
+
+	[h264 @ 0x6537e40] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x6537e40] error while decoding MB 0 33, bytestream 7269
+	[h264 @ 0x3cf1c40] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x3cf1c40] error while decoding MB 0 19, bytestream 91902
+
+
+- SUB4_SEQ0_ANG3 ran into an error, but continued without crashing. Investigate or run again to see if it's cleared
+
+	[h264 @ 0x299d7c0] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x299d7c0] error while decoding MB 0 32, bytestream 14102
+	[h264 @ 0x299d7c0] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x299d7c0] error while decoding MB 0 50, bytestream 15802
+	[h264 @ 0x1cf6200] illegal short term buffer state detected
+
+
+- SUB5_SEQ0_ANG1 ran into an error, but continued without crashing. Investigate or run again to see if it's cleared
+
+	[h264 @ 0x21235c0] illegal short term buffer state detected
+	[h264 @ 0x51c8e80] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x51c8e80] error while decoding MB 0 65, bytestream 13664
+	[h264 @ 0x64f3840] error while decoding MB 46 48, bytestream -13
+	[h264 @ 0x1f54b00] left block unavailable for requested intra mode
+	[h264 @ 0x1f54b00] error while decoding MB 0 17, bytestream 7254
+	[h264 @ 0x1f54b00] left block unavailable for requested intra mode
+	[h264 @ 0x1f54b00] error while decoding MB 0 65, bytestream 14441
+	[h264 @ 0x6538180] top block unavailable for requested intra mode
+	[h264 @ 0x6538180] error while decoding MB 105 34, bytestream 3685
+
+
+- SUB8_SEQ0_ANG2 ran into an error, but continued without crashing. Investigate or run again to see if it's cleared
+
+	[h264 @ 0x20dde40] error while decoding MB 114 48, bytestream -22
+	[h264 @ 0x2315b80] left block unavailable for requested intra mode
+	[h264 @ 0x2315b80] error while decoding MB 0 14, bytestream 26821
+
+
+- SUB0_SEQ1_ANG0 ran into an error, but continued without crashing. Investigate or run again to see if it's cleared
+
+	[h264 @ 0x209d440] error while decoding MB 48 22, bytestream -18
+	[h264 @ 0x2cf9400] illegal short term buffer state detected
+
+
+- SUB3_SEQ0_ANG0 ran into an error, but continued without crashing. Investigate or run again to see if it's cleared
+
+	[h264 @ 0x22b2500] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x22b2500] error while decoding MB 0 23, bytestream 85332
+	[h264 @ 0x3fd7040] error while decoding MB 91 40, bytestream -5
+
+	[h264 @ 0x2464b80] top block unavailable for requested intra mode -1
+	[h264 @ 0x2464b80] error while decoding MB 47 51, bytestream 6938
+	[h264 @ 0x2b417c0] illegal short term buffer state detected
+	[h264 @ 0x22c7280] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x22c7280] error while decoding MB 0 21, bytestream 96672
+	[h264 @ 0x22c7280] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x22c7280] error while decoding MB 0 40, bytestream 91435
+
+
+
+- SUB6_SEQ0_ANG0 ran into an error, but continued without crashing. Investigate or run again to see if it's cleared
+
+	[h264 @ 0x210b740] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x210b740] error while decoding MB 0 6, bytestream 69802
+	[h264 @ 0x210b740] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x210b740] error while decoding MB 0 67, bytestream 16443
+	[h264 @ 0x21c8980] illegal short term buffer state detected
+	[h264 @ 0x22b1540] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x22b1540] error while decoding MB 0 21, bytestream 112679
+
+
+	[h264 @ 0x22b1540] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x22b1540] error while decoding MB 0 30, bytestream 29019
+	[h264 @ 0x22b1540] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x22b1540] error while decoding MB 0 47, bytestream 41752
+

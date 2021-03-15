@@ -1,0 +1,684 @@
+Comment:
+    This is the status for the second successful run. It ran on the full versions (un-trimmed) of the dataset.
+OpenPose params:
+    params["alpha_pose"] = 0.6
+    params["scale_gap"] = 0.25
+    params["scale_number"] = 1
+    params["render_threshold"] = 0.075
+    params["number_people_max"] = 1
+    params["model_pose"] = "BODY_25"
+    params["net_resolution"] = "-1x368"
+
+
+/usr/bin/python3.8 /home/isaeng/Exjobb/gait-analysis/users/isaeng/pre_processing/main.py
+
+----------- SUB0_SESS0_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 32450
+ Progress: 99.4%, at frame 32250 / 32450
+Pose extraction of video was successful. Run time: 2296.78 seconds
+Processing..
+Saving..
+
+----------- SUB0_SESS0_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 32474
+ Progress: 99.3%, at frame 32250 / 32474
+Pose extraction of video was successful. Run time: 2296.75 seconds
+Processing..
+Saving..
+
+----------- SUB0_SESS0_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 32450
+ Progress: 99.4%, at frame 32250 / 32450
+Pose extraction of video was successful. Run time: 2296.45 seconds
+Processing..
+Saving..
+
+----------- SUB0_SESS0_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 32450
+ Progress: 99.4%, at frame 32250 / 32450
+Pose extraction of video was successful. Run time: 2297.80 seconds
+Processing..
+Saving..
+
+----------- SUB0_SESS0_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 32450
+ Progress: 99.4%, at frame 32250 / 32450
+Pose extraction of video was successful. Run time: 2294.61 seconds
+Processing..
+Saving..
+
+----------- SUB0_SESS1_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 32282
+ Progress: 41.0%, at frame 13250 / 32282
+ 	[h264 @ 0x35e8740] error while decoding MB 48 22, bytestream -18
+	[h264 @ 0x2d96a80] illegal short term buffer state detected
+ Progress: 99.9%, at frame 32250 / 32282
+Pose extraction of video was successful. Run time: 2283.49 seconds
+Processing..
+Saving..
+
+----------- SUB0_SESS1_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 32306
+ Progress: 99.8%, at frame 32250 / 32306
+Pose extraction of video was successful. Run time: 2285.06 seconds
+Processing..
+Saving..
+
+----------- SUB0_SESS1_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.9%, at frame 32250 / 32282
+Pose extraction of video was successful. Run time: 2291.13 seconds
+Processing..
+Saving..
+
+----------- SUB0_SESS1_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 32282
+ Progress: 99.9%, at frame 32250 / 32282
+Pose extraction of video was successful. Run time: 2286.43 seconds
+Processing..
+Saving..
+
+----------- SUB0_SESS1_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.9%, at frame 32250 / 32282
+Pose extraction of video was successful. Run time: 2282.92 seconds
+Processing..
+Saving..
+
+----------- SUB1_SESS0_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.8%, at frame 31250 / 31298
+Pose extraction of video was successful. Run time: 2212.57 seconds
+Processing..
+Saving..
+
+----------- SUB1_SESS0_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.8%, at frame 31250 / 31322
+Pose extraction of video was successful. Run time: 2215.47 seconds
+Processing..
+Saving..
+
+----------- SUB1_SESS0_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.8%, at frame 31250 / 31298
+Pose extraction of video was successful. Run time: 2220.57 seconds
+Processing..
+Saving..
+
+----------- SUB1_SESS0_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.8%, at frame 31250 / 31298
+Pose extraction of video was successful. Run time: 2216.47 seconds
+Processing..
+Saving..
+
+----------- SUB1_SESS0_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.8%, at frame 31250 / 31298
+Pose extraction of video was successful. Run time: 2214.44 seconds
+Processing..
+Saving..
+
+----------- SUB1_SESS1_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.6%, at frame 35500 / 35642
+Pose extraction of video was successful. Run time: 2521.93 seconds
+Processing..
+Saving..
+
+----------- SUB1_SESS1_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.5%, at frame 35500 / 35666
+Pose extraction of video was successful. Run time: 2524.51 seconds
+Processing..
+Saving..
+
+----------- SUB1_SESS1_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.6%, at frame 35500 / 35642
+Pose extraction of video was successful. Run time: 2529.06 seconds
+Processing..
+Saving..
+
+----------- SUB1_SESS1_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.1%, at frame 750 / 35642
+ Progress: 99.6%, at frame 35500 / 35642
+Pose extraction of video was successful. Run time: 2527.64 seconds
+Processing..
+Saving..
+
+----------- SUB1_SESS1_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.1%, at frame 750 / 35642
+ Progress: 99.6%, at frame 35500 / 35642
+Pose extraction of video was successful. Run time: 2520.76 seconds
+Processing..
+Saving..
+
+----------- SUB2_SESS0_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.2%, at frame 31750 / 31994
+Pose extraction of video was successful. Run time: 2262.91 seconds
+Processing..
+Saving..
+
+----------- SUB2_SESS0_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.9%, at frame 32000 / 32018
+Pose extraction of video was successful. Run time: 2265.09 seconds
+Processing..
+Saving..
+
+----------- SUB2_SESS0_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.2%, at frame 31750 / 31994
+Pose extraction of video was successful. Run time: 2271.22 seconds
+Processing..
+Saving..
+
+----------- SUB2_SESS0_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 31994
+ Progress: 99.2%, at frame 31750 / 31994
+Pose extraction of video was successful. Run time: 2268.22 seconds
+Processing..
+Saving..
+
+----------- SUB2_SESS0_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 31994
+ Progress: 99.2%, at frame 31750 / 31994
+Pose extraction of video was successful. Run time: 2261.57 seconds
+Processing..
+Saving..
+
+----------- SUB3_SESS0_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 0.0%, at frame 0 / 32066
+ 	[h264 @ 0x2352500] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x2352500] error while decoding MB 0 23, bytestream 85332
+	[h264 @ 0x3ff9dc0] error while decoding MB 91 40, bytestream -5
+ Progress: 36.6%, at frame 11750 / 32066
+ 	[h264 @ 0x21387c0] top block unavailable for requested intra mode -1
+	[h264 @ 0x21387c0] error while decoding MB 47 51, bytestream 6938
+	[h264 @ 0x252dd80] illegal short term buffer state detected
+	[h264 @ 0x226ed40] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x226ed40] error while decoding MB 0 21, bytestream 96672
+	[h264 @ 0x226ed40] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x226ed40] error while decoding MB 0 40, bytestream 91435
+ Progress: 99.8%, at frame 32000 / 32066
+Pose extraction of video was successful. Run time: 2269.29 seconds
+Processing..
+Saving..
+
+----------- SUB3_SESS0_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.7%, at frame 32000 / 32090
+Pose extraction of video was successful. Run time: 2269.70 seconds
+Processing..
+Saving..
+
+----------- SUB3_SESS0_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.8%, at frame 32000 / 32066
+Pose extraction of video was successful. Run time: 2274.34 seconds
+Processing..
+Saving..
+
+----------- SUB3_SESS0_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.8%, at frame 32000 / 32066
+Pose extraction of video was successful. Run time: 2270.48 seconds
+Processing..
+Saving..
+
+----------- SUB3_SESS0_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.8%, at frame 32000 / 32066
+Pose extraction of video was successful. Run time: 2268.49 seconds
+Processing..
+Saving..
+
+----------- SUB4_SESS0_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.7%, at frame 32000 / 32090
+Pose extraction of video was successful. Run time: 2269.32 seconds
+Processing..
+Saving..
+
+----------- SUB4_SESS0_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 91.1%, at frame 29250 / 32090
+ 	[h264 @ 0x3332bc0] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x3332bc0] error while decoding MB 0 33, bytestream 7269
+	[h264 @ 0x3307500] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x3307500] error while decoding MB 0 19, bytestream 91902
+ Progress: 99.7%, at frame 32000 / 32090
+Pose extraction of video was successful. Run time: 2269.43 seconds
+Processing..
+Saving..
+
+----------- SUB4_SESS0_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.7%, at frame 32000 / 32090
+Pose extraction of video was successful. Run time: 2278.42 seconds
+Processing..
+Saving..
+
+----------- SUB4_SESS0_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 32090
+ Progress: 95.0%, at frame 30500 / 32090
+ 	[h264 @ 0x7436d80] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x7436d80] error while decoding MB 0 32, bytestream 14102
+	[h264 @ 0x7436d80] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x7436d80] error while decoding MB 0 50, bytestream 15802
+	[h264 @ 0x6d31940] illegal short term buffer state detected
+ Progress: 99.7%, at frame 32000 / 32090
+Pose extraction of video was successful. Run time: 2273.00 seconds
+Processing..
+Saving..
+
+----------- SUB4_SESS0_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 2.3%, at frame 750 / 32162
+ Progress: 99.5%, at frame 32000 / 32162
+Pose extraction of video was successful. Run time: 2274.41 seconds
+Processing..
+Saving..
+
+----------- SUB5_SESS0_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.3%, at frame 31750 / 31970
+Pose extraction of video was successful. Run time: 2263.03 seconds
+Processing..
+Saving..
+
+----------- SUB5_SESS0_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 55.5%, at frame 17750 / 31994
+	[h264 @ 0x487cdc0] illegal short term buffer state detected
+	[h264 @ 0x6e36580] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x6e36580] error while decoding MB 0 65, bytestream 13664
+	[h264 @ 0x74c8b40] error while decoding MB 46 48, bytestream -13
+	[h264 @ 0x4dc4180] left block unavailable for requested intra mode
+	[h264 @ 0x4dc4180] error while decoding MB 0 17, bytestream 7254
+	[h264 @ 0x4dc4180] left block unavailable for requested intra mode
+	[h264 @ 0x4dc4180] error while decoding MB 0 65, bytestream 14441
+	[h264 @ 0x48097c0] top block unavailable for requested intra mode
+	[h264 @ 0x48097c0] error while decoding MB 105 34, bytestream 3685
+ Progress: 99.2%, at frame 31750 / 31994
+Pose extraction of video was successful. Run time: 2266.36 seconds
+Processing..
+Saving..
+
+----------- SUB5_SESS0_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.3%, at frame 31750 / 31970
+Pose extraction of video was successful. Run time: 2272.00 seconds
+Processing..
+Saving..
+
+----------- SUB5_SESS0_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.4%, at frame 31750 / 31946
+Pose extraction of video was successful. Run time: 2266.33 seconds
+Processing..
+Saving..
+
+----------- SUB5_SESS0_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.3%, at frame 31750 / 31970
+Pose extraction of video was successful. Run time: 2261.39 seconds
+Processing..
+Saving..
+
+----------- SUB6_SESS0_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 86.1%, at frame 27250 / 31658
+ 	[h264 @ 0x2bdd780] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x2bdd780] error while decoding MB 0 6, bytestream 69802
+	[h264 @ 0x2bdd780] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x2bdd780] error while decoding MB 0 67, bytestream 16443
+	[h264 @ 0x2139200] illegal short term buffer state detected
+	[h264 @ 0x2351a40] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x2351a40] error while decoding MB 0 21, bytestream 112679
+ Progress: 93.2%, at frame 29500 / 31658
+	[h264 @ 0x2351a40] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x2351a40] error while decoding MB 0 30, bytestream 29019
+	[h264 @ 0x2351a40] left block unavailable for requested intra4x4 mode -1
+	[h264 @ 0x2351a40] error while decoding MB 0 47, bytestream 41752
+ Progress: 99.5%, at frame 31500 / 31658
+Pose extraction of video was successful. Run time: 2242.25 seconds
+Processing..
+Saving..
+
+----------- SUB6_SESS0_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.4%, at frame 31500 / 31682
+Pose extraction of video was successful. Run time: 2242.34 seconds
+Processing..
+Saving..
+
+----------- SUB6_SESS0_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.5%, at frame 31500 / 31658
+Pose extraction of video was successful. Run time: 2248.34 seconds
+Processing..
+Saving..
+
+----------- SUB6_SESS0_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.5%, at frame 31500 / 31658
+Pose extraction of video was successful. Run time: 2244.23 seconds
+Processing..
+Saving..
+
+----------- SUB6_SESS0_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.5%, at frame 31500 / 31658
+Pose extraction of video was successful. Run time: 2238.86 seconds
+Processing..
+Saving..
+
+----------- SUB7_SESS0_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.3%, at frame 32500 / 32738
+Pose extraction of video was successful. Run time: 2313.51 seconds
+Processing..
+Saving..
+
+----------- SUB7_SESS0_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 100.0%, at frame 32750 / 32762
+Pose extraction of video was successful. Run time: 2316.88 seconds
+Processing..
+Saving..
+
+----------- SUB7_SESS0_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.3%, at frame 32500 / 32738
+Pose extraction of video was successful. Run time: 2321.44 seconds
+Processing..
+Saving..
+
+----------- SUB7_SESS0_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.3%, at frame 32500 / 32738
+Pose extraction of video was successful. Run time: 2318.08 seconds
+Processing..
+Saving..
+
+----------- SUB7_SESS0_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.3%, at frame 32500 / 32738
+Pose extraction of video was successful. Run time: 2311.97 seconds
+Processing..
+Saving..
+
+----------- SUB8_SESS0_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.5%, at frame 32000 / 32162
+Pose extraction of video was successful. Run time: 2273.42 seconds
+Processing..
+Saving..
+
+----------- SUB8_SESS0_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.4%, at frame 32000 / 32186
+Pose extraction of video was successful. Run time: 2276.27 seconds
+Processing..
+Saving..
+
+----------- SUB8_SESS0_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 96.9%, at frame 31250 / 32234
+ 	[h264 @ 0x6d90d80] error while decoding MB 114 48, bytestream -22
+ Progress: 97.7%, at frame 31500 / 32234
+ 	[h264 @ 0x3011f80] left block unavailable for requested intra mode
+	[h264 @ 0x3011f80] error while decoding MB 0 14, bytestream 26821
+ Progress: 99.3%, at frame 32000 / 32234
+Pose extraction of video was successful. Run time: 2281.74 seconds
+Processing..
+Saving..
+
+----------- SUB8_SESS0_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.6%, at frame 32000 / 32138
+Pose extraction of video was successful. Run time: 2273.27 seconds
+Processing..
+Saving..
+
+----------- SUB8_SESS0_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.6%, at frame 32000 / 32138
+Pose extraction of video was successful. Run time: 2269.65 seconds
+Processing..
+Saving..
+
+----------- SUB9_SESS0_VIEW0 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.7%, at frame 32250 / 32354
+Pose extraction of video was successful. Run time: 2286.62 seconds
+Processing..
+Saving..
+
+----------- SUB9_SESS0_VIEW1 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.6%, at frame 32250 / 32378
+Pose extraction of video was successful. Run time: 2287.91 seconds
+Processing..
+Saving..
+
+----------- SUB9_SESS0_VIEW2 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.7%, at frame 32250 / 32354
+Pose extraction of video was successful. Run time: 2292.29 seconds
+Processing..
+Saving..
+
+----------- SUB9_SESS0_VIEW3 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.7%, at frame 32250 / 32354
+Pose extraction of video was successful. Run time: 2292.02 seconds
+Processing..
+Saving..
+
+----------- SUB9_SESS0_VIEW4 -----------
+
+Extracting..
+Starting OpenPose Python Wrapper...
+Auto-detecting all available GPUs... Detected 1 GPU(s), using 1 of them starting at GPU 0.
+ Progress: 99.7%, at frame 32250 / 32354
+Pose extraction of video was successful. Run time: 2285.94 seconds
+Processing..
+Saving..
+
+Process finished with exit code 0
