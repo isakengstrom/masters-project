@@ -15,7 +15,7 @@ def filter_file_names(unfiltered_names):
     return filtered_names
 
 
-def preprocess(path=OP_KEYPOINTS_PATH):
+def load_view(path=OP_KEYPOINTS_PATH):
     print("preprocessing")
 
     if not os.path.exists(path):
@@ -36,5 +36,5 @@ def preprocess(path=OP_KEYPOINTS_PATH):
 
 
 if __name__ == "__main__":
-    preprocess()
+    load_view()
     #preprocess(OP_KEYPOINTS_PATH_1)
