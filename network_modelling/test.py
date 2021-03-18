@@ -4,3 +4,4 @@ from torch.autograd import Variable
 
 def test(model, testloader, use_cuda):
 
+    return 1, 2, 3

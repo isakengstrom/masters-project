@@ -16,11 +16,12 @@ class LSTM(nn.Module):
         self.fc = nn.Linear(hidden_size, num_classes)
 
     def forward(self, x):
-
         h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(device)
         c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(device)
+
         out, _ = self.lstm(x, (h0, c0))
 
+        # Decode the hidden state of the last time step (many to one)
         out = out[:, -1, :]
 
         # out: (n,
