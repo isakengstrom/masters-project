@@ -9,7 +9,7 @@ OpenPose params:
     params["model_pose"] = "BODY_25"
     params["net_resolution"] = "-1x368"
 
-    
+
 Details of the extraction run:
 
 	     Video 	  time

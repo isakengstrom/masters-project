@@ -2,7 +2,7 @@ import os
 import numpy as np
 
 from helpers import read_from_json
-from helpers.paths import OP_KEYPOINTS_PATH
+from helpers.paths import OP_KEYPOINTS_PATH, OP_KEYPOINTS_PATH_1
 
 
 def filter_file_names(unfiltered_names):
@@ -15,21 +15,26 @@ def filter_file_names(unfiltered_names):
     return filtered_names
 
 
-def preprocess():
+def preprocess(path=OP_KEYPOINTS_PATH):
     print("preprocessing")
 
-    if not os.path.exists(OP_KEYPOINTS_PATH):
+    if not os.path.exists(path):
         return
 
-    dir_path, _, unfiltered_file_names = next(os.walk(OP_KEYPOINTS_PATH))
+    dir_path, _, unfiltered_file_names = next(os.walk(path))
     file_names = filter_file_names(unfiltered_file_names)
     file_names = sorted(file_names)
 
     for file_name in file_names:
         keypoints = read_from_json(dir_path + file_name)
+        print(keypoints[0][0][0])
+        print(keypoints[0][0])
         keypoints = np.array(keypoints)
+        file_name = file_name.split('.')[0]
+
         print(file_name + ": " + str(keypoints.shape))
 
 
 if __name__ == "__main__":
     preprocess()
+    #preprocess(OP_KEYPOINTS_PATH_1)
