@@ -4,7 +4,7 @@ import torch.backends.cudnn as cudnn
 import torchvision
 import torchvision.transforms as transforms
 
-from models.Net import LSTM
+from models.LSTM import LSTM
 from train import train
 from test import test
 
