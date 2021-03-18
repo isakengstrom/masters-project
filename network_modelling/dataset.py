@@ -3,9 +3,10 @@ import torchvision
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
 
+from helpers.paths import OP_EXTRACTED_PATH
 
-class FOIDataset(Dataset):
-    def __init__(self):
+class FOIKineticPoseDataset(Dataset):
+    def __init__(self, json_path, root_dir, transform=None):
         # Data loading
         print()
 
