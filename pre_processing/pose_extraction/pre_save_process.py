@@ -2,12 +2,12 @@ import numpy as np
 import math
 
 from .openpose_extraction import extract_poses  # Only for testing in main function
-from helpers.paths import OP_KP_SAVE_PATH
+from helpers.paths import OP_SAVE_PATH
 from helpers import write_to_json
 
 
 def save_processed_poses(poses, file_name):
-    json_name = OP_KP_SAVE_PATH + "/{}.json".format(file_name)
+    json_name = OP_SAVE_PATH + "/{}.json".format(file_name)
     write_to_json(poses, json_name)
 
 

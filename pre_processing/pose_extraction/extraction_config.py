@@ -2,7 +2,7 @@ import os
 import argparse
 
 TRIMMED_SESSION_FLAG = "_T"  # Some sessions have trimmed versions, indicating by this flag in the name
-SHOULD_USE_TRIMMED = True
+SHOULD_USE_TRIMMED = False
 # Settings
 SHOULD_DISPLAY = True  # OpenPose: If the stream should be displayed during pose extraction
 SHOULD_EXTRACT = False  # OpenPose: If extraction should take place

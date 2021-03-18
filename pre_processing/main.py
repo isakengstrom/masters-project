@@ -10,7 +10,7 @@ from pose_extraction.extraction_config import TRIMMED_SESSION_FLAG, SHOULD_USE_T
 
 from pose_extraction.foi_extraction import extract_session
 from session_synchronisation.sync_sessions import synchronise_session
-from pose_extraction.post_save_process import load_view
+from pose_extraction.post_save_process import load_extracted_files
 
 
 def loop_over_session(session_dir, subject_idx, session_idx, action):
@@ -105,9 +105,9 @@ if __name__ == "__main__":
     For syncing the sessions
     """""""""""
 
-    #loop_over_foi_dataset(root_dir=DATASET_PATH, action=synchronise_session)
+    loop_over_foi_dataset(root_dir=DATASET_PATH, action=synchronise_session)
 
     """""""""""
     other
     """""""""""
-    #preprocess()
+    load_extracted_files()

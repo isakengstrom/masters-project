@@ -10,7 +10,7 @@ import cv2
 from glob import glob
 
 from .sync_config import EXTRACT_OFFSET, USE_OFFSET, SHOULD_DISPLAY, FIX_BACK_CAMERA
-from helpers import write_to_json, read_from_json, draw_label
+from helpers import write_to_json, read_from_json, draw_label, SHOULD_LIMIT, LIMIT_PARAMS
 from helpers.paths import CC_OFFSETS_PATH
 
 
@@ -154,6 +154,9 @@ def synchronise_session(session_dir, subject_idx, session_idx, views):
             offset = 100
             stream.set(cv2.CAP_PROP_POS_FRAMES, offset)
 
+        if SHOULD_LIMIT and LIMIT_PARAMS["frame_lower_lim"] is not None and LIMIT_PARAMS["frame_lower_lim"] >= 0:
+            stream.set(cv2.CAP_PROP_POS_FRAMES, LIMIT_PARAMS["frame_lower_lim"])
+
         starting_frames.append(int(stream.get(cv2.CAP_PROP_POS_FRAMES)))
         starting_msec.append(stream.get(cv2.CAP_PROP_POS_MSEC))
         streams.append(stream)
@@ -169,6 +172,9 @@ def synchronise_session(session_dir, subject_idx, session_idx, views):
                 break
 
             ret, img = stream.read()
+
+            if not ret:
+                continue
             rets.append(ret)
 
             if stream_idx == 0:
