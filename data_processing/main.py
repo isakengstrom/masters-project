@@ -9,8 +9,8 @@ from helpers.paths import DATASET_PATH
 from pose_extraction.extraction_config import TRIMMED_SESSION_FLAG, SHOULD_USE_TRIMMED
 
 from pose_extraction.foi_extraction import extract_session
-from session_synchronisation.sync_sessions import synchronise_session
-from data_processing.session_synchronisation.post_extraction_processing import process_extracted_files
+from pre_processing.sync_sessions import synchronise_session
+from data_processing.pre_processing.post_extraction_processing import process_extracted_files
 
 
 def loop_over_session(session_dir, subject_idx, session_idx, action):
