@@ -31,12 +31,14 @@ def write_to_json(dic, target_dir):
     file.close()
 
 
-def read_from_json(target_dir):
+def read_from_json(target_dir, use_dumps=False):
     """
     A function that reads JSON files.
     """
     f = open(target_dir, 'r')
     data = json.load(f)
+    if use_dumps is True:
+        data = json.dumps(data)
     data = json.loads(data)
     f.close()
     return data
