@@ -11,7 +11,7 @@ OP_EXTRACTED_PATH = os.environ['DATASET_DIR'] + "EXTRACTED_KEYPOINTS/isaeng/untr
 OP_EXTRACTED_PATH_T = os.environ['DATASET_DIR'] + "EXTRACTED_KEYPOINTS/isaeng/trimmed_version/"
 
 # Path to the json that stores at which frames the untrimmed extracted
-TRIM_INTERVALS = os.environ['PROJECT_PATH'] + "users/isaeng/pre_processing/session_synchronisation/frame_intervals.json"
+TRIM_INTERVALS = os.environ['PROJECT_PATH'] + "users/isaeng/data_processing/session_synchronisation/frame_intervals.json"
 
 # Path to the session offsets extracted using cross correlation
 CC_OFFSETS_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_test/offsets.json"
