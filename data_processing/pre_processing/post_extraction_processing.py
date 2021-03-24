@@ -3,7 +3,7 @@ import numpy as np
 
 from helpers import read_from_json, write_to_json
 from helpers.paths import OP_EXTRACTED_PATH, OP_SYNCED_PATH, OP_EXTRACTED_PATH_T, TRIM_INTERVALS, SEQUENTIAL_DATA_PATH, NON_SEQUENTIAL_DATA_PATH
-from .sync_config import SHOULD_LOAD_TRIMMED, SHOULD_SYNC_SESSIONS, SHOULD_SEQUENTIATE
+from .pre_config import SHOULD_LOAD_TRIMMED, SHOULD_SYNC_SESSIONS, SHOULD_SEQUENTIATE
 from .sync_sessions import sync_sessions
 
 
