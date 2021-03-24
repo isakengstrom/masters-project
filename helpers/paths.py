@@ -7,7 +7,9 @@ DATASET_PATH = os.environ['DATASET_DIR'] + "VIDEO/"  # Path to the dataset that 
 OP_SAVE_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_test"
 
 # Path to fetch the openpose keypoints from
-OP_EXTRACTED_PATH = os.environ['DATASET_DIR'] + "EXTRACTED_KEYPOINTS/isaeng/untrimmed_version/"
+OP_EXTRACTED_PATH = os.environ['DATASET_DIR'] + "EXTRACTED_KEYPOINTS/isaeng/untrimmed_version/unsynced/"
+OP_SYNCED_PATH = os.environ['DATASET_DIR'] + "EXTRACTED_KEYPOINTS/isaeng/untrimmed_version/synced/"
+
 OP_EXTRACTED_PATH_T = os.environ['DATASET_DIR'] + "EXTRACTED_KEYPOINTS/isaeng/trimmed_version/"
 
 # Path to the json that stores at which frames the untrimmed extracted
