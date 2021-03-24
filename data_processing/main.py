@@ -4,12 +4,12 @@ Starting point for the pose extraction, using OpenPose.
 
 import os
 
-from helpers import SHOULD_LIMIT, lower_lim_check, upper_lim_check
+from helpers import SHOULD_LIMIT, lower_lim_check, upper_lim_check, display_session
 from helpers.paths import DATASET_PATH
 from pose_extraction.extraction_config import TRIMMED_SESSION_FLAG, SHOULD_USE_TRIMMED
 
 from pose_extraction.foi_extraction import extract_session
-from pre_processing.sync_sessions import synchronise_session, display_session
+from pre_processing.cc_sync_sessions import cc_session_sync
 from pre_processing.post_extraction_processing import process_extracted_files
 
 
@@ -105,8 +105,8 @@ if __name__ == "__main__":
     For syncing the sessions
     """""""""""
 
-    #loop_over_foi_dataset(root_dir=DATASET_PATH, action=synchronise_session)
-    #loop_over_foi_dataset(root_dir=DATASET_PATH, action=display_session)
+    loop_over_foi_dataset(root_dir=DATASET_PATH, action=cc_session_sync)
+    loop_over_foi_dataset(root_dir=DATASET_PATH, action=display_session)
     """""""""""
     other
     """""""""""
