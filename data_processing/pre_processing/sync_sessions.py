@@ -115,25 +115,9 @@ def save_offset_to_json(session_dir, views, subject_idx, session_idx, file_path=
     os.system(cmd_remove_wav_files)
 
 
-def synchronise_session(session_dir, subject_idx, session_idx, views):
-    """"""
-    print("\n-------- Subject {} - Session {} --------".format(subject_idx, session_idx))
-
-    if glob('*wav'):
-        # Remove any remaining WAV files in the dir if a previous process was interrupted
-        print("Removing audio files..")
-        cmd_remove_wav_files = "rm *wav"
-        os.system(cmd_remove_wav_files)
-
-    if EXTRACT_OFFSET:
-        print("Extracting offsets..")
-        save_offset_to_json(session_dir, views, subject_idx, session_idx)
-
+def display_session(session_dir, subject_idx, session_idx, views):
     offsets_data = read_from_json(CC_OFFSETS_PATH)
     print(offsets_data)
-
-    if not SHOULD_DISPLAY:
-        return
 
     session_paths = []
     for view in views:
@@ -226,6 +210,24 @@ def synchronise_session(session_dir, subject_idx, session_idx, views):
         stream.release()
 
     cv2.destroyAllWindows()
+
+def synchronise_session(session_dir, subject_idx, session_idx, views):
+    """"""
+    print("\n-------- Subject {} - Session {} --------".format(subject_idx, session_idx))
+
+    if glob('*wav'):
+        # Remove any remaining WAV files in the dir if a previous process was interrupted
+        print("Removing audio files..")
+        cmd_remove_wav_files = "rm *wav"
+        os.system(cmd_remove_wav_files)
+
+    if EXTRACT_OFFSET:
+        print("Extracting offsets..")
+        save_offset_to_json(session_dir, views, subject_idx, session_idx)
+
+    if SHOULD_DISPLAY:
+        display_session(session_dir, subject_idx, session_idx, views)
+
 
 
 if __name__ == "__main__":
