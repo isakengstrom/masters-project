@@ -1,9 +1,9 @@
 import os
 import numpy as np
 
-from helpers import read_from_json, write_to_json
-from helpers.paths import OP_EXTRACTED_PATH, OP_SYNCED_PATH, OP_EXTRACTED_PATH_T, TRIM_INTERVALS, SEQUENTIAL_DATA_PATH, NON_SEQUENTIAL_DATA_PATH
-from .pre_config import SHOULD_LOAD_TRIMMED, SHOULD_SYNC_SESSIONS, SHOULD_SEQUENTIATE
+from helpers import read_from_json
+from helpers.paths import OP_EXTRACTED_PATH, OP_SYNCED_PATH, TRIM_INTERVALS
+from .pre_config import SHOULD_LOAD_TRIMMED, SHOULD_SYNC_SESSIONS
 from .sync_sessions import sync_sessions
 
 
@@ -28,12 +28,6 @@ def trim_frames(data, interval_info):
         data = data[:-interval_info["upper_frames"], :, :]
 
     return data
-
-
-def sequentiate_view(view_data):
-
-
-    return
 
 
 def process_extracted_files(path=OP_EXTRACTED_PATH):
@@ -63,20 +57,10 @@ def process_extracted_files(path=OP_EXTRACTED_PATH):
 
         # Crop the beginning and end frames if they need trimming
         if not SHOULD_LOAD_TRIMMED and interval_info["status"] == "trim":
-            print(view_name + ": " + str(view_data.shape))
             view_data = trim_frames(data=view_data, interval_info=interval_info)
-
-        if SHOULD_SEQUENTIATE:
-            sequential_view_data = sequentiate_view(view_data)
-            write_to_json(sequential_view_data, SEQUENTIAL_DATA_PATH)
-
-
-        #print(view_data[0][0])
-        #file_name = file_name.split('.')[0]
 
         print(view_name + "::: " + str(view_data.shape))
 
 
 if __name__ == "__main__":
     process_extracted_files()
-    #preprocess(OP_EXTRACTED_PATH_T)

@@ -106,7 +106,13 @@ if __name__ == "__main__":
     """""""""""
 
     #loop_over_foi_dataset(root_dir=DATASET_PATH, action=cc_session_sync)
-    loop_over_foi_dataset(root_dir=DATASET_PATH, action=display_session)
+
+    """""""""""
+    For viewing session, synced or not
+    """""""""""
+
+    #loop_over_foi_dataset(root_dir=DATASET_PATH, action=display_session)
+
     """""""""""
     other
     """""""""""
