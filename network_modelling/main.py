@@ -7,7 +7,7 @@ import torchvision.transforms as transforms
 from models.LSTM import LSTM
 from train import train
 from test import test
-from dataset import FOIKineticPoseDataset, NormalisePose, ChangeOrigin
+from dataset import FOIKineticPoseDataset, NormalisePose, ChangePoseOrigin
 
 from helpers.paths import EXTR_PATH
 
@@ -33,8 +33,8 @@ if __name__ == "__main__":
     use_cuda = torch.cuda.is_available()
 
     normalise = NormalisePose()
-    #change_origin = ChangeOrigin()
-    #composed = transforms.Compose([normalise, change_origin])
+    #change_pose_origin = ChangePoseOrigin()
+    #composed = transforms.Compose([normalise, change_pose_origin])
 
     kinetic_dataset = FOIKineticPoseDataset(json_path, root_dir, sequence_len, transform=normalise)
     #train_loader = DataLoader(train_set, batch_size, shuffle=True, num_workers=2)

@@ -36,7 +36,10 @@ class SeqElement(DatasetElement):
         self.start = int(element["start"])
         self.end = int(element["end"])
 
-class ChangeOrigin():
+class ToTensor(object):
+    raise NotImplementedError
+
+class ChangePoseOrigin(object):
     raise NotImplementedError
 
 class NormalisePose(object):
@@ -45,8 +48,8 @@ class NormalisePose(object):
     def __call__(self, item):
         uid, keypoints = item["uid"], item["keypoints"]
 
-        for frame in keypoints[0]:
-            print(frame.shape)
+        #for frame in keypoints[0]:
+        #    print(frame.shape)
 
 
         return {"uid": uid, "keypoints": keypoints}
