@@ -36,6 +36,8 @@ if __name__ == "__main__":
     kinetic_dataset = FOIKineticPoseDataset(json_path, root_dir, sequence_len)
     #train_loader = DataLoader(train_set, batch_size, shuffle=True, num_workers=2)
 
+    print("Dataset length: {}".format(len(kinetic_dataset)))
+
     model = LSTM(input_size, hidden_size, num_layers, num_classes)
 
     if use_cuda:
