@@ -1,8 +1,8 @@
 import os
 import numpy as np
 
-from helpers import read_from_json
-from helpers.paths import OP_EXTRACTED_PATH, OP_SYNCED_PATH, TRIM_INTERVALS
+from helpers import read_from_json, write_to_json
+from helpers.paths import EXTR_PATH, TRIM_INTERVALS
 from .pre_config import SHOULD_LOAD_TRIMMED, SHOULD_SYNC_SESSIONS
 from .sync_sessions import sync_sessions
 
@@ -30,7 +30,7 @@ def trim_frames(data, interval_info):
     return data
 
 
-def process_extracted_files(path=OP_EXTRACTED_PATH):
+def process_extracted_files(path=EXTR_PATH + "untrimmed/"):
     print("preprocessing")
 
     if not os.path.exists(path):
@@ -38,7 +38,7 @@ def process_extracted_files(path=OP_EXTRACTED_PATH):
 
     if SHOULD_SYNC_SESSIONS:
         sync_sessions(path)
-        path = OP_SYNCED_PATH  # Change the path to load the synced files instead.
+        path = EXTR_PATH + "final/synced/"  # Change the path to load the synced files instead.
 
     dir_path, _, unfiltered_file_names = next(os.walk(path))
     file_names = filter_file_names(unfiltered_file_names)
@@ -51,15 +51,21 @@ def process_extracted_files(path=OP_EXTRACTED_PATH):
         view_data = read_from_json(dir_path + file_name)  # Load all the data from one view
         view_data = np.array(view_data)  # Convert data to np array
 
+        json_path = EXTR_PATH + "final/{}".format(file_name)
+
         file_name = file_name.split('.')[0].lower()  # Remove ".json" and convert to lowercase
         subject_name, session_name, view_name = file_name.split('_')  # Split sub*_sess*_view* to sub*, sess* and view*
         interval_info = intervals_data[subject_name][session_name]
 
+        print(view_name + ": " + str(view_data.shape))
+
         # Crop the beginning and end frames if they need trimming
         if not SHOULD_LOAD_TRIMMED and interval_info["status"] == "trim":
             view_data = trim_frames(data=view_data, interval_info=interval_info)
+            print("Trimmed view to: {}".format(view_data.shape))
 
-        print(view_name + "::: " + str(view_data.shape))
+        # Save the trimmed versions
+        #write_to_json(view_data.tolist(), json_path)
 
 
 if __name__ == "__main__":
