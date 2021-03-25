@@ -3,7 +3,7 @@ import numpy as np
 
 from helpers import read_from_json, write_to_json
 from helpers.paths import EXTR_PATH, TRIM_INTERVALS
-from .pre_config import SHOULD_LOAD_TRIMMED, SHOULD_SYNC_SESSIONS
+from .pre_config import SHOULD_LOAD_TRIMMED, SHOULD_SYNC_SESSIONS, SHOULD_SAVE_FINAL, SHOULD_SAVE_INFO
 from .sync_sessions import sync_sessions
 
 
@@ -47,25 +47,42 @@ def process_extracted_files(path=EXTR_PATH + "untrimmed/"):
     # Load the intervals at which to cut the untrimmed sessions
     intervals_data = read_from_json(TRIM_INTERVALS, use_dumps=True)
 
+    data_info = []
     for file_name in file_names:
         view_data = read_from_json(dir_path + file_name)  # Load all the data from one view
         view_data = np.array(view_data)  # Convert data to np array
 
-        json_path = EXTR_PATH + "final/{}".format(file_name)
+        view_data_path = EXTR_PATH + "final/{}".format(file_name)
+
+        file_info = dict()
+        file_info["file_name"] = file_name
 
         file_name = file_name.split('.')[0].lower()  # Remove ".json" and convert to lowercase
         subject_name, session_name, view_name = file_name.split('_')  # Split sub*_sess*_view* to sub*, sess* and view*
         interval_info = intervals_data[subject_name][session_name]
 
-        print(view_name + ": " + str(view_data.shape))
+        #print(view_name + ": " + str(view_data.shape))
 
         # Crop the beginning and end frames if they need trimming
         if not SHOULD_LOAD_TRIMMED and interval_info["status"] == "trim":
             view_data = trim_frames(data=view_data, interval_info=interval_info)
-            print("Trimmed view to: {}".format(view_data.shape))
+            #print("Trimmed view to: {}".format(view_data.shape))
+
+        file_info["sub_name"] = subject_name
+        file_info["sess_name"] = session_name
+        file_info["view_name"] = view_name
+        file_info["len"] = view_data.shape[0]
+        file_info["shape"] = view_data.shape
+        print(file_info)
+        data_info.append(file_info)
 
         # Save the trimmed versions
-        #write_to_json(view_data.tolist(), json_path)
+        if SHOULD_SAVE_FINAL:
+            write_to_json(view_data.tolist(), view_data_path)
+
+    # Save the data info to a file, used to create a look up table in dataset.py
+    if SHOULD_SAVE_INFO:
+        write_to_json(data_info, EXTR_PATH + "final_data_info.json")
 
 
 if __name__ == "__main__":
