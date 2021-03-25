@@ -36,6 +36,20 @@ class SeqElement(DatasetElement):
         self.start = int(element["start"])
         self.end = int(element["end"])
 
+class ChangeOrigin():
+    raise NotImplementedError
+
+class NormalisePose(object):
+
+
+    def __call__(self, item):
+        uid, keypoints = item["uid"], item["keypoints"]
+
+        for frame in keypoints[0]:
+            print(frame.shape)
+
+
+        return {"uid": uid, "keypoints": keypoints}
 
 class FOIKineticPoseDataset(Dataset):
     def __init__(self, json_path, root_dir, sequence_len, transform=None):
@@ -66,10 +80,10 @@ class FOIKineticPoseDataset(Dataset):
         file_path = os.path.join(self.root_dir, se.file_name)
         file_data = read_from_json(file_path)
 
-        seq_data = file_data[se.start:se.end]
-        seq_data = np.array(seq_data)
+        keypoints = file_data[se.start:se.end]
+        keypoints = np.array(keypoints)
 
-        item = {"uid": se.uid, 'data': seq_data}
+        item = {"uid": se.uid, 'keypoints': keypoints}
 
         if self.transform:
             item = self.transform(item)
