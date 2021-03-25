@@ -4,7 +4,8 @@ Starting point for the pose extraction, using OpenPose.
 
 import os
 
-from helpers import SHOULD_LIMIT, lower_lim_check, upper_lim_check, display_session, read_from_json
+from helpers import SHOULD_LIMIT, lower_lim_check, upper_lim_check, read_from_json
+from helpers.display_helper import display_session
 from helpers.paths import DATASET_PATH, EXTR_PATH
 from pose_extraction.extraction_config import TRIMMED_SESSION_FLAG, SHOULD_USE_TRIMMED
 
