@@ -12,7 +12,6 @@ from dataset import FOIKineticPoseDataset
 from helpers.paths import EXTR_PATH
 
 
-
 if __name__ == "__main__":
     # Hyper parameters:
     hidden_size = 128
@@ -37,7 +36,9 @@ if __name__ == "__main__":
     #train_loader = DataLoader(train_set, batch_size, shuffle=True, num_workers=2)
 
     print("Dataset length: {}".format(len(kinetic_dataset)))
-
+    for i in range(15000, 15010):
+        item = kinetic_dataset[i]
+        print(item["data"].shape)
     model = LSTM(input_size, hidden_size, num_layers, num_classes)
 
     if use_cuda:
