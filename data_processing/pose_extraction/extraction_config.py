@@ -4,7 +4,7 @@ import argparse
 TRIMMED_SESSION_FLAG = "_T"  # Some sessions have trimmed versions, indicating by this flag in the name
 SHOULD_USE_TRIMMED = False
 # Settings
-SHOULD_DISPLAY = True  # OpenPose: If the stream should be displayed during joints extraction
+SHOULD_DISPLAY = True  # OpenPose: If the stream should be displayed during pose extraction
 SHOULD_EXTRACT = False  # OpenPose: If extraction should take place
 SHOULD_SAVE = False  # If the poses should be saved tp JSON
 

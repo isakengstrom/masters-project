@@ -1,5 +1,5 @@
 """
-Starting point for the joints extraction, using OpenPose.
+Starting point for the pose extraction, using OpenPose.
 """
 
 import os
