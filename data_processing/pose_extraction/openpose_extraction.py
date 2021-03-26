@@ -1,5 +1,5 @@
 """
-This file contains the code for pose extraction using OpenPose.
+This file contains the code for joints extraction using OpenPose.
 The code is heavily inspired by the Python examples that OpenPose provides:
 https://github.com/CMU-Perceptual-Computing-Lab/openpose/tree/master/examples/tutorial_api_python
 """
@@ -61,7 +61,7 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
         datum = op.Datum()
         extracted_poses = []
 
-        # Check if the pose should be extracted
+        # Check if the joints should be extracted
         def extractable():
             return should_extract and datum.poseKeypoints is not None and datum.poseKeypoints.size > 1
 
