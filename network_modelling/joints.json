@@ -1,6 +1,6 @@
 {
   "joints": [
-    {"joint_nr": 0, "joint": "nose", "side": "c", "vert_group": "spine", "hori_group": "face"},
+    {"joint_nr": 0, "joint": "nose", "side": "c", "vert_group": "spine", "hori_group": "nose"},
     {"joint_nr": 1, "joint": "spine", "side": "c", "vert_group": "spine", "hori_group": "shoulders"},
 
     {"joint_nr": 2, "joint": "shoulder", "side": "r", "vert_group": "arm", "hori_group": "shoulders"},
