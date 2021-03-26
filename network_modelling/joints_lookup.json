@@ -1,42 +1,42 @@
 {
-  "active_joints": {
-    "activate_by": "op_idx",
-    "active_op_idx": [1,8,9,10,11,12,13,14]
-  },
+  "activate_by": "op_idx",
+  "active_op_idx": [1,8,9,10,11,12,13,14],
+  "active_side": ["r"],
+  "active_name": ["l_shoulder", "r_shoulder"],
   "joints": [
-    {"op_idx": 0, "joint": "nose", "side": "c", "vert_group": "spine", "hori_group": "nose"},
-    {"op_idx": 1, "joint": "neck", "side": "c", "vert_group": "spine", "hori_group": "neck"},
+    {"op_idx": 0, "name": "nose", "side": "c", "vert_group": "spine", "hori_group": "nose"},
+    {"op_idx": 1, "name": "neck", "side": "c", "vert_group": "spine", "hori_group": "neck"},
 
-    {"op_idx": 2, "joint": "r_shoulder", "side": "r", "vert_group": "arm", "hori_group": "shoulders"},
-    {"op_idx": 3, "joint": "r_elbow", "side": "r", "vert_group": "arm", "hori_group": "elbows"},
-    {"op_idx": 4, "joint": "r_hand", "side": "r", "vert_group": "arm", "hori_group": "hands"},
+    {"op_idx": 2, "name": "r_shoulder", "side": "r", "vert_group": "arm", "hori_group": "shoulders"},
+    {"op_idx": 3, "name": "r_elbow", "side": "r", "vert_group": "arm", "hori_group": "elbows"},
+    {"op_idx": 4, "name": "r_hand", "side": "r", "vert_group": "arm", "hori_group": "hands"},
 
-    {"op_idx": 5, "joint": "l_shoulder", "side": "l", "vert_group": "arm", "hori_group": "shoulders"},
-    {"op_idx": 6, "joint": "l_elbow", "side": "l", "vert_group": "arm", "hori_group": "elbows"},
-    {"op_idx": 7, "joint": "l_hand", "side": "l", "vert_group": "arm", "hori_group": "hands"},
+    {"op_idx": 5, "name": "l_shoulder", "side": "l", "vert_group": "arm", "hori_group": "shoulders"},
+    {"op_idx": 6, "name": "l_elbow", "side": "l", "vert_group": "arm", "hori_group": "elbows"},
+    {"op_idx": 7, "name": "l_hand", "side": "l", "vert_group": "arm", "hori_group": "hands"},
 
-    {"op_idx": 8, "joint": "c_hip", "side": "c", "vert_group": "spine", "hori_group": "hips"},
+    {"op_idx": 8, "name": "c_hip", "side": "c", "vert_group": "spine", "hori_group": "hips"},
 
-    {"op_idx": 9, "joint": "r_hip", "side": "r", "vert_group": "leg", "hori_group": "hips"},
-    {"op_idx": 10, "joint": "r_knee", "side": "r", "vert_group": "leg", "hori_group": "knees"},
-    {"op_idx": 11, "joint": "r_ankle", "side": "r", "vert_group": "leg", "hori_group": "ankles"},
+    {"op_idx": 9, "name": "r_hip", "side": "r", "vert_group": "leg", "hori_group": "hips"},
+    {"op_idx": 10, "name": "r_knee", "side": "r", "vert_group": "leg", "hori_group": "knees"},
+    {"op_idx": 11, "name": "r_ankle", "side": "r", "vert_group": "leg", "hori_group": "ankles"},
 
-    {"op_idx": 12, "joint": "l_hip", "side": "l", "vert_group": "leg", "hori_group": "hips"},
-    {"op_idx": 13, "joint": "l_knee", "side": "l", "vert_group": "leg", "hori_group": "knees"},
-    {"op_idx": 14, "joint": "l_ankle", "side": "l", "vert_group": "leg", "hori_group": "ankles"},
+    {"op_idx": 12, "name": "l_hip", "side": "l", "vert_group": "leg", "hori_group": "hips"},
+    {"op_idx": 13, "name": "l_knee", "side": "l", "vert_group": "leg", "hori_group": "knees"},
+    {"op_idx": 14, "name": "l_ankle", "side": "l", "vert_group": "leg", "hori_group": "ankles"},
 
-    {"op_idx": 15, "joint": "r_eye", "side": "r", "vert_group": "face", "hori_group": "eyes"},
-    {"op_idx": 16, "joint": "l_eye", "side": "l", "vert_group": "face", "hori_group": "eyes"},
-    {"op_idx": 17, "joint": "r_ear", "side": "r", "vert_group": "face", "hori_group": "ears"},
-    {"op_idx": 18, "joint": "l_ear", "side": "l", "vert_group": "face", "hori_group": "ears"},
+    {"op_idx": 15, "name": "r_eye", "side": "r", "vert_group": "face", "hori_group": "eyes"},
+    {"op_idx": 16, "name": "l_eye", "side": "l", "vert_group": "face", "hori_group": "eyes"},
+    {"op_idx": 17, "name": "r_ear", "side": "r", "vert_group": "face", "hori_group": "ears"},
+    {"op_idx": 18, "name": "l_ear", "side": "l", "vert_group": "face", "hori_group": "ears"},
 
-    {"op_idx": 19, "joint": "l_b_toe", "side": "l", "vert_group": "foot", "hori_group": "b_toes"},
-    {"op_idx": 20, "joint": "l_s_toe", "side": "l", "vert_group": "foot", "hori_group": "s_toes"},
-    {"op_idx": 21, "joint": "l_heel", "side": "l", "vert_group": "foot", "hori_group": "heels"},
+    {"op_idx": 19, "name": "l_b_toe", "side": "l", "vert_group": "foot", "hori_group": "b_toes"},
+    {"op_idx": 20, "name": "l_s_toe", "side": "l", "vert_group": "foot", "hori_group": "s_toes"},
+    {"op_idx": 21, "name": "l_heel", "side": "l", "vert_group": "foot", "hori_group": "heels"},
 
-    {"op_idx": 22, "joint": "r_b_toe", "side": "r", "vert_group": "foot", "hori_group": "b_toes"},
-    {"op_idx": 23, "joint": "r_s_toe", "side": "r", "vert_group": "foot", "hori_group": "s_toes"},
-    {"op_idx": 24, "joint": "r_heel", "side": "r", "vert_group": "foot", "hori_group": "heels"}
+    {"op_idx": 22, "name": "r_b_toe", "side": "r", "vert_group": "foot", "hori_group": "b_toes"},
+    {"op_idx": 23, "name": "r_s_toe", "side": "r", "vert_group": "foot", "hori_group": "s_toes"},
+    {"op_idx": 24, "name": "r_heel", "side": "r", "vert_group": "foot", "hori_group": "heels"}
   ]
 
 }
