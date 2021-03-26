@@ -30,13 +30,13 @@
     {"op_idx": 17, "joint": "r_ear", "side": "r", "vert_group": "face", "hori_group": "ears"},
     {"op_idx": 18, "joint": "l_ear", "side": "l", "vert_group": "face", "hori_group": "ears"},
 
-    {"op_idx": 19, "joint": "l_b_toe", "side": "l", "vert_group": "feet", "hori_group": "b_toes"},
-    {"op_idx": 20, "joint": "l_s_toe", "side": "l", "vert_group": "feet", "hori_group": "l_toes"},
-    {"op_idx": 21, "joint": "l_heel", "side": "l", "vert_group": "feet", "hori_group": "heels"},
+    {"op_idx": 19, "joint": "l_b_toe", "side": "l", "vert_group": "foot", "hori_group": "b_toes"},
+    {"op_idx": 20, "joint": "l_s_toe", "side": "l", "vert_group": "foot", "hori_group": "s_toes"},
+    {"op_idx": 21, "joint": "l_heel", "side": "l", "vert_group": "foot", "hori_group": "heels"},
 
-    {"op_idx": 22, "joint": "r_b_toe", "side": "r", "vert_group": "feet", "hori_group": "b_toes"},
-    {"op_idx": 23, "joint": "r_s_toe", "side": "r", "vert_group": "feet", "hori_group": "l_toes"},
-    {"op_idx": 24, "joint": "r_heel", "side": "r", "vert_group": "feet", "hori_group": "heels"}
+    {"op_idx": 22, "joint": "r_b_toe", "side": "r", "vert_group": "foot", "hori_group": "b_toes"},
+    {"op_idx": 23, "joint": "r_s_toe", "side": "r", "vert_group": "foot", "hori_group": "s_toes"},
+    {"op_idx": 24, "joint": "r_heel", "side": "r", "vert_group": "foot", "hori_group": "heels"}
   ]
 
 }
