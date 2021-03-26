@@ -1,0 +1,38 @@
+{
+  "joints": [
+    {"joint_nr": 0, "joint": "nose", "side": "c", "vert_group": "spine", "hori_group": "face"},
+    {"joint_nr": 1, "joint": "spine", "side": "c", "vert_group": "spine", "hori_group": "shoulders"},
+
+    {"joint_nr": 2, "joint": "shoulder", "side": "r", "vert_group": "arm", "hori_group": "shoulders"},
+    {"joint_nr": 3, "joint": "elbow", "side": "r", "vert_group": "arm", "hori_group": "elbows"},
+    {"joint_nr": 4, "joint": "hand", "side": "r", "vert_group": "arm", "hori_group": "hands"},
+
+    {"joint_nr": 5, "joint": "shoulder", "side": "l", "vert_group": "arm", "hori_group": "shoulders"},
+    {"joint_nr": 6, "joint": "elbow", "side": "l", "vert_group": "arm", "hori_group": "elbows"},
+    {"joint_nr": 7, "joint": "hand", "side": "l", "vert_group": "arm", "hori_group": "hands"},
+
+    {"joint_nr": 8, "joint": "hip", "side": "c", "vert_group": "spine", "hori_group": "hips"},
+
+    {"joint_nr": 9, "joint": "hip", "side": "r", "vert_group": "leg", "hori_group": "hips"},
+    {"joint_nr": 10, "joint": "knee", "side": "r", "vert_group": "leg", "hori_group": "knees"},
+    {"joint_nr": 11, "joint": "ankle", "side": "r", "vert_group": "leg", "hori_group": "ankles"},
+
+    {"joint_nr": 12, "joint": "hip", "side": "l", "vert_group": "leg", "hori_group": "hips"},
+    {"joint_nr": 13, "joint": "knee", "side": "l", "vert_group": "leg", "hori_group": "knees"},
+    {"joint_nr": 14, "joint": "ankle", "side": "l", "vert_group": "leg", "hori_group": "ankles"},
+
+    {"joint_nr": 15, "joint": "eye", "side": "r", "vert_group": "face", "hori_group": "eyes"},
+    {"joint_nr": 16, "joint": "eye", "side": "l", "vert_group": "face", "hori_group": "eyes"},
+    {"joint_nr": 17, "joint": "ear", "side": "r", "vert_group": "face", "hori_group": "ears"},
+    {"joint_nr": 18, "joint": "ear", "side": "l", "vert_group": "face", "hori_group": "ears"},
+
+    {"joint_nr": 19, "joint": "b_toe", "side": "l", "vert_group": "feet", "hori_group": "b_toes"},
+    {"joint_nr": 20, "joint": "s_toe", "side": "l", "vert_group": "feet", "hori_group": "l_toes"},
+    {"joint_nr": 21, "joint": "heel", "side": "l", "vert_group": "feet", "hori_group": "heels"},
+
+    {"joint_nr": 22, "joint": "b_toe", "side": "r", "vert_group": "feet", "hori_group": "b_toes"},
+    {"joint_nr": 23, "joint": "s_toe", "side": "r", "vert_group": "feet", "hori_group": "l_toes"},
+    {"joint_nr": 24, "joint": "heel", "side": "r", "vert_group": "feet", "hori_group": "heels"}
+  ]
+
+}
