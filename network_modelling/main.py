@@ -7,7 +7,7 @@ import torchvision.transforms as transforms
 from models.LSTM import LSTM
 from train import train
 from test import test
-from dataset import FOIKineticPoseDataset, NormalisePose, ChangePoseOrigin
+from dataset import FOIKineticPoseDataset, NormalisePose, FilterPose, Pose # , ChangePoseOrigin
 
 from helpers.paths import EXTR_PATH
 
@@ -32,16 +32,22 @@ if __name__ == "__main__":
 
     use_cuda = torch.cuda.is_available()
 
-    normalise = NormalisePose()
+    filter_poses = FilterPose()
+    #normalise = NormalisePose()
+    #pose_composed = transforms.Compose([FilterPose(), NormalisePose()])
+
     #change_pose_origin = ChangePoseOrigin()
     #composed = transforms.Compose([normalise, change_pose_origin])
 
-    kinetic_dataset = FOIKineticPoseDataset(json_path, root_dir, sequence_len, transform=normalise)
+    kinetic_dataset = FOIKineticPoseDataset(json_path, root_dir, sequence_len, pose_transform=filter_poses)
     #train_loader = DataLoader(train_set, batch_size, shuffle=True, num_workers=2)
 
     print("Dataset length: {}".format(len(kinetic_dataset)))
-
     item = kinetic_dataset[0]
+
+    pose = Pose(item["keypoints"][0])
+    print(pose.joints[24].name)
+    #filter_poses(item["keypoints"][0])
     print(item["keypoints"].shape)
 
     '''

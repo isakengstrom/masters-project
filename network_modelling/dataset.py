@@ -5,6 +5,7 @@ import numpy as np
 import os
 
 from helpers import read_from_json
+from helpers.paths import JOINTS_LOOKUP_PATH
 
 
 class DatasetElement:
@@ -18,7 +19,7 @@ class DatasetElement:
         self.sess = int(self.sess_name[-1])
         self.view = int(self.view_name[-1])
 
-        self.uid = "s{}s{}v{}".format(self.sub, self.sess, self.view)
+        self.seq_id = "s{}s{}v{}".format(self.sub, self.sess, self.view)
 
 
 class InfoElement(DatasetElement):
@@ -36,26 +37,95 @@ class SeqElement(DatasetElement):
         self.start = int(element["start"])
         self.end = int(element["end"])
 
+
+'''
 class ToTensor(object):
     raise NotImplementedError
 
 class ChangePoseOrigin(object):
     raise NotImplementedError
+'''
+
+
+class Joint:
+    def __init__(self, op_idx, name, coords):
+        self.op_idx = op_idx
+        self.name = name
+        self.coords = coords
+        self.x, self.y = self.coords
+
+
+class FilterPose:
+    """
+    Transform to filter out the unwanted Joints
+    """
+    def __init__(self, path=JOINTS_LOOKUP_PATH):
+        joints_lookup = read_from_json(path, use_dumps=True)
+
+        active_name = joints_lookup["activate_by"]
+        filtered_indexes = []
+        for joint in joints_lookup["joints"]:
+            for trait in joints_lookup["active_" + active_name]:
+                if joint[active_name] == trait:
+                    filtered_indexes.append(joint["op_idx"])
+        self.filtered_indexes = filtered_indexes
+        print("filter init")
+
+    def __call__(self, pose):
+        assert len(pose) == 25
+        # print(joints[self.filtered_indexes])
+        print("entered call")
+        return pose[self.filtered_indexes]
+
 
 class NormalisePose(object):
 
 
     def __call__(self, item):
-        uid, keypoints = item["uid"], item["keypoints"]
+        seq_id, keypoints = item["seq_id"], item["keypoints"]
 
-        #for frame in keypoints[0]:
-        #    print(frame.shape)
+        print(keypoints[0,:,:].shape)
 
 
-        return {"uid": uid, "keypoints": keypoints}
+
+        return {"seq_id": seq_id, "keypoints": keypoints}
+
+# TODO: make sure this is called correctly, might need __call__ and separate pose and transform from init
+class Pose:
+    def __init__(self, pose, transform=None, path=JOINTS_LOOKUP_PATH):
+        self.transform = transform
+
+        joints_lookup = read_from_json(path, use_dumps=True)
+        joints_info = joints_lookup["joints"]
+
+        self.joints = []
+        for idx, coords in enumerate(pose):
+            op_idx = joints_info[idx]["op_idx"]
+            name = joints_info[idx]["name"]
+
+            joint = Joint(op_idx, name, coords)
+            self.joints.append(joint)
+
+    def __len__(self):
+        return len(self.joints)
+
+    def __getitem__(self, idx):
+        if torch.is_tensor(idx):
+            idx = idx.tolist()
+
+        if isinstance(idx, slice):
+            return Pose(self.joints[idx])
+
+        item = self.joints
+        if self.transform:
+            print("run transforms")
+            item = self.transform(item)
+
+        #print(item)
+        return item
 
 class FOIKineticPoseDataset(Dataset):
-    def __init__(self, json_path, root_dir, sequence_len, transform=None):
+    def __init__(self, json_path, root_dir, sequence_len, transform=None, pose_transform=None):
         # Data loading
         self.json_path = json_path
         self.root_dir = root_dir
@@ -63,9 +133,14 @@ class FOIKineticPoseDataset(Dataset):
 
         self.lookup = self.__create_lookup()
 
-        #print(SeqElement(self.lookup[1000]).uid)
+        #print(SeqElement(self.lookup[1000]).seq_id)
 
         self.transform = transform
+
+        Pose
+        self.pose_transform = pose_transform
+
+
 
 
     def __len__(self):
@@ -83,10 +158,10 @@ class FOIKineticPoseDataset(Dataset):
         file_path = os.path.join(self.root_dir, se.file_name)
         file_data = read_from_json(file_path)
 
-        keypoints = file_data[se.start:se.end]
-        keypoints = np.array(keypoints)
+        poses = file_data[se.start:se.end]
+        poses = np.array(poses)
 
-        item = {"uid": se.uid, 'keypoints': keypoints}
+        item = {"seq_id": se.seq_id, 'poses': poses}
 
         if self.transform:
             item = self.transform(item)
@@ -104,7 +179,7 @@ class FOIKineticPoseDataset(Dataset):
             seq_info["sub_name"] = el.sub_name
             seq_info["sess_name"] = el.sess_name
             seq_info["view_name"] = el.view_name
-            seq_info["uid"] = el.uid
+            seq_info["seq_id"] = el.seq_id
 
             for i in range(0, el.len, self.sequence_len):
                 seq_info["start"] = i
