@@ -18,31 +18,99 @@ class DatasetElement:
         self.sess = int(self.sess_name[-1])
         self.view = int(self.view_name[-1])
 
-        self.seq_id = "s{}s{}v{}".format(self.sub, self.sess, self.view)
+        self.id = "s{}s{}v{}".format(self.sub, self.sess, self.view)
+
+
+class DimensionsElement(DatasetElement):
+    def __init__(self, element):
+        super().__init__(element)
 
         self.len = element["len"]
         self.shape = element["shape"]
 
 
+class SequenceElement(DatasetElement):
+    def __init__(self, element):
+        super().__init__(element)
+
+        self.start = int(element["start"])
+        self.end = int(element["end"])
+
+
 class Joint:
-    def __init__(self):
-        raise NotImplementedError
+    def __init__(self, op_idx, name, coords):
+        self.op_idx = op_idx
+        self.name = name
+        self.coords = coords
+        self.x, self.y = coords
+
+    def __len__(self):
+        return len(self.coords)
+
+    def __getitem__(self, idx):
+        return self.coords[idx]
+
 
 class Pose:
-    def __init__(self):
-        raise NotImplementedError
+    def __init__(self, pose, path=JOINTS_LOOKUP_PATH):
+        joints_lookup = read_from_json(path, use_dumps=True)
+        joints_info = joints_lookup["joints"]
+
+        joints = []
+        for idx, coords in enumerate(pose):
+            op_idx = joints_info[idx]["op_idx"]
+            name = joints_info[idx]["name"]
+
+            joint = Joint(op_idx, name, coords)
+            joints.append(joint)
+
+        self.joints = joints
+
+    def __len__(self):
+        return len(self.joints)
+
+    def __getitem__(self, idx):
+        if torch.is_tensor(idx):
+            idx = idx.tolist()
+
+        if isinstance(idx, list):
+            item = [self.joints[i] for i in idx]
+            return item
+
+        item = self.joints[idx]
+
+        return item
+
 
 class Sequence:
-    def __init__(self, root_dir, seq):
-        seq_info = DatasetElement(seq)
-        self.start = int(seq["start"])
-        self.end = int(seq["end"])
+    def __init__(self, root_dir, seq, sequence_len, pose_transforms=None):
+        seq_info = SequenceElement(seq)
+
+        self.__sequence_len = sequence_len
+        self.id = seq_info.id
 
         file_path = os.path.join(root_dir, seq_info.file_name)
         file_data = read_from_json(file_path)
 
+        seq_data = file_data[seq_info.start:seq_info.end]
+        seq_data = np.array(seq_data)
 
+        self.poses = []
+        for data_element in seq_data:
+            item = Pose(data_element)
 
+            if pose_transforms:
+                item = pose_transforms(item)
+
+            self.poses.append(item)
+
+        print("Init sequence")
+
+    def __len__(self):
+        return self.__sequence_len
+
+    def __getitem__(self, idx):
+        return self.poses[idx]
 
 
 class FOIKineticPoseDataset(Dataset):
@@ -57,6 +125,8 @@ class FOIKineticPoseDataset(Dataset):
         self.transform = transform
         self.pose_transform = pose_transform
 
+        print("Init dataset")
+
     def __len__(self):
         return len(self.lookup)
 
@@ -67,21 +137,26 @@ class FOIKineticPoseDataset(Dataset):
         if isinstance(idx, slice):
             raise NotImplementedError
 
-        seq = Sequence(self.root_dir, self.lookup[idx])
+        seq = Sequence(self.root_dir, self.lookup[idx], self.sequence_len, self.pose_transform)
+        item = {"id": seq.id, "sequence": seq.poses}
 
+        if self.transform:
+            item = self.transform(item)
+
+        return item
 
     def __create_lookup(self):
         data_info = read_from_json(self.json_path)
 
         lookup = []
         for element in data_info:
-            element_info = DatasetElement(element)
+            element_info = DimensionsElement(element)
             seq_info = dict()
             seq_info["file_name"] = element_info.file_name
             seq_info["sub_name"] = element_info.sub_name
             seq_info["sess_name"] = element_info.sess_name
             seq_info["view_name"] = element_info.view_name
-            seq_info["seq_id"] = element_info.seq_id
+            seq_info["id"] = element_info.id
 
             for i in range(0, element_info.len, self.sequence_len):
                 seq_info["start"] = i
