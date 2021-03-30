@@ -7,6 +7,7 @@ import os
 from helpers import read_from_json
 from helpers.paths import JOINTS_LOOKUP_PATH
 
+
 class DatasetElement:
     def __init__(self, element):
         self.file_name = element["file_name"]
@@ -85,7 +86,7 @@ class Pose:
 
 
 class Sequence:
-    def __init__(self, root_dir, seq, sequence_len, pose_transforms=None):
+    def __init__(self, root_dir, seq, sequence_len, pose_transform=None):
         seq_info = SequenceElement(seq)
 
         self.__sequence_len = sequence_len
@@ -95,18 +96,17 @@ class Sequence:
         file_data = read_from_json(file_path)
 
         seq_data = file_data[seq_info.start:seq_info.end]
-        #seq_data = np.array(seq_data)
+        seq_data = np.array(seq_data)
 
         self.poses = []
-        for data_element in seq_data:
-            item = Pose(data_element)
 
-            if pose_transforms:
-                item = pose_transforms(item)
+        for item in seq_data:
+            if pose_transform:
+                item = pose_transform(item)
 
             self.poses.append(item)
 
-        print("Init sequence")
+        self.poses = np.array(self.poses)
 
     def __len__(self):
         return self.__sequence_len
@@ -140,8 +140,9 @@ class FOIKineticPoseDataset(Dataset):
             raise NotImplementedError
 
         seq = Sequence(self.root_dir, self.lookup[idx], self.sequence_len, self.pose_transform)
+        #print(seq.poses)
         item = {"id": seq.id, "sequence": seq.poses}
-
+        #print(item["sequence"])
         if self.transform:
             item = self.transform(item)
 

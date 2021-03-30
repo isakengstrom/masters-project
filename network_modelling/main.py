@@ -10,7 +10,7 @@ from test import test
 #from dataset import FOIKineticPoseDataset, NormalisePose, FilterPose, Pose # , ChangePoseOrigin
 from dataset2 import FOIKineticPoseDataset as FOID
 from helpers.paths import EXTR_PATH
-from transforms import FilterPose, NormalisePose
+from transforms import FilterPose, NormalisePose, ToTensor
 
 if __name__ == "__main__":
     # Hyper parameters:
@@ -33,14 +33,15 @@ if __name__ == "__main__":
     use_cuda = torch.cuda.is_available()
 
     filter_pose = FilterPose()
-    normalise_pose = NormalisePose(low=0, high=10)
-
-    pose_composed = transforms.Compose([FilterPose(), NormalisePose(low=7, high=10)])
-
+    normalise_pose = NormalisePose()
     #change_pose_origin = ChangePoseOrigin()
+
+    pose_composed = transforms.Compose([FilterPose(), NormalisePose(low=0, high=1)])
+
+    to_tensor = ToTensor()
     #composed = transforms.Compose([normalise, change_pose_origin])
 
-    foid = FOID(json_path, root_dir, sequence_len, pose_transform=pose_composed)
+    foid = FOID(json_path, root_dir, sequence_len, transform=to_tensor, pose_transform=pose_composed)
 
     foid_item = foid[0]
     #print(len(foid_item["sequence"]))
