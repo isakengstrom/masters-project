@@ -73,9 +73,11 @@ class Pose:
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
+        '''
         if isinstance(idx, list):
             item = [self.joints[i] for i in idx]
             return item
+        '''
 
         item = self.joints[idx]
 
@@ -93,7 +95,7 @@ class Sequence:
         file_data = read_from_json(file_path)
 
         seq_data = file_data[seq_info.start:seq_info.end]
-        seq_data = np.array(seq_data)
+        #seq_data = np.array(seq_data)
 
         self.poses = []
         for data_element in seq_data:

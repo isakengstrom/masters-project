@@ -1,4 +1,4 @@
-
+import numpy as np
 from helpers import read_from_json
 from helpers.paths import JOINTS_LOOKUP_PATH
 
@@ -27,6 +27,7 @@ class FilterPose(object):
 
     def __call__(self, pose):
         assert len(pose) == 25
-
-        return pose[self.filtered_indexes]
+        pose = np.array(pose)
+        pose = pose[self.filtered_indexes]
+        return pose.tolist()
 
