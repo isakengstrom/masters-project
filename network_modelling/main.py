@@ -7,10 +7,10 @@ import torchvision.transforms as transforms
 from models.LSTM import LSTM
 from train import train
 from test import test
-from dataset import FOIKineticPoseDataset, NormalisePose, FilterPose, Pose # , ChangePoseOrigin
-
+#from dataset import FOIKineticPoseDataset, NormalisePose, FilterPose, Pose # , ChangePoseOrigin
+from dataset2 import FOIKineticPoseDataset as FOID
 from helpers.paths import EXTR_PATH
-
+from transforms import FilterPose, NormalisePose
 
 if __name__ == "__main__":
     # Hyper parameters:
@@ -32,23 +32,43 @@ if __name__ == "__main__":
 
     use_cuda = torch.cuda.is_available()
 
-    filter_poses = FilterPose()
-    #normalise = NormalisePose()
-    #pose_composed = transforms.Compose([FilterPose(), NormalisePose()])
+    filter_pose = FilterPose()
+    normalise_pose = NormalisePose(low=0, high=10)
+
+    pose_composed = transforms.Compose([FilterPose(), NormalisePose(low=7, high=10)])
 
     #change_pose_origin = ChangePoseOrigin()
     #composed = transforms.Compose([normalise, change_pose_origin])
 
+    foid = FOID(json_path, root_dir, sequence_len, pose_transform=pose_composed)
+
+    foid_item = foid[0]
+    #print(len(foid_item["sequence"]))
+    print(len(foid_item["sequence"][0]))
+    '''
+    for idx in range(0,10):
+        foid_item = foid[idx]
+        print(len(foid_item["sequence"]))
+        print(foid_item["sequence"][0])
+    '''
+
+
+    '''
     kinetic_dataset = FOIKineticPoseDataset(json_path, root_dir, sequence_len, pose_transform=filter_poses)
     #train_loader = DataLoader(train_set, batch_size, shuffle=True, num_workers=2)
 
+    
     print("Dataset length: {}".format(len(kinetic_dataset)))
     item = kinetic_dataset[0]
+    print(item["poses"][0])
+    pose = Pose(item["poses"][0])
+    print(pose.joints[23].name)
+    '''
 
-    pose = Pose(item["keypoints"][0])
-    print(pose.joints[24].name)
+
+
     #filter_poses(item["keypoints"][0])
-    print(item["keypoints"].shape)
+    #print(item["poses"].shape)
 
     '''
     for i in range(15000, 15010):

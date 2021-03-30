@@ -1,15 +1,40 @@
 import numpy as np
+
 from helpers import read_from_json
 from helpers.paths import JOINTS_LOOKUP_PATH
 
-'''
-class ToTensor(object):
-    raise NotImplementedError
+
+
+
+#class ToTensor:
+
 
 
 class NormalisePose(object):
-    raise NotImplementedError
-'''
+    def __init__(self, low=0, high=1):
+        self.low = low
+        self.high = high
+
+    def __call__(self, pose):
+
+        pose = np.array(pose)
+
+        min_x = min(pose[:, 0])
+        max_x = max(pose[:, 0])
+        min_y = min(pose[:, 1])
+        max_y = max(pose[:, 1])
+
+        max_dist_x = abs(max_x - min_x)
+        max_dist_y = abs(max_y - min_y)
+
+        if max_dist_x > max_dist_y:
+            normalised = (pose - min_x) / max_dist_x
+        else:
+            normalised = (pose - min_y) / max_dist_y
+
+        normalised = normalised * (self.high - self.low) + self.low
+
+        return normalised
 
 
 class FilterPose(object):
