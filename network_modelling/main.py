@@ -10,7 +10,7 @@ from test import test
 #from dataset import FOIKineticPoseDataset, NormalisePose, FilterPose, Pose # , ChangePoseOrigin
 from dataset2 import FOIKineticPoseDataset as FOID
 from helpers.paths import EXTR_PATH
-from transforms import FilterPose, NormalisePose, ToTensor
+from transforms import FilterPose, NormalisePose, ChangePoseOrigin, ToTensor
 
 if __name__ == "__main__":
     # Hyper parameters:
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
     filter_pose = FilterPose()
     normalise_pose = NormalisePose()
-    #change_pose_origin = ChangePoseOrigin()
+    change_pose_origin = ChangePoseOrigin()
 
     pose_composed = transforms.Compose([FilterPose(), NormalisePose(low=0, high=1)])
 

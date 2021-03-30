@@ -5,10 +5,18 @@ from helpers.paths import JOINTS_LOOKUP_PATH
 
 
 class ToTensor:
+    """
+    Converts a sequence from a Numpy Array to a Torch Tensor
+    """
     def __call__(self, item):
         seq_id, seq = item["id"], item["sequence"]
 
         return {"id": seq_id, "sequence": torch.from_numpy(seq)}
+
+
+class ChangePoseOrigin(object):
+    def __init__(self):
+        raise NotImplementedError
 
 
 class NormalisePose(object):
