@@ -4,13 +4,15 @@ import torch.backends.cudnn as cudnn
 from torch.utils.data import Dataset, DataLoader
 import torchvision
 import torchvision.transforms as transforms
+import numpy as np
+
 from models.LSTM import LSTM
 from train import train
 from test import test
-#from dataset import FOIKineticPoseDataset, NormalisePose, FilterPose, Pose # , ChangePoseOrigin
+#from dataset import FOIKineticPoseDataset, NormalisePose, FilterJoints, Pose # , ChangePoseOrigin
 from dataset2 import FOIKineticPoseDataset as FOID
 from helpers.paths import EXTR_PATH
-from transforms import FilterPose, NormalisePose, ChangePoseOrigin, ToTensor
+from transforms import FilterJoints, NormalisePose, ChangePoseOrigin, ToTensor
 
 if __name__ == "__main__":
     # Hyper parameters:
@@ -32,20 +34,30 @@ if __name__ == "__main__":
 
     use_cuda = torch.cuda.is_available()
 
-    filter_pose = FilterPose()
+    filter_pose = FilterJoints()
     normalise_pose = NormalisePose()
     change_pose_origin = ChangePoseOrigin()
 
-    pose_composed = transforms.Compose([FilterPose(), NormalisePose(low=0, high=1)])
+    pose_composed = transforms.Compose([FilterJoints(), NormalisePose(low=0, high=1)])
 
     to_tensor = ToTensor()
-    #composed = transforms.Compose([normalise, change_pose_origin])
+    composed = transforms.Compose([FilterJoints(), ToTensor()])
 
-    foid = FOID(json_path, root_dir, sequence_len, transform=to_tensor, pose_transform=pose_composed)
+    foid = FOID(json_path, root_dir, sequence_len, transform=composed, pose_transform=normalise_pose)
 
     foid_item = foid[0]
-    #print(len(foid_item["sequence"]))
-    print(len(foid_item["sequence"][0]))
+
+    shape = ""
+    if isinstance(foid_item["sequence"], np.ndarray):
+        shape = foid_item["sequence"].shape
+    elif isinstance(foid_item["sequence"], list):
+        shape = len(foid_item["sequence"])
+    elif isinstance(foid_item["sequence"], torch.Tensor):
+        shape = foid_item["sequence"].size()
+
+    print("Dataset instance with id '{}' is of type '{}', with shape {}"
+          .format(foid_item["id"], type(foid_item["sequence"]), shape))
+
     '''
     for idx in range(0,10):
         foid_item = foid[idx]

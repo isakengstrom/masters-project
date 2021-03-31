@@ -16,7 +16,7 @@ class ToTensor:
 
 class ChangePoseOrigin(object):
     def __init__(self):
-        raise NotImplementedError
+        print("Init ChangePoseOrigin")
 
 
 class NormalisePose(object):
@@ -48,7 +48,7 @@ class NormalisePose(object):
         return normalised
 
 
-class FilterPose(object):
+class FilterJoints(object):
     def __init__(self, path=JOINTS_LOOKUP_PATH):
         """
         Initialise the pose filter. It filters out the unwanted joints from the OpenPose data. This is according to
@@ -75,11 +75,13 @@ class FilterPose(object):
                 if joint[active_name] == trait:
                     self.filtered_indexes.append(joint["op_idx"])
 
-    def __call__(self, pose):
-        assert len(pose) == 25
-        assert type(pose) is np.ndarray
+    def __call__(self, item):
+        seq_id, seq = item["id"], item["sequence"]
+
+        assert type(seq) is np.ndarray
+        assert seq.shape[2] == 2
 
         # Uses Numpy's extended slicing to return ONLY the indexes saved in the list 'self.filtered_indexes'
-        return pose[self.filtered_indexes]
+        return {"id": seq_id, "sequence": seq[:, self.filtered_indexes]}
 
 
