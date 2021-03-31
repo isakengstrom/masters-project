@@ -12,7 +12,7 @@ from test import test
 #from dataset import FOIKineticPoseDataset, NormalisePose, FilterJoints, Pose # , ChangePoseOrigin
 from dataset2 import FOIKineticPoseDataset as FOID
 from helpers.paths import EXTR_PATH
-from transforms import FilterJoints, NormalisePose, ChangePoseOrigin, ToTensor
+from transforms import FilterJoints, NormalisePose, ChangePoseOrigin, ToTensor, NormalisePoses
 
 if __name__ == "__main__":
     # Hyper parameters:
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     to_tensor = ToTensor()
     composed = transforms.Compose([FilterJoints(), ToTensor()])
 
-    foid = FOID(json_path, root_dir, sequence_len, transform=composed, pose_transform=normalise_pose)
+    foid = FOID(json_path, root_dir, sequence_len, transform=NormalisePoses(low=2, high=5), pose_transform=None)
 
     foid_item = foid[0]
 

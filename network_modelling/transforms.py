@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from helpers import read_from_json
 from helpers.paths import JOINTS_LOOKUP_PATH
-
+import time
 
 class ToTensor:
     """
@@ -17,6 +17,52 @@ class ToTensor:
 class ChangePoseOrigin(object):
     def __init__(self):
         print("Init ChangePoseOrigin")
+
+
+class NormalisePoses(object):
+    def __init__(self, low=0, high=1):
+        self.low = low
+        self.high = high
+
+    # Influenced by: https://stats.stackexchange.com/a/281164
+    def __call__(self, item):
+        seq_id, seq = item["id"], item["sequence"]
+        assert type(seq) is np.ndarray
+
+        min_x = np.amin(seq[:, :, 0], axis=1)
+        max_x = np.amax(seq[:, :, 0], axis=1)
+        min_y = np.amin(seq[:, :, 1], axis=1)
+        max_y = np.amax(seq[:, :, 1], axis=1)
+
+        max_dist_x = np.abs(max_x - min_x)
+        max_dist_y = np.abs(max_y - min_y)
+
+        condition = max_dist_x > max_dist_y
+        tile_len = seq.shape[1] * seq.shape[2]
+
+        seq_mins = np.where(condition, min_x, min_y)
+        seq_mins = np.tile(seq_mins, tile_len).reshape(seq.shape, order='F')
+
+        seq_denoms = np.where(condition, max_dist_x, max_dist_y)
+        seq_denoms = np.tile(seq_denoms, tile_len).reshape(seq.shape, order='F')
+
+        # Normalise to interval [0, 1]
+        normalised = (seq - seq_mins) / seq_denoms
+
+        # Normalise from [0,1] to [self.low, self.high]
+        normalised = normalised * (self.high - self.low) + self.low
+
+        '''
+        for pose_idx in range(len(seq_mins)):
+            if pose_idx < 1000:
+                print("----------------------------------------------------------")
+                print(min(normalised[pose_idx, :, 0]), max(normalised[pose_idx, :, 0]))
+                print(min(normalised[pose_idx, :, 1]), max(normalised[pose_idx, :, 1]))
+                # time.sleep(1)
+
+        '''
+
+        return {"id": seq_id, "sequence": normalised}
 
 
 class NormalisePose(object):
