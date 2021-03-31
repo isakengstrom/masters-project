@@ -52,7 +52,8 @@ class Joint:
         self.op_idx = op_idx
         self.name = name
         self.coords = coords
-        self.x, self.y = self.coords
+        self.x = self.coords[0]
+        self.y = self.coords[1]
 
 
 class FilterPose:
@@ -82,24 +83,28 @@ class NormalisePose(object):
 
 
     def __call__(self, item):
-        seq_id, keypoints = item["seq_id"], item["keypoints"]
+        seq_id, keypoints = item["id"], item["keypoints"]
 
         print(keypoints[0,:,:].shape)
 
 
 
-        return {"seq_id": seq_id, "keypoints": keypoints}
+        return {"id": seq_id, "keypoints": keypoints}
+
 
 # TODO: make sure this is called correctly, might need __call__ and separate pose and transform from init
+#  needs to be called from FOIDataset Pose yadiyada..
 class Pose:
     def __init__(self, pose, transform=None, path=JOINTS_LOOKUP_PATH):
         self.transform = transform
 
         joints_lookup = read_from_json(path, use_dumps=True)
         joints_info = joints_lookup["joints"]
-
         self.joints = []
+
+        #print(pose)
         for idx, coords in enumerate(pose):
+            #print(coords[0])
             op_idx = joints_info[idx]["op_idx"]
             name = joints_info[idx]["name"]
 
@@ -117,12 +122,29 @@ class Pose:
             return Pose(self.joints[idx])
 
         item = self.joints
-        if self.transform:
-            print("run transforms")
-            item = self.transform(item)
+        #if self.transform:
+        #    print("run transforms")
+        #    item = self.transform(item)
 
         #print(item)
         return item
+
+'''
+class Sequence:
+    def __init__(self, sequence_len):
+        self.sequence_len = sequence_len
+        
+        self.poses = []
+
+    def __len__(self):
+        return self.sequence_len
+
+    def __call__(self, poses):
+        self.poses = []
+        for pose in poses:
+            self.poses.append(Pose(pose))
+'''
+
 
 class FOIKineticPoseDataset(Dataset):
     def __init__(self, json_path, root_dir, sequence_len, transform=None, pose_transform=None):
@@ -133,15 +155,13 @@ class FOIKineticPoseDataset(Dataset):
 
         self.lookup = self.__create_lookup()
 
-        #print(SeqElement(self.lookup[1000]).seq_id)
+        #print(SeqElement(self.lookup[1000]).id)
 
         self.transform = transform
 
-        Pose
         self.pose_transform = pose_transform
 
-
-
+        self.poses = []
 
     def __len__(self):
         return len(self.lookup)
@@ -161,7 +181,13 @@ class FOIKineticPoseDataset(Dataset):
         poses = file_data[se.start:se.end]
         poses = np.array(poses)
 
-        item = {"seq_id": se.seq_id, 'poses': poses}
+        self.poses = []
+        for pose in poses:
+            print(pose.shape)
+            self.poses.append(Pose(pose, self.pose_transform))
+
+        print(self.poses)
+        item = {"id": se.seq_id, 'poses': self.poses}
 
         if self.transform:
             item = self.transform(item)
@@ -179,7 +205,7 @@ class FOIKineticPoseDataset(Dataset):
             seq_info["sub_name"] = el.sub_name
             seq_info["sess_name"] = el.sess_name
             seq_info["view_name"] = el.view_name
-            seq_info["seq_id"] = el.seq_id
+            seq_info["id"] = el.seq_id
 
             for i in range(0, el.len, self.sequence_len):
                 seq_info["start"] = i
