@@ -125,7 +125,7 @@ class FOIKineticPoseDataset(Dataset):
 
         seq = Sequence(self.root_dir, self.lookup[idx], self.sequence_len)
 
-        item = {"id": seq.id, "sequence": seq.poses}
+        item = {"seq_idx": idx, "id": seq.id, "sequence": seq.poses}
 
         if self.transform:
             item = self.transform(item)
