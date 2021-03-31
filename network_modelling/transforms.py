@@ -9,11 +9,12 @@ class ToTensor:
     Converts a sequence from a Numpy Array to a Torch Tensor
     """
     def __call__(self, item):
-        seq_id, seq = item["id"], item["sequence"]
+        item["sequence"] = torch.from_numpy(item["sequence"])
 
-        return {"id": seq_id, "sequence": torch.from_numpy(seq)}
+        return item
 
 
+# TODO: implement this transform
 class ChangePoseOrigin(object):
     def __init__(self):
         print("Init ChangePoseOrigin")
@@ -31,7 +32,8 @@ class NormalisePoses(object):
 
     # Influenced by: https://stats.stackexchange.com/a/281164
     def __call__(self, item):
-        seq_id, seq = item["id"], item["sequence"]
+        seq = item["sequence"]
+
         assert type(seq) is np.ndarray
 
         # Get the min and max of the x and y coordinates separately for each pose in the sequence.
@@ -65,7 +67,8 @@ class NormalisePoses(object):
         # Normalise from [0,1] to [self.low, self.high]
         normalised = normalised * (self.high - self.low) + self.low
 
-        return {"id": seq_id, "sequence": normalised}
+        item["sequence"] = normalised
+        return item
 
 
 class FilterJoints(object):
@@ -96,10 +99,12 @@ class FilterJoints(object):
                     self.filtered_indexes.append(joint["op_idx"])
 
     def __call__(self, item):
-        seq_id, seq = item["id"], item["sequence"]
+        seq = item["sequence"]
         assert type(seq) is np.ndarray
 
         # Uses Numpy's extended slicing to return ONLY the indexes saved in the list 'self.filtered_indexes'
-        return {"id": seq_id, "sequence": seq[:, self.filtered_indexes]}
+        item["sequence"] = seq[:, self.filtered_indexes]
+
+        return item
 
 
