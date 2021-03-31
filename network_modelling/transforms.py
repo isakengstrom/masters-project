@@ -68,35 +68,6 @@ class NormalisePoses(object):
         return {"id": seq_id, "sequence": normalised}
 
 
-class NormalisePose(object):
-    def __init__(self, low=0, high=1):
-        self.low = low
-        self.high = high
-
-    # Influenced by: https://stats.stackexchange.com/a/281164
-    def __call__(self, pose):
-        assert type(pose) is np.ndarray
-
-        min_x = min(pose[:, 0])
-        max_x = max(pose[:, 0])
-        min_y = min(pose[:, 1])
-        max_y = max(pose[:, 1])
-
-        max_dist_x = abs(max_x - min_x)
-        max_dist_y = abs(max_y - min_y)
-
-        # Normalise to interval [0, 1]
-        if max_dist_x > max_dist_y:
-            normalised = (pose - min_x) / max_dist_x
-        else:
-            normalised = (pose - min_y) / max_dist_y
-
-        # Normalise from [0,1] to [self.low, self.high]
-        normalised = normalised * (self.high - self.low) + self.low
-
-        return normalised
-
-
 class FilterJoints(object):
     def __init__(self, path=JOINTS_LOOKUP_PATH):
         """
