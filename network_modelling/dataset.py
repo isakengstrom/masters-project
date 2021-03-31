@@ -74,12 +74,6 @@ class Pose:
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
-        '''
-        if isinstance(idx, list):
-            item = [self.joints[i] for i in idx]
-            return item
-        '''
-
         item = self.joints[idx]
 
         return item
@@ -140,9 +134,9 @@ class FOIKineticPoseDataset(Dataset):
             raise NotImplementedError
 
         seq = Sequence(self.root_dir, self.lookup[idx], self.sequence_len, self.pose_transform)
-        #print(seq.poses)
+
         item = {"id": seq.id, "sequence": seq.poses}
-        #print(item["sequence"])
+
         if self.transform:
             item = self.transform(item)
 

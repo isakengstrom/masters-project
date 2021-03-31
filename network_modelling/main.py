@@ -9,8 +9,7 @@ import numpy as np
 from models.LSTM import LSTM
 from train import train
 from test import test
-#from dataset import FOIKineticPoseDataset, NormalisePose, FilterJoints, Pose # , ChangePoseOrigin
-from dataset2 import FOIKineticPoseDataset as FOID
+from dataset import FOIKineticPoseDataset as FOID
 from helpers.paths import EXTR_PATH
 from transforms import FilterJoints, NormalisePose, ChangePoseOrigin, ToTensor, NormalisePoses
 
@@ -31,63 +30,33 @@ if __name__ == "__main__":
     json_path = EXTR_PATH + "final_data_info.json"
     root_dir = EXTR_PATH + "final/"
 
-
     use_cuda = torch.cuda.is_available()
 
+    # Pose transforms
     filter_pose = FilterJoints()
     normalise_pose = NormalisePose()
     change_pose_origin = ChangePoseOrigin()
 
-    pose_composed = transforms.Compose([FilterJoints(), NormalisePose(low=0, high=1)])
-
+    # Transforms
     to_tensor = ToTensor()
-    composed = transforms.Compose([FilterJoints(), ToTensor()])
+    composed = transforms.Compose([FilterJoints(), NormalisePoses(low=2, high=5), ToTensor()])
 
-    foid = FOID(json_path, root_dir, sequence_len, transform=NormalisePoses(low=2, high=5), pose_transform=None)
+    foid = FOID(json_path, root_dir, sequence_len, transform=composed, pose_transform=None)
 
     foid_item = foid[0]
-
+    seq = foid_item["sequence"]
     shape = ""
-    if isinstance(foid_item["sequence"], np.ndarray):
-        shape = foid_item["sequence"].shape
-    elif isinstance(foid_item["sequence"], list):
-        shape = len(foid_item["sequence"])
-    elif isinstance(foid_item["sequence"], torch.Tensor):
-        shape = foid_item["sequence"].size()
+
+    if isinstance(seq, np.ndarray):
+        shape = seq.shape
+    elif isinstance(seq, list):
+        shape = len(seq)
+    elif isinstance(seq, torch.Tensor):
+        shape = seq.size()
 
     print("Dataset instance with id '{}' is of type '{}', with shape {}"
-          .format(foid_item["id"], type(foid_item["sequence"]), shape))
+          .format(foid_item["id"], type(seq), shape))
 
-    '''
-    for idx in range(0,10):
-        foid_item = foid[idx]
-        print(len(foid_item["sequence"]))
-        print(foid_item["sequence"][0])
-    '''
-
-
-    '''
-    kinetic_dataset = FOIKineticPoseDataset(json_path, root_dir, sequence_len, pose_transform=filter_poses)
-    #train_loader = DataLoader(train_set, batch_size, shuffle=True, num_workers=2)
-
-    
-    print("Dataset length: {}".format(len(kinetic_dataset)))
-    item = kinetic_dataset[0]
-    print(item["poses"][0])
-    pose = Pose(item["poses"][0])
-    print(pose.joints[23].name)
-    '''
-
-
-
-    #filter_poses(item["keypoints"][0])
-    #print(item["poses"].shape)
-
-    '''
-    for i in range(15000, 15010):
-        item = kinetic_dataset[i]
-        print(item["keypoints"].shape)
-    '''
     model = LSTM(input_size, hidden_size, num_layers, num_classes)
 
     if use_cuda:

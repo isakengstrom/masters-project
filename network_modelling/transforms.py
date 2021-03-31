@@ -126,9 +126,7 @@ class FilterJoints(object):
 
     def __call__(self, item):
         seq_id, seq = item["id"], item["sequence"]
-
         assert type(seq) is np.ndarray
-        assert seq.shape[2] == 2
 
         # Uses Numpy's extended slicing to return ONLY the indexes saved in the list 'self.filtered_indexes'
         return {"id": seq_id, "sequence": seq[:, self.filtered_indexes]}
