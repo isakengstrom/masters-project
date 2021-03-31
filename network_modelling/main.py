@@ -32,16 +32,11 @@ if __name__ == "__main__":
 
     use_cuda = torch.cuda.is_available()
 
-    # Pose transforms
-    filter_pose = FilterJoints()
-    normalise_pose = NormalisePose()
-    change_pose_origin = ChangePoseOrigin()
-
     # Transforms
     to_tensor = ToTensor()
     composed = transforms.Compose([FilterJoints(), NormalisePoses(low=2, high=5), ToTensor()])
 
-    foid = FOID(json_path, root_dir, sequence_len, transform=composed, pose_transform=None)
+    foid = FOID(json_path, root_dir, sequence_len, transform=composed)
 
     foid_item = foid[0]
     seq = foid_item["sequence"]

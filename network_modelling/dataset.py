@@ -80,7 +80,7 @@ class Pose:
 
 
 class Sequence:
-    def __init__(self, root_dir, seq, sequence_len, pose_transform=None):
+    def __init__(self, root_dir, seq, sequence_len):
         seq_info = SequenceElement(seq)
 
         self.__sequence_len = sequence_len
@@ -92,15 +92,7 @@ class Sequence:
         seq_data = file_data[seq_info.start:seq_info.end]
         seq_data = np.array(seq_data)
 
-        self.poses = []
-
-        for item in seq_data:
-            if pose_transform:
-                item = pose_transform(item)
-
-            self.poses.append(item)
-
-        self.poses = np.array(self.poses)
+        self.poses = np.array(seq_data)
 
     def __len__(self):
         return self.__sequence_len
@@ -110,16 +102,14 @@ class Sequence:
 
 
 class FOIKineticPoseDataset(Dataset):
-    def __init__(self, json_path, root_dir, sequence_len, transform=None, pose_transform=None):
+    def __init__(self, json_path, root_dir, sequence_len, transform=None):
         # Data loading
         self.json_path = json_path
         self.root_dir = root_dir
         self.sequence_len = sequence_len
+        self.transform = transform
 
         self.lookup = self.__create_lookup()
-
-        self.transform = transform
-        self.pose_transform = pose_transform
 
         print("Init dataset")
 
@@ -133,7 +123,7 @@ class FOIKineticPoseDataset(Dataset):
         if isinstance(idx, slice):
             raise NotImplementedError
 
-        seq = Sequence(self.root_dir, self.lookup[idx], self.sequence_len, self.pose_transform)
+        seq = Sequence(self.root_dir, self.lookup[idx], self.sequence_len)
 
         item = {"id": seq.id, "sequence": seq.poses}
 
