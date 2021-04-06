@@ -39,8 +39,7 @@ class ChangePoseOrigin(object):
     """
     Changes the origins of the poses in a sequence to the specified joint.
 
-    NOTE:
-        Apply this transform before applying 'FilterJoints()', as it otherwise can use the incorrect joint.
+    NOTE: Apply this transform before applying 'FilterJoints()', as it otherwise can use the incorrect joint.
     """
     def __init__(self, path=JOINTS_LOOKUP_PATH, origin_name="c_hip"):
         joints_lookup = read_from_json(path, use_dumps=True)

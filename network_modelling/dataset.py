@@ -104,16 +104,15 @@ class Sequence:
 
 
 class FOIKineticPoseDataset(Dataset):
-    def __init__(self, json_path, root_dir, sequence_len, transform=None):
+    def __init__(self, json_path, root_dir, sequence_len, data_limiter=None, transform=None):
         # Data loading
         self.json_path = json_path
         self.root_dir = root_dir
         self.sequence_len = sequence_len
         self.transform = transform
+        self.data_limiter = data_limiter
 
         self.lookup = self.__create_lookup()
-
-        print("Init dataset")
 
     def __len__(self):
         return len(self.lookup)
@@ -140,6 +139,11 @@ class FOIKineticPoseDataset(Dataset):
         lookup = []
         for element in data_info:
             element_info = DimensionsElement(element)
+
+            # Skip adding a sequence to the lookup if it is not specified in the data_limiter.
+            if self.__should_skip(element_info):
+                continue
+
             seq_info = dict()
             seq_info["file_name"] = element_info.file_name
             seq_info["sub_name"] = element_info.sub_name
@@ -156,3 +160,30 @@ class FOIKineticPoseDataset(Dataset):
             lookup[-1]["end"] = min(lookup[-1]["end"], element_info.len)
 
         return lookup
+
+    def __should_skip(self, info):
+        if self.data_limiter is None:
+            return False
+
+        if not isinstance(self.data_limiter, dict):
+            print("The data limiter is not a dict or 'None'")
+            raise TypeError
+
+        def contains(limit, element):
+            if self.data_limiter[limit] is None:
+                return True
+
+            if element in self.data_limiter[limit]:
+                return True
+
+            return False
+
+        if not contains("subjects", info.sub):
+            return True
+
+        if not contains("sessions", info.sess):
+            return True
+
+        if not contains("views", info.view):
+            return True
+

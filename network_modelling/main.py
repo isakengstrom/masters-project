@@ -26,11 +26,25 @@ if __name__ == "__main__":
     sequence_len = 100
     num_layers = 2
 
+    # Loss function
+    margin = 0.2
+
     # Other params
     json_path = EXTR_PATH + "final_data_info.json"
     root_dir = EXTR_PATH + "final/"
 
     use_cuda = torch.cuda.is_available()
+
+    # Limiter
+    # Used to specify which sequences to extract from the dataset.
+    # Values can either be 'None' or a list of indices.
+    # If 'None', don't limit that parameter
+    # If indices, get the corresponding sequences
+    data_limiter = {
+        "subjects": None,
+        "sessions": [0],
+        "views": [0, 1],
+    }
 
     # Transforms
     composed = transforms.Compose([
@@ -40,7 +54,10 @@ if __name__ == "__main__":
         ToTensor()
     ])
 
-    foid = FOID(json_path, root_dir, sequence_len, transform=composed)
+
+    foid = FOID(json_path, root_dir, sequence_len, data_limiter, transform=composed)
+
+    print(len(foid))
 
     foid_item = foid[3]
     seq = foid_item["sequence"]
@@ -62,10 +79,10 @@ if __name__ == "__main__":
         model.cuda()
         cudnn.benchmark = True
 
-    objective = nn.TripletMarginLoss()
+    triplet_loss = nn.TripletMarginLoss(margin)
 
     optimizer = torch.optim.Adam(model.parameters())
 
 
-    #model, loss_log, acc_log = train(model, train_loader, optimizer, objective, use_cuda, start_epoch, num_epochs)
+    #model, loss_log, acc_log = train(model, train_loader, optimizer, triplet_loss, use_cuda, start_epoch, num_epochs)
 
