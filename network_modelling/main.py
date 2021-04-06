@@ -11,7 +11,7 @@ from train import train
 from test import test
 from dataset import FOIKineticPoseDataset as FOID
 from helpers.paths import EXTR_PATH
-from transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, ApplyNoise
+from transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise
 
 if __name__ == "__main__":
     # Hyper parameters:

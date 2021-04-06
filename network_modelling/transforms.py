@@ -14,7 +14,7 @@ class ToTensor(object):
         return item
 
 
-class ApplyNoise(object):
+class AddNoise(object):
     def __init__(self, loc=0.0, scale=0.1):
         self.loc = loc
         self.scale = scale
