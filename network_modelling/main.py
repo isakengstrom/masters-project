@@ -34,7 +34,8 @@ if __name__ == "__main__":
 
     # Transforms
     to_tensor = ToTensor()
-    composed = transforms.Compose([FilterJoints(), NormalisePoses(low=2, high=5), ToTensor()])
+    change_pose_origin = ChangePoseOrigin(origin_name="c_hip")
+    composed = transforms.Compose([ChangePoseOrigin(), FilterJoints(), NormalisePoses(low=2, high=5), ToTensor()])
 
     foid = FOID(json_path, root_dir, sequence_len, transform=composed)
 

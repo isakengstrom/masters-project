@@ -14,10 +14,31 @@ class ToTensor:
         return item
 
 
-# TODO: implement this transform
 class ChangePoseOrigin(object):
-    def __init__(self):
-        print("Init ChangePoseOrigin")
+    """
+
+    """
+    def __init__(self, path=JOINTS_LOOKUP_PATH, origin_name="c_hip"):
+        joints_lookup = read_from_json(path, use_dumps=True)
+        self.origin_name = origin_name
+        self.origin_idx = None
+
+        for joint in joints_lookup["joints"]:
+            if self.origin_name == joint["name"]:
+                self.origin_idx = joint["op_idx"]
+
+    def __call__(self, item):
+        seq = item["sequence"]
+
+        assert type(seq) is np.ndarray
+
+        origins = seq[:, self.origin_idx, :]
+        origins = np.tile(origins, seq.shape[1]).reshape(seq.shape, order='F')
+
+        changed_seq = seq - origins
+
+        item["sequence"] = changed_seq
+        return item
 
 
 class NormalisePoses(object):
