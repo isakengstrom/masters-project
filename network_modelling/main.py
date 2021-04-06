@@ -11,7 +11,7 @@ from train import train
 from test import test
 from dataset import FOIKineticPoseDataset as FOID
 from helpers.paths import EXTR_PATH
-from transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses
+from transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, ApplyNoise
 
 if __name__ == "__main__":
     # Hyper parameters:
@@ -33,9 +33,12 @@ if __name__ == "__main__":
     use_cuda = torch.cuda.is_available()
 
     # Transforms
-    to_tensor = ToTensor()
-    change_pose_origin = ChangePoseOrigin(origin_name="c_hip")
-    composed = transforms.Compose([ChangePoseOrigin(), FilterJoints(), NormalisePoses(low=2, high=5), ToTensor()])
+    composed = transforms.Compose([
+        ChangePoseOrigin(),
+        FilterJoints(),
+        NormalisePoses(),
+        ToTensor()
+    ])
 
     foid = FOID(json_path, root_dir, sequence_len, transform=composed)
 

@@ -4,7 +4,7 @@ from helpers import read_from_json
 from helpers.paths import JOINTS_LOOKUP_PATH
 
 
-class ToTensor:
+class ToTensor(object):
     """
     Converts a sequence from a Numpy Array to a Torch Tensor
     """
@@ -14,19 +14,35 @@ class ToTensor:
         return item
 
 
+class ApplyNoise(object):
+    def __init__(self, loc=0.0, scale=0.1):
+        self.loc = loc
+        self.scale = scale
+
+    def __call__(self, item):
+        seq = item["sequence"]
+
+        assert type(seq) is np.ndarray
+
+        seq += np.random.normal(self.loc, self.scale, seq.shape)
+        item["sequence"] = seq
+
+        return item
+
+
 class ChangePoseOrigin(object):
     """
     Changes the origins of the poses in a sequence to the specified joint.
 
     NOTE:
-        Apply this transform before applying FilterJoints, as it otherwise can use the incorrect joint.
+        Apply this transform before applying 'FilterJoints()', as it otherwise can use the incorrect joint.
     """
     def __init__(self, path=JOINTS_LOOKUP_PATH, origin_name="c_hip"):
         joints_lookup = read_from_json(path, use_dumps=True)
         self.origin_name = origin_name
         self.origin_idx = None
 
-        # Get the openpose index corresponding to the origin_name, this index represent the origin joint. 
+        # Get the openpose index corresponding to the origin_name, this index represent the origin joint.
         for joint in joints_lookup["joints"]:
             if self.origin_name == joint["name"]:
                 self.origin_idx = joint["op_idx"]
@@ -48,9 +64,8 @@ class ChangePoseOrigin(object):
         origins = np.tile(origins, seq.shape[1]).reshape(seq.shape, order='F')
 
         # Transform all the coordinates with the origins.
-        changed_seq = seq - origins
+        item["sequence"] = seq - origins
 
-        item["sequence"] = changed_seq
         return item
 
 
