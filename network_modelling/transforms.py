@@ -16,25 +16,38 @@ class ToTensor:
 
 class ChangePoseOrigin(object):
     """
+    Changes the origins of the poses in a sequence to the specified joint.
 
+    NOTE:
+        Apply this transform before applying FilterJoints, as it otherwise can use the incorrect joint.
     """
     def __init__(self, path=JOINTS_LOOKUP_PATH, origin_name="c_hip"):
         joints_lookup = read_from_json(path, use_dumps=True)
         self.origin_name = origin_name
         self.origin_idx = None
 
+        # Get the openpose index corresponding to the origin_name, this index represent the origin joint. 
         for joint in joints_lookup["joints"]:
             if self.origin_name == joint["name"]:
                 self.origin_idx = joint["op_idx"]
+
+        assert self.origin_idx is not None
 
     def __call__(self, item):
         seq = item["sequence"]
 
         assert type(seq) is np.ndarray
 
+        # Small assertion to make sure origin_idx is in range.
+        # Still needs to be applied before 'FilterJoints()' tough!
+        assert self.origin_idx <= seq.shape[1]
+
+        # Store the coordinate values of the origins, then tile them to the same dimensions as seq so subtraction
+        # can be applied.
         origins = seq[:, self.origin_idx, :]
         origins = np.tile(origins, seq.shape[1]).reshape(seq.shape, order='F')
 
+        # Transform all the coordinates with the origins.
         changed_seq = seq - origins
 
         item["sequence"] = changed_seq
