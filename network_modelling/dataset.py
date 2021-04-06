@@ -19,7 +19,8 @@ class DatasetElement:
         self.sess = int(self.sess_name[-1])
         self.view = int(self.view_name[-1])
 
-        self.id = "s{}s{}v{}".format(self.sub, self.sess, self.view)
+        self.label = self.sub
+        self.key = "s{}s{}v{}".format(self.sub, self.sess, self.view)
 
 
 class DimensionsElement(DatasetElement):
@@ -84,7 +85,8 @@ class Sequence:
         seq_info = SequenceElement(seq)
 
         self.__sequence_len = sequence_len
-        self.id = seq_info.id
+        self.id = seq_info.key
+        self.label = seq_info.label
 
         file_path = os.path.join(root_dir, seq_info.file_name)
         file_data = read_from_json(file_path)
@@ -125,7 +127,7 @@ class FOIKineticPoseDataset(Dataset):
 
         seq = Sequence(self.root_dir, self.lookup[idx], self.sequence_len)
 
-        item = {"seq_idx": idx, "id": seq.id, "sequence": seq.poses}
+        item = {"seq_idx": idx, "key": seq.id, "label": seq.label, "sequence": seq.poses}
 
         if self.transform:
             item = self.transform(item)
@@ -143,7 +145,7 @@ class FOIKineticPoseDataset(Dataset):
             seq_info["sub_name"] = element_info.sub_name
             seq_info["sess_name"] = element_info.sess_name
             seq_info["view_name"] = element_info.view_name
-            seq_info["id"] = element_info.id
+            seq_info["key"] = element_info.key
 
             for i in range(0, element_info.len, self.sequence_len):
                 seq_info["start"] = i

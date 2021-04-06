@@ -38,21 +38,21 @@ if __name__ == "__main__":
 
     foid = FOID(json_path, root_dir, sequence_len, transform=composed)
 
-    foid_item = foid[0]
+    foid_item = foid[3]
     seq = foid_item["sequence"]
-    shape = ""
+    dim = ""
 
     if isinstance(seq, np.ndarray):
-        shape = seq.shape
+        dim = seq.shape
     elif isinstance(seq, list):
-        shape = len(seq)
+        dim = len(seq)
     elif isinstance(seq, torch.Tensor):
-        shape = seq.size()
+        dim = seq.size()
 
-    print("Dataset instance with id '{}' is of type '{}', with shape {}"
-          .format(foid_item["id"], type(seq), shape))
+    print("Dataset instance with index {} and key '{}'\n\ttype: {}, \n\tDimensions: {}"
+          .format(foid_item["seq_idx"], foid_item["key"], type(seq), dim))
 
-    model = LSTM(input_size, hidden_size, num_layers, num_classes)
+    model = LSTM(input_size, hidden_size, num_layers, num_classes, use_cuda)
 
     if use_cuda:
         model.cuda()
