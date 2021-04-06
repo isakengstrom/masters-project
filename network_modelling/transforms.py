@@ -15,6 +15,11 @@ class ToTensor(object):
 
 
 class AddNoise(object):
+    """
+    Adds noise to a sequence using Numpy's normal (Gaussian) distribution.
+
+    Read more: https://numpy.org/doc/stable/reference/random/generated/numpy.random.normal.html
+    """
     def __init__(self, loc=0.0, scale=0.1):
         self.loc = loc
         self.scale = scale
