@@ -16,7 +16,7 @@ class ToTensor(object):
 
 class AddNoise(object):
     """
-    Adds noise to a sequence using Numpy's normal (Gaussian) distribution.
+    Adds noise to a sequence using NumPy's normal (Gaussian) distribution.
 
     Read more: https://numpy.org/doc/stable/reference/random/generated/numpy.random.normal.html
     """
@@ -155,7 +155,7 @@ class FilterJoints(object):
         seq = item["sequence"]
         assert type(seq) is np.ndarray
 
-        # Uses Numpy's extended slicing to return ONLY the indexes saved in the list 'self.filtered_indexes'
+        # Uses NumPy's extended slicing to return ONLY the indexes saved in the list 'self.filtered_indexes'
         item["sequence"] = seq[:, self.filtered_indexes]
 
         return item
