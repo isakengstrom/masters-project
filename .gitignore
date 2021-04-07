@@ -1,3 +1,14 @@
 .idea/
 
+# Ignore all audio files with the extentions '.wav'
 /**/*.wav
+
+# Ignore the saved models
+/**/saved_models/*
+
+# Ignore training checkpoints
+*ckpt
+
+# All folders with a .keep should not be ignored
+!/**/.keep
+
