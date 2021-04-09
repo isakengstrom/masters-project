@@ -192,7 +192,7 @@ class FOIKineticPoseDataset(Dataset):
             element_info = DimensionsElement(element)
 
             # Skip adding a sequence to the lookup if it is not specified in the data_limiter.
-            if self.__should_skip(element_info):
+            if self.__should_skip_sequence(element_info):
                 continue
 
             seq_info = dict()
@@ -212,7 +212,7 @@ class FOIKineticPoseDataset(Dataset):
 
         return lookup
 
-    def __should_skip(self, info):
+    def __should_skip_sequence(self, info):
         if self.data_limiter is None:
             return False
 
