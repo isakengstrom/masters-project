@@ -23,7 +23,21 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
         for batch_idx, sample_batched in enumerate(train_loader):
             label = None
             if network_type == "siamese":
-                raise NotImplementedError
+                positive_sequence, negative_sequence, positive_label = sample_batched
+
+                label = positive_label.to(device)
+                positive_sequence = positive_sequence.to(device)
+                negative_sequence = negative_sequence.to(device)
+
+                # Clear the gradients of all variables
+                optimizer.zero_grad()
+
+                # Feed the network forward
+                positive_out = model(positive_sequence)
+                negative_out = model(negative_sequence)
+
+                # Calculate the loss
+                loss = loss_function(positive_out, negative_out)
 
             elif network_type == "triplet":
                 anchor_sequence, positive_sequence, negative_sequence, anchor_label = sample_batched
