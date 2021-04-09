@@ -8,10 +8,8 @@ class ToTensor(object):
     """
     Converts a sequence from a Numpy Array to a Torch Tensor
     """
-    def __call__(self, item):
-        item["sequence"] = torch.from_numpy(item["sequence"])
-
-        return item
+    def __call__(self, seq):
+        return torch.from_numpy(seq)
 
 
 class AddNoise(object):
@@ -24,15 +22,10 @@ class AddNoise(object):
         self.loc = loc
         self.scale = scale
 
-    def __call__(self, item):
-        seq = item["sequence"]
-
+    def __call__(self, seq):
         assert type(seq) is np.ndarray
 
-        seq += np.random.normal(self.loc, self.scale, seq.shape)
-        item["sequence"] = seq
-
-        return item
+        return seq + np.random.normal(self.loc, self.scale, seq.shape)
 
 
 class ChangePoseOrigin(object):
@@ -53,9 +46,7 @@ class ChangePoseOrigin(object):
 
         assert self.origin_idx is not None
 
-    def __call__(self, item):
-        seq = item["sequence"]
-
+    def __call__(self, seq):
         assert type(seq) is np.ndarray
 
         # Small assertion to make sure origin_idx is in range.
@@ -67,10 +58,8 @@ class ChangePoseOrigin(object):
         origins = seq[:, self.origin_idx, :]
         origins = np.tile(origins, seq.shape[1]).reshape(seq.shape, order='F')
 
-        # Transform all the coordinates with the origins.
-        item["sequence"] = seq - origins
-
-        return item
+        # Transform all the coordinates with the origins and return
+        return seq - origins
 
 
 class NormalisePoses(object):
@@ -84,9 +73,7 @@ class NormalisePoses(object):
         self.high = high
 
     # Influenced by: https://stats.stackexchange.com/a/281164
-    def __call__(self, item):
-        seq = item["sequence"]
-
+    def __call__(self, seq):
         assert type(seq) is np.ndarray
 
         # Get the min and max of the x and y coordinates separately for each pose in the sequence.
@@ -120,8 +107,7 @@ class NormalisePoses(object):
         # Normalise from [0,1] to [self.low, self.high]
         normalised = normalised * (self.high - self.low) + self.low
 
-        item["sequence"] = normalised
-        return item
+        return normalised
 
 
 class FilterJoints(object):
@@ -151,13 +137,8 @@ class FilterJoints(object):
                 if joint[active_name] == trait:
                     self.filtered_indexes.append(joint["op_idx"])
 
-    def __call__(self, item):
-        seq = item["sequence"]
+    def __call__(self, seq):
         assert type(seq) is np.ndarray
 
         # Uses NumPy's extended slicing to return ONLY the indexes saved in the list 'self.filtered_indexes'
-        item["sequence"] = seq[:, self.filtered_indexes]
-
-        return item
-
-
+        return seq[:, self.filtered_indexes]
