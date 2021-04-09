@@ -17,17 +17,18 @@ from helpers.paths import EXTR_PATH
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise
 
 
-def create_samplers(dataset_len, train_split=.8, validation_split=.2, val_from_train=True, shuffle=True):
+def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=True, shuffle=True):
     """
 
     Influenced by: https://stackoverflow.com/a/50544887
 
     This is not (as of yet) stratified sampling,
     read more about it here: https://stackoverflow.com/a/52284619
+    or here: https://github.com/ncullen93/torchsample/blob/master/torchsample/samplers.py#L22
 
     :param dataset_len:
     :param train_split:
-    :param validation_split:
+    :param val_split:
     :param val_from_train:
     :param shuffle:
     :return:
@@ -42,26 +43,35 @@ def create_samplers(dataset_len, train_split=.8, validation_split=.2, val_from_t
 
     if val_from_train:
         train_test_split = int(np.floor(train_split * dataset_len))
-        temp_indices, test_indices = indices[:train_test_split], indices[train_test_split:]
+        train_val_split = int(np.floor((1 - val_split) * train_test_split))
 
-        train_val_split = int(np.floor((1 - validation_split) * train_test_split))
-        train_indices, val_indices = temp_indices[:train_val_split], temp_indices[train_val_split:]
+        temp_indices = indices[:train_test_split]
 
+        train_indices = temp_indices[:train_val_split]
+        val_indices = temp_indices[train_val_split:]
+        test_indices = indices[train_test_split:]
     else:
-        test_split = 1 - (train_split + validation_split)
+        test_split = 1 - (train_split + val_split)
 
         # Check that there is a somewhat reasonable split left for testing
         assert test_split >= 0.1
 
         first_split = int(np.floor(train_split * dataset_len))
         second_split = int(np.floor((train_split + test_split) * dataset_len))
-        train_indices, test_indices, val_indices = indices[:first_split], indices[first_split:second_split], indices[second_split:]
+
+        train_indices = indices[:first_split]
+        test_indices = indices[first_split:second_split]
+        val_indices = indices[second_split:]
 
     return SubsetRandomSampler(train_indices), SubsetRandomSampler(test_indices), SubsetRandomSampler(val_indices)
 
 
 def check_dataset_item(item):
-    seq = item["sequence"]
+    """"""
+    print(len(item))
+    '''
+    if len(item)
+    seq = item["sequences"]["anchor_sequence"]
     print(seq.shape)
     dim = ""
 
@@ -75,12 +85,13 @@ def check_dataset_item(item):
     print("Dataset instance with index {} and key '{}'\n\ttype: {}, \n\tDimensions: {}"
           .format(item["seq_idx"], item["key"], type(seq), dim))
 
+    '''
+
 
 if __name__ == "__main__":
     # Hyper parameters:
     hidden_size = 128
     num_classes = 10
-    start_epoch = 1
     num_epochs = 2
     batch_size = 2
     learning_rate = 0.001
@@ -95,6 +106,7 @@ if __name__ == "__main__":
     # Other params
     json_path = EXTR_PATH + "final_data_info.json"
     root_dir = EXTR_PATH + "final/"
+    network_type = "triplet"
 
     use_cuda = torch.cuda.is_available()
 
@@ -133,15 +145,21 @@ if __name__ == "__main__":
         ToTensor()
     ])
 
-    dataset = FOIKineticPoseDataset(json_path, root_dir, sequence_len, data_limiter, transform=composed)
+    dataset = FOIKineticPoseDataset(json_path, root_dir, sequence_len, network_type, data_limiter, transform=composed)
+    #check_dataset_item(dataset[3])
 
-    train_sampler, test_sampler, val_sampler = create_samplers(len(dataset), train_split=0.6, validation_split=0.1)
+    train_sampler, test_sampler, val_sampler = create_samplers(len(dataset), train_split=.8, val_split=.2, shuffle=True)
 
     train_loader = DataLoader(dataset, batch_size, sampler=train_sampler, num_workers=2)
     test_loader = DataLoader(dataset, batch_size, sampler=test_sampler, num_workers=2)
     val_loader = DataLoader(dataset, batch_size, sampler=val_sampler, num_workers=2)
 
-    #check_dataset_item(dataset[3])
+    if network_type == "siamese":
+        raise NotImplementedError
+    elif network_type == "triplet":
+        loss_function = nn.TripletMarginLoss(margin)
+    else:
+        raise NotImplementedError
 
     model = LSTM(input_size, hidden_size, num_layers, num_classes)
 
@@ -152,9 +170,7 @@ if __name__ == "__main__":
     else:
         device = torch.device('cpu')
 
-    triplet_loss = nn.TripletMarginLoss(margin)
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-    optimizer = torch.optim.Adam(model.parameters())
-
-    model, loss_log, acc_log = train(model, train_loader, optimizer, triplet_loss, device, start_epoch, num_epochs)
+    model, loss_log, acc_log = train(model, train_loader, optimizer, loss_function, num_epochs, device, network_type)
 
