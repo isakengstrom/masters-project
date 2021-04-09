@@ -1,45 +1,51 @@
 import os
 import torch
 import torch.nn as nn
+import numpy as np
 
 
-def train(model, train_loader, optimizer, triplet_loss, device, start_epoch, num_epochs):
+#https://www.kaggle.com/hirotaka0122/triplet-loss-with-pytorch
+def train(model, train_loader, optimizer, loss_function, num_epochs, device, network_type="triplet"):
     loss_log = []
     acc_log = []
 
-    for epoch in range(start_epoch, num_epochs+1):
-        print("\nEpoch {}".format(epoch))
+    for epoch in range(num_epochs):
+        print(f"\nEpoch {epoch}")
 
         model.train()
 
-        train_loss = 0
+        train_loss = []
         correct = 0
         total = 0
 
         batch_len = len(train_loader)
 
         for batch_idx, sample_batched in enumerate(train_loader):
-            data = sample_batched["sequence"], labels = sample_batched["label"]
+            label = None
+            if network_type == "siamese":
+                raise NotImplementedError
 
-            data, labels = data.to(device), labels.to(device)
+            elif network_type == "triplet":
+                anchor_sequence, positive_sequence, negative_sequence, anchor_label = sample_batched
 
-            #data, labels = torch.tensor(data, requires_grad=True), torch.tensor(labels).long()
+                label = anchor_label.to(device)
+                anchor_sequence = anchor_sequence.to(device)
+                positive_sequence = positive_sequence.to(device)
+                negative_sequence = negative_sequence.to(device)
 
-            # Clear the gradients of all variables
-            optimizer.zero_grad()
+                # Clear the gradients of all variables
+                optimizer.zero_grad()
 
-            # Feed forward the network
-            #embeddings = model(data)
-            #print(len(embeddings))
+                # Feed the network forward
+                anchor_out = model(anchor_sequence)
+                positive_out = model(positive_sequence)
+                negative_out = model(negative_sequence)
 
-            #TODO: Fix this with triplet loss
-            # Should be something like: loss = triplet_loss(anchor, positive, negative)
+                # Calculate the loss
+                loss = loss_function(anchor_out, positive_out, negative_out)
 
-            anchor = torch.randn(100, 128, requires_grad=True)
-            positive = torch.randn(100, 128, requires_grad=True)
-            negative = torch.randn(100, 128, requires_grad=True)
-            # Calculate the loss
-            loss = triplet_loss(anchor, positive, negative)
+            else:
+                raise NotImplementedError
 
             # Feed Backward
             loss.backward()
@@ -48,7 +54,7 @@ def train(model, train_loader, optimizer, triplet_loss, device, start_epoch, num
             optimizer.step()
 
             # Update the training status
-            train_loss += loss.item()
+            train_loss.append(loss.cpu().detach().numpy())
 
             # Find the class with the highest output
             #_, predicted = torch.max(embeddings.data, 1)
@@ -58,7 +64,8 @@ def train(model, train_loader, optimizer, triplet_loss, device, start_epoch, num
             #correct += (predicted == labels).sum().item()
 
             if batch_idx % 2 == 0:
-                print("Epoch {}/{}, Iteration {}/{}: Loss = {}".format(epoch, num_epochs, batch_idx, batch_len, loss))
+                print(f"Epoch {epoch+1}/{num_epochs} - Iteration {batch_idx+1}/{batch_len}: Loss = {np.mean(train_loss)}")
+
 
         #loss_log.append((train_loss / (batch_idx + 1)))
         #acc_log.append(100. * correct / total)
@@ -70,7 +77,7 @@ def train(model, train_loader, optimizer, triplet_loss, device, start_epoch, num
             'optimizer': optimizer.state_dict(),
         }
 
-        file_path = './checkpoints/checkpoint_{}.ckpt'.format(epoch)
+        file_path = f'./checkpoints/checkpoint_{epoch}.ckpt'
         torch.save(state, file_path)
 
     # Save the final model
