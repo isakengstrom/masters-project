@@ -80,28 +80,6 @@ class Pose:
         return item
 
 
-class Sequence:
-    def __init__(self, root_dir, seq, sequence_len):
-        seq_info = SequenceElement(seq)
-
-        self.__sequence_len = sequence_len
-        self.id = seq_info.key
-        self.label = seq_info.label
-
-        file_path = os.path.join(root_dir, seq_info.file_name)
-        file_data = read_from_json(file_path)
-
-        seq_data = file_data[seq_info.start:seq_info.end]
-        self.poses = np.array(seq_data)
-
-    def __len__(self):
-        return self.__sequence_len
-
-    def __getitem__(self, idx):
-        print("Getting a sequence item")
-        return self.poses[idx]
-
-
 class Sequences:
     def __init__(self, root_dir, sequence_len):
         self.__root_dir = root_dir
