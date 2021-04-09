@@ -5,7 +5,6 @@ import numpy as np
 import os
 
 from helpers import read_from_json
-from helpers.paths import JOINTS_LOOKUP_PATH
 
 
 class DatasetElement:
@@ -37,20 +36,6 @@ class SequenceElement(DatasetElement):
 
         self.start = int(element["start"])
         self.end = int(element["end"])
-
-
-class Joint:
-    def __init__(self, op_idx, name, coords):
-        self.op_idx = op_idx
-        self.name = name
-        self.coords = coords
-        self.x, self.y = coords
-
-    def __len__(self):
-        return len(self.coords)
-
-    def __getitem__(self, idx):
-        return self.coords[idx]
 
 
 class Sequences:
