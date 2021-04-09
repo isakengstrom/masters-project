@@ -59,7 +59,19 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
                 loss = loss_function(anchor_out, positive_out, negative_out)
 
             else:
-                raise NotImplementedError
+                sequence, label = sample_batched
+
+                label = label.to(device)
+                sequence = sequence.to(device)
+
+                # Clear the gradients of all variables
+                optimizer.zero_grad()
+
+                # Feed the network forward
+                sequence_out = model(sequence)
+
+                # Calculate the loss
+                loss = loss_function(sequence_out)
 
             # Feed Backward
             loss.backward()
