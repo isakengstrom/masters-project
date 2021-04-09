@@ -53,33 +53,6 @@ class Joint:
         return self.coords[idx]
 
 
-class Pose:
-    def __init__(self, pose, path=JOINTS_LOOKUP_PATH):
-        joints_lookup = read_from_json(path, use_dumps=True)
-        joints_info = joints_lookup["joints"]
-
-        joints = []
-        for idx, coords in enumerate(pose):
-            op_idx = joints_info[idx]["op_idx"]
-            name = joints_info[idx]["name"]
-
-            joint = Joint(op_idx, name, coords)
-            joints.append(joint)
-
-        self.joints = joints
-
-    def __len__(self):
-        return len(self.joints)
-
-    def __getitem__(self, idx):
-        if torch.is_tensor(idx):
-            idx = idx.tolist()
-
-        item = self.joints[idx]
-
-        return item
-
-
 class Sequences:
     def __init__(self, root_dir, sequence_len):
         self.__root_dir = root_dir
