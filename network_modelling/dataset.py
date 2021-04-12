@@ -46,7 +46,7 @@ class Sequences:
     def __len__(self):
         return self.__sequence_len
 
-    def __call__(self, item):
+    def __call__(self, item: dict) -> tuple:
         seq_info = SequenceElement(item)
 
         file_path = os.path.join(self.__root_dir, seq_info.file_name)
@@ -74,7 +74,7 @@ class FOIKineticPoseDataset(Dataset):
     def __len__(self):
         return len(self.lookup)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx) -> tuple:
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
@@ -90,7 +90,7 @@ class FOIKineticPoseDataset(Dataset):
 
         return item
 
-    def __get_single(self, idx):
+    def __get_single(self, idx: int) -> tuple:
         sequence, label = self.sequences(self.lookup[idx])
 
         if self.transform:
@@ -98,7 +98,7 @@ class FOIKineticPoseDataset(Dataset):
 
         return sequence, label
 
-    def __get_siamese(self, idx):
+    def __get_siamese(self, idx: int) -> tuple:
         positive_sequence, positive_label = self.sequences(self.lookup[idx])
         negative_sequence, _ = self.sequences(self.lookup[idx])
 
@@ -108,7 +108,7 @@ class FOIKineticPoseDataset(Dataset):
 
         return positive_sequence, negative_sequence, positive_label
 
-    def __get_triplet(self, idx):
+    def __get_triplet(self, idx: int) -> tuple:
         anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
         positive_sequence, _ = self.sequences(self.lookup[idx])
         negative_sequence, _ = self.sequences(self.lookup[idx])
@@ -120,7 +120,7 @@ class FOIKineticPoseDataset(Dataset):
 
         return anchor_sequence, positive_sequence, negative_sequence, anchor_label
 
-    def __create_lookup(self):
+    def __create_lookup(self) -> list:
         data_info = read_from_json(self.json_path)
 
         lookup = []
@@ -148,7 +148,7 @@ class FOIKineticPoseDataset(Dataset):
 
         return lookup
 
-    def __should_skip_sequence(self, info):
+    def __should_skip_sequence(self, info: DimensionsElement) -> bool:
         if self.data_limiter is None:
             return False
 
