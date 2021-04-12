@@ -12,6 +12,18 @@ class ToTensor(object):
         return torch.from_numpy(seq)
 
 
+class ReshapePoses(object):
+    """
+    Reshapes a sequence of poses of shape:
+        (seq_len, num_joints, num_coords) --> (seq_len, num_joints * num_coords)
+    """
+
+    def __call__(self, seq):
+        assert type(seq) is np.ndarray
+
+        return seq.reshape(seq.shape[0], seq.shape[1] * seq.shape[2])
+
+
 class AddNoise(object):
     """
     Adds noise to a sequence using NumPy's normal (Gaussian) distribution.
@@ -62,6 +74,7 @@ class ChangePoseOrigin(object):
         return seq - origins
 
 
+# TODO: fix the division by zero if one joint is chosen. This is a minor error, as one joint is of no interest..
 class NormalisePoses(object):
     """
     Transform which normalises the poses in a sequence in a given range, default being [0, 1].
