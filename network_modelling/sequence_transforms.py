@@ -18,9 +18,7 @@ class ReshapePoses(object):
         (seq_len, num_joints, num_coords) --> (seq_len, num_joints * num_coords)
     """
 
-    def __call__(self, seq):
-        assert type(seq) is np.ndarray
-
+    def __call__(self, seq: np.ndarray) -> np.ndarray:
         return seq.reshape(seq.shape[0], seq.shape[1] * seq.shape[2])
 
 
@@ -34,9 +32,8 @@ class AddNoise(object):
         self.loc = loc
         self.scale = scale
 
-    def __call__(self, seq):
-        assert type(seq) is np.ndarray
-
+    def __call__(self, seq: np.ndarray) -> np.ndarray:
+        
         return seq + np.random.normal(self.loc, self.scale, seq.shape)
 
 
@@ -58,8 +55,7 @@ class ChangePoseOrigin(object):
 
         assert self.origin_idx is not None
 
-    def __call__(self, seq):
-        assert type(seq) is np.ndarray
+    def __call__(self, seq: np.ndarray) -> np.ndarray:
 
         # Small assertion to make sure origin_idx is in range.
         # Still needs to be applied before 'FilterJoints()' tough!
@@ -86,8 +82,7 @@ class NormalisePoses(object):
         self.high = high
 
     # Influenced by: https://stats.stackexchange.com/a/281164
-    def __call__(self, seq):
-        assert type(seq) is np.ndarray
+    def __call__(self, seq: np.ndarray) -> np.ndarray:
 
         # Get the min and max of the x and y coordinates separately for each pose in the sequence.
         # The vars are of shape (sequence_len,)
@@ -150,8 +145,7 @@ class FilterJoints(object):
                 if joint[active_name] == trait:
                     self.filtered_indexes.append(joint["op_idx"])
 
-    def __call__(self, seq):
-        assert type(seq) is np.ndarray
+    def __call__(self, seq: np.ndarray) -> np.ndarray:
 
         # Uses NumPy's extended slicing to return ONLY the indexes saved in the list 'self.filtered_indexes'
         return seq[:, self.filtered_indexes]
