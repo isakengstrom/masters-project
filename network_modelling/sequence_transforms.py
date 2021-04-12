@@ -8,8 +8,8 @@ class ToTensor(object):
     """
     Converts a sequence from a Numpy Array to a Torch Tensor
     """
-    def __call__(self, seq):
-        return torch.from_numpy(seq)
+    def __call__(self, seq: np.ndarray) -> torch.Tensor:
+        return torch.from_numpy(seq).type(torch.float)
 
 
 class ReshapePoses(object):
