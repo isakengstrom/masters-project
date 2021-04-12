@@ -21,7 +21,6 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
         batch_len = len(train_loader)
 
         for batch_idx, sample_batched in enumerate(train_loader):
-            label = None
             if network_type == "siamese":
                 positive_sequence, negative_sequence, positive_label = sample_batched
 
