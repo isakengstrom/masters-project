@@ -13,8 +13,9 @@ from models.LSTM import LSTM
 from train import train
 from test import test
 from dataset import FOIKineticPoseDataset
-from helpers.paths import EXTR_PATH
-from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise
+from helpers.paths import EXTR_PATH, JOINTS_LOOKUP_PATH
+from helpers import read_from_json
+from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
 
 
 def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=True, shuffle=True):
@@ -89,14 +90,24 @@ def check_dataset_item(item):
 
 
 if __name__ == "__main__":
+    # Get the active number of OpenPose joints from the joints lookup. For full kinetic pose, this will be 25,
+    # but with the FilterJoints() transform, it can be a lower amount.
+    # (See if the filter is applied below, when calling the dataset)
+    joints_lookup = read_from_json(JOINTS_LOOKUP_PATH, use_dumps=True)
+    active_name = joints_lookup["activate_by"]
+    num_joints = len(joints_lookup["active_" + active_name])
+
+    # The number of coordinates for each of the OpenPose joints, equal to 2 if using both x and y
+    num_joint_coords = 2
+
     # Hyper parameters:
     hidden_size = 128
     num_classes = 10
     num_epochs = 2
-    batch_size = 2
+    batch_size = 1
     learning_rate = 0.001
 
-    input_size = 28
+    input_size = num_joints * num_joint_coords
     sequence_len = 100
     num_layers = 2
 
@@ -142,6 +153,7 @@ if __name__ == "__main__":
         ChangePoseOrigin(),
         FilterJoints(),
         NormalisePoses(),
+        ReshapePoses(),
         ToTensor()
     ])
 
@@ -161,14 +173,13 @@ if __name__ == "__main__":
     else:
         raise NotImplementedError
 
-    model = LSTM(input_size, hidden_size, num_layers, num_classes)
+    device = torch.device('cuda' if use_cuda else 'cpu')
+
+    model = LSTM(input_size, hidden_size, num_layers, num_classes, device)
 
     if use_cuda:
         model.cuda()
         cudnn.benchmark = True
-        device = torch.device('cuda')
-    else:
-        device = torch.device('cpu')
 
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
