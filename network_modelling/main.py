@@ -9,7 +9,7 @@ import torchvision.transforms as transforms
 import os
 import numpy as np
 
-from models.LSTM import LSTM
+from models.LSTM import LSTM, LSTM_2
 from train import train
 from test import test
 from dataset import FOIKineticPoseDataset

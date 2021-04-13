@@ -91,9 +91,8 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
             #correct += (predicted == labels).sum().item()
 
             if batch_idx % 2 == 0:
-                #print(f"Epoch {epoch + 1}/{num_epochs} - Iteration {batch_idx + 1}/{batch_len}: Loss = {np.mean(train_loss)}")
-                print(f"Epoch {epoch+1}/{num_epochs} - Iteration {batch_idx+1}/{batch_len}: Loss = {loss.item()}")
-
+                print(f"Epoch {epoch + 1}/{num_epochs} - Iteration {batch_idx + 1}/{batch_len}: Loss = {np.mean(train_loss)}")
+                #print(f"Epoch {epoch+1}/{num_epochs} - Iteration {batch_idx+1}/{batch_len}: Loss = {loss.item()}")
 
         #loss_log.append((train_loss / (batch_idx + 1)))
         #acc_log.append(100. * correct / total)
