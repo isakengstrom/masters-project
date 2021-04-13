@@ -11,15 +11,33 @@ class LSTM(nn.Module):
         super(LSTM, self).__init__()
         self.num_layers = num_layers
         self.hidden_size = hidden_size
+        self.device = device
+
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
 
+        self.fc_1 = nn.Linear(hidden_size, 128)
+        self.fc = nn.Linear(128, num_classes)
+
+        self.relu = nn.ReLU()
+
+        '''
         self.fc = nn.Linear(hidden_size, num_classes)
-        self.device = device
+        '''
 
     def forward(self, x):
         h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, dtype=torch.float).to(self.device)
         c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, dtype=torch.float).to(self.device)
 
+        # out: batch_size, seq_length, hidden_size
+        output, (hn, cn) = self.lstm(x, (h0, c0))
+
+        hn = hn.view(-1, self.hidden_size)
+        out = self.relu(hn)
+        out = self.fc_1(out)
+        out = self.relu(out)
+        out = self.fc(out)
+
+        '''
         # out: batch_size, seq_length, hidden_size
         out, _ = self.lstm(x, (h0, c0))
 
@@ -28,5 +46,7 @@ class LSTM(nn.Module):
 
         # out: (n,
         out = self.fc(out)
+
+        '''
 
         return out
