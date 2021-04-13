@@ -20,7 +20,22 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
         batch_len = len(train_loader)
 
         for batch_idx, sample_batched in enumerate(train_loader):
-            if network_type == "siamese":
+            if network_type == "single":
+                sequence, label = sample_batched
+
+                label = label.to(device)
+                sequence = sequence.to(device)
+
+                # Clear the gradients of all variables
+                optimizer.zero_grad()
+
+                # Feed the network forward
+                sequence_out = model(sequence)
+
+                # Calculate the loss
+                loss = loss_function(sequence_out, label)
+
+            elif network_type == "siamese":
                 positive_sequence, negative_sequence, positive_label = sample_batched
 
                 label = positive_label.to(device)
@@ -57,19 +72,7 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
                 loss = loss_function(anchor_out, positive_out, negative_out)
 
             else:
-                sequence, label = sample_batched
-
-                label = label.to(device)
-                sequence = sequence.to(device)
-
-                # Clear the gradients of all variables
-                optimizer.zero_grad()
-
-                # Feed the network forward
-                sequence_out = model(sequence)
-
-                # Calculate the loss
-                loss = loss_function(sequence_out, label)
+                raise AssertionError("Invalid network_type, should be 'single', 'siamese' or 'triplet'")
 
             # Feed Backward
             loss.backward()
