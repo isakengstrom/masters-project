@@ -38,6 +38,8 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
     indices = list(range(dataset_len))
 
     if shuffle:
+        # TODO: Look into if this truly generates random, see this:
+        #  https://www.reddit.com/r/MachineLearning/comments/mocpgj/p_using_pytorch_numpy_a_bug_that_plagues/
         random_seed = 42
         np.random.seed(random_seed)
         np.random.shuffle(indices)
@@ -100,24 +102,44 @@ if __name__ == "__main__":
     # The number of coordinates for each of the OpenPose joints, equal to 2 if using both x and y
     num_joint_coords = 2
 
-    # Hyper parameters:
-    hidden_size = 128
+    ####################################################################
+    # Hyper parameters #################################################
+    ####################################################################
+
+    # There are 10 people in the dataset that we want to classify correctly.
     num_classes = 10
+
+    # Number of epochs - The number of times the dataset is worked through during training
     num_epochs = 2
-    batch_size = 1
+
+    # Batch size - tightly linked with gradient descent.
+    # The number of samples worked through before the params of the model are updated
+    #   - Batch Gradient Descent: batch_size = len(dataset)
+    #   - Stochastic Gradient descent: batch_size = 1
+    #   - Mini-Batch Gradient descent: 1 < batch_size < len(dataset)
+    batch_size = 32
+
+    # Learning rate
     learning_rate = 0.001
 
+    # Number of features
     input_size = num_joints * num_joint_coords
+
+    # Length of a sequence, the length represent the number of frames.
+    # The FOI dataset is captured at 50 fps
     sequence_len = 100
-    num_layers = 2
+
+    # Layers for the RNN
+    num_layers = 1  # Number of stacked RNN layers
+    hidden_size = 2  # Number of features in hidden state
 
     # Loss function
-    margin = 0.2
+    margin = 0.2  # The margin used if margin loss is used
 
     # Other params
     json_path = EXTR_PATH + "final_data_info.json"
     root_dir = EXTR_PATH + "final/"
-    network_type = "triplet"
+    network_type = "single"
 
     use_cuda = torch.cuda.is_available()
 
@@ -144,8 +166,8 @@ if __name__ == "__main__":
     ###########################################################################
     data_limiter = {
         "subjects": None,
-        "sessions": None,
-        "views": None,
+        "sessions": [0],
+        "views": [0],
     }
 
     # Transforms
@@ -157,21 +179,39 @@ if __name__ == "__main__":
         ToTensor()
     ])
 
-    dataset = FOIKineticPoseDataset(json_path, root_dir, sequence_len, network_type, data_limiter, transform=composed)
-    #check_dataset_item(dataset[3])
+    train_dataset = FOIKineticPoseDataset(
+        json_path=json_path,
+        root_dir=root_dir,
+        sequence_len=sequence_len,
+        is_train=True,
+        network_type=network_type,
+        data_limiter=data_limiter,
+        transform=composed
+    )
 
-    train_sampler, test_sampler, val_sampler = create_samplers(len(dataset), train_split=.8, val_split=.2, shuffle=True)
+    test_dataset = FOIKineticPoseDataset(
+        json_path=json_path,
+        root_dir=root_dir,
+        sequence_len=sequence_len,
+        is_train=False,
+        data_limiter=data_limiter,
+        transform=composed
+    )
 
-    train_loader = DataLoader(dataset, batch_size, sampler=train_sampler, num_workers=2)
-    test_loader = DataLoader(dataset, batch_size, sampler=test_sampler, num_workers=2)
-    val_loader = DataLoader(dataset, batch_size, sampler=val_sampler, num_workers=2)
+    train_sampler, test_sampler, val_sampler = create_samplers(len(train_dataset), train_split=.8, val_split=.2, shuffle=True)
 
-    if network_type == "siamese":
+    train_loader = DataLoader(train_dataset, batch_size, sampler=train_sampler, num_workers=4)
+    test_loader = DataLoader(test_dataset, batch_size, sampler=test_sampler, num_workers=4)
+    val_loader = DataLoader(train_dataset, batch_size, sampler=val_sampler, num_workers=4)
+
+    if network_type == "single":
+        loss_function = nn.CrossEntropyLoss()
+    elif network_type == "siamese":
         raise NotImplementedError
     elif network_type == "triplet":
         loss_function = nn.TripletMarginLoss(margin)
     else:
-        raise NotImplementedError
+        raise NameError
 
     device = torch.device('cuda' if use_cuda else 'cpu')
 
@@ -185,3 +225,4 @@ if __name__ == "__main__":
 
     model, loss_log, acc_log = train(model, train_loader, optimizer, loss_function, num_epochs, device, network_type)
 
+    test_acc = test(model, test_loader, device)
