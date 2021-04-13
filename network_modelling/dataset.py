@@ -38,6 +38,37 @@ class SequenceElement(DatasetElement):
         self.end = int(element["end"])
 
 
+class DataLimiter:
+    """
+    Used to specify which sequences to extract from the dataset.
+    Values can either be 'None' or a list of indices.
+
+    If 'None', don't limit that parameter, e.g.
+        "subjects": None, "sessions": None, "views": None
+        will get all sequences, from s0_s0_v0 to s9_s0_v4
+
+    If indices, get the corresponding sequences, e.g.
+        "subjects": [0], "sessions": [0,1], "views": [0,1,2]
+        will get s0_s0_v0, s0_s0_v1, s0_s0_v2, s0_s1_v0, s0_s1_v1, s0_s1_v2
+    """
+
+    def __init__(self, subjects: list = None, sessions: list = None, views: list = None):
+        self.subjects = subjects
+        self.sessions = sessions
+        self.views = views
+
+    def skip_sequence(self, info: DimensionsElement) -> bool:
+
+        if self.subjects is not None and info.sub not in self.subjects:
+            return True
+
+        if self.sessions is not None and info.sess not in self.sessions:
+            return True
+
+        if self.views is not None and info.view not in self.views:
+            return True
+
+
 class Sequences:
     def __init__(self, root_dir, sequence_len):
         self.__root_dir = root_dir
@@ -125,7 +156,7 @@ class FOIKineticPoseDataset(Dataset):
             element_info = DimensionsElement(element)
 
             # Skip adding a sequence to the lookup if it is not specified in the data_limiter.
-            if self.__should_skip_sequence(element_info):
+            if self.data_limiter and self.data_limiter.skip_sequence(element_info):
                 continue
 
             seq_info = dict()
@@ -149,29 +180,4 @@ class FOIKineticPoseDataset(Dataset):
 
         return lookup
 
-    def __should_skip_sequence(self, info: DimensionsElement) -> bool:
-        if self.data_limiter is None:
-            return False
-
-        if not isinstance(self.data_limiter, dict):
-            print("The data limiter is not a dict or 'None'")
-            raise TypeError
-
-        def contains(limit, element):
-            if self.data_limiter[limit] is None:
-                return True
-
-            if element in self.data_limiter[limit]:
-                return True
-
-            return False
-
-        if not contains("subjects", info.sub):
-            return True
-
-        if not contains("sessions", info.sess):
-            return True
-
-        if not contains("views", info.view):
-            return True
 

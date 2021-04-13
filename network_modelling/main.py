@@ -12,7 +12,7 @@ import numpy as np
 from models.LSTM import LSTM, LSTM_2
 from train import train
 from test import test
-from dataset import FOIKineticPoseDataset
+from dataset import FOIKineticPoseDataset, DataLimiter
 from helpers.paths import EXTR_PATH, JOINTS_LOOKUP_PATH
 from helpers import read_from_json
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     #   - Batch Gradient Descent: batch_size = len(dataset)
     #   - Stochastic Gradient descent: batch_size = 1
     #   - Mini-Batch Gradient descent: 1 < batch_size < len(dataset)
-    batch_size = 32
+    batch_size = 1
 
     # Learning rate
     learning_rate = 0.001
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     hidden_size = 2  # Number of features in hidden state
 
     # Loss function
-    margin = 0.2  # The margin used if margin loss is used
+    margin = 0.2  # The margin for certain loss functions
 
     # Other params
     json_path = EXTR_PATH + "final_data_info.json"
@@ -151,24 +151,11 @@ if __name__ == "__main__":
     if not os.path.isdir('./models/saved_models'):
         os.mkdir('./models/saved_models')
 
-    # Limiter #################################################################
-    #   Used to specify which sequences to extract from the dataset.
-    #   Values can either be 'None' or a list of indices.
-    #
-    #   If 'None', don't limit that parameter, e.g.
-    #       "subjects": None, "sessions": None, "views": None
-    #        will get all sequences, from s0_s0_v0 to s9_s0_v4
-    #
-    #   If indices, get the corresponding sequences, e.g.
-    #       "subjects": [0], "sessions": [0,1], "views": [0,1,2]
-    #       will get s0_s0_v0, s0_s0_v1, s0_s0_v2, s0_s1_v0, s0_s1_v1, s0_s1_v2
-    #
-    ###########################################################################
-    data_limiter = {
-        "subjects": None,
-        "sessions": [0],
-        "views": [0],
-    }
+    data_limiter = DataLimiter(
+        subjects=[2, 3],
+        sessions=[0],
+        views=[0],
+    )
 
     # Transforms
     composed = transforms.Compose([
