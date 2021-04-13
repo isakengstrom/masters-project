@@ -59,7 +59,7 @@ class Sequences:
 
 # TODO: get positives and negatives correctly, they are all the same sequence atm
 class FOIKineticPoseDataset(Dataset):
-    def __init__(self, json_path, root_dir, sequence_len, network_type="triplet", data_limiter=None, transform=None):
+    def __init__(self, json_path, root_dir, sequence_len, is_train=False, network_type="triplet", data_limiter=None, transform=None):
         # Data loading
         self.json_path = json_path
         #self.root_dir = root_dir
@@ -67,6 +67,7 @@ class FOIKineticPoseDataset(Dataset):
         self.network_type = network_type
         self.data_limiter = data_limiter
         self.transform = transform
+        self.is_train = is_train
 
         self.sequences = Sequences(root_dir, sequence_len)
         self.lookup = self.__create_lookup()
@@ -79,9 +80,18 @@ class FOIKineticPoseDataset(Dataset):
             idx = idx.tolist()
 
         if isinstance(idx, slice):
+            print("Slicing is not available.")
             raise TypeError
 
-        if self.network_type == "siamese":
+        if self.network_type == "single" or not self.is_train:
+            sequence, label = self.sequences(self.lookup[idx])
+
+            if self.transform:
+                sequence = self.transform(sequence)
+
+            return sequence, label
+
+        elif self.network_type == "siamese":
             positive_sequence, positive_label = self.sequences(self.lookup[idx])
             negative_sequence, _ = self.sequences(self.lookup[idx])
 
@@ -89,7 +99,7 @@ class FOIKineticPoseDataset(Dataset):
                 positive_sequence = self.transform(positive_sequence)
                 negative_sequence = self.transform(negative_sequence)
 
-            item = positive_sequence, negative_sequence, positive_label
+            return positive_sequence, negative_sequence, positive_label
 
         elif self.network_type == "triplet":
             anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
@@ -101,17 +111,7 @@ class FOIKineticPoseDataset(Dataset):
                 positive_sequence = self.transform(positive_sequence)
                 negative_sequence = self.transform(negative_sequence)
 
-            item = anchor_sequence, positive_sequence, negative_sequence, anchor_label
-
-        else:
-            sequence, label = self.sequences(self.lookup[idx])
-
-            if self.transform:
-                sequence = self.transform(sequence)
-
-            item = sequence, label
-
-        return item
+            return anchor_sequence, positive_sequence, negative_sequence, anchor_label
 
     def __create_lookup(self) -> list:
         data_info = read_from_json(self.json_path)
