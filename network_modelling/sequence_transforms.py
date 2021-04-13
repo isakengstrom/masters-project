@@ -33,7 +33,7 @@ class AddNoise(object):
         self.scale = scale
 
     def __call__(self, seq: np.ndarray) -> np.ndarray:
-
+        
         return seq + np.random.normal(self.loc, self.scale, seq.shape)
 
 

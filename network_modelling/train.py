@@ -90,8 +90,9 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
             #total += labels.size(0)
             #correct += (predicted == labels).sum().item()
 
-            if batch_idx % 10 == 0:
-                print(f"Epoch {epoch+1}/{num_epochs} - Iteration {batch_idx+1}/{batch_len}: Loss = {np.mean(train_loss)}")
+            if batch_idx % 2 == 0:
+                #print(f"Epoch {epoch + 1}/{num_epochs} - Iteration {batch_idx + 1}/{batch_len}: Loss = {np.mean(train_loss)}")
+                print(f"Epoch {epoch+1}/{num_epochs} - Iteration {batch_idx+1}/{batch_len}: Loss = {loss.item()}")
 
 
         #loss_log.append((train_loss / (batch_idx + 1)))
@@ -115,7 +116,7 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
         model.state_dict(), './models/saved_models/lstm_triplet_loss_trained_foi_final')
     '''
     print('Training finished')
-
+    '''
     train_results = []
     labels = []
 
@@ -140,5 +141,6 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
 
     plt.legend()
     plt.show()
+    '''
 
     return model, loss_log, acc_log
