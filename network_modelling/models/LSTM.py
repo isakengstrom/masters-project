@@ -41,7 +41,7 @@ class LSTM_2(nn.Module):
     Second LSTM net, with a few more layers
     """
     def __init__(self, input_size, hidden_size, num_layers, num_classes, device):
-        super(LSTM, self).__init__()
+        super(LSTM_2, self).__init__()
         self.num_layers = num_layers
         self.hidden_size = hidden_size
         self.device = device
