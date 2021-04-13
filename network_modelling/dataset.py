@@ -82,43 +82,36 @@ class FOIKineticPoseDataset(Dataset):
             raise TypeError
 
         if self.network_type == "siamese":
-            item = self.__get_siamese(idx)
+            positive_sequence, positive_label = self.sequences(self.lookup[idx])
+            negative_sequence, _ = self.sequences(self.lookup[idx])
+
+            if self.transform:
+                positive_sequence = self.transform(positive_sequence)
+                negative_sequence = self.transform(negative_sequence)
+
+            item = positive_sequence, negative_sequence, positive_label
+
         elif self.network_type == "triplet":
-            item = self.__get_triplet(idx)
+            anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
+            positive_sequence, _ = self.sequences(self.lookup[idx])
+            negative_sequence, _ = self.sequences(self.lookup[idx])
+
+            if self.transform:
+                anchor_sequence = self.transform(anchor_sequence)
+                positive_sequence = self.transform(positive_sequence)
+                negative_sequence = self.transform(negative_sequence)
+
+            item = anchor_sequence, positive_sequence, negative_sequence, anchor_label
+
         else:
-            item = self.__get_single(idx)
+            sequence, label = self.sequences(self.lookup[idx])
+
+            if self.transform:
+                sequence = self.transform(sequence)
+
+            item = sequence, label
 
         return item
-
-    def __get_single(self, idx: int) -> tuple:
-        sequence, label = self.sequences(self.lookup[idx])
-
-        if self.transform:
-            sequence = self.transform(sequence)
-
-        return sequence, label
-
-    def __get_siamese(self, idx: int) -> tuple:
-        positive_sequence, positive_label = self.sequences(self.lookup[idx])
-        negative_sequence, _ = self.sequences(self.lookup[idx])
-
-        if self.transform:
-            positive_sequence = self.transform(positive_sequence)
-            negative_sequence = self.transform(negative_sequence)
-
-        return positive_sequence, negative_sequence, positive_label
-
-    def __get_triplet(self, idx: int) -> tuple:
-        anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
-        positive_sequence, _ = self.sequences(self.lookup[idx])
-        negative_sequence, _ = self.sequences(self.lookup[idx])
-
-        if self.transform:
-            anchor_sequence = self.transform(anchor_sequence)
-            positive_sequence = self.transform(positive_sequence)
-            negative_sequence = self.transform(negative_sequence)
-
-        return anchor_sequence, positive_sequence, negative_sequence, anchor_label
 
     def __create_lookup(self) -> list:
         data_info = read_from_json(self.json_path)
