@@ -113,6 +113,10 @@ class FOIKineticPoseDataset(Dataset):
 
             return anchor_sequence, positive_sequence, negative_sequence, anchor_label
 
+        else:
+            raise AssertionError("If not loading training dataset, make sure the is_train flag is set to True, "
+                                 "Otherwise, the network_type is invalid, should be 'single', 'siamese' or 'triplet'.")
+
     def __create_lookup(self) -> list:
         data_info = read_from_json(self.json_path)
 
@@ -138,6 +142,10 @@ class FOIKineticPoseDataset(Dataset):
 
             # Fix the last sequence's end frame
             lookup[-1]["end"] = min(lookup[-1]["end"], element_info.len)
+
+            # TODO: Solve so this isn't necessary. For it to work, needs to add zeros to end of last seq, which is
+            #   shorter than the rest of the seqs
+            del lookup[-1]
 
         return lookup
 
