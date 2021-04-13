@@ -6,8 +6,9 @@
 # Ignore the saved models
 /**/saved_models/*
 
-# Ignore training checkpoints
-*ckpt
+# Ignore training Pytorch checkpoints
+*.ckpt
+*.pth
 
 # All folders with a .keep should not be ignored
 !/**/.keep
