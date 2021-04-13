@@ -2,6 +2,7 @@ import os
 import torch
 import torch.nn as nn
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 #https://www.kaggle.com/hirotaka0122/triplet-loss-with-pytorch
@@ -10,8 +11,6 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
     acc_log = []
 
     for epoch in range(num_epochs):
-        print(f"\nEpoch {epoch}")
-
         model.train()
 
         train_loss = []
@@ -70,7 +69,7 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
                 sequence_out = model(sequence)
 
                 # Calculate the loss
-                loss = loss_function(sequence_out)
+                loss = loss_function(sequence_out, label)
 
             # Feed Backward
             loss.backward()
@@ -88,7 +87,7 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
             #total += labels.size(0)
             #correct += (predicted == labels).sum().item()
 
-            if batch_idx % 2 == 0:
+            if batch_idx % 10 == 0:
                 print(f"Epoch {epoch+1}/{num_epochs} - Iteration {batch_idx+1}/{batch_len}: Loss = {np.mean(train_loss)}")
 
 
@@ -102,10 +101,41 @@ def train(model, train_loader, optimizer, loss_function, num_epochs, device, net
             'optimizer': optimizer.state_dict(),
         }
 
-        file_path = f'./checkpoints/checkpoint_{epoch}.ckpt'
+        file_path = f'./checkpoints/checkpoint_{epoch}.pth'
         torch.save(state, file_path)
-
+    '''
     # Save the final model
-    torch.save(model.state_dict(), './models/saved_models/lstm_triplet_loss_trained_foi_final')
+    torch.save({
+        "model_state_dict": model.state_dict(), 
+        "optimizer_state_dict": optimizer.state_dict()
+    })
+        model.state_dict(), './models/saved_models/lstm_triplet_loss_trained_foi_final')
+    '''
     print('Training finished')
+
+    train_results = []
+    labels = []
+
+    model.eval()
+    with torch.no_grad():
+        batch_len = len(train_loader)
+        for batch_idx, (seq, label) in enumerate(train_loader):
+            train_results.append(model(seq.to(device)).cpu().numpy())
+            labels.append(label)
+            if batch_idx % 20 == 0:
+                print(f"Iteration {batch_idx+1}/{batch_len}")
+
+    train_results = np.concatenate(train_results)
+    labels = np.concatenate(labels)
+    print(train_results.shape)
+
+    #vis
+    plt.figure(figsize=(15, 10), facecolor="azure")
+    for label in np.unique(labels):
+        tmp = train_results[labels == label]
+        plt.scatter(tmp[:, 0], tmp[:, 1], label=label)
+
+    plt.legend()
+    plt.show()
+
     return model, loss_log, acc_log
