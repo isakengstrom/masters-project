@@ -6,33 +6,31 @@ from torch.utils.data.sampler import SubsetRandomSampler
 import torchvision
 import torchvision.transforms as transforms
 
+# To start board, type the following in the terminal: tensorboard --logdir=runs
+from torch.utils.tensorboard import SummaryWriter
+
 import os
 import numpy as np
 
 from models.LSTM import LSTM, LSTM_2
 from train import train
 from test import test
+from learn import learn
+from evaluate import evaluate
+
 from dataset import FOIKineticPoseDataset, DataLimiter
-from helpers.paths import EXTR_PATH, JOINTS_LOOKUP_PATH
+from helpers.paths import EXTR_PATH, JOINTS_LOOKUP_PATH, TB_RUNS_PATH
 from helpers import read_from_json
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
 
 
 def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=True, shuffle=True):
     """
-
     Influenced by: https://stackoverflow.com/a/50544887
 
     This is not (as of yet) stratified sampling,
     read more about it here: https://stackoverflow.com/a/52284619
     or here: https://github.com/ncullen93/torchsample/blob/master/torchsample/samplers.py#L22
-
-    :param dataset_len:
-    :param train_split:
-    :param val_split:
-    :param val_from_train:
-    :param shuffle:
-    :return:
     """
 
     indices = list(range(dataset_len))
@@ -69,29 +67,9 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
     return SubsetRandomSampler(train_indices), SubsetRandomSampler(test_indices), SubsetRandomSampler(val_indices)
 
 
-def check_dataset_item(item):
-    """"""
-    print(len(item))
-    '''
-    if len(item)
-    seq = item["sequences"]["anchor_sequence"]
-    print(seq.shape)
-    dim = ""
-
-    if isinstance(seq, np.ndarray):
-        dim = seq.shape
-    elif isinstance(seq, list):
-        dim = len(seq)
-    elif isinstance(seq, torch.Tensor):
-        dim = seq.size()
-
-    print("Dataset instance with index {} and key '{}'\n\ttype: {}, \n\tDimensions: {}"
-          .format(item["seq_idx"], item["key"], type(seq), dim))
-
-    '''
-
-
 if __name__ == "__main__":
+    writer = SummaryWriter(TB_RUNS_PATH)
+
     # Get the active number of OpenPose joints from the joints lookup. For full kinetic pose, this will be 25,
     # but with the FilterJoints() transform, it can be a lower amount.
     # (See if the filter is applied below, when calling the dataset)
@@ -117,20 +95,20 @@ if __name__ == "__main__":
     #   - Batch Gradient Descent: batch_size = len(dataset)
     #   - Stochastic Gradient descent: batch_size = 1
     #   - Mini-Batch Gradient descent: 1 < batch_size < len(dataset)
-    batch_size = 1
+    batch_size = 32
 
     # Learning rate
-    learning_rate = 0.001
+    learning_rate = 0.01
 
     # Number of features
     input_size = num_joints * num_joint_coords
 
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
-    sequence_len = 100
+    sequence_len = 350
 
     # Layers for the RNN
-    num_layers = 1  # Number of stacked RNN layers
+    num_layers = 512  # Number of stacked RNN layers
     hidden_size = 2  # Number of features in hidden state
 
     # Loss function
@@ -152,9 +130,9 @@ if __name__ == "__main__":
         os.mkdir('./models/saved_models')
 
     data_limiter = DataLimiter(
-        subjects=[2, 3],
+        subjects=None,
         sessions=[0],
-        views=[0],
+        views=[0]
     )
 
     # Transforms
@@ -163,8 +141,8 @@ if __name__ == "__main__":
         FilterJoints(),
         NormalisePoses(),
         ReshapePoses(),
-        ToTensor()
-    ])
+        ToTensor()]
+    )
 
     train_dataset = FOIKineticPoseDataset(
         json_path=json_path,
@@ -185,11 +163,18 @@ if __name__ == "__main__":
         transform=composed
     )
 
-    train_sampler, test_sampler, val_sampler = create_samplers(len(train_dataset), train_split=.8, val_split=.2, shuffle=True)
+    train_sampler, test_sampler, val_sampler = create_samplers(
+        dataset_len=len(train_dataset),
+        train_split=.8,
+        val_split=.2,
+        val_from_train=True,
+        shuffle=True
+    )
 
-    train_loader = DataLoader(train_dataset, batch_size, sampler=train_sampler, num_workers=4)
-    test_loader = DataLoader(test_dataset, batch_size, sampler=test_sampler, num_workers=4)
-    val_loader = DataLoader(train_dataset, batch_size, sampler=val_sampler, num_workers=4)
+    #print(len(train_dataset), len(train_sampler), len(val_sampler), len(test_sampler))
+    train_loader = DataLoader(train_dataset, batch_size, sampler=train_sampler, num_workers=0)
+    test_loader = DataLoader(test_dataset, batch_size, sampler=test_sampler, num_workers=0)
+    val_loader = DataLoader(train_dataset, batch_size, sampler=val_sampler, num_workers=0)
 
     if network_type == "single":
         loss_function = nn.CrossEntropyLoss()
@@ -198,7 +183,7 @@ if __name__ == "__main__":
     elif network_type == "triplet":
         loss_function = nn.TripletMarginLoss(margin)
     else:
-        raise NameError
+        raise Exception("Invalid network_type")
 
     device = torch.device('cuda' if use_cuda else 'cpu')
 
@@ -210,6 +195,21 @@ if __name__ == "__main__":
 
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-    model, loss_log, acc_log = train(model, train_loader, optimizer, loss_function, num_epochs, device, network_type)
+    model = learn(
+        train_loader=train_loader,
+        val_loader=val_loader,
+        model=model,
+        optimizer=optimizer,
+        loss_function=loss_function,
+        num_epochs=num_epochs,
+        device=device,
+        network_type=network_type
+    )
 
-    test_acc = test(model, test_loader, device)
+    test_accuracy = evaluate(
+        data_loader=test_loader,
+        model=model,
+        device=device
+    )
+
+    print(f'| Finished testing | Accuracy: {test_accuracy:.3f} ')

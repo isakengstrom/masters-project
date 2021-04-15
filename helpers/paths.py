@@ -5,6 +5,7 @@ import os
 # EXTR - Extracted
 # KP - KeyPoints
 # CC - Cross Correlation
+#
 
 # Unused: UT - untrimmed # T - trimmed # F - final
 
@@ -25,3 +26,6 @@ JOINTS_LOOKUP_PATH = os.environ['PROJECT_PATH'] + "users/isaeng/network_modellin
 
 # Path to the session offsets extracted using cross correlation
 CC_OFFSETS_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_test/offsets.json"
+
+# Path for TensorBoard's SummaryWriter
+TB_RUNS_PATH = os.environ['STATES_PATH'] + "tb_runs/"
