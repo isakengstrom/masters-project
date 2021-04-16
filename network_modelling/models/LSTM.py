@@ -18,6 +18,9 @@ class LSTM(nn.Module):
 
         self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
 
+        # Should it be this ??
+        #self.fc = nn.Linear(hidden_size*seq_len, num_classes)
+
         self.fc = nn.Linear(hidden_size, num_classes)
 
     def forward(self, x):
@@ -29,6 +32,7 @@ class LSTM(nn.Module):
 
         # Decode the hidden state of the last time step (many to one)
         out = out[:, -1, :]
+        #out = out.reshape(out.shape[0], -1)
 
         # out: (n,
         out = self.fc(out)
@@ -65,6 +69,28 @@ class LSTM_2(nn.Module):
         out = self.fc_1(out)
         out = self.relu(out)
         out = self.fc(out)
+
+        return out
+
+
+class BRNN(nn.Module):
+    def __init__(self, input_size, hidden_size, num_layers, num_classes, device):
+        super(BRNN, self).__init__()
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+        self.device = device
+
+        self.lstm = nn.LSTM(
+            input_size, hidden_size, num_layers, batch_first=True, bidirectional=True
+        )
+        self.fc = nn.Linear(hidden_size * 2, num_classes)
+
+    def forward(self, x):
+        h0 = torch.zeros(self.num_layers * 2, x.size(0), self.hidden_size).to(self.device)
+        c0 = torch.zeros(self.num_layers * 2, x.size(0), self.hidden_size).to(self.device)
+
+        out, _ = self.lstm(x, (h0, c0))
+        out = self.fc(out[:, -1, :])
 
         return out
 
