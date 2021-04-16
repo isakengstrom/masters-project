@@ -11,10 +11,11 @@ from torch.utils.tensorboard import SummaryWriter
 
 import os
 import numpy as np
+import time
 
-from models.LSTM import LSTM, LSTM_2
+from models.LSTM import LSTM, LSTM_2, BRNN
 from train import train
-from test import test
+
 from learn import learn
 from evaluate import evaluate
 
@@ -84,32 +85,41 @@ if __name__ == "__main__":
     # Hyper parameters #################################################
     ####################################################################
 
-    # There are 10 people in the dataset that we want to classify correctly.
-    num_classes = 10
+    data_limiter = DataLimiter(
+        subjects=[0,1,2,3,4],
+        sessions=[0],
+        views=[2]
+    )
 
-    # Number of epochs - The number of times the dataset is worked through during training
-    num_epochs = 2
+    # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
+    if data_limiter.subjects is None:
+        num_classes = 10
+    else:
+        num_classes = len(data_limiter.subjects)
+
+    # Number of epochs - The number of times the dataset is worked through during learning
+    num_epochs = 100
 
     # Batch size - tightly linked with gradient descent.
     # The number of samples worked through before the params of the model are updated
     #   - Batch Gradient Descent: batch_size = len(dataset)
     #   - Stochastic Gradient descent: batch_size = 1
     #   - Mini-Batch Gradient descent: 1 < batch_size < len(dataset)
-    batch_size = 32
+    batch_size = 2
 
     # Learning rate
-    learning_rate = 0.01
+    learning_rate = 0.05
 
     # Number of features
     input_size = num_joints * num_joint_coords
 
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
-    sequence_len = 350
+    sequence_len = 1000
 
     # Layers for the RNN
-    num_layers = 512  # Number of stacked RNN layers
-    hidden_size = 2  # Number of features in hidden state
+    num_layers = 2  # Number of stacked RNN layers
+    hidden_size = 256  # Number of features in hidden state
 
     # Loss function
     margin = 0.2  # The margin for certain loss functions
@@ -129,17 +139,11 @@ if __name__ == "__main__":
     if not os.path.isdir('./models/saved_models'):
         os.mkdir('./models/saved_models')
 
-    data_limiter = DataLimiter(
-        subjects=None,
-        sessions=[0],
-        views=[0]
-    )
-
     # Transforms
     composed = transforms.Compose([
         ChangePoseOrigin(),
         FilterJoints(),
-        NormalisePoses(),
+        #NormalisePoses(),
         ReshapePoses(),
         ToTensor()]
     )
@@ -171,7 +175,6 @@ if __name__ == "__main__":
         shuffle=True
     )
 
-    #print(len(train_dataset), len(train_sampler), len(val_sampler), len(test_sampler))
     train_loader = DataLoader(train_dataset, batch_size, sampler=train_sampler, num_workers=0)
     test_loader = DataLoader(test_dataset, batch_size, sampler=test_sampler, num_workers=0)
     val_loader = DataLoader(train_dataset, batch_size, sampler=val_sampler, num_workers=0)
@@ -187,7 +190,7 @@ if __name__ == "__main__":
 
     device = torch.device('cuda' if use_cuda else 'cpu')
 
-    model = LSTM(input_size, hidden_size, num_layers, num_classes, device)
+    model = BRNN(input_size, hidden_size, num_layers, num_classes, device)
 
     if use_cuda:
         model.cuda()
@@ -195,6 +198,45 @@ if __name__ == "__main__":
 
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
+    start_time = time.time()
+
+    model_name = str(type(model)).split('.')[-1][:-2]
+    optimizer_name = str(type(optimizer)).split('.')[-1][:-2]
+    loss_function_name = str(type(loss_function)).split('.')[-1][:-2]
+
+    transform_names = [transform.split(' ')[0].split('.')[1] for transform in str(composed).split('<')[1:]]
+
+    print('-' * 32, 'Setup', '-' * 33)
+    print(f"| Model: {model_name}\n"
+          f"| Optimizer: {optimizer_name}\n"
+          f"| Network type: {network_type}\n"
+          f"| Loss function: {loss_function_name}\n"
+          f"| Device: {device}\n"
+          f"|")
+
+    print(f"| Sequence transforms:")
+    [print(f"| {name_idx+1}: {name}") for name_idx, name in enumerate(transform_names)]
+    print(f"|")
+
+    print(f"| Total sequences: {len(train_dataset)}\n"
+          f"| Train split: {len(train_sampler)}\n"
+          f"| Val split: {len(val_sampler)}\n"
+          f"| Test split: {len(test_sampler)}\n"
+          f"|")
+
+    print(f"| Learning phase:\n"
+          f"| Epochs: {num_epochs}\n"
+          f"| Batch size: {batch_size}\n"
+          f"| Train batches: {len(train_loader)}\n"
+          f"| Val batches: {len(val_loader)}\n"
+          f"|")
+
+    print(f"| Testing phase:\n"
+          f"| Batch size: {batch_size}\n"
+          f"| Test batches: {len(test_loader)}\n"
+          f"|")
+
+    print('-' * 28, 'Learning phase', '-' * 28)
     model = learn(
         train_loader=train_loader,
         val_loader=val_loader,
@@ -206,10 +248,11 @@ if __name__ == "__main__":
         network_type=network_type
     )
 
+    print('-' * 28, 'Testing phase', '-' * 29)
     test_accuracy = evaluate(
         data_loader=test_loader,
         model=model,
         device=device
     )
 
-    print(f'| Finished testing | Accuracy: {test_accuracy:.3f} ')
+    print(f'| Finished testing | Accuracy: {test_accuracy:.3f} | Total time: {time.time() - start_time:.3f}s ')
