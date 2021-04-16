@@ -145,7 +145,7 @@ class FOIKineticPoseDataset(Dataset):
             return anchor_sequence, positive_sequence, negative_sequence, anchor_label
 
         else:
-            raise AssertionError("If not loading training dataset, make sure the is_train flag is set to True, "
+            raise Exception("If not loading training dataset, make sure the is_train flag is set to True, "
                                  "Otherwise, the network_type is invalid, should be 'single', 'siamese' or 'triplet'.")
 
     def __create_lookup(self) -> list:
