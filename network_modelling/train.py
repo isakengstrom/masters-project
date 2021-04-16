@@ -1,20 +1,29 @@
+import math
+import numpy as np
+
 import torch
 import torch.nn.utils as utils
+from tqdm import tqdm
 
 
-#https://www.kaggle.com/hirotaka0122/triplet-loss-with-pytorch
+#  https://www.kaggle.com/hirotaka0122/triplet-loss-with-pytorch
 def train(data_loader, model, optimizer, loss_function, device, network_type, epoch_idx, num_epochs):
-    model.train()
 
     total_accuracy, total_count, total_loss = 0, 0, 0
-    log_interval = 1
+    num_epochs_digits = int(math.log10(num_epochs)) + 1
+
     num_batches = len(data_loader)
+    log_interval = max(math.floor(num_batches/50), 1)
+    num_batches_digits = int(math.log10(num_batches)) + 1
+
+    model.train()
 
     for batch_idx, batch_sample in enumerate(data_loader):
 
         if network_type == "single":
             sequence, label = batch_sample
-
+            #print(sequence[0])
+            #print(label[0])
             label = label.to(device)
             sequence = sequence.to(device)
 
@@ -82,10 +91,18 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
         total_loss += loss.item()
 
         if batch_idx % log_interval == 0:
-            print(f"| Epoch {epoch_idx}/{num_epochs} "
-                  f"| Batch {batch_idx+1}/{num_batches} "
+            print(f"| Epoch {epoch_idx:{num_epochs_digits}.0f}/{num_epochs} "
+                  f"| Batch {batch_idx+1:{num_batches_digits}.0f}/{num_batches} "
                   f"| Accuracy: {total_accuracy/total_count:.6f} "
-                  f"| Loss: {total_loss/(batch_idx+1):.6f} ")
+                  f"| Loss: {(total_loss/(batch_idx+1)):9.6f} |")
+
+            if True:
+                print("  Predicted labels:", predicted_label.data.cpu().numpy(), "\n",
+                      "    Actual labels:", label.data.cpu().numpy(), "\n",
+                      "True/False labels:", (predicted_label == label).cpu().numpy().astype(int))
+                print('-' * 72)
+
+            total_accuracy, total_count, total_loss = 0, 0, 0
 
         '''
         loss_log.append((train_loss / (batch_idx + 1)))

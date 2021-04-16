@@ -2,11 +2,13 @@ import time
 
 import torch.optim.lr_scheduler
 
+
 from train import train
 from evaluate import evaluate
 
 
 def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs, device, network_type="triplet"):
+
     learn_start_time = time.time()
 
     accuracy_log = []
@@ -29,24 +31,26 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
             epoch_idx=epoch_idx,
             num_epochs=num_epochs
         )
-        print("Passed train")
+
         val_accuracy = evaluate(
             data_loader=val_loader,
             model=model,
             device=device
         )
-        print("Passed val")
 
         if total_accuracy is not None and total_accuracy > val_accuracy:
             scheduler.step()
         else:
             total_accuracy = val_accuracy
 
-        print('-' * 59)
-        print(f'| Epoch {epoch_idx}/{num_epochs} '
+        for param_group in optimizer.param_groups:
+            print(param_group['lr'])
+
+        print('-' * 72)
+        print(f'| Epoch {epoch_idx:3.0f}/{num_epochs} '
               f'| Duration: {time.time()-epoch_start_time:.2f}s '
-              f'| Val accuracy: {val_accuracy:.3f}')
-        print('-' * 59)
+              f'| Val accuracy: {val_accuracy:.3f} |')
+        print('-' * 72)
 
         # Save a checkpoint when the epoch finishes
         state = {
