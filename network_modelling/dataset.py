@@ -175,7 +175,7 @@ class FOIKineticPoseDataset(Dataset):
 
             # TODO: Solve so this isn't necessary. For it to work, needs to add zeros to end of last seq, which is
             #   shorter than the rest of the seqs
-            #del lookup[-1]
+            del lookup[-1]
 
         return lookup
 
