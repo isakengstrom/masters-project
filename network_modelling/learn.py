@@ -3,7 +3,6 @@ import math
 
 import torch.optim.lr_scheduler
 
-
 from train import train
 from evaluate import evaluate
 
@@ -39,15 +38,16 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
             epoch_idx=epoch_idx,
             num_epochs=num_epochs
         )
-
+        '''
         val_accuracy = evaluate(
             data_loader=val_loader,
             model=model,
             device=device
         )
-
+        '''
+        val_accuracy = 0
         if total_accuracy is not None and total_accuracy > val_accuracy:
-            if curr_lr > 5e-12:
+            if curr_lr > 5e-8:
                 prev_lr = curr_lr
 
                 # Step the learning rate

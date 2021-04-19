@@ -5,7 +5,7 @@ from torch.utils.data import Dataset, DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
 import torchvision
 import torchvision.transforms as transforms
-
+import torchvision.datasets as datasets
 # To start board, type the following in the terminal: tensorboard --logdir=runs
 from torch.utils.tensorboard import SummaryWriter
 
@@ -13,7 +13,7 @@ import os
 import numpy as np
 import time
 
-from models.LSTM import LSTM, LSTM_2, BRNN
+from models.LSTM import LSTM, LSTM_2, BDLSTM, RNN_LSTM
 from train import train
 
 from learn import learn
@@ -105,7 +105,7 @@ if __name__ == "__main__":
         num_classes = len(data_limiter.subjects)
 
     # Number of epochs - The number of times the dataset is worked through during learning
-    num_epochs = 50
+    num_epochs = 10
 
     # Batch size - tightly linked with gradient descent.
     # The number of samples worked through before the params of the model are updated
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     batch_size = 8
 
     # Learning rate
-    learning_rate = 5e-8  # 0.05
+    learning_rate = 0.001  # 0.05 5e-8
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
     # The joint_filter will also be applied further down, in the FilterJoints() transform.
@@ -125,11 +125,11 @@ if __name__ == "__main__":
     num_joint_coords = 2
 
     # Number of features
-    input_size = num_joints * num_joint_coords
+    input_size = num_joints * num_joint_coords # 28
 
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
-    sequence_len = 150
+    sequence_len = 29
 
     # Layers for the RNN
     num_layers = 2  # Number of stacked RNN layers
@@ -161,7 +161,6 @@ if __name__ == "__main__":
         ReshapePoses(),
         ToTensor()
     ])
-
     train_dataset = FOIKineticPoseDataset(
         json_path=json_path,
         root_dir=root_dir,
@@ -200,6 +199,13 @@ if __name__ == "__main__":
     test_loader = DataLoader(test_dataset, batch_size, sampler=test_sampler, num_workers=0)
     val_loader = DataLoader(train_dataset, batch_size, sampler=val_sampler, num_workers=0)
 
+    '''
+    train_dataset = datasets.MNIST(root="dataset/", train=True, transform=transforms.ToTensor(), download=True)
+    test_dataset = datasets.MNIST(root="dataset/", train=False, transform=transforms.ToTensor(), download=True)
+    train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
+    test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
+    '''
+
     if network_type == "single":
         loss_function = nn.CrossEntropyLoss()
     elif network_type == "siamese":
@@ -211,7 +217,7 @@ if __name__ == "__main__":
 
     device = torch.device('cuda' if use_cuda else 'cpu')
 
-    model = BRNN(input_size, hidden_size, num_layers, num_classes, device)
+    model = LSTM(input_size, hidden_size, num_layers, num_classes, device)
 
     if use_cuda:
         model.cuda()
@@ -226,6 +232,7 @@ if __name__ == "__main__":
     loss_function_name = str(type(loss_function)).split('.')[-1][:-2]
 
     transform_names = [transform.split(' ')[0].split('.')[1] for transform in str(composed).split('<')[1:]]
+    '''
     def print_setup():
         print('-' * 32, 'Setup', '-' * 33)
         print(f"| Model: {model_name}\n"
@@ -257,11 +264,12 @@ if __name__ == "__main__":
               f"| Test batches: {len(test_loader)}")
 
     print_setup()
+    '''
 
     print('-' * 28, 'Learning phase', '-' * 28)
     model = learn(
         train_loader=train_loader,
-        val_loader=val_loader,
+        val_loader=None,
         model=model,
         optimizer=optimizer,
         loss_function=loss_function,

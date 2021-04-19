@@ -13,3 +13,6 @@
 # All folders with a .keep should not be ignored
 !/**/.keep
 
+# Ignore test with MNIST dataset
+network_modelling/dataset/
+network_modelling/test.py

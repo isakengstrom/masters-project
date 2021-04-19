@@ -4,7 +4,7 @@ import numpy as np
 import torch
 import torch.nn.utils as utils
 from tqdm import tqdm
-
+from collections import Counter
 
 #  https://www.kaggle.com/hirotaka0122/triplet-loss-with-pytorch
 def train(data_loader, model, optimizer, loss_function, device, network_type, epoch_idx, num_epochs):
@@ -13,7 +13,7 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
     num_epochs_digits = int(math.log10(num_epochs)) + 1
 
     num_batches = len(data_loader)
-    log_interval = 2 #max(math.floor(num_batches/10), 1)
+    log_interval = 1#max(math.floor(num_batches/10), 1)
     num_batches_digits = int(math.log10(num_batches)) + 1
 
     model.train()
@@ -22,11 +22,14 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
 
         if network_type == "single":
             sequence, label = batch_sample
-            #print(sequence[0])
-            #print(label[0])
+
             label = label.to(device)
             sequence = sequence.to(device)
-
+            '''
+            print(sequence.size())
+            sequence.squeeze(1)
+            print(sequence.size())
+            '''
             # Clear the gradients of all variables
             optimizer.zero_grad()
 
@@ -79,7 +82,7 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
         loss.backward()
 
         # Clip norms
-        utils.clip_grad_norm_(model.parameters(), max_norm=.1)
+        #utils.clip_grad_norm_(model.parameters(), max_norm=.1)
 
         # Update the weights
         optimizer.step()
@@ -97,12 +100,14 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
                   f"| Loss: {(total_loss/(batch_idx+1)):9.6f} |")
 
             if False:
+                lst = (predicted_label == label).cpu().numpy().astype(int)
                 print("  Predicted labels:", predicted_label.data.cpu().numpy(), "\n",
                       "    Actual labels:", label.data.cpu().numpy(), "\n",
-                      "True/False labels:", (predicted_label == label).cpu().numpy().astype(int))
+                      "True/False labels:", lst, " ", Counter(lst))
                 print('-' * 72)
 
-            total_accuracy, total_count, total_loss = 0, 0, 0
+            #print(total_accuracy, total_count, total_loss)
+            total_accuracy, total_count = 0, 0
 
         '''
         loss_log.append((train_loss / (batch_idx + 1)))
