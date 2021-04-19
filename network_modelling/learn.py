@@ -57,7 +57,6 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
             total_accuracy = val_accuracy
 
         # Print info from the finished epoch
-        #print('-' * 72)
         print(f'| Epoch {epoch_idx:{num_epochs_digits}.0f}/{num_epochs} '
               f'| Duration: {time.time()-epoch_start_time:.2f}s '
               f'| Val accuracy: {val_accuracy:.3f} |')

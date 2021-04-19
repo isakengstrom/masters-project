@@ -1,9 +1,4 @@
-{
-  "activate_by": "op_idx",
-  "active_op_idx": [1,8,9,10,11,12,13,14, 19, 20, 21, 22, 23, 24],
-  "active_side": ["r"],
-  "active_name": ["nose", "c_hip"],
-  "joints": [
+[
     {"op_idx": 0, "name": "nose", "side": "c", "vert_group": "spine", "hori_group": "nose"},
     {"op_idx": 1, "name": "neck", "side": "c", "vert_group": "spine", "hori_group": "neck"},
 
@@ -37,6 +32,4 @@
     {"op_idx": 22, "name": "r_b_toe", "side": "r", "vert_group": "foot", "hori_group": "b_toes"},
     {"op_idx": 23, "name": "r_s_toe", "side": "r", "vert_group": "foot", "hori_group": "s_toes"},
     {"op_idx": 24, "name": "r_heel", "side": "r", "vert_group": "foot", "hori_group": "heels"}
-  ]
-
-}
+]

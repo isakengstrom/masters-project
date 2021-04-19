@@ -49,7 +49,7 @@ class ChangePoseOrigin(object):
         self.origin_idx = None
 
         # Get the openpose index corresponding to the origin_name, this index represent the origin joint.
-        for joint in joints_lookup["joints"]:
+        for joint in joints_lookup:
             if self.origin_name == joint["name"]:
                 self.origin_idx = joint["op_idx"]
 
@@ -119,7 +119,7 @@ class NormalisePoses(object):
 
 
 class FilterJoints(object):
-    def __init__(self, path=JOINTS_LOOKUP_PATH):
+    def __init__(self, path=JOINTS_LOOKUP_PATH, activator="op_idx", joint_filter=None):
         """
         Initialise the pose filter. It filters out the unwanted joints from the OpenPose data. This is according to
         the "activate_by" and "active_*" parameters in the file 'joints_lookup.json'.
@@ -135,14 +135,19 @@ class FilterJoints(object):
 
         :param path:
         """
-        joints_lookup = read_from_json(path, use_dumps=True)
 
-        active_name = joints_lookup["activate_by"]
+        if joint_filter is None:
+            joint_filter = []
+
+        if not isinstance(joint_filter, list):
+            joint_filter = [joint_filter]
+
+        joints_lookup = read_from_json(path, use_dumps=True)
         self.filtered_indexes = []
 
-        for joint in joints_lookup["joints"]:
-            for trait in joints_lookup["active_" + active_name]:
-                if joint[active_name] == trait:
+        for joint in joints_lookup:
+            for trait in joint_filter:
+                if joint[activator] == trait:
                     self.filtered_indexes.append(joint["op_idx"])
 
     def __call__(self, seq: np.ndarray) -> np.ndarray:

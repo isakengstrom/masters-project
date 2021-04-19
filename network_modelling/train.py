@@ -13,7 +13,7 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
     num_epochs_digits = int(math.log10(num_epochs)) + 1
 
     num_batches = len(data_loader)
-    log_interval = max(math.floor(num_batches/10), 1)
+    log_interval = 2 #max(math.floor(num_batches/10), 1)
     num_batches_digits = int(math.log10(num_batches)) + 1
 
     model.train()

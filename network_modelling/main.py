@@ -71,24 +71,31 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
 if __name__ == "__main__":
     writer = SummaryWriter(TB_RUNS_PATH)
 
-    # Get the active number of OpenPose joints from the joints lookup. For full kinetic pose, this will be 25,
-    # but with the FilterJoints() transform, it can be a lower amount.
-    # (See if the filter is applied below, when calling the dataset)
-    joints_lookup = read_from_json(JOINTS_LOOKUP_PATH, use_dumps=True)
-    active_name = joints_lookup["activate_by"]
-    num_joints = len(joints_lookup["active_" + active_name])
+    # Pick OpenPose joints for the model,
+    # these are used in the FilterPose() transform, as well as when deciding the input_size/number of features
+    joints_lookup_activator = "name"
+    joint_filter = []
 
-    # The number of coordinates for each of the OpenPose joints, equal to 2 if using both x and y
-    num_joint_coords = 2
+    # OpenPose indices, same as in the OpenPose repo.
+    if joints_lookup_activator == "op_idx":
+        joint_filter = [1, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24]  # Select OpenPose indices
+        #joint_filter = list(range(25))  # All OpenPose indices
+
+    # Joint names, see more in the 'joints_lookup.json' file
+    elif joints_lookup_activator == "name":
+        joint_filter = ["nose", "c_hip", "neck"]
+
+    else:
+        NotImplementedError(f"The Joint filter of the '{joints_lookup_activator}' activator is not implemented.")
 
     ####################################################################
     # Hyper parameters #################################################
     ####################################################################
 
     data_limiter = DataLimiter(
-        subjects=[0, 1, 2, 3, 4],
+        subjects=None,
         sessions=[0],
-        views=[0]
+        views=None
     )
 
     # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
@@ -110,12 +117,19 @@ if __name__ == "__main__":
     # Learning rate
     learning_rate = 5e-8  # 0.05
 
+    # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
+    # The joint_filter will also be applied further down, in the FilterJoints() transform.
+    num_joints = len(joint_filter)
+
+    # The number of coordinates for each of the OpenPose joints, equal to 2 if using both x and y
+    num_joint_coords = 2
+
     # Number of features
     input_size = num_joints * num_joint_coords
 
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
-    sequence_len = 500
+    sequence_len = 150
 
     # Layers for the RNN
     num_layers = 2  # Number of stacked RNN layers
@@ -141,12 +155,12 @@ if __name__ == "__main__":
 
     # Transforms
     composed = transforms.Compose([
+        NormalisePoses(),
         ChangePoseOrigin(),
-        FilterJoints(),
-        #NormalisePoses(),
+        FilterJoints(activator=joints_lookup_activator, joint_filter=joint_filter),
         ReshapePoses(),
-        ToTensor()]
-    )
+        ToTensor()
+    ])
 
     train_dataset = FOIKineticPoseDataset(
         json_path=json_path,
@@ -157,6 +171,13 @@ if __name__ == "__main__":
         data_limiter=data_limiter,
         transform=composed
     )
+
+    '''
+    print("Dataset length: ", len(train_dataset))
+    set_len = len(train_dataset)
+    for idx, seq in enumerate(train_dataset):
+        print(f'At {idx} / {set_len}, shape: {seq[0].size()}')
+    '''
 
     test_dataset = FOIKineticPoseDataset(
         json_path=json_path,
@@ -205,7 +226,6 @@ if __name__ == "__main__":
     loss_function_name = str(type(loss_function)).split('.')[-1][:-2]
 
     transform_names = [transform.split(' ')[0].split('.')[1] for transform in str(composed).split('<')[1:]]
-
     def print_setup():
         print('-' * 32, 'Setup', '-' * 33)
         print(f"| Model: {model_name}\n"
@@ -258,3 +278,4 @@ if __name__ == "__main__":
     )
 
     print(f'| Finished testing | Accuracy: {test_accuracy:.3f} | Total time: {time.time() - start_time:.3f}s ')
+
