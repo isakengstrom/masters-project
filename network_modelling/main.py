@@ -86,9 +86,9 @@ if __name__ == "__main__":
     ####################################################################
 
     data_limiter = DataLimiter(
-        subjects=[0,1,2,3,4],
+        subjects=[0, 1, 2, 3, 4],
         sessions=[0],
-        views=[2]
+        views=[0]
     )
 
     # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
@@ -98,24 +98,24 @@ if __name__ == "__main__":
         num_classes = len(data_limiter.subjects)
 
     # Number of epochs - The number of times the dataset is worked through during learning
-    num_epochs = 100
+    num_epochs = 50
 
     # Batch size - tightly linked with gradient descent.
     # The number of samples worked through before the params of the model are updated
     #   - Batch Gradient Descent: batch_size = len(dataset)
     #   - Stochastic Gradient descent: batch_size = 1
     #   - Mini-Batch Gradient descent: 1 < batch_size < len(dataset)
-    batch_size = 2
+    batch_size = 8
 
     # Learning rate
-    learning_rate = 0.05
+    learning_rate = 5e-8  # 0.05
 
     # Number of features
     input_size = num_joints * num_joint_coords
 
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
-    sequence_len = 1000
+    sequence_len = 500
 
     # Layers for the RNN
     num_layers = 2  # Number of stacked RNN layers
@@ -206,35 +206,37 @@ if __name__ == "__main__":
 
     transform_names = [transform.split(' ')[0].split('.')[1] for transform in str(composed).split('<')[1:]]
 
-    print('-' * 32, 'Setup', '-' * 33)
-    print(f"| Model: {model_name}\n"
-          f"| Optimizer: {optimizer_name}\n"
-          f"| Network type: {network_type}\n"
-          f"| Loss function: {loss_function_name}\n"
-          f"| Device: {device}\n"
-          f"|")
+    def print_setup():
+        print('-' * 32, 'Setup', '-' * 33)
+        print(f"| Model: {model_name}\n"
+              f"| Optimizer: {optimizer_name}\n"
+              f"| Network type: {network_type}\n"
+              f"| Loss function: {loss_function_name}\n"
+              f"| Device: {device}\n"
+              f"|")
 
-    print(f"| Sequence transforms:")
-    [print(f"| {name_idx+1}: {name}") for name_idx, name in enumerate(transform_names)]
-    print(f"|")
+        print(f"| Sequence transforms:")
+        [print(f"| {name_idx+1}: {name}") for name_idx, name in enumerate(transform_names)]
+        print(f"|")
 
-    print(f"| Total sequences: {len(train_dataset)}\n"
-          f"| Train split: {len(train_sampler)}\n"
-          f"| Val split: {len(val_sampler)}\n"
-          f"| Test split: {len(test_sampler)}\n"
-          f"|")
+        print(f"| Total sequences: {len(train_dataset)}\n"
+              f"| Train split: {len(train_sampler)}\n"
+              f"| Val split: {len(val_sampler)}\n"
+              f"| Test split: {len(test_sampler)}\n"
+              f"|")
 
-    print(f"| Learning phase:\n"
-          f"| Epochs: {num_epochs}\n"
-          f"| Batch size: {batch_size}\n"
-          f"| Train batches: {len(train_loader)}\n"
-          f"| Val batches: {len(val_loader)}\n"
-          f"|")
+        print(f"| Learning phase:\n"
+              f"| Epochs: {num_epochs}\n"
+              f"| Batch size: {batch_size}\n"
+              f"| Train batches: {len(train_loader)}\n"
+              f"| Val batches: {len(val_loader)}\n"
+              f"|")
 
-    print(f"| Testing phase:\n"
-          f"| Batch size: {batch_size}\n"
-          f"| Test batches: {len(test_loader)}\n"
-          f"|")
+        print(f"| Testing phase:\n"
+              f"| Batch size: {batch_size}\n"
+              f"| Test batches: {len(test_loader)}")
+
+    print_setup()
 
     print('-' * 28, 'Learning phase', '-' * 28)
     model = learn(

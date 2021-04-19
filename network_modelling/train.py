@@ -13,7 +13,7 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
     num_epochs_digits = int(math.log10(num_epochs)) + 1
 
     num_batches = len(data_loader)
-    log_interval = max(math.floor(num_batches/50), 1)
+    log_interval = max(math.floor(num_batches/10), 1)
     num_batches_digits = int(math.log10(num_batches)) + 1
 
     model.train()
@@ -96,7 +96,7 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
                   f"| Accuracy: {total_accuracy/total_count:.6f} "
                   f"| Loss: {(total_loss/(batch_idx+1)):9.6f} |")
 
-            if True:
+            if False:
                 print("  Predicted labels:", predicted_label.data.cpu().numpy(), "\n",
                       "    Actual labels:", label.data.cpu().numpy(), "\n",
                       "True/False labels:", (predicted_label == label).cpu().numpy().astype(int))

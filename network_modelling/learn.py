@@ -1,4 +1,5 @@
 import time
+import math
 
 import torch.optim.lr_scheduler
 
@@ -11,15 +12,22 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
 
     learn_start_time = time.time()
 
+    total_accuracy = None
     accuracy_log = []
     loss_log = []
 
-    total_accuracy = None
+    num_epochs_digits = int(math.log10(num_epochs)) + 1
+
     step_size = 1
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size, gamma=.1)
+    curr_lr = optimizer.param_groups[0]['lr']
+    prev_lr = curr_lr
 
     for epoch_idx in range(1, num_epochs + 1):
         epoch_start_time = time.time()
+
+        print(f"| Epoch {epoch_idx:{num_epochs_digits}.0f}/{num_epochs} "
+              f"| {'Updated l' if curr_lr != prev_lr else 'L'}earning rate: {curr_lr}")
 
         model = train(
             data_loader=train_loader,
@@ -39,26 +47,24 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
         )
 
         if total_accuracy is not None and total_accuracy > val_accuracy:
-            scheduler.step()
+            if curr_lr > 5e-12:
+                prev_lr = curr_lr
+
+                # Step the learning rate
+                scheduler.step()
+                curr_lr = optimizer.param_groups[0]['lr']
         else:
             total_accuracy = val_accuracy
 
-        for param_group in optimizer.param_groups:
-            print(param_group['lr'])
-
-        print('-' * 72)
-        print(f'| Epoch {epoch_idx:3.0f}/{num_epochs} '
+        # Print info from the finished epoch
+        #print('-' * 72)
+        print(f'| Epoch {epoch_idx:{num_epochs_digits}.0f}/{num_epochs} '
               f'| Duration: {time.time()-epoch_start_time:.2f}s '
               f'| Val accuracy: {val_accuracy:.3f} |')
         print('-' * 72)
 
         # Save a checkpoint when the epoch finishes
-        state = {
-            'epoch': epoch_idx,
-            'net': model.state_dict(),
-            'optimizer': optimizer.state_dict(),
-        }
-
+        state = {'epoch': epoch_idx, 'net': model.state_dict(), 'optimizer': optimizer.state_dict()}
         file_path = f'./checkpoints/checkpoint_{epoch_idx}.pth'
         torch.save(state, file_path)
 
