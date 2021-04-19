@@ -1,9 +1,8 @@
 import torch
 import torch.nn as nn
 
+
 # https://towardsdatascience.com/metric-learning-loss-functions-5b67b3da99a5
-
-
 class LSTM(nn.Module):
     """
     First and simplest LSTM net

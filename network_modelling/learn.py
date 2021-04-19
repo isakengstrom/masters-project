@@ -38,14 +38,15 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
             epoch_idx=epoch_idx,
             num_epochs=num_epochs
         )
-        '''
+
         val_accuracy = evaluate(
             data_loader=val_loader,
             model=model,
             device=device
         )
-        '''
-        val_accuracy = 0
+
+        # TODO: Check if this is a viable use of the schedeler. Seems to be a bit problematic, as only a change in
+        #  learning rate dosen't seem to be enough. Maybe reset the model if the accuracy is too low?
         if total_accuracy is not None and total_accuracy > val_accuracy:
             if curr_lr > 5e-8:
                 prev_lr = curr_lr

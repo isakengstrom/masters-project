@@ -1,10 +1,8 @@
 import math
-import numpy as np
-
 import torch
 import torch.nn.utils as utils
-from tqdm import tqdm
 from collections import Counter
+
 
 #  https://www.kaggle.com/hirotaka0122/triplet-loss-with-pytorch
 def train(data_loader, model, optimizer, loss_function, device, network_type, epoch_idx, num_epochs):
@@ -13,7 +11,7 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
     num_epochs_digits = int(math.log10(num_epochs)) + 1
 
     num_batches = len(data_loader)
-    log_interval = 1#max(math.floor(num_batches/10), 1)
+    log_interval = 1# max(math.floor(num_batches/10), 1)
     num_batches_digits = int(math.log10(num_batches)) + 1
 
     model.train()
@@ -24,12 +22,8 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
             sequence, label = batch_sample
 
             label = label.to(device)
-            sequence = sequence.to(device)
-            '''
-            print(sequence.size())
-            sequence.squeeze(1)
-            print(sequence.size())
-            '''
+            sequence = sequence.to(device).squeeze(1)  # Squeeze(1) is for MNIST
+
             # Clear the gradients of all variables
             optimizer.zero_grad()
 
@@ -99,7 +93,7 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
                   f"| Accuracy: {total_accuracy/total_count:.6f} "
                   f"| Loss: {(total_loss/(batch_idx+1)):9.6f} |")
 
-            if False:
+            if True:
                 lst = (predicted_label == label).cpu().numpy().astype(int)
                 print("  Predicted labels:", predicted_label.data.cpu().numpy(), "\n",
                       "    Actual labels:", label.data.cpu().numpy(), "\n",

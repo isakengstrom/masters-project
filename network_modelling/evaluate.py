@@ -10,7 +10,7 @@ def evaluate(data_loader, model, device):
     with torch.no_grad():
         for batch_idx, (sequence, label) in enumerate(data_loader):
             label = label.to(device)
-            sequence = sequence.to(device)
+            sequence = sequence.to(device).squeeze(1)
 
             sequence_out = model(sequence)
 
