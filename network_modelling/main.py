@@ -1,28 +1,25 @@
+import os
+import time
+import numpy as np
+
+import torchvision.transforms as transforms
+
 import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
-from torch.utils.data import Dataset, DataLoader
-from torch.utils.data.sampler import SubsetRandomSampler
-import torchvision
-import torchvision.transforms as transforms
-import torchvision.datasets as datasets
+
 # To start board, type the following in the terminal: tensorboard --logdir=runs
 from torch.utils.tensorboard import SummaryWriter
+from torch.utils.data import DataLoader
+from torch.utils.data.sampler import SubsetRandomSampler
 
-import os
-import numpy as np
-import time
-
-from models.LSTM import LSTM, LSTM_2, BDLSTM, RNN_LSTM
-from train import train
 
 from learn import learn
 from evaluate import evaluate
-
+from models.LSTM import LSTM, LSTM_2, BDLSTM, AladdinLSTM
 from dataset import FOIKineticPoseDataset, DataLimiter
-from helpers.paths import EXTR_PATH, JOINTS_LOOKUP_PATH, TB_RUNS_PATH
-from helpers import read_from_json
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
+from helpers.paths import EXTR_PATH, JOINTS_LOOKUP_PATH, TB_RUNS_PATH
 
 
 def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=True, shuffle=True):
@@ -37,8 +34,6 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
     indices = list(range(dataset_len))
 
     if shuffle:
-        # TODO: Look into if this truly generates random, see this:
-        #  https://www.reddit.com/r/MachineLearning/comments/mocpgj/p_using_pytorch_numpy_a_bug_that_plagues/
         random_seed = 42
         np.random.seed(random_seed)
         np.random.shuffle(indices)
@@ -73,13 +68,13 @@ if __name__ == "__main__":
 
     # Pick OpenPose joints for the model,
     # these are used in the FilterPose() transform, as well as when deciding the input_size/number of features
-    joints_lookup_activator = "name"
+    joints_lookup_activator = "op_idx"
     joint_filter = []
 
     # OpenPose indices, same as in the OpenPose repo.
     if joints_lookup_activator == "op_idx":
-        joint_filter = [1, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24]  # Select OpenPose indices
-        #joint_filter = list(range(25))  # All OpenPose indices
+        #joint_filter = [1, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24]  # Select OpenPose indices
+        joint_filter = list(range(25))  # All OpenPose indices
 
     # Joint names, see more in the 'joints_lookup.json' file
     elif joints_lookup_activator == "name":
@@ -95,7 +90,7 @@ if __name__ == "__main__":
     data_limiter = DataLimiter(
         subjects=None,
         sessions=[0],
-        views=None
+        views=[3]
     )
 
     # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
@@ -115,7 +110,7 @@ if __name__ == "__main__":
     batch_size = 8
 
     # Learning rate
-    learning_rate = 0.001  # 0.05 5e-8
+    learning_rate = 0.005  # 0.05 5e-8
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
     # The joint_filter will also be applied further down, in the FilterJoints() transform.
@@ -125,11 +120,11 @@ if __name__ == "__main__":
     num_joint_coords = 2
 
     # Number of features
-    input_size = num_joints * num_joint_coords # 28
-
+    input_size = num_joints * num_joint_coords  # 28
+    print(input_size)
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
-    sequence_len = 29
+    sequence_len = 350  # use seq_len+1 for MNIST
 
     # Layers for the RNN
     num_layers = 2  # Number of stacked RNN layers
@@ -155,9 +150,9 @@ if __name__ == "__main__":
 
     # Transforms
     composed = transforms.Compose([
-        NormalisePoses(),
-        ChangePoseOrigin(),
-        FilterJoints(activator=joints_lookup_activator, joint_filter=joint_filter),
+        #NormalisePoses(),
+        #ChangePoseOrigin(),
+        #FilterJoints(activator=joints_lookup_activator, joint_filter=joint_filter),
         ReshapePoses(),
         ToTensor()
     ])
@@ -232,7 +227,7 @@ if __name__ == "__main__":
     loss_function_name = str(type(loss_function)).split('.')[-1][:-2]
 
     transform_names = [transform.split(' ')[0].split('.')[1] for transform in str(composed).split('<')[1:]]
-    '''
+
     def print_setup():
         print('-' * 32, 'Setup', '-' * 33)
         print(f"| Model: {model_name}\n"
@@ -264,12 +259,11 @@ if __name__ == "__main__":
               f"| Test batches: {len(test_loader)}")
 
     print_setup()
-    '''
 
     print('-' * 28, 'Learning phase', '-' * 28)
     model = learn(
         train_loader=train_loader,
-        val_loader=None,
+        val_loader=val_loader,
         model=model,
         optimizer=optimizer,
         loss_function=loss_function,
