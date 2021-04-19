@@ -3,6 +3,7 @@ import time
 import numpy as np
 
 import torchvision.transforms as transforms
+import torchvision.datasets as datasets
 
 import torch
 import torch.nn as nn
@@ -10,15 +11,12 @@ import torch.backends.cudnn as cudnn
 
 # To start board, type the following in the terminal: tensorboard --logdir=runs
 from torch.utils.tensorboard import SummaryWriter
-from torch.utils.data import DataLoader
+from torch.utils.data import Dataset, DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
-
 
 from learn import learn
 from evaluate import evaluate
 from models.LSTM import LSTM, LSTM_2, BDLSTM, AladdinLSTM
-from dataset import FOIKineticPoseDataset, DataLimiter
-from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
 from helpers.paths import EXTR_PATH, JOINTS_LOOKUP_PATH, TB_RUNS_PATH
 
 
@@ -66,38 +64,12 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
 if __name__ == "__main__":
     writer = SummaryWriter(TB_RUNS_PATH)
 
-    # Pick OpenPose joints for the model,
-    # these are used in the FilterPose() transform, as well as when deciding the input_size/number of features
-    joints_lookup_activator = "op_idx"
-    joint_filter = []
-
-    # OpenPose indices, same as in the OpenPose repo.
-    if joints_lookup_activator == "op_idx":
-        #joint_filter = [1, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24]  # Select OpenPose indices
-        joint_filter = list(range(25))  # All OpenPose indices
-
-    # Joint names, see more in the 'joints_lookup.json' file
-    elif joints_lookup_activator == "name":
-        joint_filter = ["nose", "c_hip", "neck"]
-
-    else:
-        NotImplementedError(f"The Joint filter of the '{joints_lookup_activator}' activator is not implemented.")
-
     ####################################################################
     # Hyper parameters #################################################
     ####################################################################
 
-    data_limiter = DataLimiter(
-        subjects=None,
-        sessions=[0],
-        views=[3]
-    )
-
     # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
-    if data_limiter.subjects is None:
-        num_classes = 10
-    else:
-        num_classes = len(data_limiter.subjects)
+    num_classes = 10
 
     # Number of epochs - The number of times the dataset is worked through during learning
     num_epochs = 10
@@ -107,28 +79,21 @@ if __name__ == "__main__":
     #   - Batch Gradient Descent: batch_size = len(dataset)
     #   - Stochastic Gradient descent: batch_size = 1
     #   - Mini-Batch Gradient descent: 1 < batch_size < len(dataset)
-    batch_size = 8
+    batch_size = 64
 
     # Learning rate
-    learning_rate = 0.005  # 0.05 5e-8
-
-    # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
-    # The joint_filter will also be applied further down, in the FilterJoints() transform.
-    num_joints = len(joint_filter)
-
-    # The number of coordinates for each of the OpenPose joints, equal to 2 if using both x and y
-    num_joint_coords = 2
+    learning_rate = 0.001  # 0.05 5e-8
 
     # Number of features
-    input_size = num_joints * num_joint_coords  # 28
-    print(input_size)
+    input_size = 28
+
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
-    sequence_len = 350  # use seq_len+1 for MNIST
+    sequence_len = 29  # use seq_len+1 for MNIST
 
     # Layers for the RNN
     num_layers = 2  # Number of stacked RNN layers
-    hidden_size = 256  # Number of features in hidden state
+    hidden_size = 256*2  # Number of features in hidden state
 
     # Loss function
     margin = 0.2  # The margin for certain loss functions
@@ -148,51 +113,14 @@ if __name__ == "__main__":
     if not os.path.isdir('./models/saved_models'):
         os.mkdir('./models/saved_models')
 
-    # Transforms
-    composed = transforms.Compose([
-        #NormalisePoses(),
-        #ChangePoseOrigin(),
-        #FilterJoints(activator=joints_lookup_activator, joint_filter=joint_filter),
-        ReshapePoses(),
-        ToTensor()
-    ])
-    train_dataset = FOIKineticPoseDataset(
-        json_path=json_path,
-        root_dir=root_dir,
-        sequence_len=sequence_len,
-        is_train=True,
-        network_type=network_type,
-        data_limiter=data_limiter,
-        transform=composed
-    )
+    learn_dataset = datasets.MNIST(root="dataset/", train=True, transform=transforms.ToTensor(), download=True)
+    test_dataset = datasets.MNIST(root="dataset/", train=False, transform=transforms.ToTensor(), download=True)
 
-    '''
-    print("Dataset length: ", len(train_dataset))
-    set_len = len(train_dataset)
-    for idx, seq in enumerate(train_dataset):
-        print(f'At {idx} / {set_len}, shape: {seq[0].size()}')
-    '''
+    train_dataset, val_dataset = torch.utils.data.random_split(learn_dataset, [50000, 10000])
 
-    test_dataset = FOIKineticPoseDataset(
-        json_path=json_path,
-        root_dir=root_dir,
-        sequence_len=sequence_len,
-        is_train=False,
-        data_limiter=data_limiter,
-        transform=composed
-    )
-
-    train_sampler, test_sampler, val_sampler = create_samplers(
-        dataset_len=len(train_dataset),
-        train_split=.8,
-        val_split=.2,
-        val_from_train=True,
-        shuffle=True
-    )
-
-    train_loader = DataLoader(train_dataset, batch_size, sampler=train_sampler, num_workers=0)
-    test_loader = DataLoader(test_dataset, batch_size, sampler=test_sampler, num_workers=0)
-    val_loader = DataLoader(train_dataset, batch_size, sampler=val_sampler, num_workers=0)
+    train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
+    val_loader = DataLoader(dataset=val_dataset, batch_size=batch_size, shuffle=True)
+    test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
 
     if network_type == "single":
         loss_function = nn.CrossEntropyLoss()
@@ -205,7 +133,7 @@ if __name__ == "__main__":
 
     device = torch.device('cuda' if use_cuda else 'cpu')
 
-    model = LSTM(input_size, hidden_size, num_layers, num_classes, device)
+    model = AladdinLSTM(input_size, hidden_size, num_layers, num_classes, device)
 
     if use_cuda:
         model.cuda()
@@ -218,9 +146,9 @@ if __name__ == "__main__":
     model_name = str(type(model)).split('.')[-1][:-2]
     optimizer_name = str(type(optimizer)).split('.')[-1][:-2]
     loss_function_name = str(type(loss_function)).split('.')[-1][:-2]
-
+    '''
     transform_names = [transform.split(' ')[0].split('.')[1] for transform in str(composed).split('<')[1:]]
-
+    '''
     def print_setup():
         print('-' * 32, 'Setup', '-' * 33)
         print(f"| Model: {model_name}\n"
@@ -230,6 +158,7 @@ if __name__ == "__main__":
               f"| Device: {device}\n"
               f"|")
 
+        '''
         print(f"| Sequence transforms:")
         [print(f"| {name_idx+1}: {name}") for name_idx, name in enumerate(transform_names)]
         print(f"|")
@@ -239,7 +168,7 @@ if __name__ == "__main__":
               f"| Val split: {len(val_sampler)}\n"
               f"| Test split: {len(test_sampler)}\n"
               f"|")
-
+        '''
         print(f"| Learning phase:\n"
               f"| Epochs: {num_epochs}\n"
               f"| Batch size: {batch_size}\n"
