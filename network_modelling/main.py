@@ -37,13 +37,6 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
         random_seed = 22  # 42
         #np.random.seed(random_seed)
         np.random.shuffle(indices)
-        '''
-        for idx in range(len(indices)):
-            if idx < 20:
-                print("From all: ", indices[idx])
-            else:
-                break
-        '''
 
     if val_from_train:
         train_test_split = int(np.floor(train_split * dataset_len))
@@ -66,23 +59,6 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
         train_indices = indices[:first_split]
         test_indices = indices[first_split:second_split]
         val_indices = indices[second_split:]
-        '''
-        for idx in range(len(train_indices)):
-            if idx < 20:
-                print("From train: ", train_indices[idx])
-            else:
-                break
-        for idx in range(len(test_indices)):
-            if idx < 20:
-                print("From test: ", test_indices[idx])
-            else:
-                break
-        for idx in range(len(val_indices)):
-            if idx < 20:
-                print("From val: ", val_indices[idx])
-            else:
-                break
-        '''
 
     return SubsetRandomSampler(train_indices), SubsetRandomSampler(test_indices), SubsetRandomSampler(val_indices)
 
@@ -114,7 +90,7 @@ if __name__ == "__main__":
     data_limiter = DataLimiter(
         subjects=[0,1,2, 3, 4, 5, 6, 7, 8, 9],
         sessions=[0],
-        views=[3]
+        views=None
     )
 
     # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
@@ -124,7 +100,7 @@ if __name__ == "__main__":
         num_classes = len(data_limiter.subjects)
 
     # Number of epochs - The number of times the dataset is worked through during learning
-    num_epochs = 10
+    num_epochs = 30
 
     # Batch size - tightly linked with gradient descent.
     # The number of samples worked through before the params of the model are updated
@@ -214,9 +190,9 @@ if __name__ == "__main__":
         shuffle=True
     )
 
-    train_loader = DataLoader(train_dataset, batch_size, sampler=train_sampler, num_workers=0)
-    test_loader = DataLoader(test_dataset, batch_size, sampler=test_sampler, num_workers=0)
-    val_loader = DataLoader(train_dataset, batch_size, sampler=val_sampler, num_workers=0)
+    train_loader = DataLoader(train_dataset, batch_size, sampler=train_sampler, num_workers=4)
+    test_loader = DataLoader(test_dataset, batch_size, sampler=test_sampler, num_workers=4)
+    val_loader = DataLoader(train_dataset, batch_size, sampler=val_sampler, num_workers=4)
 
     if network_type == "single":
         loss_function = nn.CrossEntropyLoss()
