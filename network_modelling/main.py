@@ -88,7 +88,7 @@ if __name__ == "__main__":
     ####################################################################
 
     data_limiter = DataLimiter(
-        subjects=[0,1,2, 3, 4, 5, 6, 7, 8, 9],
+        subjects=None,
         sessions=[0],
         views=None
     )
@@ -100,7 +100,7 @@ if __name__ == "__main__":
         num_classes = len(data_limiter.subjects)
 
     # Number of epochs - The number of times the dataset is worked through during learning
-    num_epochs = 30
+    num_epochs = 40
 
     # Batch size - tightly linked with gradient descent.
     # The number of samples worked through before the params of the model are updated
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     batch_size = 16
 
     # Learning rate
-    learning_rate = 5e-4  # 0.05 5e-8
+    learning_rate = 0.001  # 0.05 5e-4 5e-8
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
     # The joint_filter will also be applied further down, in the FilterJoints() transform.
@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
-    sequence_len = 350
+    sequence_len = 150
 
     # Layers for the RNN
     num_layers = 2  # Number of stacked RNN layers
