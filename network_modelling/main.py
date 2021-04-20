@@ -34,9 +34,16 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
     indices = list(range(dataset_len))
 
     if shuffle:
-        random_seed = 42
-        np.random.seed(random_seed)
+        random_seed = 22  # 42
+        #np.random.seed(random_seed)
         np.random.shuffle(indices)
+        '''
+        for idx in range(len(indices)):
+            if idx < 20:
+                print("From all: ", indices[idx])
+            else:
+                break
+        '''
 
     if val_from_train:
         train_test_split = int(np.floor(train_split * dataset_len))
@@ -59,6 +66,23 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
         train_indices = indices[:first_split]
         test_indices = indices[first_split:second_split]
         val_indices = indices[second_split:]
+        '''
+        for idx in range(len(train_indices)):
+            if idx < 20:
+                print("From train: ", train_indices[idx])
+            else:
+                break
+        for idx in range(len(test_indices)):
+            if idx < 20:
+                print("From test: ", test_indices[idx])
+            else:
+                break
+        for idx in range(len(val_indices)):
+            if idx < 20:
+                print("From val: ", val_indices[idx])
+            else:
+                break
+        '''
 
     return SubsetRandomSampler(train_indices), SubsetRandomSampler(test_indices), SubsetRandomSampler(val_indices)
 
@@ -73,8 +97,8 @@ if __name__ == "__main__":
 
     # OpenPose indices, same as in the OpenPose repo.
     if joints_lookup_activator == "op_idx":
-        #joint_filter = [1, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24]  # Select OpenPose indices
-        joint_filter = list(range(25))  # All OpenPose indices
+        joint_filter = [1, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24]  # Select OpenPose indices
+        #joint_filter = list(range(25))  # All OpenPose indices
 
     # Joint names, see more in the 'joints_lookup.json' file
     elif joints_lookup_activator == "name":
@@ -88,7 +112,7 @@ if __name__ == "__main__":
     ####################################################################
 
     data_limiter = DataLimiter(
-        subjects=None,
+        subjects=[0,1,2, 3, 4, 5, 6, 7, 8, 9],
         sessions=[0],
         views=[3]
     )
@@ -107,10 +131,10 @@ if __name__ == "__main__":
     #   - Batch Gradient Descent: batch_size = len(dataset)
     #   - Stochastic Gradient descent: batch_size = 1
     #   - Mini-Batch Gradient descent: 1 < batch_size < len(dataset)
-    batch_size = 8
+    batch_size = 16
 
     # Learning rate
-    learning_rate = 0.005  # 0.05 5e-8
+    learning_rate = 5e-4  # 0.05 5e-8
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
     # The joint_filter will also be applied further down, in the FilterJoints() transform.
@@ -121,14 +145,14 @@ if __name__ == "__main__":
 
     # Number of features
     input_size = num_joints * num_joint_coords  # 28
-    print(input_size)
+
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
-    sequence_len = 350  # use seq_len+1 for MNIST
+    sequence_len = 350
 
     # Layers for the RNN
     num_layers = 2  # Number of stacked RNN layers
-    hidden_size = 256  # Number of features in hidden state
+    hidden_size = 256*2  # Number of features in hidden state
 
     # Loss function
     margin = 0.2  # The margin for certain loss functions
@@ -151,8 +175,8 @@ if __name__ == "__main__":
     # Transforms
     composed = transforms.Compose([
         #NormalisePoses(),
-        #ChangePoseOrigin(),
-        #FilterJoints(activator=joints_lookup_activator, joint_filter=joint_filter),
+        ChangePoseOrigin(),
+        FilterJoints(activator=joints_lookup_activator, joint_filter=joint_filter),
         ReshapePoses(),
         ToTensor()
     ])
@@ -184,9 +208,9 @@ if __name__ == "__main__":
 
     train_sampler, test_sampler, val_sampler = create_samplers(
         dataset_len=len(train_dataset),
-        train_split=.8,
-        val_split=.2,
-        val_from_train=True,
+        train_split=.7,
+        val_split=.15,
+        val_from_train=False,
         shuffle=True
     )
 
@@ -212,6 +236,7 @@ if __name__ == "__main__":
         cudnn.benchmark = True
 
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+    #optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
 
     start_time = time.time()
 
