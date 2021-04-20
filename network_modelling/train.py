@@ -11,63 +11,63 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
     num_epochs_digits = int(math.log10(num_epochs)) + 1
 
     num_batches = len(data_loader)
-    log_interval = 1# max(math.floor(num_batches/10), 1)
+    log_interval = max(math.floor(num_batches/10), 1)
     num_batches_digits = int(math.log10(num_batches)) + 1
 
     model.train()
 
-    for batch_idx, batch_sample in enumerate(data_loader):
+    for batch_idx, batch_samples in enumerate(data_loader):
 
         if network_type == "single":
-            sequence, label = batch_sample
+            sequences, labels = batch_samples
 
-            label = label.to(device)
-            sequence = sequence.to(device).squeeze(1)  # Squeeze(1) is for MNIST
+            labels = labels.to(device)
+            sequences = sequences.to(device).squeeze(1)  # Squeeze(1) is for MNIST
 
             # Clear the gradients of all variables
             optimizer.zero_grad()
 
             # Feed the network forward
-            sequence_out = model(sequence)
+            sequences_out = model(sequences)
 
             # Calculate the loss
-            loss = loss_function(sequence_out, label)
+            loss = loss_function(sequences_out, labels)
 
         elif network_type == "siamese":
-            sequence, negative_sequence, label = batch_sample
+            sequences, negative_sequences, labels = batch_samples
 
-            label = label.to(device)
-            sequence = sequence.to(device)
-            negative_sequence = negative_sequence.to(device)
+            labels = labels.to(device)
+            sequences = sequences.to(device)
+            negative_sequences = negative_sequences.to(device)
 
             # Clear the gradients of all variables
             optimizer.zero_grad()
 
             # Feed the network forward
-            sequence_out = model(sequence)
-            negative_sequence_out = model(negative_sequence)
+            sequences_out = model(sequences)
+            negative_sequences_out = model(negative_sequences)
 
             # Calculate the loss
-            loss = loss_function(sequence_out, negative_sequence_out)
+            loss = loss_function(sequences_out, negative_sequences_out)
 
         elif network_type == "triplet":
-            sequence, positive_sequence, negative_sequence, label = batch_sample
+            sequences, positive_sequences, negative_sequences, labels = batch_samples
 
-            label = label.to(device)
-            sequence = sequence.to(device)
-            positive_sequence = positive_sequence.to(device)
-            negative_sequence = negative_sequence.to(device)
+            labels = labels.to(device)
+            sequences = sequences.to(device)
+            positive_sequences = positive_sequences.to(device)
+            negative_sequences = negative_sequences.to(device)
 
             # Clear the gradients of all variables
             optimizer.zero_grad()
 
             # Feed the network forward
-            sequence_out = model(sequence)
-            positive_sequence_out = model(positive_sequence)
-            negative_sequence_out = model(negative_sequence)
+            sequences_out = model(sequences)
+            positive_sequences_out = model(positive_sequences)
+            negative_sequences_out = model(negative_sequences)
 
             # Calculate the loss
-            loss = loss_function(sequence_out, positive_sequence_out, negative_sequence_out)
+            loss = loss_function(sequences_out, positive_sequences_out, negative_sequences_out)
 
         else:
             raise Exception("Invalid network_type, should be 'single', 'siamese' or 'triplet'")
@@ -76,15 +76,15 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
         loss.backward()
 
         # Clip norms
-        #utils.clip_grad_norm_(model.parameters(), max_norm=.1)
+        utils.clip_grad_norm_(model.parameters(), max_norm=.1)
 
         # Update the weights
         optimizer.step()
 
-        _, predicted_label = torch.max(sequence_out, 1)
+        _, predicted_labels = torch.max(sequences_out, 1)
 
-        total_accuracy += (predicted_label == label).sum().item()
-        total_count += label.size(0)
+        total_accuracy += (predicted_labels == labels).sum().item()
+        total_count += labels.size(0)
         total_loss += loss.item()
 
         if batch_idx % log_interval == 0:
@@ -94,14 +94,14 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
                   f"| Loss: {(total_loss/(batch_idx+1)):9.6f} |")
 
             if True:
-                lst = (predicted_label == label).cpu().numpy().astype(int)
-                print("  Predicted labels:", predicted_label.data.cpu().numpy(), "\n",
-                      "    Actual labels:", label.data.cpu().numpy(), "\n",
+                lst = (predicted_labels == labels).cpu().numpy().astype(int)
+                print("  Predicted labels:", predicted_labels.data.cpu().numpy(), "\n",
+                      "    Actual labels:", labels.data.cpu().numpy(), "\n",
                       "True/False labels:", lst, " ", Counter(lst))
                 print('-' * 72)
 
             #print(total_accuracy, total_count, total_loss)
-            total_accuracy, total_count = 0, 0
+            #total_accuracy, total_count = 0, 0
 
         '''
         loss_log.append((train_loss / (batch_idx + 1)))
