@@ -13,12 +13,12 @@ class LSTM(nn.Module):
         self.hidden_size = hidden_size
         self.device = device
 
-        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True)
+        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, dropout=1, batch_first=True)
         self.fc = nn.Linear(hidden_size, num_classes)
 
     def forward(self, x):
-        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, dtype=torch.float).to(self.device)
-        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, dtype=torch.float).to(self.device)
+        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, device=self.device)
+        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, device=self.device)
 
         # out: batch_size, seq_length, hidden_size
         out, _ = self.lstm(x, (h0, c0))
@@ -48,8 +48,8 @@ class LSTM_2(nn.Module):
         self.relu = nn.ReLU()
 
     def forward(self, x):
-        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, dtype=torch.float).to(self.device)
-        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, dtype=torch.float).to(self.device)
+        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, device=self.device)
+        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, device=self.device)
 
         # out: batch_size, seq_length, hidden_size
         output, (hn, cn) = self.lstm(x, (h0, c0))
@@ -70,12 +70,12 @@ class BDLSTM(nn.Module):
         self.num_layers = num_layers
         self.device = device
 
-        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True, bidirectional=True)
+        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, dropout=.5, batch_first=True, bidirectional=True)
         self.fc = nn.Linear(hidden_size * 2, num_classes)
 
     def forward(self, x):
-        h0 = torch.zeros(self.num_layers * 2, x.size(0), self.hidden_size).to(self.device)
-        c0 = torch.zeros(self.num_layers * 2, x.size(0), self.hidden_size).to(self.device)
+        h0 = torch.zeros(self.num_layers * 2, x.size(0), self.hidden_size, device=self.device)
+        c0 = torch.zeros(self.num_layers * 2, x.size(0), self.hidden_size, device=self.device)
 
         out, _ = self.lstm(x, (h0, c0))
         out = self.fc(out[:, -1, :])
@@ -101,8 +101,8 @@ class AladdinLSTM(nn.Module):
 
     def forward(self, x):
         # Set initial hidden and cell states
-        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(self.device)
-        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(self.device)
+        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, device=self.device)
+        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size, device=self.device)
 
         # Forward propagate LSTM
         out, _ = self.lstm(x, (h0, c0))  # out: tensor of shape (batch_size, seq_length, hidden_size)
