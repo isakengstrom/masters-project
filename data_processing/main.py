@@ -3,10 +3,12 @@ Starting point for the pose extraction, using OpenPose.
 """
 
 import os
+import time
 
 from helpers import SHOULD_LIMIT, lower_lim_check, upper_lim_check, read_from_json
 from helpers.display_helper import display_session
-from helpers.paths import DATASET_PATH, EXTR_PATH
+from helpers.json_helper import combine_json_files
+from helpers.paths import DATASET_PATH, EXTR_PATH, EXTR_PATH_SSD
 from pose_extraction.extraction_config import TRIMMED_SESSION_FLAG, SHOULD_USE_TRIMMED
 
 from pose_extraction.foi_extraction import extract_session
@@ -96,6 +98,7 @@ def loop_over_foi_dataset(root_dir, action=None):
 
 
 if __name__ == "__main__":
+    start_time = time.time()
     """""""""""
     For extraction of the FOI dataset
     """""""""""
@@ -120,3 +123,9 @@ if __name__ == "__main__":
     #process_extracted_files()
     #data_info = read_from_json(EXTR_PATH + "final_data_info.json")
     #print(data_info)
+
+    #combine_json_files(EXTR_PATH + "final/")
+    data = read_from_json(EXTR_PATH_SSD + "final/combined/combined.json")
+    print(len(data["SUB5_SESS0_VIEW3.json"]))
+
+    print(f"Main finished in {time.time()-start_time:0.1f}s")

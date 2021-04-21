@@ -12,7 +12,8 @@ import cv2
 from glob import glob
 
 from .pre_config import EXTRACT_OFFSET, USE_OFFSET, SHOULD_DISPLAY, FIX_BACK_CAMERA
-from helpers import write_to_json, read_from_json, display_session, SHOULD_LIMIT, LIMIT_PARAMS
+from helpers import write_to_json, read_from_json, SHOULD_LIMIT, LIMIT_PARAMS
+from helpers.display_helper import display_session
 from helpers.paths import CC_OFFSETS_PATH
 
 
