@@ -133,7 +133,7 @@ if __name__ == "__main__":
 
     device = torch.device('cuda' if use_cuda else 'cpu')
 
-    model = AladdinLSTM(input_size, hidden_size, num_layers, num_classes, device)
+    model = LSTM(input_size, hidden_size, num_layers, num_classes, device)
 
     if use_cuda:
         model.cuda()
