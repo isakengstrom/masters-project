@@ -17,12 +17,13 @@ OP_SAVE_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_test"
 
 # Paths to the openpose keypoints
 EXTR_PATH = os.environ['DATASET_DIR'] + "EXTRACTED_KEYPOINTS/isaeng/"
+EXTR_PATH_SSD = os.environ['THESIS_PROJECT_PATH'] + "data/"
 
 # Path to the json that stores at which frames the untrimmed extracted
-TRIM_INTERVALS = os.environ['PROJECT_PATH'] + "users/isaeng/data_processing/pre_processing/frame_intervals.json"
+TRIM_INTERVALS = os.environ['REPO_PATH'] + "users/isaeng/data_processing/pre_processing/frame_intervals.json"
 
 # Path to the joints lookup table
-JOINTS_LOOKUP_PATH = os.environ['PROJECT_PATH'] + "users/isaeng/network_modelling/joints_lookup.json"
+JOINTS_LOOKUP_PATH = os.environ['REPO_PATH'] + "users/isaeng/network_modelling/joints_lookup.json"
 
 # Path to the session offsets extracted using cross correlation
 CC_OFFSETS_PATH = os.environ['DATASET_DIR'] + "/isaeng_extr/json_dumps_test/offsets.json"
