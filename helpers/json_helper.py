@@ -1,5 +1,6 @@
 import json
 import numpy as np
+import os
 
 
 class NumpyEncoder(json.JSONEncoder):
@@ -42,3 +43,25 @@ def read_from_json(target_dir, use_dumps=False):
     data = json.loads(data)
     f.close()
     return data
+
+
+def combine_json_files(target_dir, save_dir=None, save_name="combined.json"):
+    print(target_dir)
+    _, _, json_files = next(os.walk(target_dir))
+
+    if save_dir is None:
+        save_dir = os.path.join(target_dir, "combined")
+        print(save_dir)
+
+    if not os.path.isdir(save_dir):
+        os.mkdir(save_dir)
+
+    combined_dict = {}
+    for file_name in sorted(json_files):
+        print("Adding file:", file_name)
+        file_path = os.path.join(target_dir, file_name)
+        file_data = read_from_json(file_path)
+        combined_dict[file_name] = file_data
+
+    write_to_json(combined_dict, save_dir + "/" + save_name)
+

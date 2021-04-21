@@ -4,6 +4,7 @@ from helpers import read_from_json, LIMIT_PARAMS, SHOULD_LIMIT
 from helpers.paths import CC_OFFSETS_PATH
 from data_processing.pre_processing.pre_config import USE_OFFSET, FIX_BACK_CAMERA
 
+
 def draw_label(img, text, pos=(20, 20), bg_color=(200, 200, 200)):
     """
     Code from: https://stackoverflow.com/a/54616857/15354710
