@@ -1,4 +1,5 @@
 import math
+import time
 import torch
 import torch.nn.utils as utils
 from collections import Counter
@@ -8,16 +9,16 @@ from collections import Counter
 def train(data_loader, model, optimizer, loss_function, device, network_type, epoch_idx, num_epochs):
 
     total_accuracy, total_count, total_loss = 0, 0, 0
-    num_epochs_digits = int(math.log10(num_epochs)) + 1
+    epoch_formatter = int(math.log10(num_epochs)) + 1
 
     num_batches = len(data_loader)
     log_interval = max(math.floor(num_batches/10), 1)
-    num_batches_digits = int(math.log10(num_batches)) + 1
+    batch_formatter = int(math.log10(num_batches)) + 1
 
     model.train()
 
+    batch_time = time.time()
     for batch_idx, batch_samples in enumerate(data_loader):
-
         if network_type == "single":
             sequences, labels = batch_samples
 
@@ -87,25 +88,15 @@ def train(data_loader, model, optimizer, loss_function, device, network_type, ep
         total_count += labels.size(0)
         total_loss += loss.item()
 
-        if batch_idx % log_interval == 0:
-            print(f"| Epoch {epoch_idx:{num_epochs_digits}.0f}/{num_epochs} "
-                  f"| Batch {batch_idx+1:{num_batches_digits}.0f}/{num_batches} "
+        if batch_idx > 0 and batch_idx % log_interval == 0:
+            print(f"| Epoch {epoch_idx:{epoch_formatter}.0f}/{num_epochs} "
+                  f"| Batch {batch_idx+1:{batch_formatter}.0f}/{num_batches} "
                   f"| Accuracy: {total_accuracy/total_count:.6f} "
                   f"| Loss: {(total_loss/(batch_idx+1)):9.6f} |")
 
-            if True:
-                lst = (predicted_labels == labels).cpu().numpy().astype(int)
-                print("  Predicted labels:", predicted_labels.data.cpu().numpy(), "\n",
-                      "    Actual labels:", labels.data.cpu().numpy(), "\n",
-                      "True/False labels:", lst, " ", Counter(lst))
+            if False:
+                print(f"|\t\t\t\tPredicted labels: {predicted_labels.data.cpu().numpy()}\n"
+                      f"|\t\t\t\t   Actual labels: {labels.data.cpu().numpy()}")
                 print('-' * 72)
-
-            #print(total_accuracy, total_count, total_loss)
-            #total_accuracy, total_count = 0, 0
-
-        '''
-        loss_log.append((train_loss / (batch_idx + 1)))
-        acc_log.append(100. * correct / total)
-        '''
 
     return model
