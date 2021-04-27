@@ -1,6 +1,7 @@
 import os
 import time
 import numpy as np
+import math
 
 import torchvision.transforms as transforms
 
@@ -17,9 +18,9 @@ from torch.utils.data.sampler import SubsetRandomSampler
 from learn import learn
 from evaluate import evaluate
 from models.LSTM import LSTM, LSTM_2, BDLSTM, AladdinLSTM
-from dataset import FOIKineticPoseDataset, DataLimiter
+from dataset import FOIKineticPoseDataset, DataLimiter, LoadData
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
-from helpers.paths import EXTR_PATH, JOINTS_LOOKUP_PATH, TB_RUNS_PATH
+from helpers.paths import EXTR_PATH, EXTR_PATH_SSD, JOINTS_LOOKUP_PATH, TB_RUNS_PATH
 
 
 def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=True, shuffle=True):
@@ -94,23 +95,20 @@ if __name__ == "__main__":
     )
 
     # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
-    if data_limiter.subjects is None:
-        num_classes = 10
-    else:
-        num_classes = len(data_limiter.subjects)
+    num_classes = len(data_limiter.subjects)
 
     # Number of epochs - The number of times the dataset is worked through during learning
-    num_epochs = 40
+    num_epochs = 60
 
     # Batch size - tightly linked with gradient descent.
     # The number of samples worked through before the params of the model are updated
     #   - Batch Gradient Descent: batch_size = len(dataset)
     #   - Stochastic Gradient descent: batch_size = 1
     #   - Mini-Batch Gradient descent: 1 < batch_size < len(dataset)
-    batch_size = 16
+    batch_size = 32
 
     # Learning rate
-    learning_rate = 0.001  # 0.05 5e-4 5e-8
+    learning_rate = 5e-4  # 0.05 5e-4 5e-8
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
     # The joint_filter will also be applied further down, in the FilterJoints() transform.
@@ -124,7 +122,7 @@ if __name__ == "__main__":
 
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
-    sequence_len = 150
+    sequence_len = 50
 
     # Layers for the RNN
     num_layers = 2  # Number of stacked RNN layers
@@ -136,6 +134,9 @@ if __name__ == "__main__":
     # Other params
     json_path = EXTR_PATH + "final_data_info.json"
     root_dir = EXTR_PATH + "final/"
+    json_path_ssd = EXTR_PATH_SSD + "final_data_info.json"
+    root_dir_ssd = EXTR_PATH_SSD + "final/"
+
     network_type = "single"
 
     use_cuda = torch.cuda.is_available()
@@ -150,15 +151,23 @@ if __name__ == "__main__":
 
     # Transforms
     composed = transforms.Compose([
-        #NormalisePoses(),
+        NormalisePoses(low=0, high=100),
         ChangePoseOrigin(),
         FilterJoints(activator=joints_lookup_activator, joint_filter=joint_filter),
         ReshapePoses(),
         ToTensor()
     ])
+
+    # Load the data into memory
+    print(f"| Loading data into memory..")
+    load_start_time = time.time()
+    data = LoadData(root_dir=root_dir_ssd, data_limiter=data_limiter, num_workers=8)
+    print(f"| Loading finished in {time.time() - load_start_time:0.1f}s")
+
     train_dataset = FOIKineticPoseDataset(
-        json_path=json_path,
-        root_dir=root_dir,
+        data=data,
+        json_path=json_path_ssd,
+        root_dir=root_dir_ssd,
         sequence_len=sequence_len,
         is_train=True,
         network_type=network_type,
@@ -166,16 +175,10 @@ if __name__ == "__main__":
         transform=composed
     )
 
-    '''
-    print("Dataset length: ", len(train_dataset))
-    set_len = len(train_dataset)
-    for idx, seq in enumerate(train_dataset):
-        print(f'At {idx} / {set_len}, shape: {seq[0].size()}')
-    '''
-
     test_dataset = FOIKineticPoseDataset(
-        json_path=json_path,
-        root_dir=root_dir,
+        data=data,
+        json_path=json_path_ssd,
+        root_dir=root_dir_ssd,
         sequence_len=sequence_len,
         is_train=False,
         data_limiter=data_limiter,
@@ -205,7 +208,7 @@ if __name__ == "__main__":
 
     device = torch.device('cuda' if use_cuda else 'cpu')
 
-    model = LSTM(input_size, hidden_size, num_layers, num_classes, device)
+    model = BDLSTM(input_size, hidden_size, num_layers, num_classes, device)
 
     if use_cuda:
         model.cuda()
@@ -213,8 +216,6 @@ if __name__ == "__main__":
 
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     #optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
-
-    start_time = time.time()
 
     model_name = str(type(model)).split('.')[-1][:-2]
     optimizer_name = str(type(optimizer)).split('.')[-1][:-2]
@@ -254,6 +255,8 @@ if __name__ == "__main__":
 
     print_setup()
 
+    start_time = time.time()
+
     print('-' * 28, 'Learning phase', '-' * 28)
     model = learn(
         train_loader=train_loader,
@@ -273,5 +276,6 @@ if __name__ == "__main__":
         device=device
     )
 
-    print(f'| Finished testing | Accuracy: {test_accuracy:.3f} | Total time: {time.time() - start_time:.3f}s ')
+    print(f'| Finished testing | Accuracy: {test_accuracy:.6f} | Total time: {time.time() - start_time:.2f}s ')
+
 
