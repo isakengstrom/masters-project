@@ -21,17 +21,17 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
     lim_lr = 5.1e-12
 
     bad_val_counter = 0
-    bad_val_lim = 7
+    bad_val_lim = 5
 
     for epoch_idx in range(1, num_epochs + 1):
         epoch_start_time = time.time()
         epoch_status_message = f"| Epoch {epoch_idx:{epoch_formatter}.0f}/{num_epochs} "
 
         if prev_lr == curr_lr:
-            print(epoch_status_message + f"| LR: {curr_lr:} "
-                                         f"| Step after {bad_val_lim-bad_val_counter+1} more un-increasing vals |")
+            print(epoch_status_message + f"| LR: {curr_lr:g} "
+                                         f"| Step after {bad_val_lim-bad_val_counter} more un-increasing vals |")
         else:
-            print(epoch_status_message + f"| Stepped the LR to: {curr_lr}")
+            print(epoch_status_message + f"| Stepped the LR to: {curr_lr:g}")
 
         prev_lr = curr_lr
 
@@ -57,7 +57,7 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
         if prev_val_acc is not None and prev_val_acc >= val_acc:
             bad_val_counter += 1
 
-            if bad_val_counter > bad_val_lim and curr_lr > lim_lr:
+            if bad_val_counter >= bad_val_lim and curr_lr > lim_lr:
                 # Step the learning rate
                 scheduler.step()
                 curr_lr = optimizer.param_groups[0]['lr']
