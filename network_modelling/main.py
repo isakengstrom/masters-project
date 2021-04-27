@@ -64,7 +64,7 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
     return SubsetRandomSampler(train_indices), SubsetRandomSampler(test_indices), SubsetRandomSampler(val_indices)
 
 
-if __name__ == "__main__":
+def main():
     writer = SummaryWriter(TB_RUNS_PATH)
 
     # Pick OpenPose joints for the model,
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     # OpenPose indices, same as in the OpenPose repo.
     if joints_lookup_activator == "op_idx":
         joint_filter = [1, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24]  # Select OpenPose indices
-        #joint_filter = list(range(25))  # All OpenPose indices
+        # joint_filter = list(range(25))  # All OpenPose indices
 
     # Joint names, see more in the 'joints_lookup.json' file
     elif joints_lookup_activator == "name":
@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     # Layers for the RNN
     num_layers = 2  # Number of stacked RNN layers
-    hidden_size = 256*2  # Number of features in hidden state
+    hidden_size = 256 * 2  # Number of features in hidden state
 
     # Loss function
     margin = 0.2  # The margin for certain loss functions
@@ -215,7 +215,7 @@ if __name__ == "__main__":
         cudnn.benchmark = True
 
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-    #optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
+    # optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
 
     model_name = str(type(model)).split('.')[-1][:-2]
     optimizer_name = str(type(optimizer)).split('.')[-1][:-2]
@@ -233,7 +233,7 @@ if __name__ == "__main__":
               f"|")
 
         print(f"| Sequence transforms:")
-        [print(f"| {name_idx+1}: {name}") for name_idx, name in enumerate(transform_names)]
+        [print(f"| {name_idx + 1}: {name}") for name_idx, name in enumerate(transform_names)]
         print(f"|")
 
         print(f"| Total sequences: {len(train_dataset)}\n"
@@ -277,5 +277,9 @@ if __name__ == "__main__":
     )
 
     print(f'| Finished testing | Accuracy: {test_accuracy:.6f} | Total time: {time.time() - start_time:.2f}s ')
+
+
+if __name__ == "__main__":
+    main()
 
 
