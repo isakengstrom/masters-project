@@ -11,23 +11,31 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
 
     learn_start_time = time.time()
 
-    total_accuracy = None
-    accuracy_log = []
-    loss_log = []
+    prev_val_acc = None
 
-    num_epochs_digits = int(math.log10(num_epochs)) + 1
+    epoch_formatter = int(math.log10(num_epochs)) + 1
 
-    step_size = 1
-    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size, gamma=.1)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=.1)
     curr_lr = optimizer.param_groups[0]['lr']
     prev_lr = curr_lr
+    lim_lr = 5.1e-12
+
+    bad_val_counter = 0
+    bad_val_lim = 7
 
     for epoch_idx in range(1, num_epochs + 1):
         epoch_start_time = time.time()
+        epoch_status_message = f"| Epoch {epoch_idx:{epoch_formatter}.0f}/{num_epochs} "
 
-        print(f"| Epoch {epoch_idx:{num_epochs_digits}.0f}/{num_epochs} "
-              f"| {'Updated l' if curr_lr != prev_lr else 'L'}earning rate: {curr_lr}")
+        if prev_lr == curr_lr:
+            print(epoch_status_message + f"| LR: {curr_lr:} "
+                                         f"| Step after {bad_val_lim-bad_val_counter+1} more un-increasing vals |")
+        else:
+            print(epoch_status_message + f"| Stepped the LR to: {curr_lr}")
 
+        prev_lr = curr_lr
+
+        # Train the epoch
         model = train(
             data_loader=train_loader,
             model=model,
@@ -39,28 +47,28 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
             num_epochs=num_epochs
         )
 
-        val_accuracy = evaluate(
+        # Validate the epoch
+        val_acc = evaluate(
             data_loader=val_loader,
             model=model,
             device=device
         )
 
-        # TODO: Check if this is a viable use of the schedeler. Seems to be a bit problematic, as only a change in
-        #  learning rate dosen't seem to be enough. Maybe reset the model if the accuracy is too low?
-        if total_accuracy is not None and total_accuracy > val_accuracy:
-            if curr_lr > 5e-8:
-                prev_lr = curr_lr
+        if prev_val_acc is not None and prev_val_acc >= val_acc:
+            bad_val_counter += 1
 
+            if bad_val_counter > bad_val_lim and curr_lr > lim_lr:
                 # Step the learning rate
                 scheduler.step()
                 curr_lr = optimizer.param_groups[0]['lr']
+                bad_val_counter = 0
         else:
-            total_accuracy = val_accuracy
+            prev_val_acc = val_acc
 
         # Print info from the finished epoch
-        print(f'| Epoch {epoch_idx:{num_epochs_digits}.0f}/{num_epochs} '
-              f'| Duration: {time.time()-epoch_start_time:.2f}s '
-              f'| Val accuracy: {val_accuracy:.3f} |')
+        epoch_status_message += f'| Val accuracy: {val_acc:.6f} '
+
+        print(epoch_status_message + f'| Duration: {time.time() - epoch_start_time:.2f}s |')
         print('-' * 72)
 
         # Save a checkpoint when the epoch finishes
@@ -70,4 +78,4 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
 
     print(f'| Finished learning | Learning time: {(time.time()-learn_start_time):2f}s')
 
-    return model #, loss_log, acc_log
+    return model
