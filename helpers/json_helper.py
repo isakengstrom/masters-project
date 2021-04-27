@@ -1,6 +1,15 @@
-import json
+#import json
 import numpy as np
 import os
+
+
+try:
+    import ujson as json
+except ImportError:
+    try:
+        import simplejson as json
+    except ImportError:
+        import json
 
 
 class NumpyEncoder(json.JSONEncoder):
@@ -61,7 +70,7 @@ def combine_json_files(target_dir, save_dir=None, save_name="combined.json"):
         print("Adding file:", file_name)
         file_path = os.path.join(target_dir, file_name)
         file_data = read_from_json(file_path)
-        combined_dict[file_name] = file_data
+        combined_dict[file_name] = np.array(file_data)
 
     write_to_json(combined_dict, save_dir + "/" + save_name)
 
