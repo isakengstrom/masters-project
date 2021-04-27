@@ -4,6 +4,7 @@ Starting point for the pose extraction, using OpenPose.
 
 import os
 import time
+import numpy as np
 
 from helpers import SHOULD_LIMIT, lower_lim_check, upper_lim_check, read_from_json
 from helpers.display_helper import display_session
@@ -126,6 +127,6 @@ if __name__ == "__main__":
 
     #combine_json_files(EXTR_PATH + "final/")
     data = read_from_json(EXTR_PATH_SSD + "final/combined/combined.json")
-    print(len(data["SUB5_SESS0_VIEW3.json"]))
+    print(np.array(data["SUB5_SESS0_VIEW3.json"]).shape)
 
     print(f"Main finished in {time.time()-start_time:0.1f}s")
