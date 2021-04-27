@@ -72,7 +72,7 @@ class ChangePoseOrigin(object):
 
 # TODO:
 #  - fix the division by zero if one joint is chosen. This is a minor error, as one joint is of no interest..
-#  - Seems to be a rare and random occurrences when there is a division by zero when dividing with seq_dists. 
+#  - Seems to be a rare and random occurrences when there is a division by zero when dividing with seq_dists.
 class NormalisePoses(object):
     """
     Transform which normalises the poses in a sequence in a given range, default being [0, 1].
