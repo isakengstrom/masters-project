@@ -2,6 +2,7 @@ import torch
 from torch.utils.data import Dataset
 import numpy as np
 import os
+import multiprocessing
 
 from helpers import read_from_json
 
@@ -52,6 +53,14 @@ class DataLimiter:
     """
 
     def __init__(self, subjects: list = None, sessions: list = None, views: list = None):
+        # The original FOI Gait dataset contains subjects [0-9], sessions [0-1], views [0-4]
+        if subjects is None:
+            subjects = range(10)
+        if sessions is None:
+            sessions = range(2)
+        if views is None:
+            views = range(5)
+
         self.subjects = subjects
         self.sessions = sessions
         self.views = views
@@ -78,29 +87,78 @@ class Sequences:
 
     def __call__(self, item: dict) -> tuple:
         seq_info = SequenceElement(item)
-
         file_path = os.path.join(self.__root_dir, seq_info.file_name)
         file_data = read_from_json(file_path)
 
+        print(item)
         seq_data = file_data[seq_info.start:seq_info.end]
 
         return np.array(seq_data), seq_info.label
 
 
+class LoadData:
+    """
+    Loads the data from json into memory.
+
+    The data is converted to NumPy arrays with values of type: as_type.
+
+    Loading of the files can be threaded with the num_workers argument.
+    """
+    def __init__(self, root_dir, data_limiter, num_workers=0, as_type='float64'):
+        data_dict = {}
+
+        all_file_names = []
+        all_file_dirs = []
+        for subject in data_limiter.subjects:
+            for session in data_limiter.sessions:
+                for view in data_limiter.views:
+                    file_name = f"SUB{subject}_SESS{session}_VIEW{view}.json"
+                    file_dir = os.path.join(root_dir, file_name)
+                    all_file_names.append(file_name)
+                    all_file_dirs.append(file_dir)
+
+        # If not threaded or if num workers <= 0, load files using the main process
+        if num_workers is None or num_workers <= 0:
+            num_files = len(all_file_names)
+            for idx in sorted(range(len(all_file_names))):
+                file_name = all_file_names[idx]
+                file_dir = all_file_dirs[idx]
+                data_dict[file_name] = self.read_json_as_numpy(file_dir).astype(as_type)
+                print('\r|', f"Loading file {idx+1} of {num_files}..", end='')
+            print("")
+
+        # Threaded file loading
+        else:
+            pool = multiprocessing.Pool(processes=num_workers)
+            data_list = pool.map(self.read_json_as_numpy, all_file_dirs)
+
+            for idx in sorted(range(len(all_file_names))):
+                file_name = all_file_names[idx]
+                data_dict[file_name] = data_list[idx].astype(as_type)
+
+        self.data = data_dict
+
+    @staticmethod
+    def read_json_as_numpy(file_dir):
+        return np.array(read_from_json(file_dir))
+
+
 # TODO: get positives and negatives correctly, they are all the same sequence atm
 class FOIKineticPoseDataset(Dataset):
-    def __init__(self, json_path, root_dir, sequence_len, is_train=False, network_type="triplet", data_limiter=None, transform=None):
+    def __init__(self, data, json_path, root_dir, sequence_len, is_train=False, network_type="triplet", data_limiter=None, transform=None):
         # Data loading
         self.json_path = json_path
-        #self.root_dir = root_dir
+        self.root_dir = root_dir
         self.sequence_len = sequence_len
         self.network_type = network_type
         self.data_limiter = data_limiter
         self.transform = transform
         self.is_train = is_train
 
-        self.sequences = Sequences(root_dir, sequence_len)
+        self.sequences = Sequences(self.root_dir, sequence_len)
         self.lookup = self.__create_lookup()
+
+        self.loaded_data = data
 
     def __len__(self):
         return len(self.lookup)
@@ -114,7 +172,15 @@ class FOIKineticPoseDataset(Dataset):
             raise TypeError
 
         if self.network_type == "single" or not self.is_train:
+            '''
+            #print("Getting single sequence")
             sequence, label = self.sequences(self.lookup[idx])
+            #print(sequence.shape, label)
+            '''
+
+            seq_info = SequenceElement(self.lookup[idx])
+            sequence = self.loaded_data.data[seq_info.file_name][seq_info.start:seq_info.end]
+            label = seq_info.label
 
             if self.transform:
                 sequence = self.transform(sequence)
@@ -167,7 +233,7 @@ class FOIKineticPoseDataset(Dataset):
 
             for i in range(0, element_info.len, self.sequence_len):
                 seq_info["start"] = i
-                seq_info["end"] = i + self.sequence_len - 1
+                seq_info["end"] = i + self.sequence_len
                 lookup.append(seq_info.copy())
 
             # Fix the last sequence's end frame
@@ -178,5 +244,3 @@ class FOIKineticPoseDataset(Dataset):
             del lookup[-1]
 
         return lookup
-
-
