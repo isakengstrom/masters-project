@@ -168,6 +168,15 @@ class FOIKineticPoseDataset(Dataset):
         return len(self.lookup)
 
     def __getitem__(self, idx) -> dict:
+        """
+        The main sequence is always called 'anchor'.
+
+        Therefore, in cases of siamese, the sequences will be 'anchor' and 'negative', this would commonly be 'positive'
+        and 'negative'.
+
+        However, the current naming conventions makes the implementation more generalizable.
+        """
+
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
@@ -190,7 +199,6 @@ class FOIKineticPoseDataset(Dataset):
             item["anchor"]["label"] = anchor_info.label
 
         elif self.network_type == "siamese":
-
             anchor_info = SequenceElement(self.lookup[idx])
             negative_info = SequenceElement(self.lookup[dummy_idx])
 
@@ -235,6 +243,8 @@ class FOIKineticPoseDataset(Dataset):
         else:
             raise Exception("If not loading training dataset, make sure the is_train flag is set to True, "
                             "Otherwise, the network_type is invalid, should be 'single', 'siamese' or 'triplet'.")
+
+        return item
 
     def create_lookup(self) -> tuple:
         data_info = read_from_json(self.json_path)
