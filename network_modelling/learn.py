@@ -7,7 +7,7 @@ from train import train
 from evaluate import evaluate
 
 
-def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs, device, network_type="triplet"):
+def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs, device, tb_writer, network_type="triplet"):
 
     learn_start_time = time.time()
 
@@ -44,7 +44,8 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
             device=device,
             network_type=network_type,
             epoch_idx=epoch_idx,
-            num_epochs=num_epochs
+            num_epochs=num_epochs,
+            tb_writer=tb_writer
         )
 
         # Validate the epoch

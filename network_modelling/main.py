@@ -2,6 +2,7 @@ import os
 import time
 import numpy as np
 import math
+import subprocess
 
 import torchvision.transforms as transforms
 
@@ -66,6 +67,8 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
 
 def main():
     writer = SummaryWriter(TB_RUNS_PATH)
+    #cmd_start_tensorboard = ["tensorboard", "--logdir", TB_RUNS_PATH]
+    #subprocess.Popen(cmd_start_tensorboard)
 
     # Pick OpenPose joints for the model,
     # these are used in the FilterPose() transform, as well as when deciding the input_size/number of features
@@ -266,7 +269,8 @@ def main():
         loss_function=loss_function,
         num_epochs=num_epochs,
         device=device,
-        network_type=network_type
+        network_type=network_type,
+        tb_writer=writer
     )
 
     print('-' * 28, 'Testing phase', '-' * 29)
@@ -277,6 +281,8 @@ def main():
     )
 
     print(f'| Finished testing | Accuracy: {test_accuracy:.6f} | Total time: {time.time() - start_time:.2f}s ')
+
+    writer.close()
 
 
 if __name__ == "__main__":
