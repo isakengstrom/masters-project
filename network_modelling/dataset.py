@@ -67,13 +67,13 @@ class DataLimiter:
 
     def skip_sequence(self, info: DimensionsElement) -> bool:
 
-        if self.subjects is not None and info.sub not in self.subjects:
+        if info.sub not in self.subjects:
             return True
 
-        if self.sessions is not None and info.sess not in self.sessions:
+        if info.sess not in self.sessions:
             return True
 
-        if self.views is not None and info.view not in self.views:
+        if info.view not in self.views:
             return True
 
 
@@ -172,11 +172,6 @@ class FOIKineticPoseDataset(Dataset):
             raise TypeError
 
         if self.network_type == "single" or not self.is_train:
-            '''
-            #print("Getting single sequence")
-            sequence, label = self.sequences(self.lookup[idx])
-            #print(sequence.shape, label)
-            '''
 
             seq_info = SequenceElement(self.lookup[idx])
             sequence = self.loaded_data.data[seq_info.file_name][seq_info.start:seq_info.end]
