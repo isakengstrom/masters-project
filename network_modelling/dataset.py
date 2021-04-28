@@ -156,14 +156,18 @@ class FOIKineticPoseDataset(Dataset):
         self.is_train = is_train
 
         self.sequences = Sequences(self.root_dir, sequence_len)
-        self.lookup = self.__create_lookup()
+        self.lookup, self.keys_set = self.create_lookup()
+
+        self.idx_lookup = self.create_idx_lookup()
+
+        print(self.lookup[0])
 
         self.loaded_data = data
 
     def __len__(self):
         return len(self.lookup)
 
-    def __getitem__(self, idx) -> tuple:
+    def __getitem__(self, idx) -> dict:
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
@@ -171,47 +175,72 @@ class FOIKineticPoseDataset(Dataset):
             print("Slicing is not available.")
             raise TypeError
 
-        if self.network_type == "single" or not self.is_train:
+        item = dict()
+        dummy_idx = 0
 
-            seq_info = SequenceElement(self.lookup[idx])
-            sequence = self.loaded_data.data[seq_info.file_name][seq_info.start:seq_info.end]
-            label = seq_info.label
+        if self.network_type == "single" or not self.is_train:
+            anchor_info = SequenceElement(self.lookup[idx])
+            anchor_sequence = self.loaded_data.data[anchor_info.file_name][anchor_info.start:anchor_info.end]
 
             if self.transform:
-                sequence = self.transform(sequence)
+                anchor_sequence = self.transform(anchor_sequence)
 
-            return sequence, label
+            item["anchor"] = {}
+            item["anchor"]["sequence"] = anchor_sequence
+            item["anchor"]["label"] = anchor_info.label
 
         elif self.network_type == "siamese":
-            positive_sequence, positive_label = self.sequences(self.lookup[idx])
-            negative_sequence, _ = self.sequences(self.lookup[idx])
+
+            anchor_info = SequenceElement(self.lookup[idx])
+            negative_info = SequenceElement(self.lookup[dummy_idx])
+
+            anchor_sequence = self.loaded_data.data[anchor_info.file_name][anchor_info.start:anchor_info.end]
+            negative_sequence = self.loaded_data.data[negative_info.file_name][negative_info.start:negative_info.end]
 
             if self.transform:
-                positive_sequence = self.transform(positive_sequence)
+                anchor_sequence = self.transform(anchor_sequence)
                 negative_sequence = self.transform(negative_sequence)
 
-            return positive_sequence, negative_sequence, positive_label
+            item["anchor"] = {}
+            item["anchor"]["sequence"] = anchor_sequence
+            item["anchor"]["label"] = anchor_info.label
+            item["negative"] = {}
+            item["negative"]["sequence"] = negative_sequence
+            item["negative"]["label"] = negative_info.label
 
         elif self.network_type == "triplet":
-            anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
-            positive_sequence, _ = self.sequences(self.lookup[idx])
-            negative_sequence, _ = self.sequences(self.lookup[idx])
+            anchor_info = SequenceElement(self.lookup[idx])
+            positive_info = SequenceElement(self.lookup[dummy_idx])
+            negative_info = SequenceElement(self.lookup[dummy_idx])
+
+            anchor_sequence = self.loaded_data.data[anchor_info.file_name][anchor_info.start:anchor_info.end]
+            positive_sequence = self.loaded_data.data[positive_info.file_name][positive_info.start:positive_info.end]
+            negative_sequence = self.loaded_data.data[negative_info.file_name][negative_info.start:negative_info.end]
 
             if self.transform:
                 anchor_sequence = self.transform(anchor_sequence)
                 positive_sequence = self.transform(positive_sequence)
                 negative_sequence = self.transform(negative_sequence)
 
-            return anchor_sequence, positive_sequence, negative_sequence, anchor_label
+            item["anchor"] = {}
+            item["anchor"]["sequence"] = anchor_sequence
+            item["anchor"]["label"] = anchor_info.label
+            item["positive"] = {}
+            item["positive"]["sequence"] = positive_sequence
+            item["positive"]["label"] = positive_info.label
+            item["negative"] = {}
+            item["negative"]["sequence"] = negative_sequence
+            item["negative"]["label"] = negative_info.label
 
         else:
             raise Exception("If not loading training dataset, make sure the is_train flag is set to True, "
                             "Otherwise, the network_type is invalid, should be 'single', 'siamese' or 'triplet'.")
 
-    def __create_lookup(self) -> list:
+    def create_lookup(self) -> tuple:
         data_info = read_from_json(self.json_path)
 
         lookup = []
+        key_set = set()
         for element in data_info:
             element_info = DimensionsElement(element)
 
@@ -225,6 +254,7 @@ class FOIKineticPoseDataset(Dataset):
             seq_info["sess_name"] = element_info.sess_name
             seq_info["view_name"] = element_info.view_name
             seq_info["key"] = element_info.key
+            key_set.add(element_info.key)
 
             for i in range(0, element_info.len, self.sequence_len):
                 seq_info["start"] = i
@@ -238,4 +268,15 @@ class FOIKineticPoseDataset(Dataset):
             #   shorter than the rest of the seqs
             del lookup[-1]
 
-        return lookup
+        return lookup, sorted(key_set)
+
+    def create_idx_lookup(self):
+        idx_lookup = dict()
+
+        for key in self.keys_set:
+            idx_lookup[key] = []
+
+        for seq_idx, seq in enumerate(self.lookup):
+            idx_lookup[seq['key']].append(seq_idx)
+
+        return idx_lookup
