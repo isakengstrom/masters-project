@@ -186,9 +186,7 @@ class FOIKineticPoseDataset(Dataset):
             if self.transform:
                 anchor_sequence = self.transform(anchor_sequence)
 
-            item["anchor"] = {}
-            item["anchor"]["sequence"] = anchor_sequence
-            item["anchor"]["label"] = anchor_label
+            item["anchor"] = (anchor_sequence, anchor_label)
 
         elif self.network_type == "siamese":
             anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
@@ -198,13 +196,8 @@ class FOIKineticPoseDataset(Dataset):
                 anchor_sequence = self.transform(anchor_sequence)
                 negative_sequence = self.transform(negative_sequence)
 
-            item["anchor"] = {}
-            item["anchor"]["sequence"] = anchor_sequence
-            item["anchor"]["label"] = anchor_label
-
-            item["negative"] = {}
-            item["negative"]["sequence"] = negative_sequence
-            item["negative"]["label"] = negative_label
+            item["anchor"] = (anchor_sequence, anchor_label)
+            item["negative"] = (negative_sequence, negative_label)
 
         elif self.network_type == "triplet":
             anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
@@ -216,17 +209,9 @@ class FOIKineticPoseDataset(Dataset):
                 positive_sequence = self.transform(positive_sequence)
                 negative_sequence = self.transform(negative_sequence)
 
-            item["anchor"] = {}
-            item["anchor"]["sequence"] = anchor_sequence
-            item["anchor"]["label"] = anchor_label
-
-            item["positive"] = {}
-            item["positive"]["sequence"] = positive_sequence
-            item["positive"]["label"] = positive_label
-
-            item["negative"] = {}
-            item["negative"]["sequence"] = negative_sequence
-            item["negative"]["label"] = negative_label
+            item["anchor"] = (anchor_sequence, anchor_label)
+            item["positive"] = (positive_sequence, positive_label)
+            item["negative"] = (negative_sequence, negative_label)
 
         else:
             raise Exception("If not loading training dataset, make sure the is_train flag is set to True, "
