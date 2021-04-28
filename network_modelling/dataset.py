@@ -161,15 +161,6 @@ class FOIKineticPoseDataset(Dataset):
         return len(self.lookup)
 
     def __getitem__(self, idx) -> dict:
-        """
-        The main sequence is always called 'anchor'.
-
-        Therefore, in cases of siamese, the sequences will be 'anchor' and 'negative', this would commonly be 'positive'
-        and 'negative'.
-
-        However, the current naming conventions makes the implementation more generalizable.
-        """
-
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
@@ -181,35 +172,35 @@ class FOIKineticPoseDataset(Dataset):
         dummy_idx = 0
 
         if self.network_type == "single" or not self.is_train:
-            anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
+            main_sequence, main_label = self.sequences(self.lookup[idx])
 
             if self.transform:
-                anchor_sequence = self.transform(anchor_sequence)
+                main_sequence = self.transform(main_sequence)
 
-            item["anchor"] = (anchor_sequence, anchor_label)
+            item["main"] = (main_sequence, main_label)
 
         elif self.network_type == "siamese":
-            anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
+            main_sequence, main_label = self.sequences(self.lookup[idx])
             negative_sequence, negative_label = self.sequences(self.lookup[dummy_idx])
 
             if self.transform:
-                anchor_sequence = self.transform(anchor_sequence)
+                main_sequence = self.transform(main_sequence)
                 negative_sequence = self.transform(negative_sequence)
 
-            item["anchor"] = (anchor_sequence, anchor_label)
+            item["main"] = (main_sequence, main_label)
             item["negative"] = (negative_sequence, negative_label)
 
         elif self.network_type == "triplet":
-            anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
+            main_sequence, main_label = self.sequences(self.lookup[idx])
             positive_sequence, positive_label = self.sequences(self.lookup[dummy_idx])
             negative_sequence, negative_label = self.sequences(self.lookup[dummy_idx])
 
             if self.transform:
-                anchor_sequence = self.transform(anchor_sequence)
+                main_sequence = self.transform(main_sequence)
                 positive_sequence = self.transform(positive_sequence)
                 negative_sequence = self.transform(negative_sequence)
 
-            item["anchor"] = (anchor_sequence, anchor_label)
+            item["main"] = (main_sequence, main_label)
             item["positive"] = (positive_sequence, positive_label)
             item["negative"] = (negative_sequence, negative_label)
 
