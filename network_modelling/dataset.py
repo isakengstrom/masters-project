@@ -77,25 +77,6 @@ class DataLimiter:
             return True
 
 
-class Sequences:
-    def __init__(self, root_dir, sequence_len):
-        self.__root_dir = root_dir
-        self.__sequence_len = sequence_len
-
-    def __len__(self):
-        return self.__sequence_len
-
-    def __call__(self, item: dict) -> tuple:
-        seq_info = SequenceElement(item)
-        file_path = os.path.join(self.__root_dir, seq_info.file_name)
-        file_data = read_from_json(file_path)
-
-        print(item)
-        seq_data = file_data[seq_info.start:seq_info.end]
-
-        return np.array(seq_data), seq_info.label
-
-
 class LoadData:
     """
     Loads the data from json into memory.
@@ -143,6 +124,18 @@ class LoadData:
         return np.array(read_from_json(file_dir))
 
 
+class Sequences:
+    def __init__(self, instantiated_data):
+        self.instantiated_data = instantiated_data
+
+    def __call__(self, item: dict) -> tuple:
+        seq_info = SequenceElement(item)
+
+        sequence = self.instantiated_data.data[seq_info.file_name][seq_info.start:seq_info.end]
+
+        return sequence, seq_info.label
+
+
 # TODO: get positives and negatives correctly, they are all the same sequence atm
 class FOIKineticPoseDataset(Dataset):
     def __init__(self, data, json_path, root_dir, sequence_len, is_train=False, network_type="triplet", data_limiter=None, transform=None):
@@ -155,14 +148,14 @@ class FOIKineticPoseDataset(Dataset):
         self.transform = transform
         self.is_train = is_train
 
-        self.sequences = Sequences(self.root_dir, sequence_len)
+        self.instantiated_data = data
+        self.sequences = Sequences(self.instantiated_data)
+
         self.lookup, self.keys_set = self.create_lookup()
 
         self.idx_lookup = self.create_idx_lookup()
 
         print(self.lookup[0])
-
-        self.loaded_data = data
 
     def __len__(self):
         return len(self.lookup)
@@ -188,22 +181,18 @@ class FOIKineticPoseDataset(Dataset):
         dummy_idx = 0
 
         if self.network_type == "single" or not self.is_train:
-            anchor_info = SequenceElement(self.lookup[idx])
-            anchor_sequence = self.loaded_data.data[anchor_info.file_name][anchor_info.start:anchor_info.end]
+            anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
 
             if self.transform:
                 anchor_sequence = self.transform(anchor_sequence)
 
             item["anchor"] = {}
             item["anchor"]["sequence"] = anchor_sequence
-            item["anchor"]["label"] = anchor_info.label
+            item["anchor"]["label"] = anchor_label
 
         elif self.network_type == "siamese":
-            anchor_info = SequenceElement(self.lookup[idx])
-            negative_info = SequenceElement(self.lookup[dummy_idx])
-
-            anchor_sequence = self.loaded_data.data[anchor_info.file_name][anchor_info.start:anchor_info.end]
-            negative_sequence = self.loaded_data.data[negative_info.file_name][negative_info.start:negative_info.end]
+            anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
+            negative_sequence, negative_label = self.sequences(self.lookup[dummy_idx])
 
             if self.transform:
                 anchor_sequence = self.transform(anchor_sequence)
@@ -211,19 +200,16 @@ class FOIKineticPoseDataset(Dataset):
 
             item["anchor"] = {}
             item["anchor"]["sequence"] = anchor_sequence
-            item["anchor"]["label"] = anchor_info.label
+            item["anchor"]["label"] = anchor_label
+
             item["negative"] = {}
             item["negative"]["sequence"] = negative_sequence
-            item["negative"]["label"] = negative_info.label
+            item["negative"]["label"] = negative_label
 
         elif self.network_type == "triplet":
-            anchor_info = SequenceElement(self.lookup[idx])
-            positive_info = SequenceElement(self.lookup[dummy_idx])
-            negative_info = SequenceElement(self.lookup[dummy_idx])
-
-            anchor_sequence = self.loaded_data.data[anchor_info.file_name][anchor_info.start:anchor_info.end]
-            positive_sequence = self.loaded_data.data[positive_info.file_name][positive_info.start:positive_info.end]
-            negative_sequence = self.loaded_data.data[negative_info.file_name][negative_info.start:negative_info.end]
+            anchor_sequence, anchor_label = self.sequences(self.lookup[idx])
+            positive_sequence, positive_label = self.sequences(self.lookup[dummy_idx])
+            negative_sequence, negative_label = self.sequences(self.lookup[dummy_idx])
 
             if self.transform:
                 anchor_sequence = self.transform(anchor_sequence)
@@ -232,13 +218,15 @@ class FOIKineticPoseDataset(Dataset):
 
             item["anchor"] = {}
             item["anchor"]["sequence"] = anchor_sequence
-            item["anchor"]["label"] = anchor_info.label
+            item["anchor"]["label"] = anchor_label
+
             item["positive"] = {}
             item["positive"]["sequence"] = positive_sequence
-            item["positive"]["label"] = positive_info.label
+            item["positive"]["label"] = positive_label
+
             item["negative"] = {}
             item["negative"]["sequence"] = negative_sequence
-            item["negative"]["label"] = negative_info.label
+            item["negative"]["label"] = negative_label
 
         else:
             raise Exception("If not loading training dataset, make sure the is_train flag is set to True, "
