@@ -1,8 +1,12 @@
+import random
+
 import torch
 from torch.utils.data import Dataset
 import numpy as np
 import os
 import multiprocessing
+
+from typing import Tuple
 
 from helpers import read_from_json
 
@@ -19,7 +23,7 @@ class DatasetElement:
         self.view = int(self.view_name[-1])
 
         self.label = self.sub
-        self.key = "s{}s{}v{}".format(self.sub, self.sess, self.view)
+        self.key = "{}{}{}".format(self.sub, self.sess, self.view)
 
 
 class DimensionsElement(DatasetElement):
@@ -136,17 +140,17 @@ class Sequences:
         return sequence, seq_info.label
 
 
-# TODO: get positives and negatives correctly, they are all the same sequence atm
 class FOIKineticPoseDataset(Dataset):
-    def __init__(self, data, json_path, root_dir, sequence_len, is_train=False, network_type="triplet", data_limiter=None, transform=None):
+    def __init__(self, data, json_path, root_dir, sequence_len, is_train=False, loss_type="triplet", data_limiter=None, transform=None, view_specific=False):
         # Data loading
         self.json_path = json_path
         self.root_dir = root_dir
         self.sequence_len = sequence_len
-        self.network_type = network_type
+        self.loss_type = loss_type
         self.data_limiter = data_limiter
         self.transform = transform
         self.is_train = is_train
+        self.view_specific = view_specific
 
         self.instantiated_data = data
         self.sequences = Sequences(self.instantiated_data)
@@ -154,8 +158,6 @@ class FOIKineticPoseDataset(Dataset):
         self.lookup, self.keys_set = self.create_lookup()
 
         self.idx_lookup = self.create_idx_lookup()
-
-        print(self.lookup[0])
 
     def __len__(self):
         return len(self.lookup)
@@ -165,13 +167,11 @@ class FOIKineticPoseDataset(Dataset):
             idx = idx.tolist()
 
         if isinstance(idx, slice):
-            print("Slicing is not available.")
-            raise TypeError
+            raise Exception("Slicing is not available.")
 
         item = dict()
-        dummy_idx = 0
 
-        if self.network_type == "single" or not self.is_train:
+        if self.loss_type == "single" or not self.is_train:
             main_sequence, main_label = self.sequences(self.lookup[idx])
 
             if self.transform:
@@ -179,9 +179,13 @@ class FOIKineticPoseDataset(Dataset):
 
             item["main"] = (main_sequence, main_label)
 
-        elif self.network_type == "siamese":
+        elif self.loss_type == "siamese":
+            _, neg_idx = self.get_pos_neg_idxs(main_idx=idx)
+
             main_sequence, main_label = self.sequences(self.lookup[idx])
-            negative_sequence, negative_label = self.sequences(self.lookup[dummy_idx])
+            negative_sequence, negative_label = self.sequences(self.lookup[neg_idx])
+
+            assert main_label != negative_label
 
             if self.transform:
                 main_sequence = self.transform(main_sequence)
@@ -190,10 +194,16 @@ class FOIKineticPoseDataset(Dataset):
             item["main"] = (main_sequence, main_label)
             item["negative"] = (negative_sequence, negative_label)
 
-        elif self.network_type == "triplet":
+        elif self.loss_type == "triplet":
+
+            pos_idx, neg_idx = self.get_pos_neg_idxs(main_idx=idx)
+
             main_sequence, main_label = self.sequences(self.lookup[idx])
-            positive_sequence, positive_label = self.sequences(self.lookup[dummy_idx])
-            negative_sequence, negative_label = self.sequences(self.lookup[dummy_idx])
+            positive_sequence, positive_label = self.sequences(self.lookup[pos_idx])
+            negative_sequence, negative_label = self.sequences(self.lookup[neg_idx])
+
+            assert main_label == positive_label
+            assert main_label != negative_label
 
             if self.transform:
                 main_sequence = self.transform(main_sequence)
@@ -239,12 +249,13 @@ class FOIKineticPoseDataset(Dataset):
             lookup[-1]["end"] = min(lookup[-1]["end"], element_info.len)
 
             # TODO: Solve so this isn't necessary. For it to work, needs to add zeros to end of last seq, which is
-            #   shorter than the rest of the seqs
+            #   shorter than the rest of the seqs.
+            #   - Is there a way to do that efficiently, without checking for the last element at every iteration?
             del lookup[-1]
 
         return lookup, sorted(key_set)
 
-    def create_idx_lookup(self):
+    def create_idx_lookup(self) -> dict:
         idx_lookup = dict()
 
         for key in self.keys_set:
@@ -254,3 +265,38 @@ class FOIKineticPoseDataset(Dataset):
             idx_lookup[seq['key']].append(seq_idx)
 
         return idx_lookup
+
+    def get_pos_neg_idxs(self, main_idx) -> Tuple[int, int]:
+
+        if self.view_specific:
+            raise NotImplementedError
+
+        else:
+            seq_info = SequenceElement(self.lookup[main_idx])
+
+            idx_lookup_keys = list(self.idx_lookup.keys())
+
+            interest_keys = [key for key in idx_lookup_keys if key[0] == seq_info.key[0] or key[2] == seq_info.key[2]]
+
+            positive_keys = [key for key in interest_keys if key[0] == seq_info.key[0]]
+            view_keys = [key for key in interest_keys if key[2] == seq_info.key[2]]
+
+            positive_idxs = dict()
+            negative_idxs = self.idx_lookup.copy()
+
+            for key in positive_keys:
+                positive_idxs[key] = negative_idxs.pop(key, None)
+
+            random_positive_key = random.choice(list(positive_idxs.keys()))
+            random_negative_key = random.choice(list(negative_idxs.keys()))
+
+            positive_idx = random.choice(positive_idxs[random_positive_key])
+            negative_idx = random.choice(negative_idxs[random_negative_key])
+
+            '''
+            print(seq_info.key, positive_idx)
+            print("positive: ", random_positive_key, positive_idx)
+            print("negative: ", random_negative_key, negative_idx)
+            '''
+
+        return positive_idx, negative_idx
