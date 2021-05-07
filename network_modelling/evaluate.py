@@ -2,7 +2,7 @@ import torch
 
 
 # https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html
-def evaluate(data_loader, model, device):
+def evaluate(data_loader, model, device, is_test):
     model.eval()
 
     total_accuracy, total_count = 0, 0
@@ -20,5 +20,8 @@ def evaluate(data_loader, model, device):
 
             total_accuracy += (predicted_labels == labels).sum().item()
             total_count += labels.size(0)
+
+            if is_test:
+                pass
 
     return total_accuracy / total_count
