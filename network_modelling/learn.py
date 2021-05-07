@@ -7,7 +7,8 @@ from train import train
 from evaluate import evaluate
 
 
-def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs, device, tb_writer, network_type="triplet"):
+def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs, device, classes, tb_writer,
+          loss_type="triplet"):
 
     learn_start_time = time.time()
 
@@ -18,7 +19,7 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=.1)
     curr_lr = optimizer.param_groups[0]['lr']
     prev_lr = curr_lr
-    lim_lr = 5.1e-12
+    lim_lr = 5.1e-10
 
     bad_val_counter = 0
     bad_val_lim = 5
@@ -27,7 +28,11 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
         epoch_start_time = time.time()
         epoch_status_message = f"| Epoch {epoch_idx:{epoch_formatter}.0f}/{num_epochs} "
 
-        if prev_lr == curr_lr:
+        if curr_lr <= lim_lr:
+            if bad_val_lim-bad_val_counter <= 0:
+                break
+            print(epoch_status_message + f"| Breaking in {bad_val_lim-bad_val_counter} more un-increasing vals |")
+        elif prev_lr == curr_lr:
             print(epoch_status_message + f"| LR: {curr_lr:g} "
                                          f"| Step after {bad_val_lim-bad_val_counter} more un-increasing vals |")
         else:
@@ -42,9 +47,10 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
             optimizer=optimizer,
             loss_function=loss_function,
             device=device,
-            network_type=network_type,
+            loss_type=loss_type,
             epoch_idx=epoch_idx,
             num_epochs=num_epochs,
+            classes=classes,
             tb_writer=tb_writer
         )
 
@@ -52,7 +58,8 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
         val_acc = evaluate(
             data_loader=val_loader,
             model=model,
-            device=device
+            device=device,
+            is_test=False
         )
 
         if prev_val_acc is not None and prev_val_acc >= val_acc:
@@ -66,10 +73,9 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
         else:
             prev_val_acc = val_acc
 
-        # Print info from the finished epoch
-        epoch_status_message += f'| Val accuracy: {val_acc:.6f} '
-
-        print(epoch_status_message + f'| Duration: {time.time() - epoch_start_time:.2f}s |')
+        print(epoch_status_message +
+              f'| Val accuracy: {val_acc:.6f} '
+              f'| Duration: {time.time() - epoch_start_time:.2f}s |')
         print('-' * 72)
 
         # Save a checkpoint when the epoch finishes
@@ -77,6 +83,6 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
         file_path = f'./checkpoints/checkpoint_{epoch_idx}.pth'
         torch.save(state, file_path)
 
-    print(f'| Finished learning | Learning time: {(time.time()-learn_start_time):2f}s')
+    print(f'| Finished learning | Learning time: {(time.time()-learn_start_time):.2f}s')
 
     return model
