@@ -1,14 +1,55 @@
 import random
-
-import torch
-from torch.utils.data import Dataset
 import numpy as np
 import os
 import multiprocessing
-
 from typing import Tuple
 
+import torch
+from torch.utils.data import Dataset
+from torch.utils.data.sampler import SubsetRandomSampler
+
 from helpers import read_from_json
+
+
+def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=True, shuffle=True):
+    """
+    Influenced by: https://stackoverflow.com/a/50544887
+
+    This is not (as of yet) stratified sampling,
+    read more about it here: https://stackoverflow.com/a/52284619
+    or here: https://github.com/ncullen93/torchsample/blob/master/torchsample/samplers.py#L22
+    """
+
+    indices = list(range(dataset_len))
+
+    if shuffle:
+        random_seed = 22  # 42
+        np.random.seed(random_seed)
+        np.random.shuffle(indices)
+
+    if val_from_train:
+        train_test_split = int(np.floor(train_split * dataset_len))
+        train_val_split = int(np.floor((1 - val_split) * train_test_split))
+
+        temp_indices = indices[:train_test_split]
+
+        train_indices = temp_indices[:train_val_split]
+        val_indices = temp_indices[train_val_split:]
+        test_indices = indices[train_test_split:]
+    else:
+        test_split = 1 - (train_split + val_split)
+
+        # Check that there is a somewhat reasonable split left for testing
+        assert test_split >= 0.1
+
+        first_split = int(np.floor(train_split * dataset_len))
+        second_split = int(np.floor((train_split + test_split) * dataset_len))
+
+        train_indices = indices[:first_split]
+        test_indices = indices[first_split:second_split]
+        val_indices = indices[second_split:]
+
+    return SubsetRandomSampler(train_indices), SubsetRandomSampler(test_indices), SubsetRandomSampler(val_indices)
 
 
 class DatasetElement:
