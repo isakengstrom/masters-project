@@ -24,4 +24,4 @@ def evaluate(data_loader, model, device, is_test):
             if is_test:
                 pass
 
-    return total_accuracy / total_count
+    return {'accuracy': total_accuracy / total_count}
