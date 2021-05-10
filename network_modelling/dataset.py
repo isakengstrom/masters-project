@@ -140,7 +140,7 @@ class Sequences:
         return sequence, seq_info.label
 
 
-class FOIKineticPoseDataset(Dataset):
+class FOIKinematicPoseDataset(Dataset):
     def __init__(self, data, json_path, root_dir, sequence_len, is_train=False, loss_type="triplet", data_limiter=None, transform=None, view_specific=False):
         # Data loading
         self.json_path = json_path
@@ -232,12 +232,9 @@ class FOIKineticPoseDataset(Dataset):
             if self.data_limiter and self.data_limiter.skip_sequence(element_info):
                 continue
 
-            seq_info = dict()
-            seq_info["file_name"] = element_info.file_name
-            seq_info["sub_name"] = element_info.sub_name
-            seq_info["sess_name"] = element_info.sess_name
-            seq_info["view_name"] = element_info.view_name
-            seq_info["key"] = element_info.key
+            seq_info = {"file_name": element_info.file_name, "sub_name": element_info.sub_name,
+                        "sess_name": element_info.sess_name, "view_name": element_info.view_name,
+                        "key": element_info.key}
             key_set.add(element_info.key)
 
             for i in range(0, element_info.len, self.sequence_len):
