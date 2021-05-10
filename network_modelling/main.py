@@ -15,7 +15,6 @@ import torch.backends.cudnn as cudnn
 # To start board, type the following in the terminal: tensorboard --logdir=runs
 from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import DataLoader
-from torch.utils.data.sampler import SubsetRandomSampler
 
 
 from learn import learn
@@ -25,7 +24,7 @@ from models.LSTM import LSTM, LSTM_2, BDLSTM, AladdinLSTM
 from models.RNN import GenNet
 from losses.margin_losses import TripletMarginLoss
 
-from dataset import FOIKinematicPoseDataset, DataLimiter, LoadData
+from dataset import FOIKinematicPoseDataset, DataLimiter, LoadData, create_samplers
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
 from helpers.paths import EXTR_PATH, EXTR_PATH_SSD, JOINTS_LOOKUP_PATH, TB_RUNS_PATH
 
@@ -64,54 +63,13 @@ def print_setup(setup: dict):
           f"| Test batches: {split['num_test_batches']}")
 
 
-def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=True, shuffle=True):
-    """
-    Influenced by: https://stackoverflow.com/a/50544887
-
-    This is not (as of yet) stratified sampling,
-    read more about it here: https://stackoverflow.com/a/52284619
-    or here: https://github.com/ncullen93/torchsample/blob/master/torchsample/samplers.py#L22
-    """
-
-    indices = list(range(dataset_len))
-
-    if shuffle:
-        random_seed = 22  # 42
-        np.random.seed(random_seed)
-        np.random.shuffle(indices)
-
-    if val_from_train:
-        train_test_split = int(np.floor(train_split * dataset_len))
-        train_val_split = int(np.floor((1 - val_split) * train_test_split))
-
-        temp_indices = indices[:train_test_split]
-
-        train_indices = temp_indices[:train_val_split]
-        val_indices = temp_indices[train_val_split:]
-        test_indices = indices[train_test_split:]
-    else:
-        test_split = 1 - (train_split + val_split)
-
-        # Check that there is a somewhat reasonable split left for testing
-        assert test_split >= 0.1
-
-        first_split = int(np.floor(train_split * dataset_len))
-        second_split = int(np.floor((train_split + test_split) * dataset_len))
-
-        train_indices = indices[:first_split]
-        test_indices = indices[first_split:second_split]
-        val_indices = indices[second_split:]
-
-    return SubsetRandomSampler(train_indices), SubsetRandomSampler(test_indices), SubsetRandomSampler(val_indices)
-
-
 def main():
     now = str(datetime.datetime.now()).split('.')[0]  # Save Date and time of run, split to remove microseconds
 
     # Dict to save all the run info. When learning and evaluating is finished, this will be saved to disk.
     run_info = dict()
     run_info['at'] = now
-    params = dict()  # This stores the hyperparameters (+ some other params)  
+    params = dict()  # This stores the hyperparameters (+ some other params)
 
     # Pick OpenPose joints for the model,
     # these are used in the FilterPose() transform, as well as when deciding the input_size/number of features
@@ -128,15 +86,6 @@ def main():
     ####################################################################
     # Hyper parameters #################################################
     ####################################################################
-
-    data_limiter = DataLimiter(
-        subjects=None,
-        sessions=[0],
-        views=[3]
-    )
-
-    # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
-    num_classes = len(data_limiter.subjects)
 
     # Number of epochs - The number of times the dataset is worked through during learning
     params['num_epochs'] = 5
@@ -178,19 +127,17 @@ def main():
 
     run_info['params'] = params
 
-    # Other params
-    json_path_ssd = os.path.join(EXTR_PATH_SSD, "final_data_info.json")
-    root_dir_ssd = os.path.join(EXTR_PATH_SSD, "final/")
-
     use_cuda = torch.cuda.is_available()
 
-    # Add checkpoint dir if it doesn't exist
-    if not os.path.isdir('./checkpoints'):
-        os.mkdir('./checkpoints')
+    # Data limiter: Go to definition for more info
+    data_limiter = DataLimiter(
+        subjects=None,
+        sessions=[0],
+        views=[3]
+    )
 
-    # Add saved_models dir if it doesn't exist
-    if not os.path.isdir('./models/saved_models'):
-        os.mkdir('./models/saved_models')
+    # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
+    num_classes = len(data_limiter.subjects)
 
     # Transforms
     composed = transforms.Compose([
@@ -201,6 +148,18 @@ def main():
         #AddNoise(scale=1),
         ToTensor()
     ])
+
+    # Add checkpoint dir if it doesn't exist
+    if not os.path.isdir('./checkpoints'):
+        os.mkdir('./checkpoints')
+
+    # Add saved_models dir if it doesn't exist
+    if not os.path.isdir('./models/saved_models'):
+        os.mkdir('./models/saved_models')
+
+    # Other params
+    json_path_ssd = os.path.join(EXTR_PATH_SSD, "final_data_info.json")
+    root_dir_ssd = os.path.join(EXTR_PATH_SSD, "final/")
 
     # Load the data into memory
     print(f"| Loading data into memory..")
@@ -241,18 +200,17 @@ def main():
     test_loader = DataLoader(test_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
     val_loader = DataLoader(train_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
 
-    if params['loss_type'] == "single":
-        loss_function = nn.CrossEntropyLoss()
-    elif params['loss_type'] == "siamese":
-        raise NotImplementedError
-    elif params['loss_type'] == "triplet":
-        loss_function = TripletMarginLoss(margin=params['loss_margin'])
-    else:
-        raise Exception("Invalid network_type")
+    # Store all the info of how the data is split into train, val and test
+    run_info['split'] = {
+        'tot_num_seqs': len(train_dataset), 'batch_size': params['batch_size'], 'train_split': len(train_sampler),
+        'val_split': len(val_sampler), 'test_split': len(test_sampler), 'num_train_batches': len(train_loader),
+        'num_val_batches': len(val_loader), 'num_test_batches': len(test_loader)
+    }
 
     device = torch.device('cuda' if use_cuda else 'cpu')
     run_info['device'] = str(device)
 
+    # The recurrent neural net model, RNN, GRU or LSTM
     model = GenNet(
         input_size=params['input_size'],
         hidden_size=params['hidden_size'],
@@ -267,29 +225,28 @@ def main():
         model.cuda()
         cudnn.benchmark = True
 
+    # The optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=params['learning_rate'])
     #optimizer = torch.optim.SGD(model.parameters(), lr=params["learning_rate"], momentum=0.9)
 
+    if params['loss_type'] == "single":
+        loss_function = nn.CrossEntropyLoss()
+    elif params['loss_type'] == "siamese":
+        raise NotImplementedError
+    elif params['loss_type'] == "triplet":
+        loss_function = TripletMarginLoss(margin=params['loss_margin'])
+    else:
+        raise Exception("Invalid network_type")
+
+    # Get the names as strings for the pytorch objects of interest
     run_info['model_name'] = str(type(model)).split('.')[-1][:-2]
     run_info['optimizer_name'] = str(type(optimizer)).split('.')[-1][:-2]
     run_info['loss_function_name'] = str(type(loss_function)).split('.')[-1][:-2]
     run_info['transforms'] = [transform.split(' ')[0].split('.')[1] for transform in str(composed).split('<')[1:]]
 
-    split = {
-        'tot_num_seqs': len(train_dataset),
-        'batch_size': params['batch_size'],
-        'train_split': len(train_sampler),
-        'val_split': len(val_sampler),
-        'test_split': len(test_sampler),
-        'num_train_batches': len(train_loader),
-        'num_val_batches': len(val_loader),
-        'num_test_batches': len(test_loader)
-    }
-
-    run_info['split'] = split
     print_setup(setup=run_info)
 
-    writer = SummaryWriter(TB_RUNS_PATH)
+    writer = SummaryWriter(TB_RUNS_PATH)  # TensorBoard writer
     start_time = time.time()
 
     print('-' * 28, 'Learning phase', '-' * 28)
