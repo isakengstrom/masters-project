@@ -182,10 +182,9 @@ class Sequences:
 
 
 class FOIKinematicPoseDataset(Dataset):
-    def __init__(self, data, json_path, root_dir, sequence_len, is_train=False, loss_type="triplet", data_limiter=None, transform=None, view_specific=False):
+    def __init__(self, data, json_path, sequence_len, is_train=False, loss_type="triplet", data_limiter=None, transform=None, view_specific=False):
         # Data loading
         self.json_path = json_path
-        self.root_dir = root_dir
         self.sequence_len = sequence_len
         self.loss_type = loss_type
         self.data_limiter = data_limiter

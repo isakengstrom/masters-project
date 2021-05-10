@@ -204,7 +204,6 @@ def run_network(params: dict):
     train_dataset = FOIKinematicPoseDataset(
         data=data,
         json_path=json_path_ssd,
-        root_dir=root_dir_ssd,
         sequence_len=params['sequence_len'],
         is_train=True,
         loss_type=params['loss_type'],
@@ -215,7 +214,6 @@ def run_network(params: dict):
     test_dataset = FOIKinematicPoseDataset(
         data=data,
         json_path=json_path_ssd,
-        root_dir=root_dir_ssd,
         sequence_len=params['sequence_len'],
         is_train=False,
         data_limiter=data_limiter,
