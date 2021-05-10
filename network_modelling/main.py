@@ -1,3 +1,4 @@
+import itertools
 import json
 import os
 import time
@@ -21,6 +22,8 @@ from losses.margin_losses import TripletMarginLoss
 
 from dataset import FOIKinematicPoseDataset, DataLimiter, LoadData, create_samplers
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
+
+from helpers import write_to_json
 from helpers.paths import EXTR_PATH_SSD, TB_RUNS_PATH
 
 
@@ -58,42 +61,53 @@ def print_setup(setup: dict):
           f"| Test batches: {split['num_test_batches']}")
 
 
-def main():
-    now = str(datetime.datetime.now()).split('.')[0]  # Save Date and time of run, split to remove microseconds
+def make_save_dirs():
+    if not os.path.isdir('./saves'):
+        os.mkdir('./saves')
 
-    # Dict to save all the run info. When learning and evaluating is finished, this will be saved to disk.
-    run_info = dict()
-    run_info['at'] = now
-    params = dict()  # This stores the hyperparameters (+ some other params)
+    # Add checkpoint dir if it doesn't exist
+    if not os.path.isdir('./saves/checkpoints'):
+        os.mkdir('./saves/checkpoints')
+
+    # Add saved_models dir if it doesn't exist
+    if not os.path.isdir('./saves/models'):
+        os.mkdir('./saves/models')
+
+    if not os.path.isdir('./saves/runs'):
+        os.mkdir('./saves/runs')
+
+
+def parameters():
+    """
+    Initialise the hyperparameters (+ some other params)
+
+    - Batch size - tightly linked with gradient descent. The number of samples worked through before the params of the
+      model are updated.
+      - Batch Gradient Descent: batch_size = len(dataset)
+      - Stochastic Gradient descent: batch_size = 1
+      - Mini-Batch Gradient descent: 1 < batch_size < len(dataset)
+      - Advice from Yann LeCun, batch_size <= 32: arxiv.org/abs/1804.07612
+
+
+    :return: params: dict()
+    """
+
+    params = dict()
 
     # Pick OpenPose joints for the model,
     # these are used in the FilterPose() transform, as well as when deciding the input_size/number of features
-    joints_lookup_activator = "op_idx"
+    params['joints_activator'] = "op_idx"
 
     # OpenPose indices, same as in the OpenPose repo.
-    if joints_lookup_activator == "op_idx":
+    if params['joints_activator'] == "op_idx":
         params['joint_filter'] = [1, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24]  # Select OpenPose indices
-    elif joints_lookup_activator == "name":
+    elif params['joints_activator'] == "name":
         params['joint_filter'] = ["nose", "c_hip", "neck"]  # Joint names, see more in the 'joints_lookup.json' file
     else:
-        NotImplementedError(f"The Joint filter of the '{joints_lookup_activator}' activator is not implemented.")
+        NotImplementedError(f"The Joint filter of the '{params['joints_activator']}' activator is not implemented.")
 
-    ####################################################################
-    # Hyper parameters #################################################
-    ####################################################################
-
-    # Number of epochs - The number of times the dataset is worked through during learning
     params['num_epochs'] = 5
-
-    # Batch size - tightly linked with gradient descent.
-    # The number of samples worked through before the params of the model are updated
-    #   - Batch Gradient Descent: batch_size = len(dataset)
-    #   - Stochastic Gradient descent: batch_size = 1
-    #   - Mini-Batch Gradient descent: 1 < batch_size < len(dataset)
-    # From Yann LeCun, batch_size <= 32: arxiv.org/abs/1804.07612
     params['batch_size'] = 32
-
-    # Learning rate
     params['learning_rate'] = 5e-4  # 0.05 5e-4 5e-8
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
@@ -120,9 +134,40 @@ def main():
     params['loss_type'] = "single"
     params['loss_margin'] = 1  # The margin for certain loss functions
 
+    return params
+
+
+def multi_run():
+    runnables = {
+        'bidirectional': [False, True],
+        'net_type': ['rnn', 'gru', 'lstm'],
+        'sequence_len': [50, 100, 200, 400, 800],
+    }
+
+    # Create every combination from the lists in runnables
+    runnable_products = [dict(zip(runnables, value)) for value in itertools.product(*runnables.values())]
+
+    # Run the network by firstly overwriting the params with the runnables.
+    params = parameters()
+    for overwrite in runnable_products:
+        params.update(overwrite)
+
+        run_network(params)
+
+
+def run_network(params: dict):
+    now = datetime.datetime.now()  # Save Date and time of run
+
+    # Dict to save all the run info. When learning and evaluating is finished, this will be saved to disk.
+    run_info = dict()
+    run_info['at'] = str(now).split('.')[0]
     run_info['params'] = params
 
-    use_cuda = torch.cuda.is_available()
+    print(run_info['at'])
+    # Formatting of run_info save file name
+    run_name = f'd{now.strftime("%y")}{now.strftime("%m")}{now.strftime("%d")}' \
+               f'_h{now.strftime("%H")}m{now.strftime("%M")}.json'
+    print(run_name)
 
     # Data limiter: Go to definition for more info
     data_limiter = DataLimiter(
@@ -138,19 +183,13 @@ def main():
     composed = transforms.Compose([
         NormalisePoses(low=1, high=100),
         ChangePoseOrigin(),
-        FilterJoints(activator=joints_lookup_activator, joint_filter=params['joint_filter']),
+        FilterJoints(activator=params['joints_activator'], joint_filter=params['joint_filter']),
         ReshapePoses(),
         #AddNoise(scale=1),
         ToTensor()
     ])
 
-    # Add checkpoint dir if it doesn't exist
-    if not os.path.isdir('./checkpoints'):
-        os.mkdir('./checkpoints')
-
-    # Add saved_models dir if it doesn't exist
-    if not os.path.isdir('./models/saved_models'):
-        os.mkdir('./models/saved_models')
+    make_save_dirs()
 
     # Other params
     json_path_ssd = os.path.join(EXTR_PATH_SSD, "final_data_info.json")
@@ -202,7 +241,12 @@ def main():
         'num_val_batches': len(val_loader), 'num_test_batches': len(test_loader)
     }
 
-    device = torch.device('cuda' if use_cuda else 'cpu')
+    if torch.cuda.is_available():
+        device = torch.device('cuda')
+        cudnn.benchmark = True
+    else:
+        device = torch.device('cpu')
+
     run_info['device'] = str(device)
 
     # The recurrent neural net model, RNN, GRU or LSTM
@@ -214,11 +258,7 @@ def main():
         device=device,
         bidirectional=params['bidirectional'],
         net_type=params['net_type']
-    )
-
-    if use_cuda:
-        model.cuda()
-        cudnn.benchmark = True
+    ).to(device)
 
     # The optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=params['learning_rate'])
@@ -266,17 +306,21 @@ def main():
         is_test=True
     )
 
-    print(f"| Finished testing | Accuracy: {test_info['accuracy']:.6f} | Total time: {time.time() - start_time:.2f}s")
-
     writer.close()
 
+    run_info['tot_time'] = time.time() - start_time
     run_info['learn_info'] = learn_info
     run_info['test_info'] = test_info
+    save_path = os.path.join('./saves/runs', run_name)
+    write_to_json(run_info, save_path)
     json_info = json.dumps(run_info)
     print(json_info)
 
+    print(f"| Finished testing | Accuracy: {test_info['accuracy']:.6f} | Total time: {run_info['tot_time'] :.2f}s")
+
 
 if __name__ == "__main__":
-    main()
+    multi_run()
+    #run_network(parameters())
 
 
