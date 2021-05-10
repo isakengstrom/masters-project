@@ -3,10 +3,13 @@
 # Ignore all audio files with the extentions '.wav'
 /**/*.wav
 
+/**/saves/runs/*
+
 # Ignore the saved models
+/**/saves/models/*
 /**/saved_models/*
 
-# Ignore training Pytorch checkpoints
+# Ignore Pytorch checkpoints
 *.ckpt
 *.pth
 
