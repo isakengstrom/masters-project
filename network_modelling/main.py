@@ -2,15 +2,11 @@ import json
 import os
 import time
 import datetime
-import numpy as np
-import math
-import subprocess
-
-import torchvision.transforms as transforms
 
 import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
+import torchvision.transforms as transforms
 
 # To start board, type the following in the terminal: tensorboard --logdir=runs
 from torch.utils.tensorboard import SummaryWriter
@@ -20,13 +16,12 @@ from torch.utils.data import DataLoader
 from learn import learn
 from evaluate import evaluate
 
-from models.LSTM import LSTM, LSTM_2, BDLSTM, AladdinLSTM
 from models.RNN import GenNet
 from losses.margin_losses import TripletMarginLoss
 
 from dataset import FOIKinematicPoseDataset, DataLimiter, LoadData, create_samplers
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
-from helpers.paths import EXTR_PATH, EXTR_PATH_SSD, JOINTS_LOOKUP_PATH, TB_RUNS_PATH
+from helpers.paths import EXTR_PATH_SSD, TB_RUNS_PATH
 
 
 def print_setup(setup: dict):
