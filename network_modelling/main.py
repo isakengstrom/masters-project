@@ -107,13 +107,11 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
 
 def main():
     now = str(datetime.datetime.now()).split('.')[0]  # Save Date and time of run, split to remove microseconds
+
+    # Dict to save all the run info. When learning and evaluating is finished, this will be saved to disk.
     run_info = dict()
     run_info['at'] = now
-    params = dict()
-
-    writer = SummaryWriter(TB_RUNS_PATH)
-    #cmd_start_tensorboard = ["tensorboard", "--logdir", TB_RUNS_PATH]
-    #subprocess.Popen(cmd_start_tensorboard)
+    params = dict()  # This stores the hyperparameters (+ some other params)  
 
     # Pick OpenPose joints for the model,
     # these are used in the FilterPose() transform, as well as when deciding the input_size/number of features
@@ -181,8 +179,6 @@ def main():
     run_info['params'] = params
 
     # Other params
-    #json_path = EXTR_PATH + "final_data_info.json"
-    #root_dir = EXTR_PATH + "final/"
     json_path_ssd = os.path.join(EXTR_PATH_SSD, "final_data_info.json")
     root_dir_ssd = os.path.join(EXTR_PATH_SSD, "final/")
 
@@ -291,9 +287,9 @@ def main():
     }
 
     run_info['split'] = split
-
     print_setup(setup=run_info)
 
+    writer = SummaryWriter(TB_RUNS_PATH)
     start_time = time.time()
 
     print('-' * 28, 'Learning phase', '-' * 28)
