@@ -1,9 +1,12 @@
 import itertools
 import json
+import math
 import os
 import time
 import datetime
+from statistics import mean
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
@@ -26,6 +29,24 @@ from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, Normal
 from helpers import write_to_json
 from helpers.paths import EXTR_PATH_SSD, TB_RUNS_PATH
 
+
+# Const paths
+JSON_PATH_SSD = os.path.join(EXTR_PATH_SSD, "final_data_info.json")
+ROOT_DIR_SSD = os.path.join(EXTR_PATH_SSD, "final/")
+
+# Data limiter: Go to definition for more info
+DATA_LIMITER = DataLimiter(
+    subjects=None,
+    sessions=[0],
+    views=[3]
+)
+
+# Load the data into memory
+print(f"| Loading data into memory..")
+load_start_time = time.time()
+LOADED_DATA = LoadData(root_dir=ROOT_DIR_SSD, data_limiter=DATA_LIMITER, num_workers=8)
+print(f"| Loading finished in {time.time() - load_start_time:0.1f}s")
+print('-' * 72)
 
 def print_setup(setup: dict):
     params = setup['params']
@@ -106,7 +127,7 @@ def parameters():
     else:
         NotImplementedError(f"The Joint filter of the '{params['joints_activator']}' activator is not implemented.")
 
-    params['num_epochs'] = 5
+    params['num_epochs'] = 2
     params['batch_size'] = 32
     params['learning_rate'] = 5e-4  # 0.05 5e-4 5e-8
 
@@ -137,6 +158,17 @@ def parameters():
     return params
 
 
+def repeat_run(params: dict = None, num_reps: int = 2) -> dict:
+    repetitions = dict()
+    test_accs = []
+    for idx in range(num_reps):
+        run_info = run_network(params)
+        test_accs.append(run_info['test_info']['accuracy'])
+        repetitions[idx] = run_info
+
+    return {'mean_test_accuracy': mean(test_accs), 'test_accuracies': test_accs, 'repetitions': repetitions}
+
+
 def multi_run():
     runnables = {
         'bidirectional': [False, True],
@@ -147,15 +179,25 @@ def multi_run():
     # Create every combination from the lists in runnables
     runnable_products = [dict(zip(runnables, value)) for value in itertools.product(*runnables.values())]
 
+    num_runs = len(runnable_products)
+    run_formatter = int(math.log10(num_runs)) + 1
+
     # Run the network by firstly overwriting the params with the runnables.
     params = parameters()
-    for overwrite in runnable_products:
-        params.update(overwrite)
+    for run_idx, overwrite_params in enumerate(runnable_products):
+        params.update(overwrite_params)
 
-        run_network(params)
+        print(f"| Run {run_idx:{run_formatter}.0f}/{num_runs}")
+        [print(f"| {idx+1}. {key}: {val}") for idx, (key, val) in enumerate(overwrite_params.items())]
+        print('-' * 72)
+        reps_info = repeat_run(params, num_reps=2)
+        #run_network(params)
 
 
-def run_network(params: dict):
+def run_network(params: dict = None) -> dict:
+    if params is None:
+        params = parameters()
+
     now = datetime.datetime.now()  # Save Date and time of run
 
     # Dict to save all the run info. When learning and evaluating is finished, this will be saved to disk.
@@ -169,15 +211,8 @@ def run_network(params: dict):
                f'_h{now.strftime("%H")}m{now.strftime("%M")}.json'
     print(run_name)
 
-    # Data limiter: Go to definition for more info
-    data_limiter = DataLimiter(
-        subjects=None,
-        sessions=[0],
-        views=[3]
-    )
-
     # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
-    num_classes = len(data_limiter.subjects)
+    num_classes = len(DATA_LIMITER.subjects)
 
     # Transforms
     composed = transforms.Compose([
@@ -191,32 +226,22 @@ def run_network(params: dict):
 
     make_save_dirs()
 
-    # Other params
-    json_path_ssd = os.path.join(EXTR_PATH_SSD, "final_data_info.json")
-    root_dir_ssd = os.path.join(EXTR_PATH_SSD, "final/")
-
-    # Load the data into memory
-    print(f"| Loading data into memory..")
-    load_start_time = time.time()
-    data = LoadData(root_dir=root_dir_ssd, data_limiter=data_limiter, num_workers=8)
-    print(f"| Loading finished in {time.time() - load_start_time:0.1f}s")
-
     train_dataset = FOIKinematicPoseDataset(
-        data=data,
-        json_path=json_path_ssd,
+        data=LOADED_DATA,
+        json_path=JSON_PATH_SSD,
         sequence_len=params['sequence_len'],
         is_train=True,
         loss_type=params['loss_type'],
-        data_limiter=data_limiter,
+        data_limiter=DATA_LIMITER,
         transform=composed
     )
 
     test_dataset = FOIKinematicPoseDataset(
-        data=data,
-        json_path=json_path_ssd,
+        data=LOADED_DATA,
+        json_path=JSON_PATH_SSD,
         sequence_len=params['sequence_len'],
         is_train=False,
-        data_limiter=data_limiter,
+        data_limiter=DATA_LIMITER,
         transform=composed
     )
 
@@ -291,7 +316,7 @@ def run_network(params: dict):
         loss_function=loss_function,
         num_epochs=params['num_epochs'],
         device=device,
-        classes=data_limiter.subjects,
+        classes=DATA_LIMITER.subjects,
         tb_writer=writer,
         loss_type=params['loss_type']
     )
@@ -316,6 +341,7 @@ def run_network(params: dict):
 
     print(f"| Finished testing | Accuracy: {test_info['accuracy']:.6f} | Total time: {run_info['tot_time'] :.2f}s")
 
+    return run_info
 
 if __name__ == "__main__":
     multi_run()

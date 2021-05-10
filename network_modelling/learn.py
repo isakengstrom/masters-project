@@ -81,7 +81,7 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
 
         # Save a checkpoint when the epoch finishes
         state = {'epoch': epoch_idx, 'net': model.state_dict(), 'optimizer': optimizer.state_dict()}
-        file_path = f'./checkpoints/checkpoint_{epoch_idx}.pth'
+        file_path = f'./saves/checkpoints/checkpoint_{epoch_idx}.pth'
         torch.save(state, file_path)
 
         if prev_val_acc is not None and prev_val_acc >= val_info['accuracy']:
