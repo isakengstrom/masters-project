@@ -25,12 +25,11 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
     # Tensorboard variables
     global_step = (epoch_idx - 1) * num_batches  # Global step, unique for each combination of epoch and batch index.
 
-    tb_classes = []
-    for class_idx in classes:
-        tb_classes.append(f"sub{class_idx}")
-
+    tb_classes = [f"sub{class_idx}" for class_idx in classes]
     tb_features = torch.zeros(0, num_classes).to(device)
     tb_class_labels = []
+
+    train_info = {'num_batches': num_batches, 'num_classes': num_classes, 'batches': dict(), 'global_step': global_step}
 
     model.train()
 
@@ -119,6 +118,9 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
             accuracy = total_accuracy/total_count
             loss = total_loss/(batch_idx+1)
 
+            # Save run info
+            train_info['batches'][batch_idx] = {'accuracy': accuracy, 'loss': loss, 'global_step': global_step}
+
             print(f"| Epoch {epoch_idx:{epoch_formatter}.0f}/{num_epochs} "
                   f"| Batch {batch_idx+1:{batch_formatter}.0f}/{num_batches} "
                   f"| Accuracy: {accuracy:.6f} "
@@ -140,4 +142,4 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
     tb_writer.add_embedding(tb_features, metadata=tb_class_labels, global_step=global_step)
     tb_writer.flush()
 
-    return model
+    return model, train_info
