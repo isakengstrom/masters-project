@@ -6,7 +6,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 #  https://www.kaggle.com/hirotaka0122/triplet-loss-with-pytorch
 def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch_idx, num_epochs, classes,
-          tb_writer: SummaryWriter):
+          tb_writer: SummaryWriter = None):
 
     # Total values are concatenated for the whole epoch.
     total_accuracy, total_count, total_loss = 0, 0, 0
@@ -104,9 +104,10 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
         total_count += main_labels.size(0)
         total_loss += loss.item()
 
-        # Store the information for the tensorboard embeddings
-        tb_features = torch.cat((tb_features, main_sequences_out), 0)
-        tb_class_labels.extend([tb_classes[prediction] for prediction in predicted_labels])
+        if tb_writer is not None:
+            # Store the information for the tensorboard embeddings
+            tb_features = torch.cat((tb_features, main_sequences_out), 0)
+            tb_class_labels.extend([tb_classes[prediction] for prediction in predicted_labels])
 
         # Don't want an update of the status or of tensorboard at first batch_idx, therefore continue
         if batch_idx <= 0:
@@ -125,9 +126,10 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
                   f"| Loss: {loss:9.6f} |")
                   #f"| Global step {global_step} "
 
-            # Add scalars to Tensorboard
-            tb_writer.add_scalar('Train Accuracy', accuracy, global_step=global_step)
-            tb_writer.add_scalar('Train Loss', loss, global_step=global_step)
+            if tb_writer is not None:
+                # Add scalars to Tensorboard
+                tb_writer.add_scalar('Train Accuracy', accuracy, global_step=global_step)
+                tb_writer.add_scalar('Train Loss', loss, global_step=global_step)
             
             if is_verbose:
                 lst = (predicted_labels == main_labels).cpu().numpy().astype(int)
@@ -136,8 +138,9 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
                       "True/False labels:", lst, " ", Counter(lst))
                 print('-' * 72)
 
-    # Add embeddings to tensorboard and flush everything in the writer to disk
-    tb_writer.add_embedding(tb_features, metadata=tb_class_labels, global_step=global_step)
-    tb_writer.flush()
+    if tb_writer is not None:
+        # Add embeddings to tensorboard and flush everything in the writer to disk
+        tb_writer.add_embedding(tb_features, metadata=tb_class_labels, global_step=global_step)
+        tb_writer.flush()
 
     return model, train_info
