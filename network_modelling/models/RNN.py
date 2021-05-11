@@ -18,15 +18,15 @@ class GenNet(nn.Module):
         self.num_layers = num_layers
         self.hidden_size = hidden_size
         self.device = device
-        self.use_cell_state = True
+        self.use_cell_state = False
 
         net_type = net_type.lower()
         if net_type == "rnn":
-            self.use_cell_state = False
             self.net = nn.RNN
         elif net_type == "gru":
             self.net = nn.GRU
         elif net_type == "lstm":
+            self.use_cell_state = True
             self.net = nn.LSTM
         else:
             raise Exception("Invalid Recurrent neural network type")
