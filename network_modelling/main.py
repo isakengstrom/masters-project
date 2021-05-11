@@ -48,6 +48,7 @@ LOADED_DATA = LoadData(root_dir=ROOT_DIR_SSD, data_limiter=DATA_LIMITER, num_wor
 print(f"| Loading finished in {time.time() - load_start_time:0.1f}s")
 print('-' * 72)
 
+
 def print_setup(setup: dict):
     params = setup['params']
     split = setup['split']
@@ -127,9 +128,10 @@ def parameters():
     else:
         NotImplementedError(f"The Joint filter of the '{params['joints_activator']}' activator is not implemented.")
 
-    params['num_epochs'] = 2
+    params['num_epochs'] = 100
     params['batch_size'] = 32
     params['learning_rate'] = 5e-4  # 0.05 5e-4 5e-8
+    params['learning_rate_lim'] = 5.1e-10
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
     # The joint_filter will also be applied further down, in the FilterJoints() transform.
@@ -147,7 +149,7 @@ def parameters():
 
     # Network / Model params
     params['num_layers'] = 2  # Number of stacked RNN layers
-    params['hidden_size'] = 256 * 2  # Number of features in hidden state
+    params['hidden_size'] = 256*2  # Number of features in hidden state
     params['net_type'] = "lstm"
     params['bidirectional'] = False
 
@@ -158,58 +160,137 @@ def parameters():
     return params
 
 
-def repeat_run(params: dict = None, num_reps: int = 2) -> dict:
+def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
+    reps_start = str(datetime.datetime.now()).split('.')[0]
+    reps_start_time = time.time()
+
+    if params is None:
+        params = parameters()
+
+    params['num_reps'] = num_repeats
     repetitions = dict()
     test_accs = []
-    for idx in range(num_reps):
+    for rep_idx in range(num_repeats):
+        params['rep_idx'] = rep_idx
+
         run_info = run_network(params)
+
         test_accs.append(run_info['test_info']['accuracy'])
-        repetitions[idx] = run_info
+        repetitions[rep_idx] = run_info
 
-    return {'mean_test_accuracy': mean(test_accs), 'test_accuracies': test_accs, 'repetitions': repetitions}
+    reps_info = {
+        'at': reps_start,
+        'duration': time.time() - reps_start_time,
+        'accuracies_mean': mean(test_accs),
+        'accuracies': test_accs,
+        'repetitions': repetitions,
+    }
+
+    return reps_info
 
 
-def multi_run():
+def multi_run(num_repeats=1):
+    multi_start = datetime.datetime.now()  # Date and time of start
+    multi_start_time = time.time()  # Time of start
+
+    # Override any parameter in parameter()
     runnables = {
         'bidirectional': [False, True],
-        'net_type': ['rnn', 'gru', 'lstm'],
-        'sequence_len': [50, 100, 200, 400, 800],
+        #'net_type': ['rnn', 'gru', 'lstm'],
+        #'sequence_len': [50, 100, 200, 400, 800],
+        #'hidden_size': [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024],
+        #'hidden_size': [256, 512, 1024],
+        'num_epochs': 1
     }
+
+    # Wrap every value in a list if it isn't already the case
+    for key, value in runnables.items():
+        if not isinstance(value, list):
+            runnables[key] = [value]
 
     # Create every combination from the lists in runnables
     runnable_products = [dict(zip(runnables, value)) for value in itertools.product(*runnables.values())]
 
     num_runs = len(runnable_products)
-    run_formatter = int(math.log10(num_runs)) + 1
+    run_formatter = int(math.log10(num_runs)) + 1  # Used for printing spacing
 
-    # Run the network by firstly overwriting the params with the runnables.
+    # Store runtime information
+    multi_info = {'at': str(multi_start).split('.')[0], 'duration': None, 'num_runs': num_runs, 'num_reps': num_repeats}
+    multi_runs = dict()
+    multi_results = dict()
+
     params = parameters()
-    for run_idx, overwrite_params in enumerate(runnable_products):
-        params.update(overwrite_params)
+    params['num_runs'] = num_runs
 
-        print(f"| Run {run_idx:{run_formatter}.0f}/{num_runs}")
-        [print(f"| {idx+1}. {key}: {val}") for idx, (key, val) in enumerate(overwrite_params.items())]
-        print('-' * 72)
-        reps_info = repeat_run(params, num_reps=2)
-        #run_network(params)
+    # Run the network by firstly overriding the params with the runnables.
+    for run_idx, override_params in enumerate(runnable_products):
+
+        # Print the current run index and the current notable params
+        print(f"| Run {run_idx+1:{run_formatter}.0f}/{num_runs}")
+        [print(f"| {idx+1}. {key}: {val}", end=' ') for idx, (key, val) in enumerate(override_params.items())]
+        print('\n')
+
+        params.update(override_params)  # Override the params
+        params['run_idx'] = run_idx
+
+        # Run the network num_reps times
+        reps_info = repeat_run(params, num_repeats=num_repeats)
+
+        # Save info for every run
+        multi_runs[run_idx] = dict()
+        multi_runs[run_idx] = reps_info
+        multi_runs[run_idx]['notable_params'] = override_params
+        multi_runs[run_idx]['params'] = params
+
+        # Save the results in separate dictionary
+        multi_results[run_idx] = {
+            'setup': override_params,
+            'duration': reps_info['duration'],
+            'accuracy': reps_info['accuracies_mean']
+        }
+
+        print('---*' * 20)
+
+    # Store runtime information
+    multi_info['multi_runs'] = multi_runs
+    multi_info['duration'] = time.time() - multi_start_time
+    multi_results['duration'] = multi_info['duration']
+
+    # Formatting of run_info save file name
+    run_name = f'd{multi_start.strftime("%y")}{multi_start.strftime("%m")}{multi_start.strftime("%d")}_h{multi_start.strftime("%H")}m{multi_start.strftime("%M")}.json'
+    full_info_path = os.path.join('./saves/runs', run_name)
+    result_info_path = os.path.join('./saves/runs', 'r_' + run_name)
+
+    # Save the results
+    write_to_json(multi_info, full_info_path)  # Naming format: dYYMMDD_hHHmMM.json
+    write_to_json(multi_results, result_info_path)  # Naming format: r_dYYMMDD_hHHmMM.json
+
+    # Print the results
+    print(f"| Total time {multi_results['duration']:.2f}")
+    for key, value in multi_results.items():
+        if isinstance(key, int):
+            [print(f"| Notable parameters: {key}: {val}", end=' ') for key, val in value['setup'].items()]
+            print(f"| Accuracy: {value['accuracy']}")
+            print()
 
 
 def run_network(params: dict = None) -> dict:
+    """
+    Run the network. Either called directly, or from repeat_run()
+
+    :param params: hyperparameters and some other passed down info
+    :return:
+    """
+
     if params is None:
         params = parameters()
 
-    now = datetime.datetime.now()  # Save Date and time of run
+    run_start = datetime.datetime.now()  # Save Date and time of run
 
     # Dict to save all the run info. When learning and evaluating is finished, this will be saved to disk.
     run_info = dict()
-    run_info['at'] = str(now).split('.')[0]
-    run_info['params'] = params
-
-    print(run_info['at'])
-    # Formatting of run_info save file name
-    run_name = f'd{now.strftime("%y")}{now.strftime("%m")}{now.strftime("%d")}' \
-               f'_h{now.strftime("%H")}m{now.strftime("%M")}.json'
-    print(run_name)
+    run_info['at'] = str(run_start).split('.')[0]
+    run_info['duration'] = None
 
     # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
     num_classes = len(DATA_LIMITER.subjects)
@@ -224,6 +305,7 @@ def run_network(params: dict = None) -> dict:
         ToTensor()
     ])
 
+    # Create save dir if they don't exist
     make_save_dirs()
 
     train_dataset = FOIKinematicPoseDataset(
@@ -264,12 +346,15 @@ def run_network(params: dict = None) -> dict:
         'num_val_batches': len(val_loader), 'num_test_batches': len(test_loader)
     }
 
+    # Use cuda if possible
     if torch.cuda.is_available():
         device = torch.device('cuda')
         cudnn.benchmark = True
     else:
+        # TODO: Bug - Not everything is being sent to the cpu, fix in other parts of the scripts
         device = torch.device('cpu')
 
+    # Store runtime information
     run_info['device'] = str(device)
 
     # The recurrent neural net model, RNN, GRU or LSTM
@@ -287,6 +372,7 @@ def run_network(params: dict = None) -> dict:
     optimizer = torch.optim.Adam(model.parameters(), lr=params['learning_rate'])
     #optimizer = torch.optim.SGD(model.parameters(), lr=params["learning_rate"], momentum=0.9)
 
+    # Pick loss function depending on params
     if params['loss_type'] == "single":
         loss_function = nn.CrossEntropyLoss()
     elif params['loss_type'] == "siamese":
@@ -296,18 +382,29 @@ def run_network(params: dict = None) -> dict:
     else:
         raise Exception("Invalid network_type")
 
+    # Store runtime information
     # Get the names as strings for the pytorch objects of interest
     run_info['model_name'] = str(type(model)).split('.')[-1][:-2]
     run_info['optimizer_name'] = str(type(optimizer)).split('.')[-1][:-2]
     run_info['loss_function_name'] = str(type(loss_function)).split('.')[-1][:-2]
     run_info['transforms'] = [transform.split(' ')[0].split('.')[1] for transform in str(composed).split('<')[1:]]
 
-    print_setup(setup=run_info)
+    #print_setup(setup=run_info)
 
-    writer = SummaryWriter(TB_RUNS_PATH)  # TensorBoard writer
+    writer: SummaryWriter = None  # SummaryWriter(TB_RUNS_PATH)  # TensorBoard writer
     start_time = time.time()
 
-    print('-' * 28, 'Learning phase', '-' * 28)
+    # Print runtime information
+    if 'num_runs' in params and 'num_reps' in params:
+        run_formatter = int(math.log10(params['num_runs'])) + 1
+        rep_formatter = int(math.log10(params['num_reps'])) + 1
+
+        print(f"| Learning phase"
+              f" - Run {params['run_idx']+1:{run_formatter}.0f}/{params['num_runs']}"
+              f" - Rep {params['rep_idx']+1:{rep_formatter}.0f}/{params['num_reps']}")
+    else:
+        print('-' * 28, 'Learning phase', '-' * 28)
+
     model, learn_info = learn(
         train_loader=train_loader,
         val_loader=val_loader,
@@ -318,10 +415,10 @@ def run_network(params: dict = None) -> dict:
         device=device,
         classes=DATA_LIMITER.subjects,
         tb_writer=writer,
-        loss_type=params['loss_type']
+        lr_lim=params['learning_rate_lim'],
+        loss_type=params['loss_type'],
     )
 
-    print('-' * 28, 'Testing phase', '-' * 29)
     test_info = evaluate(
         data_loader=test_loader,
         model=model,
@@ -329,22 +426,22 @@ def run_network(params: dict = None) -> dict:
         is_test=True
     )
 
-    writer.close()
+    # Close TensorBoard writer if it exists
+    if writer is not None:
+        writer.close()
 
-    run_info['tot_time'] = time.time() - start_time
+    # Store runtime information
+    run_info['duration'] = time.time() - start_time
     run_info['learn_info'] = learn_info
     run_info['test_info'] = test_info
-    save_path = os.path.join('./saves/runs', run_name)
-    write_to_json(run_info, save_path)
-    json_info = json.dumps(run_info)
-    print(json_info)
 
-    print(f"| Finished testing | Accuracy: {test_info['accuracy']:.6f} | Total time: {run_info['tot_time'] :.2f}s")
+    print(f"| Finished testing  | Accuracy: {test_info['accuracy']:.6f} | Run time: {run_info['duration'] :.2f}s\n\n")
 
     return run_info
 
+
 if __name__ == "__main__":
     multi_run()
-    #run_network(parameters())
+    #run_network()
 
 
