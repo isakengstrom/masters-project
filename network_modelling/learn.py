@@ -7,8 +7,8 @@ from train import train
 from evaluate import evaluate
 
 
-def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs, device, classes, tb_writer, lr_lim,
-          loss_type="triplet"):
+def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs, device, classes, lr_lim, loss_type,
+          max_norm, tb_writer):
 
     learn_start_time = time.time()
 
@@ -52,6 +52,7 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
             epoch_idx=epoch_idx,
             num_epochs=num_epochs,
             classes=classes,
+            max_norm=max_norm,
             tb_writer=tb_writer
         )
 

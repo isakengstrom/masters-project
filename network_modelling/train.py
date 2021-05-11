@@ -1,11 +1,13 @@
 import math
 import torch
 from collections import Counter
+
+import torch.nn.utils as utils
 from torch.utils.tensorboard import SummaryWriter
 
 
 #  https://www.kaggle.com/hirotaka0122/triplet-loss-with-pytorch
-def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch_idx, num_epochs, classes,
+def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch_idx, num_epochs, classes, max_norm,
           tb_writer: SummaryWriter = None):
 
     # Total values are concatenated for the whole epoch.
@@ -100,7 +102,8 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
         loss.backward()
 
         # Clip norms
-        #utils.clip_grad_norm_(model.parameters(), max_norm=.1)
+        if max_norm is not None:
+            utils.clip_grad_norm_(model.parameters(), max_norm=max_norm)
 
         # Update the weights
         optimizer.step()

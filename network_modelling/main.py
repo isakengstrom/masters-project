@@ -152,6 +152,7 @@ def parameters():
     params['hidden_size'] = 256*2  # Number of features in hidden state
     params['net_type'] = "lstm"
     params['bidirectional'] = False
+    params['max_norm'] = .1
 
     # Loss function
     params['loss_type'] = "single"
@@ -414,9 +415,10 @@ def run_network(params: dict = None) -> dict:
         num_epochs=params['num_epochs'],
         device=device,
         classes=DATA_LIMITER.subjects,
-        tb_writer=writer,
         lr_lim=params['learning_rate_lim'],
         loss_type=params['loss_type'],
+        max_norm=params['max_norm'],
+        tb_writer=writer
     )
 
     test_info = evaluate(
