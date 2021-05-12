@@ -16,7 +16,7 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
 
     num_classes = len(classes)
     num_batches = len(data_loader)
-    log_interval = max(math.floor(num_batches/5), 1)
+    log_interval = max(math.floor(num_batches/3), 1)
     is_verbose = False
 
     # Used for spacing in the formatting of the status prints
@@ -101,7 +101,7 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
         # Feed Backward
         loss.backward()
 
-        # Clip norms
+        # Clip norms, to avoid exploding gradient problems
         if max_norm is not None:
             utils.clip_grad_norm_(model.parameters(), max_norm=max_norm)
 

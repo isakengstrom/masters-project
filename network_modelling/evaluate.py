@@ -2,12 +2,17 @@ import torch
 
 
 # https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html
-def evaluate(data_loader, model, device, is_test):
+def evaluate(data_loader, model, device, is_test, classes=None):
     model.eval()
 
     total_accuracy, total_count = 0, 0
-
+    eval_info = dict()
     with torch.no_grad():
+        if is_test and classes is not None:
+            classes = list(classes)
+            num_classes = len(classes)
+            conf = torch.zeros([num_classes, num_classes], dtype=torch.int32)
+
         for batch_idx, batch_samples in enumerate(data_loader):
             sequences, labels = batch_samples["main"]
 
@@ -22,6 +27,13 @@ def evaluate(data_loader, model, device, is_test):
             total_count += labels.size(0)
 
             if is_test:
-                pass
+                conf[predicted_labels, labels] += 1
 
-    return {'accuracy': total_accuracy / total_count}
+        if is_test:
+            #print(conf)
+            #print(torch.sum(conf))
+            conf_list = conf.tolist()
+            eval_info['confusion_matrix'] = conf_list
+
+        eval_info['accuracy'] = total_accuracy / total_count
+    return eval_info

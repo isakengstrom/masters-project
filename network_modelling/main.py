@@ -16,7 +16,6 @@ import torchvision.transforms as transforms
 from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import DataLoader
 
-
 from learn import learn
 from evaluate import evaluate
 
@@ -38,7 +37,7 @@ ROOT_DIR_SSD = os.path.join(EXTR_PATH_SSD, "final/")
 DATA_LIMITER = DataLimiter(
     subjects=None,
     sessions=[0],
-    views=[3]
+    views=None,
 )
 
 # Load the data into memory
@@ -131,7 +130,7 @@ def parameters():
     params['num_epochs'] = 100
     params['batch_size'] = 32
     params['learning_rate'] = 5e-4  # 0.05 5e-4 5e-8
-    params['learning_rate_lim'] = 5.1e-10
+    params['learning_rate_lim'] = 5.1e-8
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
     # The joint_filter will also be applied further down, in the FilterJoints() transform.
@@ -151,8 +150,8 @@ def parameters():
     params['num_layers'] = 2  # Number of stacked RNN layers
     params['hidden_size'] = 256*2  # Number of features in hidden state
     params['net_type'] = "lstm"
-    params['bidirectional'] = False
-    params['max_norm'] = .1
+    params['bidirectional'] = True
+    params['max_norm'] = 1
 
     # Loss function
     params['loss_type'] = "single"
@@ -190,27 +189,27 @@ def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
     return reps_info
 
 
-def multi_run(num_repeats=1):
+def multi_run(num_repeats=10):
     multi_start = datetime.datetime.now()  # Date and time of start
     multi_start_time = time.time()  # Time of start
 
     # Override any parameter in parameter()
-    runnables = {
+    param_combinations = {
         'bidirectional': [False, True],
-        #'net_type': ['rnn', 'gru', 'lstm'],
-        #'sequence_len': [50, 100, 200, 400, 800],
+        'net_type': ['rnn', 'gru', 'lstm'],
+        'sequence_len': [25, 50, 100, 200, 400, 800],
         #'hidden_size': [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024],
-        #'hidden_size': [256, 512, 1024],
-        'num_epochs': 1
+        #'max_norm': [0.01, 0.1, 1]
+        #'num_epochs': 1
     }
 
     # Wrap every value in a list if it isn't already the case
-    for key, value in runnables.items():
+    for key, value in param_combinations.items():
         if not isinstance(value, list):
-            runnables[key] = [value]
+            param_combinations[key] = [value]
 
-    # Create every combination from the lists in runnables
-    runnable_products = [dict(zip(runnables, value)) for value in itertools.product(*runnables.values())]
+    # Create every combination from the lists in param_combinations
+    runnable_products = [dict(zip(param_combinations, value)) for value in itertools.product(*param_combinations.values())]
 
     num_runs = len(runnable_products)
     run_formatter = int(math.log10(num_runs)) + 1  # Used for printing spacing
@@ -223,7 +222,7 @@ def multi_run(num_repeats=1):
     params = parameters()
     params['num_runs'] = num_runs
 
-    # Run the network by firstly overriding the params with the runnables.
+    # Run the network by firstly overriding the params with the param_combinations.
     for run_idx, override_params in enumerate(runnable_products):
 
         # Print the current run index and the current notable params
@@ -271,8 +270,7 @@ def multi_run(num_repeats=1):
     for key, value in multi_results.items():
         if isinstance(key, int):
             [print(f"| Notable parameters: {key}: {val}", end=' ') for key, val in value['setup'].items()]
-            print(f"| Accuracy: {value['accuracy']}")
-            print()
+            print(f"\n| Accuracy: {value['accuracy']}")
 
 
 def run_network(params: dict = None) -> dict:
@@ -425,7 +423,8 @@ def run_network(params: dict = None) -> dict:
         data_loader=test_loader,
         model=model,
         device=device,
-        is_test=True
+        is_test=True,
+        classes=DATA_LIMITER.subjects,
     )
 
     # Close TensorBoard writer if it exists
