@@ -25,7 +25,7 @@ from losses.margin_losses import TripletMarginLoss
 from dataset import FOIKinematicPoseDataset, DataLimiter, LoadData, create_samplers
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
 
-from helpers import write_to_json
+from helpers import write_to_json, read_from_json
 from helpers.paths import EXTR_PATH_SSD, TB_RUNS_PATH
 
 
@@ -145,6 +145,10 @@ def parameters():
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
     params['sequence_len'] = 150
+
+    params['simulated_len'] = 800
+    #params['split_limit_factor'] = params['sequence_len'] / params['simulated_len']
+
 
     # Network / Model params
     params['num_layers'] = 2  # Number of stacked RNN layers
@@ -326,12 +330,15 @@ def run_network(params: dict = None) -> dict:
         transform=composed
     )
 
+    print('factor ', params['sequence_len'] / params['simulated_len'])
+
     train_sampler, test_sampler, val_sampler = create_samplers(
         dataset_len=len(train_dataset),
         train_split=.7,
         val_split=.15,
         val_from_train=False,
-        shuffle=True
+        shuffle=True,
+        split_limit_factor=params['sequence_len']/params['simulated_len']
     )
 
     train_loader = DataLoader(train_dataset, params['batch_size'], sampler=train_sampler, num_workers=4)
@@ -442,7 +449,11 @@ def run_network(params: dict = None) -> dict:
 
 
 if __name__ == "__main__":
-    multi_run()
+    multi_run(num_repeats=5)
     #run_network()
+    #result_info_path = os.path.join('./saves/runs', 'r_' + run_name)
+    #res = read_from_json('./saves/runs/r_d210511_h17m18.json')
+    #print(res)
+
 
 

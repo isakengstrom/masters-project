@@ -11,7 +11,7 @@ from torch.utils.data.sampler import SubsetRandomSampler
 from helpers import read_from_json
 
 
-def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=True, shuffle=True):
+def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=True, shuffle=True, split_limit_factor=None):
     """
     Influenced by: https://stackoverflow.com/a/50544887
 
@@ -21,6 +21,9 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
     """
 
     indices = list(range(dataset_len))
+
+    if split_limit_factor is not None:
+        dataset_len = dataset_len * split_limit_factor
 
     if shuffle:
         random_seed = 22  # 42
@@ -316,7 +319,7 @@ class FOIKinematicPoseDataset(Dataset):
             interest_keys = [key for key in idx_lookup_keys if key[0] == seq_info.key[0] or key[2] == seq_info.key[2]]
 
             positive_keys = [key for key in interest_keys if key[0] == seq_info.key[0]]
-            view_keys = [key for key in interest_keys if key[2] == seq_info.key[2]]
+            #view_keys = [key for key in interest_keys if key[2] == seq_info.key[2]]
 
             positive_idxs = dict()
             negative_idxs = self.idx_lookup.copy()
@@ -329,11 +332,5 @@ class FOIKinematicPoseDataset(Dataset):
 
             positive_idx = random.choice(positive_idxs[random_positive_key])
             negative_idx = random.choice(negative_idxs[random_negative_key])
-
-            '''
-            print(seq_info.key, positive_idx)
-            print("positive: ", random_positive_key, positive_idx)
-            print("negative: ", random_negative_key, negative_idx)
-            '''
 
         return positive_idx, negative_idx
