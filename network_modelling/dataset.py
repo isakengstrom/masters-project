@@ -18,13 +18,22 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
     This is not (as of yet) stratified sampling,
     read more about it here: https://stackoverflow.com/a/52284619
     or here: https://github.com/ncullen93/torchsample/blob/master/torchsample/samplers.py#L22
+
+
+    split_limit_factor - a hack to lower the number of samples by a factor. Can be used to compare different sequence
+        lengths with the same number of samples. The factor should be in the interval [0,1].
+
     """
 
     indices = list(range(dataset_len))
 
     if split_limit_factor is not None:
+        if split_limit_factor >= 1 or split_limit_factor <= 0:
+            raise Exception(f'The split_limit_factor must be in interval [0, 1], it was {split_limit_factor}.')
+
         dataset_len = dataset_len * split_limit_factor
 
+    # Randomize the splits
     if shuffle:
         random_seed = 22  # 42
         np.random.seed(random_seed)
@@ -185,7 +194,7 @@ class Sequences:
 
 
 class FOIKinematicPoseDataset(Dataset):
-    def __init__(self, data, json_path, sequence_len, is_train=False, loss_type="triplet", data_limiter=None, transform=None, view_specific=False):
+    def __init__(self, data, json_path, sequence_len, is_train=False, loss_type="triplet", data_limiter=None, transform=None):
         # Data loading
         self.json_path = json_path
         self.sequence_len = sequence_len
@@ -193,81 +202,33 @@ class FOIKinematicPoseDataset(Dataset):
         self.data_limiter = data_limiter
         self.transform = transform
         self.is_train = is_train
-        self.view_specific = view_specific
 
         self.instantiated_data = data
         self.sequences = Sequences(self.instantiated_data)
 
-        self.lookup, self.keys_set = self.create_lookup()
-
-        self.idx_lookup = self.create_idx_lookup()
+        self.lookup = self.create_lookup()
 
     def __len__(self):
         return len(self.lookup)
 
-    def __getitem__(self, idx) -> dict:
+    def __getitem__(self, idx) -> tuple:
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
         if isinstance(idx, slice):
             raise Exception("Slicing is not available.")
 
-        item = dict()
+        sequence, label = self.sequences(self.lookup[idx])
 
-        if self.loss_type == "single" or not self.is_train:
-            main_sequence, main_label = self.sequences(self.lookup[idx])
+        if self.transform:
+            sequence = self.transform(sequence)
 
-            if self.transform:
-                main_sequence = self.transform(main_sequence)
+        return sequence, label
 
-            item["main"] = (main_sequence, main_label)
-
-        elif self.loss_type == "siamese":
-            _, neg_idx = self.get_pos_neg_idxs(main_idx=idx)
-
-            main_sequence, main_label = self.sequences(self.lookup[idx])
-            negative_sequence, negative_label = self.sequences(self.lookup[neg_idx])
-
-            assert main_label != negative_label
-
-            if self.transform:
-                main_sequence = self.transform(main_sequence)
-                negative_sequence = self.transform(negative_sequence)
-
-            item["main"] = (main_sequence, main_label)
-            item["negative"] = (negative_sequence, negative_label)
-
-        elif self.loss_type == "triplet":
-
-            pos_idx, neg_idx = self.get_pos_neg_idxs(main_idx=idx)
-
-            main_sequence, main_label = self.sequences(self.lookup[idx])
-            positive_sequence, positive_label = self.sequences(self.lookup[pos_idx])
-            negative_sequence, negative_label = self.sequences(self.lookup[neg_idx])
-
-            assert main_label == positive_label
-            assert main_label != negative_label
-
-            if self.transform:
-                main_sequence = self.transform(main_sequence)
-                positive_sequence = self.transform(positive_sequence)
-                negative_sequence = self.transform(negative_sequence)
-
-            item["main"] = (main_sequence, main_label)
-            item["positive"] = (positive_sequence, positive_label)
-            item["negative"] = (negative_sequence, negative_label)
-
-        else:
-            raise Exception("If not loading training dataset, make sure the is_train flag is set to True, "
-                            "Otherwise, the network_type is invalid, should be 'single', 'siamese' or 'triplet'.")
-
-        return item
-
-    def create_lookup(self) -> tuple:
+    def create_lookup(self) -> list:
         data_info = read_from_json(self.json_path)
 
         lookup = []
-        key_set = set()
         for element in data_info:
             element_info = DimensionsElement(element)
 
@@ -278,7 +239,6 @@ class FOIKinematicPoseDataset(Dataset):
             seq_info = {"file_name": element_info.file_name, "sub_name": element_info.sub_name,
                         "sess_name": element_info.sess_name, "view_name": element_info.view_name,
                         "key": element_info.key}
-            key_set.add(element_info.key)
 
             for i in range(0, element_info.len, self.sequence_len):
                 seq_info["start"] = i
@@ -293,44 +253,5 @@ class FOIKinematicPoseDataset(Dataset):
             #   - Is there a way to do that efficiently, without checking for the last element at every iteration?
             del lookup[-1]
 
-        return lookup, sorted(key_set)
+        return lookup
 
-    def create_idx_lookup(self) -> dict:
-        idx_lookup = dict()
-
-        for key in self.keys_set:
-            idx_lookup[key] = []
-
-        for seq_idx, seq in enumerate(self.lookup):
-            idx_lookup[seq['key']].append(seq_idx)
-
-        return idx_lookup
-
-    def get_pos_neg_idxs(self, main_idx) -> Tuple[int, int]:
-
-        if self.view_specific:
-            raise NotImplementedError
-
-        else:
-            seq_info = SequenceElement(self.lookup[main_idx])
-
-            idx_lookup_keys = list(self.idx_lookup.keys())
-
-            interest_keys = [key for key in idx_lookup_keys if key[0] == seq_info.key[0] or key[2] == seq_info.key[2]]
-
-            positive_keys = [key for key in interest_keys if key[0] == seq_info.key[0]]
-            #view_keys = [key for key in interest_keys if key[2] == seq_info.key[2]]
-
-            positive_idxs = dict()
-            negative_idxs = self.idx_lookup.copy()
-
-            for key in positive_keys:
-                positive_idxs[key] = negative_idxs.pop(key, None)
-
-            random_positive_key = random.choice(list(positive_idxs.keys()))
-            random_negative_key = random.choice(list(negative_idxs.keys()))
-
-            positive_idx = random.choice(positive_idxs[random_positive_key])
-            negative_idx = random.choice(negative_idxs[random_negative_key])
-
-        return positive_idx, negative_idx
