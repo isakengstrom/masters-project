@@ -56,68 +56,49 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
 
     model.train()
 
-    for batch_idx, batch_samples in enumerate(data_loader):
+    for batch_idx, (sequences, labels) in enumerate(data_loader):
         global_step += 1  # Update to make it unique
 
-        if loss_type == "single":
-            main_sequences, main_labels = batch_samples["main"]
+        sequences, labels = sequences.to(device), labels.to(device)
 
-            main_sequences = main_sequences.to(device)  # .squeeze(1) # Squeeze is for MNIST tests
-            main_labels = main_labels.to(device)
+        if loss_type == "single":
 
             # Clear the gradients of all variables
             optimizer.zero_grad()
 
             # Feed the network forward
-            anchor_sequences_out = model(main_sequences)
+            sequences_out = model(sequences)
 
             # Calculate the loss
-            loss = loss_function(anchor_sequences_out, main_labels)
+            loss = loss_function(sequences_out, labels)
 
         elif loss_type == "siamese":
-            main_sequences, main_labels = batch_samples["main"]
-            negative_sequences, _ = batch_samples["negative"]
-
-            main_sequences, main_labels = main_sequences.to(device), main_labels.to(device)
-            negative_sequences = negative_sequences.to(device)
-
-            # Clear the gradients of all variables
-            optimizer.zero_grad()
-
-            # Feed the network forward
-            anchor_sequences_out = model(main_sequences)
-            negative_sequences_out = model(negative_sequences)
-
-            # Calculate the loss
-            loss = loss_function(anchor_sequences_out, negative_sequences_out)
+            raise NotImplementedError
 
         elif loss_type == "triplet":
-
-            main_sequences, main_labels = batch_samples["main"]
-            main_sequences, main_labels = main_sequences.to(device), main_labels.to(device)
-
-            anc_indices, pos_indices, neg_indices = get_all_triplets_indices(main_labels)
+            anc_indices, pos_indices, neg_indices = get_all_triplets_indices(labels)
             random_indices = torch.randint(len(anc_indices), (200,))
 
             anc_indices = anc_indices[random_indices]
             pos_indices = pos_indices[random_indices]
             neg_indices = neg_indices[random_indices]
 
-            anc_labels, anc_sequences = main_labels[anc_indices], main_sequences[anc_indices, :, :]
-            pos_labels, pos_sequences = main_labels[pos_indices], main_sequences[pos_indices, :, :]
-            neg_labels, neg_sequences = main_labels[neg_indices], main_sequences[neg_indices, :, :]
+            anc_labels, anc_sequences = labels[anc_indices], sequences[anc_indices, :, :]
+            pos_labels, pos_sequences = labels[pos_indices], sequences[pos_indices, :, :]
+            neg_labels, neg_sequences = labels[neg_indices], sequences[neg_indices, :, :]
 
             # Clear the gradients of all variables
             optimizer.zero_grad()
 
             # Feed the network forward
-            anchor_sequences_out = model(anc_sequences)
-            positive_sequences_out = model(pos_sequences)
-            negative_sequences_out = model(neg_sequences)
+            anc_sequences_out = model(anc_sequences)
+            pos_sequences_out = model(pos_sequences)
+            neg_sequences_out = model(neg_sequences)
 
             # Calculate the loss
-            loss = loss_function(anchor_sequences_out, positive_sequences_out, negative_sequences_out)
+            loss = loss_function(anc_sequences_out, pos_sequences_out, neg_sequences_out)
 
+            sequences_out, labels = anc_sequences_out, anc_labels
         else:
             raise Exception("Invalid network_type, should be 'single', 'siamese' or 'triplet'")
 
@@ -131,16 +112,16 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
         # Update the weights
         optimizer.step()
 
-        _, predicted_labels = torch.max(anchor_sequences_out, 1)
+        _, predicted_labels = torch.max(sequences_out, 1)
 
-        total_accuracy += (predicted_labels == anc_labels).sum().item()
-        total_count += anc_labels.size(0)
+        total_accuracy += (predicted_labels == labels).sum().item()
+        total_count += labels.size(0)
         total_loss += loss.item()
 
         if tb_writer is not None:
             # Store the information for the tensorboard embeddings
-            tb_features = torch.cat((tb_features, anchor_sequences_out), 0)
-            tb_class_labels.extend([tb_classes[prediction] for prediction in anc_labels])
+            tb_features = torch.cat((tb_features, sequences_out), 0)
+            tb_class_labels.extend([tb_classes[prediction] for prediction in labels])
 
         # Don't want an update of the status or of tensorboard at first batch_idx, therefore continue
         if batch_idx <= 0:
@@ -162,15 +143,13 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
                 tb_writer.add_scalar('Train Loss', curr_loss, global_step=global_step)
 
             if is_verbose:
-                print("Actual labels:", main_labels.data.cpu().numpy())
+                print("Actual labels:", labels.data.cpu().numpy())
 
-                '''
-                lst = (predicted_labels == main_labels).cpu().numpy().astype(int)
+                lst = (predicted_labels == labels).cpu().numpy().astype(int)
                 print("  Predicted labels:", predicted_labels.data.cpu().numpy(), "\n",
-                      "    Actual labels:", main_labels.data.cpu().numpy(), "\n",
+                      "    Actual labels:", labels.data.cpu().numpy(), "\n",
                       "True/False labels:", lst, " ", Counter(lst))
                 print('-' * 72)
-                '''
 
     # Store runtime information
     train_info['accuracy'] = curr_accuracy
