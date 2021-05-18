@@ -13,11 +13,9 @@ def evaluate(data_loader, model, device, is_test, classes=None):
             num_classes = len(classes)
             conf = torch.zeros([num_classes, num_classes], dtype=torch.int32)
 
-        for batch_idx, batch_samples in enumerate(data_loader):
-            sequences, labels = batch_samples["main"]
+        for batch_idx, (sequences, labels) in enumerate(data_loader):
 
-            sequences = sequences.to(device).squeeze(1)
-            labels = labels.to(device)
+            sequences, labels = sequences.to(device).squeeze(1), labels.to(device)
 
             sequences_out = model(sequences)
 
@@ -30,8 +28,6 @@ def evaluate(data_loader, model, device, is_test, classes=None):
                 conf[predicted_labels, labels] += 1
 
         if is_test:
-            #print(conf)
-            #print(torch.sum(conf))
             conf_list = conf.tolist()
             eval_info['confusion_matrix'] = conf_list
 
