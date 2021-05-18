@@ -37,7 +37,7 @@ ROOT_DIR_SSD = os.path.join(EXTR_PATH_SSD, "final/")
 DATA_LIMITER = DataLimiter(
     subjects=None,
     sessions=[0],
-    views=None,
+    views=[3],
 )
 
 # Load the data into memory
@@ -127,10 +127,10 @@ def parameters():
     else:
         NotImplementedError(f"The Joint filter of the '{params['joints_activator']}' activator is not implemented.")
 
-    params['num_epochs'] = 100
+    params['num_epochs'] = 250
     params['batch_size'] = 32
-    params['learning_rate'] = 5e-4  # 0.05 5e-4 5e-8
-    params['learning_rate_lim'] = 5.1e-8
+    params['learning_rate'] = 0.0005  #5e-4  # 0.05 5e-4 5e-8
+    params['learning_rate_lim'] = None #5.1e-7
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
     # The joint_filter will also be applied further down, in the FilterJoints() transform.
@@ -144,22 +144,19 @@ def parameters():
 
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
-    params['sequence_len'] = 150
-
+    params['sequence_len'] = 100
     params['simulated_len'] = 800
-    #params['split_limit_factor'] = params['sequence_len'] / params['simulated_len']
-
 
     # Network / Model params
     params['num_layers'] = 2  # Number of stacked RNN layers
     params['hidden_size'] = 256*2  # Number of features in hidden state
-    params['net_type'] = "lstm"
-    params['bidirectional'] = True
+    params['net_type'] = "gru"
+    params['bidirectional'] = False
     params['max_norm'] = 1
 
     # Loss function
     params['loss_type'] = "single"
-    params['loss_margin'] = 1  # The margin for certain loss functions
+    params['loss_margin'] = 25  # The margin for certain loss functions
 
     return params
 
@@ -182,6 +179,7 @@ def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
         test_accs.append(run_info['test_info']['accuracy'])
         repetitions[rep_idx] = run_info
 
+    # Store runtime information
     reps_info = {
         'at': reps_start,
         'duration': time.time() - reps_start_time,
@@ -193,29 +191,29 @@ def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
     return reps_info
 
 
-def multi_run(num_repeats=10):
+def grid_search(num_repeats=1):
     multi_start = datetime.datetime.now()  # Date and time of start
     multi_start_time = time.time()  # Time of start
 
     # Override any parameter in parameter()
-    param_combinations = {
-        'bidirectional': [False, True],
-        'net_type': ['rnn', 'gru', 'lstm'],
-        'sequence_len': [25, 50, 100, 200, 400, 800],
+    grid = {
+        #'bidirectional': [False],
+        #'net_type': ['gru'],
+        #'sequence_len': [5, 10, 15, 20, 25],
         #'hidden_size': [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024],
         #'max_norm': [0.01, 0.1, 1]
         #'num_epochs': 1
     }
 
     # Wrap every value in a list if it isn't already the case
-    for key, value in param_combinations.items():
+    for key, value in grid.items():
         if not isinstance(value, list):
-            param_combinations[key] = [value]
+            grid[key] = [value]
 
-    # Create every combination from the lists in param_combinations
-    runnable_products = [dict(zip(param_combinations, value)) for value in itertools.product(*param_combinations.values())]
+    # Create every combination from the lists in grid
+    all_grid_combinations = [dict(zip(grid, value)) for value in itertools.product(*grid.values())]
 
-    num_runs = len(runnable_products)
+    num_runs = len(all_grid_combinations)
     run_formatter = int(math.log10(num_runs)) + 1  # Used for printing spacing
 
     # Store runtime information
@@ -226,8 +224,8 @@ def multi_run(num_repeats=10):
     params = parameters()
     params['num_runs'] = num_runs
 
-    # Run the network by firstly overriding the params with the param_combinations.
-    for run_idx, override_params in enumerate(runnable_products):
+    # Run the network by firstly overriding the params with the grid.
+    for run_idx, override_params in enumerate(all_grid_combinations):
 
         # Print the current run index and the current notable params
         print(f"| Run {run_idx+1:{run_formatter}.0f}/{num_runs}")
@@ -240,13 +238,13 @@ def multi_run(num_repeats=10):
         # Run the network num_reps times
         reps_info = repeat_run(params, num_repeats=num_repeats)
 
-        # Save info for every run
+        # Store runtime information
         multi_runs[run_idx] = dict()
         multi_runs[run_idx] = reps_info
         multi_runs[run_idx]['notable_params'] = override_params
         multi_runs[run_idx]['params'] = params
 
-        # Save the results in separate dictionary
+        # Store runtime information
         multi_results[run_idx] = {
             'setup': override_params,
             'duration': reps_info['duration'],
@@ -315,22 +313,9 @@ def run_network(params: dict = None) -> dict:
         data=LOADED_DATA,
         json_path=JSON_PATH_SSD,
         sequence_len=params['sequence_len'],
-        is_train=True,
-        loss_type=params['loss_type'],
         data_limiter=DATA_LIMITER,
         transform=composed
     )
-
-    test_dataset = FOIKinematicPoseDataset(
-        data=LOADED_DATA,
-        json_path=JSON_PATH_SSD,
-        sequence_len=params['sequence_len'],
-        is_train=False,
-        data_limiter=DATA_LIMITER,
-        transform=composed
-    )
-
-    print('factor ', params['sequence_len'] / params['simulated_len'])
 
     train_sampler, test_sampler, val_sampler = create_samplers(
         dataset_len=len(train_dataset),
@@ -338,11 +323,11 @@ def run_network(params: dict = None) -> dict:
         val_split=.15,
         val_from_train=False,
         shuffle=True,
-        split_limit_factor=params['sequence_len']/params['simulated_len']
+        #split_limit_factor=params['sequence_len']/params['simulated_len']
     )
 
     train_loader = DataLoader(train_dataset, params['batch_size'], sampler=train_sampler, num_workers=4)
-    test_loader = DataLoader(test_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
+    test_loader = DataLoader(train_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
     val_loader = DataLoader(train_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
 
     # Store all the info of how the data is split into train, val and test
@@ -384,7 +369,8 @@ def run_network(params: dict = None) -> dict:
     elif params['loss_type'] == "siamese":
         raise NotImplementedError
     elif params['loss_type'] == "triplet":
-        loss_function = TripletMarginLoss(margin=params['loss_margin'])
+        loss_function = nn.TripletMarginLoss(margin=params['loss_margin'])
+        #loss_function = TripletMarginLoss(margin=params['loss_margin'])
     else:
         raise Exception("Invalid network_type")
 
@@ -397,7 +383,7 @@ def run_network(params: dict = None) -> dict:
 
     #print_setup(setup=run_info)
 
-    writer: SummaryWriter = None  # SummaryWriter(TB_RUNS_PATH)  # TensorBoard writer
+    writer: SummaryWriter = SummaryWriter(TB_RUNS_PATH)  # TensorBoard writer
     start_time = time.time()
 
     # Print runtime information
@@ -449,7 +435,7 @@ def run_network(params: dict = None) -> dict:
 
 
 if __name__ == "__main__":
-    multi_run(num_repeats=5)
+    grid_search(num_repeats=1)
     #run_network()
     #result_info_path = os.path.join('./saves/runs', 'r_' + run_name)
     #res = read_from_json('./saves/runs/r_d210511_h17m18.json')
