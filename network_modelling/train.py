@@ -28,6 +28,8 @@ def get_all_triplets_indices(labels):
 def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch_idx, num_epochs, classes, max_norm,
           tb_writer):#: SummaryWriter = None):
 
+    num_triplets = 200
+
     # Total values are concatenated for the whole epoch.
     total_accuracy, total_count, total_loss = 0, 0, 0
     curr_accuracy, curr_loss = 0, 0
@@ -43,9 +45,9 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
 
     # Tensorboard variables
     global_step = (epoch_idx - 1) * num_batches  # Global step, unique for each combination of epoch and batch index.
+    embeddings = torch.zeros(0, num_classes).to(device)
     tb_classes = [f"sub{class_idx}" for class_idx in classes]
     tb_class_labels = []
-    embeddings = torch.zeros(0, num_classes).to(device)
 
     # Store runtime information
     train_info = {
@@ -63,10 +65,10 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
 
         sequences, labels = sequences.to(device), labels.to(device)
 
-        if loss_type == "single":
+        # Clear the gradients of all variables
+        optimizer.zero_grad()
 
-            # Clear the gradients of all variables
-            optimizer.zero_grad()
+        if loss_type == "single":
 
             # Feed the network forward
             sequences_out = model(sequences)
@@ -78,19 +80,20 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
             raise NotImplementedError
 
         elif loss_type == "triplet":
+            # Get all possible triplets
             anc_indices, pos_indices, neg_indices = get_all_triplets_indices(labels)
-            random_indices = torch.randint(len(anc_indices), (200,))
+            # Select a number of triplets at random, amount defined by num_triplets
+            random_indices = torch.randint(len(anc_indices), (num_triplets,))
 
+            # Select the random triplets' indices
             anc_indices = anc_indices[random_indices]
             pos_indices = pos_indices[random_indices]
             neg_indices = neg_indices[random_indices]
 
-            anc_labels, anc_sequences = labels[anc_indices], sequences[anc_indices, :, :]
-            pos_labels, pos_sequences = labels[pos_indices], sequences[pos_indices, :, :]
-            neg_labels, neg_sequences = labels[neg_indices], sequences[neg_indices, :, :]
-
-            # Clear the gradients of all variables
-            optimizer.zero_grad()
+            # Select the sequences and labels for the triplets
+            anc_sequences, anc_labels = sequences[anc_indices, :, :], labels[anc_indices]
+            pos_sequences, pos_labels = sequences[pos_indices, :, :], labels[pos_indices]
+            neg_sequences, neg_labels = sequences[neg_indices, :, :], labels[neg_indices]
 
             # Feed the network forward
             anc_sequences_out = model(anc_sequences)
@@ -120,62 +123,10 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
         total_count += labels.size(0)
         total_loss += loss.item()
 
-        """
-        #print(embeddings.size(0))
-        if embeddings.size(0) > 0:
-            print(sequences_out.cpu().detach().numpy().shape)
-            print(embeddings.cpu().detach().numpy().shape)
-            neighbs = neigh.fit(embeddings.cpu().detach().numpy(), sequences_out.cpu().detach().numpy())
-            print(neighbs)
-
-            '''
-            #print('embedding', embeddings.size())
-            #print('seq out', sequences_out.size())
-
-            detached_embeddings = embeddings.detach()
-            detached_sequences_out = sequences_out.detach()
-            n = detached_embeddings.size(0)
-            m = detached_sequences_out.size(0)
-            d = detached_embeddings.size(1)
-
-            detached_embeddings = detached_embeddings.unsqueeze(1).expand(n, m, d)
-            preds = detached_sequences_out.unsqueeze(0).expand(n, m, d)
-
-            #print(detached_embeddings.size())
-            #print(preds.size())
-            dist = torch.pow(detached_embeddings - preds, 2).sum(2)
-            #print(dist)
-
-            knn_indices = dist.topk(k=3, dim=0, largest=False).indices
-
-            print(knn_indices)
-            '''
-            #print(labels)
-            #print(knn_indices.size(0))
-            #tiled_labels = labels.repeat(knn_indices.size(0), 1)
-            #print(tiled_labels)
-            #classified_labels = tiled_labels[:, knn_indices][0]
-            #print(knn_indices)
-            #print(tiled_labels)
-            #print(classified_labels.size())
-
-            #res = torch.bincount(classified_labels)
-            #print(res)
-
-            '''
-            dist = torch.norm(embeddings - sequences_out, dim=1, p=None)
-            print('dist', dist.size())
-            knn = dist.topk(3, largest=False)
-            #print(knn.size())
-            '''
-
-
-        """
-        embeddings = torch.cat((embeddings, sequences_out), 0)
-
         if tb_writer is not None:
             # Store the information for the tensorboard embeddings
-            tb_class_labels.extend([tb_classes[prediction] for prediction in labels])
+            embeddings = torch.cat((embeddings, sequences_out), 0)
+            tb_class_labels.extend([tb_classes[label] for label in labels])
 
         # Don't want an update of the status or of tensorboard at first batch_idx, therefore continue
         if batch_idx <= 0:
@@ -198,6 +149,7 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
                 tb_writer.add_scalar('Train Accuracy', curr_accuracy, global_step=global_step)
                 tb_writer.add_scalar('Train Loss', curr_loss, global_step=global_step)
 
+            # Used for debugging
             if is_verbose:
                 print("Actual labels:", labels.data.cpu().numpy())
 
