@@ -1,8 +1,10 @@
 import torch
+from pytorch_metric_learning.utils.accuracy_calculator import AccuracyCalculator
 
 
 # https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html
 def evaluate(data_loader, model, device, is_test, classes=None):
+
     model.eval()
 
     total_accuracy, total_count = 0, 0
@@ -33,3 +35,53 @@ def evaluate(data_loader, model, device, is_test, classes=None):
 
         eval_info['accuracy'] = total_accuracy / total_count
     return eval_info
+
+
+def get_all_embeddings(data_loader, model, device, num_classes):
+    embeddings = torch.zeros(0, num_classes).to(device)
+    all_labels = []
+
+    model.eval()
+    with torch.no_grad():
+        for batch_idx, (sequences, labels) in enumerate(data_loader):
+            sequences, labels = sequences.to(device), labels.to(device)
+
+            sequences_out = model(sequences)
+            embeddings = torch.cat((embeddings, sequences_out), 0)
+            all_labels.extend(labels)
+
+    return embeddings, torch.Tensor(all_labels).to(device)
+
+
+def evaluate_metric(train_loader, eval_loader, model, device, classes, is_test):
+    """
+    Calculates Precision@1 (Recall@1), R-Precision and MAP@R directly from the embedding space
+
+    Read more about the three accuracies in the following paper by Musgrave et al.
+        https://arxiv.org/pdf/2003.08505.pdf
+    """
+    model.eval()
+
+    accuracy_calculator = AccuracyCalculator(
+        include=("precision_at_1", "r_precision", "mean_average_precision_at_r"), k=None
+    )
+
+    num_classes = len(classes)
+
+    train_embeddings, train_labels = get_all_embeddings(train_loader, model, device, num_classes)
+    eval_embeddings, eval_labels = get_all_embeddings(eval_loader, model, device, num_classes)
+
+    accuracies = accuracy_calculator.get_accuracy(
+        query=eval_embeddings,
+        reference=train_embeddings,
+        query_labels=eval_labels,
+        reference_labels=train_labels,
+        embeddings_come_from_same_source=False
+    )
+
+    print("| Precision@1: {:.6f} | R-Precision: {:.6f} | MAP@R {:.6f} |"
+          .format(accuracies['precision_at_1'], accuracies['r_precision'], accuracies['mean_average_precision_at_r'])
+          )
+
+    return accuracies
+
