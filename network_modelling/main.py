@@ -4,20 +4,21 @@ import math
 import os
 import time
 import datetime
+import scipy.stats
+import numpy as np
 from statistics import mean
 
-import numpy as np
 import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
 import torchvision.transforms as transforms
 
 # To start board, type the following in the terminal: tensorboard --logdir=runs
-from torch.utils.tensorboard import SummaryWriter
+#from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import DataLoader
 
 from learn import learn
-from evaluate import evaluate
+from evaluate import evaluate, evaluate_metric
 
 from models.RNN import GenNet
 from losses.margin_losses import TripletMarginLoss
@@ -37,8 +38,15 @@ ROOT_DIR_SSD = os.path.join(EXTR_PATH_SSD, "final/")
 DATA_LIMITER = DataLimiter(
     subjects=None,
     sessions=[0],
-    views=[3],
+    views=None,
 )
+'''
+DATA_LIMITER_EVAL = DataLimiter(
+    subjects=[8,9],
+    sessions=[0],
+    views=None,
+)
+'''
 
 # Load the data into memory
 print(f"| Loading data into memory..")
@@ -98,6 +106,18 @@ def make_save_dirs():
         os.mkdir('./saves/runs')
 
 
+def mean_confidence_interval(data, confidence=0.95):
+
+    if len(data) <= 1:
+        return data[0], 0
+
+    a = 1.0 * np.array(data)
+    n = len(a)
+    m, se = np.mean(a), scipy.stats.sem(a)
+    h = se * scipy.stats.t.ppf((1 + confidence) / 2., n-1)
+    return m, h
+
+
 def parameters():
     """
     Initialise the hyperparameters (+ some other params)
@@ -131,12 +151,13 @@ def parameters():
     params['batch_size'] = 32
     params['learning_rate'] = 0.0005  #5e-4  # 0.05 5e-4 5e-8
     params['learning_rate_lim'] = None #5.1e-7
+    params['step_size'] = 100
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
     # The joint_filter will also be applied further down, in the FilterJoints() transform.
     num_joints = len(params['joint_filter'])
 
-    # The number of coordinates for each of the OpenPose joints, equal to 2 if using both x and y
+    # The number of coordinates for each of the OpenPose joints, is 2 if using x, y coords
     num_joint_coords = 2
 
     # Number of features
@@ -150,12 +171,13 @@ def parameters():
     # Network / Model params
     params['num_layers'] = 2  # Number of stacked RNN layers
     params['hidden_size'] = 256*2  # Number of features in hidden state
-    params['net_type'] = "gru"
+    params['net_type'] = 'gru'
     params['bidirectional'] = False
     params['max_norm'] = 1
 
+    params['task'] = 'metric'  # 'classification'/'metric'
     # Loss function
-    params['loss_type'] = "single"
+    params['loss_type'] = 'single'  # 'single'/'triplet'
     params['loss_margin'] = 25  # The margin for certain loss functions
 
     return params
@@ -170,6 +192,8 @@ def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
 
     params['num_reps'] = num_repeats
     repetitions = dict()
+    test_scores = dict()
+    confusion_matrices = dict()
     test_accs = []
     for rep_idx in range(num_repeats):
         params['rep_idx'] = rep_idx
@@ -177,33 +201,86 @@ def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
         run_info = run_network(params)
 
         test_accs.append(run_info['test_info']['accuracy'])
+        confusion_matrices[rep_idx] = run_info['test_info'].pop('confusion_matrix', None)
+        test_scores[rep_idx] = run_info['test_info']
         repetitions[rep_idx] = run_info
 
-    # Store runtime information
+
+    # Prepare
+    scores_concat = next(iter(test_scores.values()))
+    for key in scores_concat:
+        score_list = []
+        for rep_scores in test_scores.values():
+            score_list.append(rep_scores[key])
+        scores_concat[key] = score_list
+
+    confidence_scores = dict()
+    for score_name, score in scores_concat.items():
+        confidence_scores[score_name] = mean_confidence_interval(score)
+
+    #print(confidence_scores)
+
     reps_info = {
         'at': reps_start,
         'duration': time.time() - reps_start_time,
         'accuracies_mean': mean(test_accs),
         'accuracies': test_accs,
         'repetitions': repetitions,
+        'scores': scores_concat,
+        'confidence_scores': confidence_scores,
+        'confusion_matrices': confusion_matrices
     }
 
     return reps_info
 
 
-def grid_search(num_repeats=1):
+def multi_grid(num_repeats=10):
+
+    grids = [
+        {
+            'loss_type': 'single',
+            'task': 'metric',
+            'step_size': 40,
+            'num_epochs': 100,
+        },
+        {
+            'loss_margin': 50,
+            'loss_type': 'triplet',
+            'task': 'metric',
+            'step_size': 100,
+            'num_epochs': 250,
+        },
+        {
+            'loss_margin': 100,
+            'loss_type': 'triplet',
+            'task': 'metric',
+            'step_size': 100,
+            'num_epochs': 250,
+        },
+    ]
+
+    num_grids = len(grids)
+    for grid_idx, grid in enumerate(grids):
+        print(f"| Grid {grid_idx+1}/{num_grids}")
+        grid_search(num_repeats, grid_idx, grid)
+        print(f"| ", "_____-----"*10)
+
+
+def grid_search(num_repeats=1, outer_grid_idx=-1, grid=None):
     multi_start = datetime.datetime.now()  # Date and time of start
     multi_start_time = time.time()  # Time of start
 
-    # Override any parameter in parameter()
-    grid = {
-        #'bidirectional': [False],
-        #'net_type': ['gru'],
-        #'sequence_len': [5, 10, 15, 20, 25],
-        #'hidden_size': [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024],
-        #'max_norm': [0.01, 0.1, 1]
-        #'num_epochs': 1
-    }
+    if grid is None:
+        # Override any parameter in parameter()
+        grid = {
+            #'bidirectional': [False, True],
+            #'net_type': ['gru'],
+            #'sequence_len': [5, 10, 15, 20, 25],
+            #'hidden_size': [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024],
+            #'max_norm': [0.01, 0.1, 1]
+            #'num_epochs': 2
+            #'loss_margin': [50, 100]
+        }
 
     # Wrap every value in a list if it isn't already the case
     for key, value in grid.items():
@@ -225,30 +302,32 @@ def grid_search(num_repeats=1):
     params['num_runs'] = num_runs
 
     # Run the network by firstly overriding the params with the grid.
-    for run_idx, override_params in enumerate(all_grid_combinations):
-
+    for grid_idx, override_params in enumerate(all_grid_combinations):
+        if outer_grid_idx != -1:
+            print(f"| Grid {grid_idx+1}")
         # Print the current run index and the current notable params
-        print(f"| Run {run_idx+1:{run_formatter}.0f}/{num_runs}")
+        print(f"| Run {grid_idx+1:{run_formatter}.0f}/{num_runs}")
         [print(f"| {idx+1}. {key}: {val}", end=' ') for idx, (key, val) in enumerate(override_params.items())]
         print('\n')
 
         params.update(override_params)  # Override the params
-        params['run_idx'] = run_idx
+        params['run_idx'] = grid_idx
 
         # Run the network num_reps times
         reps_info = repeat_run(params, num_repeats=num_repeats)
 
         # Store runtime information
-        multi_runs[run_idx] = dict()
-        multi_runs[run_idx] = reps_info
-        multi_runs[run_idx]['notable_params'] = override_params
-        multi_runs[run_idx]['params'] = params
+        multi_runs[grid_idx] = dict()
+        multi_runs[grid_idx] = reps_info
+        multi_runs[grid_idx]['notable_params'] = override_params
+        multi_runs[grid_idx]['params'] = params
 
         # Store runtime information
-        multi_results[run_idx] = {
+        multi_results[grid_idx] = {
             'setup': override_params,
             'duration': reps_info['duration'],
-            'accuracy': reps_info['accuracies_mean']
+            'accuracy': reps_info['accuracies_mean'],
+            'confidence_scores': reps_info['confidence_scores']
         }
 
         print('---*' * 20)
@@ -269,10 +348,13 @@ def grid_search(num_repeats=1):
 
     # Print the results
     print(f"| Total time {multi_results['duration']:.2f}")
-    for key, value in multi_results.items():
-        if isinstance(key, int):
-            [print(f"| Notable parameters: {key}: {val}", end=' ') for key, val in value['setup'].items()]
-            print(f"\n| Accuracy: {value['accuracy']}")
+    for grid_idx, grid_result in multi_results.items():
+        if isinstance(grid_idx, int):
+            print(f"| Notable parameters -", end='')
+            [print(f" {param_name}: {param} ", end='|') for param_name, param in grid_result['setup'].items()]
+            print(f"\n| Scores:")
+            [print(f"| - {name}: {score:.3f} +/- {conf:.3f} ") for name, (score, conf) in grid_result['confidence_scores'].items()]
+            print(f"|---------")
 
 
 def run_network(params: dict = None) -> dict:
@@ -383,7 +465,7 @@ def run_network(params: dict = None) -> dict:
 
     #print_setup(setup=run_info)
 
-    writer: SummaryWriter = SummaryWriter(TB_RUNS_PATH)  # TensorBoard writer
+    writer=None#: SummaryWriter = SummaryWriter(TB_RUNS_PATH)  # TensorBoard writer
     start_time = time.time()
 
     # Print runtime information
@@ -408,21 +490,35 @@ def run_network(params: dict = None) -> dict:
         classes=DATA_LIMITER.subjects,
         lr_lim=params['learning_rate_lim'],
         loss_type=params['loss_type'],
+        task=params['task'],
         max_norm=params['max_norm'],
+        step_size=params['step_size'],
         tb_writer=writer
     )
 
-    test_info = evaluate(
-        data_loader=test_loader,
-        model=model,
-        device=device,
-        is_test=True,
-        classes=DATA_LIMITER.subjects,
-    )
+    if params['task'] == 'classification':
+        test_info = evaluate(
+            data_loader=test_loader,
+            model=model,
+            device=device,
+            is_test=True,
+            classes=DATA_LIMITER.subjects,
+        )
+    elif params['task'] == 'metric':
+        test_info = evaluate_metric(
+            train_loader=train_loader,
+            eval_loader=test_loader,
+            model=model,
+            device=device,
+            classes=DATA_LIMITER.subjects,
+            is_test=False
+        )
+    else:
+        raise Exception("Invalid task type, should either by 'classification' or 'metric'")
 
     # Close TensorBoard writer if it exists
-    if writer is not None:
-        writer.close()
+    #if writer is not None:
+    #    writer.close()
 
     # Store runtime information
     run_info['duration'] = time.time() - start_time
@@ -435,7 +531,8 @@ def run_network(params: dict = None) -> dict:
 
 
 if __name__ == "__main__":
-    grid_search(num_repeats=1)
+    multi_grid(num_repeats=10)
+    #grid_search(num_repeats=1)
     #run_network()
     #result_info_path = os.path.join('./saves/runs', 'r_' + run_name)
     #res = read_from_json('./saves/runs/r_d210511_h17m18.json')
