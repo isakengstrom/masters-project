@@ -26,7 +26,7 @@ def get_all_triplets_indices(labels):
 
 #  https://www.kaggle.com/hirotaka0122/triplet-loss-with-pytorch
 def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch_idx, num_epochs, classes, max_norm,
-          tb_writer):#: SummaryWriter = None):
+          task, tb_writer):#: SummaryWriter = None):
 
     num_triplets = 200
 
@@ -140,7 +140,7 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
             print(f"| Epoch {epoch_idx:{epoch_formatter}.0f}/{num_epochs} "
                   f"| Batch {batch_idx + 1:{batch_formatter}.0f}/{num_batches} "
                   f"| Loss: {curr_loss:9.6f} "
-                  f"{'| Accuracy: {curr_accuracy:.6f}' if loss_type == 'single' else ''} "
+                  f"{f'| Accuracy: {curr_accuracy:.6f}' if task == 'classification' else ''} "
                   # f"| Global step {global_step} "
                   )
 
@@ -148,16 +148,6 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
                 # Add scalars to Tensorboard
                 tb_writer.add_scalar('Train Accuracy', curr_accuracy, global_step=global_step)
                 tb_writer.add_scalar('Train Loss', curr_loss, global_step=global_step)
-
-            # Used for debugging
-            if is_verbose:
-                print("Actual labels:", labels.data.cpu().numpy())
-
-                lst = (predicted_labels == labels).cpu().numpy().astype(int)
-                print("  Predicted labels:", predicted_labels.data.cpu().numpy(), "\n",
-                      "    Actual labels:", labels.data.cpu().numpy(), "\n",
-                      "True/False labels:", lst, " ", Counter(lst))
-                print('-' * 72)
 
     # Store runtime information
     train_info['accuracy'] = curr_accuracy
