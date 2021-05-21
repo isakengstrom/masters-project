@@ -1,6 +1,9 @@
 import torch
 from pytorch_metric_learning.utils.accuracy_calculator import AccuracyCalculator
 
+from sklearn import metrics
+from sklearn.cluster import KMeans
+
 
 # https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html
 def evaluate(data_loader, model, device, is_test, classes=None):
@@ -59,6 +62,9 @@ def evaluate_metric(train_loader, eval_loader, model, device, classes, is_test):
 
     Read more about the three accuracies in the following paper by Musgrave et al.
         https://arxiv.org/pdf/2003.08505.pdf
+
+
+    https://scikit-learn.org/stable/modules/clustering.html#calinski-harabasz-index
     """
     model.eval()
 
@@ -67,21 +73,44 @@ def evaluate_metric(train_loader, eval_loader, model, device, classes, is_test):
     )
 
     num_classes = len(classes)
-
     train_embeddings, train_labels = get_all_embeddings(train_loader, model, device, num_classes)
     eval_embeddings, eval_labels = get_all_embeddings(eval_loader, model, device, num_classes)
 
-    accuracies = accuracy_calculator.get_accuracy(
+    scores = accuracy_calculator.get_accuracy(
         query=eval_embeddings,
         reference=train_embeddings,
         query_labels=eval_labels,
         reference_labels=train_labels,
         embeddings_come_from_same_source=False
     )
+    scores['accuracy'] = scores['mean_average_precision_at_r']
+    '''
+    centroids = torch.zeros((0, eval_embeddings.size(1))).to(device)
 
-    print("| Precision@1: {:.6f} | R-Precision: {:.6f} | MAP@R {:.6f} |"
-          .format(accuracies['precision_at_1'], accuracies['r_precision'], accuracies['mean_average_precision_at_r'])
+    for class_idx in range(num_classes):
+        class_labels = torch.where(eval_labels == class_idx)
+        class_centroid = torch.median(eval_embeddings[class_labels], dim=0).values
+
+        class_centroid = torch.unsqueeze(class_centroid, 0)
+        centroids = torch.cat((centroids, class_centroid))
+
+    #centroids = torch.transpose(centroids, 0, 1)
+
+    #kmeans_model = KMeans(n_clusters=num_classes, init=centroids.cpu(), n_init=1, random_state=1).fit(eval_embeddings.cpu())
+    #kmeans_labels = kmeans_model.labels_
+    '''
+
+    scores['silhouette'] = metrics.silhouette_score(eval_embeddings.cpu(), eval_labels.cpu(), metric='euclidean')
+    scores['ch'] = metrics.calinski_harabasz_score(eval_embeddings.cpu(), eval_labels.cpu())
+
+    '''
+    print(f"| Precision@1: {scores['precision_at_1']:.6f} "
+          f"| R-Precision: {scores['r_precision']:.6f} "
+          f"| MAP@R: {scores['mean_average_precision_at_r']:.6f} "
+          f"| Sil: {scores['silhouette']:.6f} "
+          f"| CH: {scores['ch']:.0f}"
           )
+    '''
 
-    return accuracies
+    return scores
 
