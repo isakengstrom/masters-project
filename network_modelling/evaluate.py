@@ -83,34 +83,10 @@ def evaluate_metric(train_loader, eval_loader, model, device, classes, is_test):
         reference_labels=train_labels,
         embeddings_come_from_same_source=False
     )
+
     scores['accuracy'] = scores['mean_average_precision_at_r']
-    '''
-    centroids = torch.zeros((0, eval_embeddings.size(1))).to(device)
-
-    for class_idx in range(num_classes):
-        class_labels = torch.where(eval_labels == class_idx)
-        class_centroid = torch.median(eval_embeddings[class_labels], dim=0).values
-
-        class_centroid = torch.unsqueeze(class_centroid, 0)
-        centroids = torch.cat((centroids, class_centroid))
-
-    #centroids = torch.transpose(centroids, 0, 1)
-
-    #kmeans_model = KMeans(n_clusters=num_classes, init=centroids.cpu(), n_init=1, random_state=1).fit(eval_embeddings.cpu())
-    #kmeans_labels = kmeans_model.labels_
-    '''
-
     scores['silhouette'] = metrics.silhouette_score(eval_embeddings.cpu(), eval_labels.cpu(), metric='euclidean')
     scores['ch'] = metrics.calinski_harabasz_score(eval_embeddings.cpu(), eval_labels.cpu())
-
-    '''
-    print(f"| Precision@1: {scores['precision_at_1']:.6f} "
-          f"| R-Precision: {scores['r_precision']:.6f} "
-          f"| MAP@R: {scores['mean_average_precision_at_r']:.6f} "
-          f"| Sil: {scores['silhouette']:.6f} "
-          f"| CH: {scores['ch']:.0f}"
-          )
-    '''
 
     return scores
 
