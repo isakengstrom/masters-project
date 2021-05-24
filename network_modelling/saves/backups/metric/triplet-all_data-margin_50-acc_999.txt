@@ -1,0 +1,1231 @@
+| Loading data into memory..
+| Loading finished in 13.7s
+------------------------------------------------------------------------
+| Run 1/1
+| 1. loss_margin: 50 
+
+| Learning phase - Run 1/1 - Rep 1/1
+| Epoch   1/250 | Batch 116/347 | Loss: 49.699045 | Accuracy: 0.116207 
+| Epoch   1/250 | Batch 231/347 | Loss: 48.634096 | Accuracy: 0.097251 
+| Epoch   1/250 | Batch 346/347 | Loss: 48.201230 | Accuracy: 0.100809 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.406723 | R-Precision: 0.184619 | MAP@R 0.063818 |
+| Epoch   1/250 | Val accuracy: 0.000000 | Duration: 62.28s | ------------
+| Epoch   2/250 | Batch 116/347 | Loss: 46.457041 | Accuracy: 0.128578 
+| Epoch   2/250 | Batch 231/347 | Loss: 45.345574 | Accuracy: 0.114827 
+| Epoch   2/250 | Batch 346/347 | Loss: 44.057583 | Accuracy: 0.112977 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.409244 | R-Precision: 0.215918 | MAP@R 0.082778 |
+| Epoch   2/250 | Val accuracy: 0.000000 | Duration: 62.90s | ------------
+| Epoch   3/250 | Batch 116/347 | Loss: 38.550029 | Accuracy: 0.097284 
+| Epoch   3/250 | Batch 231/347 | Loss: 39.099830 | Accuracy: 0.090368 
+| Epoch   3/250 | Batch 346/347 | Loss: 37.235935 | Accuracy: 0.091315 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.472269 | R-Precision: 0.238630 | MAP@R 0.087370 |
+| Epoch   3/250 | Val accuracy: 0.000000 | Duration: 62.98s | ------------
+| Epoch   4/250 | Batch 116/347 | Loss: 33.330371 | Accuracy: 0.072241 
+| Epoch   4/250 | Batch 231/347 | Loss: 32.208747 | Accuracy: 0.057554 
+| Epoch   4/250 | Batch 346/347 | Loss: 31.021985 | Accuracy: 0.055217 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.422269 | R-Precision: 0.235485 | MAP@R 0.085957 |
+| Epoch   4/250 | Val accuracy: 0.000000 | Duration: 63.20s | ------------
+| Epoch   5/250 | Batch 116/347 | Loss: 28.258040 | Accuracy: 0.042845 
+| Epoch   5/250 | Batch 231/347 | Loss: 27.737708 | Accuracy: 0.045022 
+| Epoch   5/250 | Batch 346/347 | Loss: 27.239702 | Accuracy: 0.041980 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.485294 | R-Precision: 0.256047 | MAP@R 0.094412 |
+| Epoch   5/250 | Val accuracy: 0.000000 | Duration: 64.49s | ------------
+| Epoch   6/250 | Batch 116/347 | Loss: 25.968453 | Accuracy: 0.040474 
+| Epoch   6/250 | Batch 231/347 | Loss: 25.368326 | Accuracy: 0.038074 
+| Epoch   6/250 | Batch 346/347 | Loss: 24.905962 | Accuracy: 0.034639 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.517227 | R-Precision: 0.309877 | MAP@R 0.141938 |
+| Epoch   6/250 | Val accuracy: 0.000000 | Duration: 63.40s | ------------
+| Epoch   7/250 | Batch 116/347 | Loss: 23.687134 | Accuracy: 0.029138 
+| Epoch   7/250 | Batch 231/347 | Loss: 23.340696 | Accuracy: 0.027468 
+| Epoch   7/250 | Batch 346/347 | Loss: 22.676345 | Accuracy: 0.026402 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.514706 | R-Precision: 0.360421 | MAP@R 0.183166 |
+| Epoch   7/250 | Val accuracy: 0.000000 | Duration: 64.61s | ------------
+| Epoch   8/250 | Batch 116/347 | Loss: 22.336161 | Accuracy: 0.020517 
+| Epoch   8/250 | Batch 231/347 | Loss: 21.447467 | Accuracy: 0.020130 
+| Epoch   8/250 | Batch 346/347 | Loss: 21.319079 | Accuracy: 0.021272 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.535714 | R-Precision: 0.337907 | MAP@R 0.169226 |
+| Epoch   8/250 | Val accuracy: 0.000000 | Duration: 64.37s | ------------
+| Epoch   9/250 | Batch 116/347 | Loss: 20.069376 | Accuracy: 0.016638 
+| Epoch   9/250 | Batch 231/347 | Loss: 19.899576 | Accuracy: 0.017229 
+| Epoch   9/250 | Batch 346/347 | Loss: 19.612748 | Accuracy: 0.018699 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.579832 | R-Precision: 0.408972 | MAP@R 0.236216 |
+| Epoch   9/250 | Val accuracy: 0.000000 | Duration: 64.49s | ------------
+| Epoch  10/250 | Batch 116/347 | Loss: 18.486598 | Accuracy: 0.021164 
+| Epoch  10/250 | Batch 231/347 | Loss: 18.341459 | Accuracy: 0.019697 
+| Epoch  10/250 | Batch 346/347 | Loss: 18.317562 | Accuracy: 0.017702 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.602521 | R-Precision: 0.343257 | MAP@R 0.180894 |
+| Epoch  10/250 | Val accuracy: 0.000000 | Duration: 65.74s | ------------
+| Epoch  11/250 | Batch 116/347 | Loss: 18.353284 | Accuracy: 0.013276 
+| Epoch  11/250 | Batch 231/347 | Loss: 17.966357 | Accuracy: 0.015887 
+| Epoch  11/250 | Batch 346/347 | Loss: 18.340583 | Accuracy: 0.013960 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.576050 | R-Precision: 0.407797 | MAP@R 0.230659 |
+| Epoch  11/250 | Val accuracy: 0.000000 | Duration: 63.50s | ------------
+| Epoch  12/250 | Batch 116/347 | Loss: 17.877988 | Accuracy: 0.013578 
+| Epoch  12/250 | Batch 231/347 | Loss: 18.042114 | Accuracy: 0.012835 
+| Epoch  12/250 | Batch 346/347 | Loss: 17.963418 | Accuracy: 0.013107 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.590756 | R-Precision: 0.375977 | MAP@R 0.190298 |
+| Epoch  12/250 | Val accuracy: 0.000000 | Duration: 62.82s | ------------
+| Epoch  13/250 | Batch 116/347 | Loss: 16.880923 | Accuracy: 0.015086 
+| Epoch  13/250 | Batch 231/347 | Loss: 16.929242 | Accuracy: 0.014242 
+| Epoch  13/250 | Batch 346/347 | Loss: 17.123041 | Accuracy: 0.013410 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.581933 | R-Precision: 0.424428 | MAP@R 0.239025 |
+| Epoch  13/250 | Val accuracy: 0.000000 | Duration: 63.70s | ------------
+| Epoch  14/250 | Batch 116/347 | Loss: 16.101488 | Accuracy: 0.013534 
+| Epoch  14/250 | Batch 231/347 | Loss: 15.684075 | Accuracy: 0.015346 
+| Epoch  14/250 | Batch 346/347 | Loss: 15.813545 | Accuracy: 0.015592 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.613445 | R-Precision: 0.417929 | MAP@R 0.245774 |
+| Epoch  14/250 | Val accuracy: 0.000000 | Duration: 65.86s | ------------
+| Epoch  15/250 | Batch 116/347 | Loss: 15.870851 | Accuracy: 0.014397 
+| Epoch  15/250 | Batch 231/347 | Loss: 15.499709 | Accuracy: 0.012727 
+| Epoch  15/250 | Batch 346/347 | Loss: 15.872674 | Accuracy: 0.011460 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.612185 | R-Precision: 0.434949 | MAP@R 0.255857 |
+| Epoch  15/250 | Val accuracy: 0.000000 | Duration: 65.21s | ------------
+| Epoch  16/250 | Batch 116/347 | Loss: 16.571350 | Accuracy: 0.018319 
+| Epoch  16/250 | Batch 231/347 | Loss: 16.473268 | Accuracy: 0.017381 
+| Epoch  16/250 | Batch 346/347 | Loss: 16.444473 | Accuracy: 0.016416 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.608824 | R-Precision: 0.433703 | MAP@R 0.261060 |
+| Epoch  16/250 | Val accuracy: 0.000000 | Duration: 64.99s | ------------
+| Epoch  17/250 | Batch 116/347 | Loss: 14.867540 | Accuracy: 0.015216 
+| Epoch  17/250 | Batch 231/347 | Loss: 14.918270 | Accuracy: 0.013095 
+| Epoch  17/250 | Batch 346/347 | Loss: 14.836526 | Accuracy: 0.012702 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.634034 | R-Precision: 0.452268 | MAP@R 0.282183 |
+| Epoch  17/250 | Val accuracy: 0.000000 | Duration: 62.43s | ------------
+| Epoch  18/250 | Batch 116/347 | Loss: 13.797954 | Accuracy: 0.011897 
+| Epoch  18/250 | Batch 231/347 | Loss: 14.298699 | Accuracy: 0.016342 
+| Epoch  18/250 | Batch 346/347 | Loss: 14.452274 | Accuracy: 0.016777 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.655042 | R-Precision: 0.445482 | MAP@R 0.269665 |
+| Epoch  18/250 | Val accuracy: 0.000000 | Duration: 63.94s | ------------
+| Epoch  19/250 | Batch 116/347 | Loss: 14.566836 | Accuracy: 0.007802 
+| Epoch  19/250 | Batch 231/347 | Loss: 14.288323 | Accuracy: 0.010368 
+| Epoch  19/250 | Batch 346/347 | Loss: 14.155382 | Accuracy: 0.012442 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.665966 | R-Precision: 0.491776 | MAP@R 0.337646 |
+| Epoch  19/250 | Val accuracy: 0.000000 | Duration: 64.24s | ------------
+| Epoch  20/250 | Batch 116/347 | Loss: 14.445399 | Accuracy: 0.013405 
+| Epoch  20/250 | Batch 231/347 | Loss: 14.054506 | Accuracy: 0.013355 
+| Epoch  20/250 | Batch 346/347 | Loss: 13.845256 | Accuracy: 0.012558 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.669328 | R-Precision: 0.491562 | MAP@R 0.334622 |
+| Epoch  20/250 | Val accuracy: 0.000000 | Duration: 63.20s | ------------
+| Epoch  21/250 | Batch 116/347 | Loss: 13.954909 | Accuracy: 0.013448 
+| Epoch  21/250 | Batch 231/347 | Loss: 13.491991 | Accuracy: 0.011190 
+| Epoch  21/250 | Batch 346/347 | Loss: 13.656650 | Accuracy: 0.010824 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.669328 | R-Precision: 0.498523 | MAP@R 0.337124 |
+| Epoch  21/250 | Val accuracy: 0.000000 | Duration: 62.48s | ------------
+| Epoch  22/250 | Batch 116/347 | Loss: 14.258175 | Accuracy: 0.017155 
+| Epoch  22/250 | Batch 231/347 | Loss: 13.834748 | Accuracy: 0.015563 
+| Epoch  22/250 | Batch 346/347 | Loss: 13.462143 | Accuracy: 0.014870 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.695798 | R-Precision: 0.525285 | MAP@R 0.373990 |
+| Epoch  22/250 | Val accuracy: 0.000000 | Duration: 62.50s | ------------
+| Epoch  23/250 | Batch 116/347 | Loss: 12.532039 | Accuracy: 0.017414 
+| Epoch  23/250 | Batch 231/347 | Loss: 12.182292 | Accuracy: 0.014091 
+| Epoch  23/250 | Batch 346/347 | Loss: 12.732018 | Accuracy: 0.015246 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.696218 | R-Precision: 0.543112 | MAP@R 0.400640 |
+| Epoch  23/250 | Val accuracy: 0.000000 | Duration: 62.20s | ------------
+| Epoch  24/250 | Batch 116/347 | Loss: 12.235196 | Accuracy: 0.018534 
+| Epoch  24/250 | Batch 231/347 | Loss: 11.782720 | Accuracy: 0.015303 
+| Epoch  24/250 | Batch 346/347 | Loss: 12.160975 | Accuracy: 0.013035 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.665126 | R-Precision: 0.545377 | MAP@R 0.404811 |
+| Epoch  24/250 | Val accuracy: 0.000000 | Duration: 62.22s | ------------
+| Epoch  25/250 | Batch 116/347 | Loss: 14.037036 | Accuracy: 0.018233 
+| Epoch  25/250 | Batch 231/347 | Loss: 12.700673 | Accuracy: 0.019329 
+| Epoch  25/250 | Batch 346/347 | Loss: 12.071536 | Accuracy: 0.017442 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.702101 | R-Precision: 0.552052 | MAP@R 0.407274 |
+| Epoch  25/250 | Val accuracy: 0.000000 | Duration: 62.73s | ------------
+| Epoch  26/250 | Batch 116/347 | Loss: 11.054342 | Accuracy: 0.013707 
+| Epoch  26/250 | Batch 231/347 | Loss: 11.105543 | Accuracy: 0.017446 
+| Epoch  26/250 | Batch 346/347 | Loss: 11.856822 | Accuracy: 0.018960 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.684874 | R-Precision: 0.536421 | MAP@R 0.391700 |
+| Epoch  26/250 | Val accuracy: 0.000000 | Duration: 64.99s | ------------
+| Epoch  27/250 | Batch 116/347 | Loss: 10.844667 | Accuracy: 0.021767 
+| Epoch  27/250 | Batch 231/347 | Loss: 11.044575 | Accuracy: 0.016840 
+| Epoch  27/250 | Batch 346/347 | Loss: 10.959009 | Accuracy: 0.016575 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.715966 | R-Precision: 0.603513 | MAP@R 0.470110 |
+| Epoch  27/250 | Val accuracy: 0.000000 | Duration: 62.48s | ------------
+| Epoch  28/250 | Batch 116/347 | Loss: 11.063830 | Accuracy: 0.015690 
+| Epoch  28/250 | Batch 231/347 | Loss: 11.240156 | Accuracy: 0.016667 
+| Epoch  28/250 | Batch 346/347 | Loss: 11.477483 | Accuracy: 0.015072 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.707983 | R-Precision: 0.575020 | MAP@R 0.426239 |
+| Epoch  28/250 | Val accuracy: 0.000000 | Duration: 63.72s | ------------
+| Epoch  29/250 | Batch 116/347 | Loss: 10.795453 | Accuracy: 0.009483 
+| Epoch  29/250 | Batch 231/347 | Loss: 10.663416 | Accuracy: 0.009307 
+| Epoch  29/250 | Batch 346/347 | Loss: 10.775986 | Accuracy: 0.009942 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.742017 | R-Precision: 0.639244 | MAP@R 0.513553 |
+| Epoch  29/250 | Val accuracy: 0.000000 | Duration: 64.04s | ------------
+| Epoch  30/250 | Batch 116/347 | Loss: 10.131374 | Accuracy: 0.002543 
+| Epoch  30/250 | Batch 231/347 | Loss:  9.712181 | Accuracy: 0.003398 
+| Epoch  30/250 | Batch 346/347 | Loss:  9.857613 | Accuracy: 0.003685 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.725210 | R-Precision: 0.575724 | MAP@R 0.442939 |
+| Epoch  30/250 | Val accuracy: 0.000000 | Duration: 63.26s | ------------
+| Epoch  31/250 | Batch 116/347 | Loss:  9.459987 | Accuracy: 0.003793 
+| Epoch  31/250 | Batch 231/347 | Loss: 10.270490 | Accuracy: 0.006104 
+| Epoch  31/250 | Batch 346/347 | Loss: 10.312770 | Accuracy: 0.006257 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.725630 | R-Precision: 0.561192 | MAP@R 0.426611 |
+| Epoch  31/250 | Val accuracy: 0.000000 | Duration: 63.17s | ------------
+| Epoch  32/250 | Batch 116/347 | Loss:  9.329448 | Accuracy: 0.009871 
+| Epoch  32/250 | Batch 231/347 | Loss:  9.520140 | Accuracy: 0.007792 
+| Epoch  32/250 | Batch 346/347 | Loss:  9.325331 | Accuracy: 0.007529 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.711765 | R-Precision: 0.573144 | MAP@R 0.450925 |
+| Epoch  32/250 | Val accuracy: 0.000000 | Duration: 64.24s | ------------
+| Epoch  33/250 | Batch 116/347 | Loss:  9.450911 | Accuracy: 0.004181 
+| Epoch  33/250 | Batch 231/347 | Loss:  9.170812 | Accuracy: 0.004372 
+| Epoch  33/250 | Batch 346/347 | Loss:  9.073128 | Accuracy: 0.004986 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.772269 | R-Precision: 0.506517 | MAP@R 0.364180 |
+| Epoch  33/250 | Val accuracy: 0.000000 | Duration: 63.66s | ------------
+| Epoch  34/250 | Batch 116/347 | Loss:  8.737762 | Accuracy: 0.003276 
+| Epoch  34/250 | Batch 231/347 | Loss:  9.212518 | Accuracy: 0.004957 
+| Epoch  34/250 | Batch 346/347 | Loss:  9.646390 | Accuracy: 0.008107 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.784034 | R-Precision: 0.601294 | MAP@R 0.481824 |
+| Epoch  34/250 | Val accuracy: 0.000000 | Duration: 63.65s | ------------
+| Epoch  35/250 | Batch 116/347 | Loss:  9.843389 | Accuracy: 0.018491 
+| Epoch  35/250 | Batch 231/347 | Loss:  9.363141 | Accuracy: 0.012576 
+| Epoch  35/250 | Batch 346/347 | Loss:  9.157683 | Accuracy: 0.010116 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.783613 | R-Precision: 0.618435 | MAP@R 0.494877 |
+| Epoch  35/250 | Val accuracy: 0.000000 | Duration: 63.83s | ------------
+| Epoch  36/250 | Batch 116/347 | Loss:  8.016780 | Accuracy: 0.005172 
+| Epoch  36/250 | Batch 231/347 | Loss:  7.866513 | Accuracy: 0.006861 
+| Epoch  36/250 | Batch 346/347 | Loss:  7.993534 | Accuracy: 0.006792 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.810924 | R-Precision: 0.697660 | MAP@R 0.595726 |
+| Epoch  36/250 | Val accuracy: 0.000000 | Duration: 63.68s | ------------
+| Epoch  37/250 | Batch 116/347 | Loss:  6.361815 | Accuracy: 0.009914 
+| Epoch  37/250 | Batch 231/347 | Loss:  6.514227 | Accuracy: 0.009502 
+| Epoch  37/250 | Batch 346/347 | Loss:  6.868556 | Accuracy: 0.009610 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.821849 | R-Precision: 0.721354 | MAP@R 0.625357 |
+| Epoch  37/250 | Val accuracy: 0.000000 | Duration: 63.53s | ------------
+| Epoch  38/250 | Batch 116/347 | Loss:  6.754607 | Accuracy: 0.006121 
+| Epoch  38/250 | Batch 231/347 | Loss:  7.008978 | Accuracy: 0.007706 
+| Epoch  38/250 | Batch 346/347 | Loss:  6.967449 | Accuracy: 0.007991 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.818487 | R-Precision: 0.656631 | MAP@R 0.551748 |
+| Epoch  38/250 | Val accuracy: 0.000000 | Duration: 65.04s | ------------
+| Epoch  39/250 | Batch 116/347 | Loss:  7.445318 | Accuracy: 0.008060 
+| Epoch  39/250 | Batch 231/347 | Loss:  7.636287 | Accuracy: 0.010974 
+| Epoch  39/250 | Batch 346/347 | Loss:  7.419526 | Accuracy: 0.011402 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.856303 | R-Precision: 0.715030 | MAP@R 0.625902 |
+| Epoch  39/250 | Val accuracy: 0.000000 | Duration: 64.96s | ------------
+| Epoch  40/250 | Batch 116/347 | Loss:  6.815632 | Accuracy: 0.006897 
+| Epoch  40/250 | Batch 231/347 | Loss:  6.724226 | Accuracy: 0.009437 
+| Epoch  40/250 | Batch 346/347 | Loss:  6.552613 | Accuracy: 0.010882 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.836555 | R-Precision: 0.697152 | MAP@R 0.601316 |
+| Epoch  40/250 | Val accuracy: 0.000000 | Duration: 65.27s | ------------
+| Epoch  41/250 | Batch 116/347 | Loss:  5.997820 | Accuracy: 0.013319 
+| Epoch  41/250 | Batch 231/347 | Loss:  6.617394 | Accuracy: 0.013030 
+| Epoch  41/250 | Batch 346/347 | Loss:  6.238006 | Accuracy: 0.011127 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.857983 | R-Precision: 0.745620 | MAP@R 0.661605 |
+| Epoch  41/250 | Val accuracy: 0.000000 | Duration: 64.23s | ------------
+| Epoch  42/250 | Batch 116/347 | Loss:  6.157389 | Accuracy: 0.016121 
+| Epoch  42/250 | Batch 231/347 | Loss:  7.054804 | Accuracy: 0.018810 
+| Epoch  42/250 | Batch 346/347 | Loss:  6.910660 | Accuracy: 0.021127 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.855462 | R-Precision: 0.731723 | MAP@R 0.648047 |
+| Epoch  42/250 | Val accuracy: 0.000000 | Duration: 63.74s | ------------
+| Epoch  43/250 | Batch 116/347 | Loss:  6.604749 | Accuracy: 0.024612 
+| Epoch  43/250 | Batch 231/347 | Loss:  6.124859 | Accuracy: 0.019719 
+| Epoch  43/250 | Batch 346/347 | Loss:  6.277837 | Accuracy: 0.021272 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.869748 | R-Precision: 0.754801 | MAP@R 0.681765 |
+| Epoch  43/250 | Val accuracy: 0.000000 | Duration: 62.02s | ------------
+| Epoch  44/250 | Batch 116/347 | Loss:  5.443164 | Accuracy: 0.020388 
+| Epoch  44/250 | Batch 231/347 | Loss:  5.609760 | Accuracy: 0.021429 
+| Epoch  44/250 | Batch 346/347 | Loss:  5.585895 | Accuracy: 0.024306 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.881933 | R-Precision: 0.788190 | MAP@R 0.723434 |
+| Epoch  44/250 | Val accuracy: 0.000000 | Duration: 61.85s | ------------
+| Epoch  45/250 | Batch 116/347 | Loss:  5.551592 | Accuracy: 0.014698 
+| Epoch  45/250 | Batch 231/347 | Loss:  4.983830 | Accuracy: 0.018398 
+| Epoch  45/250 | Batch 346/347 | Loss:  5.160678 | Accuracy: 0.020968 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.875210 | R-Precision: 0.743258 | MAP@R 0.672624 |
+| Epoch  45/250 | Val accuracy: 0.000000 | Duration: 62.11s | ------------
+| Epoch  46/250 | Batch 116/347 | Loss:  5.193701 | Accuracy: 0.019784 
+| Epoch  46/250 | Batch 231/347 | Loss:  4.912516 | Accuracy: 0.022381 
+| Epoch  46/250 | Batch 346/347 | Loss:  4.767727 | Accuracy: 0.021517 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.905042 | R-Precision: 0.776353 | MAP@R 0.709982 |
+| Epoch  46/250 | Val accuracy: 0.000000 | Duration: 62.14s | ------------
+| Epoch  47/250 | Batch 116/347 | Loss:  4.822196 | Accuracy: 0.011983 
+| Epoch  47/250 | Batch 231/347 | Loss:  4.562803 | Accuracy: 0.014199 
+| Epoch  47/250 | Batch 346/347 | Loss:  4.603171 | Accuracy: 0.019653 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.898319 | R-Precision: 0.810814 | MAP@R 0.757617 |
+| Epoch  47/250 | Val accuracy: 0.000000 | Duration: 62.53s | ------------
+| Epoch  48/250 | Batch 116/347 | Loss:  4.271585 | Accuracy: 0.023621 
+| Epoch  48/250 | Batch 231/347 | Loss:  4.315338 | Accuracy: 0.023420 
+| Epoch  48/250 | Batch 346/347 | Loss:  4.050712 | Accuracy: 0.023006 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.884454 | R-Precision: 0.762915 | MAP@R 0.689800 |
+| Epoch  48/250 | Val accuracy: 0.000000 | Duration: 61.71s | ------------
+| Epoch  49/250 | Batch 116/347 | Loss:  4.100987 | Accuracy: 0.018621 
+| Epoch  49/250 | Batch 231/347 | Loss:  4.454781 | Accuracy: 0.020065 
+| Epoch  49/250 | Batch 346/347 | Loss:  4.338933 | Accuracy: 0.019003 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.910924 | R-Precision: 0.815955 | MAP@R 0.768869 |
+| Epoch  49/250 | Val accuracy: 0.000000 | Duration: 61.96s | ------------
+| Epoch  50/250 | Batch 116/347 | Loss:  4.277753 | Accuracy: 0.023319 
+| Epoch  50/250 | Batch 231/347 | Loss:  4.497317 | Accuracy: 0.023160 
+| Epoch  50/250 | Batch 346/347 | Loss:  4.574265 | Accuracy: 0.026113 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.908824 | R-Precision: 0.807940 | MAP@R 0.755458 |
+| Epoch  50/250 | Val accuracy: 0.000000 | Duration: 63.98s | ------------
+| Epoch  51/250 | Batch 116/347 | Loss:  4.053310 | Accuracy: 0.019138 
+| Epoch  51/250 | Batch 231/347 | Loss:  4.111427 | Accuracy: 0.016407 
+| Epoch  51/250 | Batch 346/347 | Loss:  4.000808 | Accuracy: 0.017023 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.936134 | R-Precision: 0.872738 | MAP@R 0.840192 |
+| Epoch  51/250 | Val accuracy: 0.000000 | Duration: 64.84s | ------------
+| Epoch  52/250 | Batch 116/347 | Loss:  3.844283 | Accuracy: 0.013060 
+| Epoch  52/250 | Batch 231/347 | Loss:  3.797301 | Accuracy: 0.020368 
+| Epoch  52/250 | Batch 346/347 | Loss:  3.792978 | Accuracy: 0.023266 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.910084 | R-Precision: 0.795563 | MAP@R 0.743082 |
+| Epoch  52/250 | Val accuracy: 0.000000 | Duration: 64.40s | ------------
+| Epoch  53/250 | Batch 116/347 | Loss:  4.157655 | Accuracy: 0.012802 
+| Epoch  53/250 | Batch 231/347 | Loss:  3.891976 | Accuracy: 0.014913 
+| Epoch  53/250 | Batch 346/347 | Loss:  3.939575 | Accuracy: 0.017341 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.938655 | R-Precision: 0.877519 | MAP@R 0.848386 |
+| Epoch  53/250 | Val accuracy: 0.000000 | Duration: 63.86s | ------------
+| Epoch  54/250 | Batch 116/347 | Loss:  3.733742 | Accuracy: 0.016810 
+| Epoch  54/250 | Batch 231/347 | Loss:  4.231218 | Accuracy: 0.017446 
+| Epoch  54/250 | Batch 346/347 | Loss:  4.047069 | Accuracy: 0.018382 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.945378 | R-Precision: 0.897691 | MAP@R 0.869387 |
+| Epoch  54/250 | Val accuracy: 0.000000 | Duration: 62.74s | ------------
+| Epoch  55/250 | Batch 116/347 | Loss:  3.929342 | Accuracy: 0.022112 
+| Epoch  55/250 | Batch 231/347 | Loss:  3.712604 | Accuracy: 0.019848 
+| Epoch  55/250 | Batch 346/347 | Loss:  3.789070 | Accuracy: 0.016951 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.946218 | R-Precision: 0.893832 | MAP@R 0.867247 |
+| Epoch  55/250 | Val accuracy: 0.000000 | Duration: 63.58s | ------------
+| Epoch  56/250 | Batch 116/347 | Loss:  2.983589 | Accuracy: 0.010819 
+| Epoch  56/250 | Batch 231/347 | Loss:  3.017215 | Accuracy: 0.011472 
+| Epoch  56/250 | Batch 346/347 | Loss:  3.242166 | Accuracy: 0.011864 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.937395 | R-Precision: 0.795344 | MAP@R 0.748901 |
+| Epoch  56/250 | Val accuracy: 0.000000 | Duration: 63.79s | ------------
+| Epoch  57/250 | Batch 116/347 | Loss:  3.421257 | Accuracy: 0.024052 
+| Epoch  57/250 | Batch 231/347 | Loss:  3.728615 | Accuracy: 0.023788 
+| Epoch  57/250 | Batch 346/347 | Loss:  3.548275 | Accuracy: 0.022182 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.947899 | R-Precision: 0.850970 | MAP@R 0.815779 |
+| Epoch  57/250 | Val accuracy: 0.000000 | Duration: 63.55s | ------------
+| Epoch  58/250 | Batch 116/347 | Loss:  3.345953 | Accuracy: 0.013448 
+| Epoch  58/250 | Batch 231/347 | Loss:  3.487290 | Accuracy: 0.012403 
+| Epoch  58/250 | Batch 346/347 | Loss:  3.443434 | Accuracy: 0.014509 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.921429 | R-Precision: 0.745823 | MAP@R 0.681849 |
+| Epoch  58/250 | Val accuracy: 0.000000 | Duration: 62.86s | ------------
+| Epoch  59/250 | Batch 116/347 | Loss:  3.152727 | Accuracy: 0.012026 
+| Epoch  59/250 | Batch 231/347 | Loss:  2.750200 | Accuracy: 0.010844 
+| Epoch  59/250 | Batch 346/347 | Loss:  2.900301 | Accuracy: 0.011402 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.921008 | R-Precision: 0.866427 | MAP@R 0.835362 |
+| Epoch  59/250 | Val accuracy: 0.000000 | Duration: 63.75s | ------------
+| Epoch  60/250 | Batch 116/347 | Loss:  3.794469 | Accuracy: 0.014052 
+| Epoch  60/250 | Batch 231/347 | Loss:  3.079349 | Accuracy: 0.012381 
+| Epoch  60/250 | Batch 346/347 | Loss:  3.360165 | Accuracy: 0.014075 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.955882 | R-Precision: 0.889960 | MAP@R 0.866186 |
+| Epoch  60/250 | Val accuracy: 0.000000 | Duration: 63.19s | ------------
+| Epoch  61/250 | Batch 116/347 | Loss:  2.169108 | Accuracy: 0.008621 
+| Epoch  61/250 | Batch 231/347 | Loss:  2.496945 | Accuracy: 0.013593 
+| Epoch  61/250 | Batch 346/347 | Loss:  2.563267 | Accuracy: 0.011777 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.955462 | R-Precision: 0.901007 | MAP@R 0.877034 |
+| Epoch  61/250 | Val accuracy: 0.000000 | Duration: 63.33s | ------------
+| Epoch  62/250 | Batch 116/347 | Loss:  2.491249 | Accuracy: 0.006853 
+| Epoch  62/250 | Batch 231/347 | Loss:  2.641284 | Accuracy: 0.006926 
+| Epoch  62/250 | Batch 346/347 | Loss:  2.552206 | Accuracy: 0.007543 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.958403 | R-Precision: 0.900356 | MAP@R 0.877100 |
+| Epoch  62/250 | Val accuracy: 0.000000 | Duration: 64.27s | ------------
+| Epoch  63/250 | Batch 116/347 | Loss:  2.852545 | Accuracy: 0.008664 
+| Epoch  63/250 | Batch 231/347 | Loss:  2.743399 | Accuracy: 0.009286 
+| Epoch  63/250 | Batch 346/347 | Loss:  2.601026 | Accuracy: 0.008194 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.960504 | R-Precision: 0.919672 | MAP@R 0.904056 |
+| Epoch  63/250 | Val accuracy: 0.000000 | Duration: 63.74s | ------------
+| Epoch  64/250 | Batch 116/347 | Loss:  2.599619 | Accuracy: 0.011034 
+| Epoch  64/250 | Batch 231/347 | Loss:  2.346786 | Accuracy: 0.009957 
+| Epoch  64/250 | Batch 346/347 | Loss:  2.539830 | Accuracy: 0.009436 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.932353 | R-Precision: 0.846952 | MAP@R 0.815250 |
+| Epoch  64/250 | Val accuracy: 0.000000 | Duration: 64.46s | ------------
+| Epoch  65/250 | Batch 116/347 | Loss:  2.631834 | Accuracy: 0.008362 
+| Epoch  65/250 | Batch 231/347 | Loss:  2.586928 | Accuracy: 0.007965 
+| Epoch  65/250 | Batch 346/347 | Loss:  2.524500 | Accuracy: 0.007558 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.958824 | R-Precision: 0.907908 | MAP@R 0.885114 |
+| Epoch  65/250 | Val accuracy: 0.000000 | Duration: 63.52s | ------------
+| Epoch  66/250 | Batch 116/347 | Loss:  2.258743 | Accuracy: 0.011336 
+| Epoch  66/250 | Batch 231/347 | Loss:  2.843702 | Accuracy: 0.012641 
+| Epoch  66/250 | Batch 346/347 | Loss:  2.546297 | Accuracy: 0.012283 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.963025 | R-Precision: 0.907129 | MAP@R 0.887659 |
+| Epoch  66/250 | Val accuracy: 0.000000 | Duration: 62.61s | ------------
+| Epoch  67/250 | Batch 116/347 | Loss:  1.480599 | Accuracy: 0.008534 
+| Epoch  67/250 | Batch 231/347 | Loss:  1.901204 | Accuracy: 0.009329 
+| Epoch  67/250 | Batch 346/347 | Loss:  2.040641 | Accuracy: 0.008280 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.955042 | R-Precision: 0.881070 | MAP@R 0.854826 |
+| Epoch  67/250 | Val accuracy: 0.000000 | Duration: 64.11s | ------------
+| Epoch  68/250 | Batch 116/347 | Loss:  2.450803 | Accuracy: 0.005474 
+| Epoch  68/250 | Batch 231/347 | Loss:  2.484882 | Accuracy: 0.004567 
+| Epoch  68/250 | Batch 346/347 | Loss:  2.294605 | Accuracy: 0.004451 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.962185 | R-Precision: 0.918138 | MAP@R 0.897987 |
+| Epoch  68/250 | Val accuracy: 0.000000 | Duration: 61.96s | ------------
+| Epoch  69/250 | Batch 116/347 | Loss:  1.773766 | Accuracy: 0.005560 
+| Epoch  69/250 | Batch 231/347 | Loss:  1.831235 | Accuracy: 0.004697 
+| Epoch  69/250 | Batch 346/347 | Loss:  2.114539 | Accuracy: 0.003873 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.961765 | R-Precision: 0.901968 | MAP@R 0.880889 |
+| Epoch  69/250 | Val accuracy: 0.000000 | Duration: 62.78s | ------------
+| Epoch  70/250 | Batch 116/347 | Loss:  2.155206 | Accuracy: 0.007500 
+| Epoch  70/250 | Batch 231/347 | Loss:  2.381067 | Accuracy: 0.005606 
+| Epoch  70/250 | Batch 346/347 | Loss:  2.248862 | Accuracy: 0.005014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.960084 | R-Precision: 0.899431 | MAP@R 0.876415 |
+| Epoch  70/250 | Val accuracy: 0.000000 | Duration: 62.42s | ------------
+| Epoch  71/250 | Batch 116/347 | Loss:  2.455479 | Accuracy: 0.002241 
+| Epoch  71/250 | Batch 231/347 | Loss:  2.343484 | Accuracy: 0.002338 
+| Epoch  71/250 | Batch 346/347 | Loss:  2.188059 | Accuracy: 0.002991 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.954202 | R-Precision: 0.877191 | MAP@R 0.850059 |
+| Epoch  71/250 | Val accuracy: 0.000000 | Duration: 62.22s | ------------
+| Epoch  72/250 | Batch 116/347 | Loss:  1.796528 | Accuracy: 0.002586 
+| Epoch  72/250 | Batch 231/347 | Loss:  1.939622 | Accuracy: 0.002359 
+| Epoch  72/250 | Batch 346/347 | Loss:  2.055771 | Accuracy: 0.003020 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.971849 | R-Precision: 0.928028 | MAP@R 0.913754 |
+| Epoch  72/250 | Val accuracy: 0.000000 | Duration: 61.84s | ------------
+| Epoch  73/250 | Batch 116/347 | Loss:  2.188193 | Accuracy: 0.002371 
+| Epoch  73/250 | Batch 231/347 | Loss:  2.112074 | Accuracy: 0.003182 
+| Epoch  73/250 | Batch 346/347 | Loss:  2.001613 | Accuracy: 0.002688 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.962185 | R-Precision: 0.882896 | MAP@R 0.858880 |
+| Epoch  73/250 | Val accuracy: 0.000000 | Duration: 63.09s | ------------
+| Epoch  74/250 | Batch 116/347 | Loss:  2.488620 | Accuracy: 0.002543 
+| Epoch  74/250 | Batch 231/347 | Loss:  2.435517 | Accuracy: 0.002186 
+| Epoch  74/250 | Batch 346/347 | Loss:  2.232100 | Accuracy: 0.002240 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.960924 | R-Precision: 0.897380 | MAP@R 0.875619 |
+| Epoch  74/250 | Val accuracy: 0.000000 | Duration: 63.56s | ------------
+| Epoch  75/250 | Batch 116/347 | Loss:  1.756293 | Accuracy: 0.003233 
+| Epoch  75/250 | Batch 231/347 | Loss:  1.949932 | Accuracy: 0.003052 
+| Epoch  75/250 | Batch 346/347 | Loss:  1.832608 | Accuracy: 0.002818 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.967647 | R-Precision: 0.911305 | MAP@R 0.895005 |
+| Epoch  75/250 | Val accuracy: 0.000000 | Duration: 66.24s | ------------
+| Epoch  76/250 | Batch 116/347 | Loss:  2.006666 | Accuracy: 0.002155 
+| Epoch  76/250 | Batch 231/347 | Loss:  1.976853 | Accuracy: 0.001580 
+| Epoch  76/250 | Batch 346/347 | Loss:  2.177106 | Accuracy: 0.002457 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.958403 | R-Precision: 0.874868 | MAP@R 0.847280 |
+| Epoch  76/250 | Val accuracy: 0.000000 | Duration: 62.23s | ------------
+| Epoch  77/250 | Batch 116/347 | Loss:  1.593056 | Accuracy: 0.002716 
+| Epoch  77/250 | Batch 231/347 | Loss:  1.798875 | Accuracy: 0.002251 
+| Epoch  77/250 | Batch 346/347 | Loss:  1.817625 | Accuracy: 0.002110 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.978151 | R-Precision: 0.940378 | MAP@R 0.929825 |
+| Epoch  77/250 | Val accuracy: 0.000000 | Duration: 62.49s | ------------
+| Epoch  78/250 | Batch 116/347 | Loss:  1.277555 | Accuracy: 0.001810 
+| Epoch  78/250 | Batch 231/347 | Loss:  1.651641 | Accuracy: 0.003009 
+| Epoch  78/250 | Batch 346/347 | Loss:  1.712717 | Accuracy: 0.003121 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.973529 | R-Precision: 0.934046 | MAP@R 0.922406 |
+| Epoch  78/250 | Val accuracy: 0.000000 | Duration: 64.34s | ------------
+| Epoch  79/250 | Batch 116/347 | Loss:  1.985125 | Accuracy: 0.003233 
+| Epoch  79/250 | Batch 231/347 | Loss:  1.590802 | Accuracy: 0.002100 
+| Epoch  79/250 | Batch 346/347 | Loss:  1.649067 | Accuracy: 0.001835 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.971008 | R-Precision: 0.905161 | MAP@R 0.889301 |
+| Epoch  79/250 | Val accuracy: 0.000000 | Duration: 61.86s | ------------
+| Epoch  80/250 | Batch 116/347 | Loss:  1.446264 | Accuracy: 0.001983 
+| Epoch  80/250 | Batch 231/347 | Loss:  1.672242 | Accuracy: 0.001667 
+| Epoch  80/250 | Batch 346/347 | Loss:  1.808740 | Accuracy: 0.001604 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.973109 | R-Precision: 0.945652 | MAP@R 0.933785 |
+| Epoch  80/250 | Val accuracy: 0.000000 | Duration: 63.47s | ------------
+| Epoch  81/250 | Batch 116/347 | Loss:  1.711797 | Accuracy: 0.001983 
+| Epoch  81/250 | Batch 231/347 | Loss:  1.795727 | Accuracy: 0.002879 
+| Epoch  81/250 | Batch 346/347 | Loss:  2.047625 | Accuracy: 0.004176 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.968067 | R-Precision: 0.911179 | MAP@R 0.894686 |
+| Epoch  81/250 | Val accuracy: 0.000000 | Duration: 62.13s | ------------
+| Epoch  82/250 | Batch 116/347 | Loss:  1.305718 | Accuracy: 0.000690 
+| Epoch  82/250 | Batch 231/347 | Loss:  1.308096 | Accuracy: 0.000823 
+| Epoch  82/250 | Batch 346/347 | Loss:  1.540813 | Accuracy: 0.001171 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.947479 | R-Precision: 0.833100 | MAP@R 0.796035 |
+| Epoch  82/250 | Val accuracy: 0.000000 | Duration: 62.07s | ------------
+| Epoch  83/250 | Batch 116/347 | Loss:  2.018514 | Accuracy: 0.002284 
+| Epoch  83/250 | Batch 231/347 | Loss:  1.445610 | Accuracy: 0.001970 
+| Epoch  83/250 | Batch 346/347 | Loss:  1.439323 | Accuracy: 0.001908 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.968067 | R-Precision: 0.907174 | MAP@R 0.891928 |
+| Epoch  83/250 | Val accuracy: 0.000000 | Duration: 61.95s | ------------
+| Epoch  84/250 | Batch 116/347 | Loss:  1.153355 | Accuracy: 0.002802 
+| Epoch  84/250 | Batch 231/347 | Loss:  1.427484 | Accuracy: 0.002316 
+| Epoch  84/250 | Batch 346/347 | Loss:  1.431573 | Accuracy: 0.003107 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.975630 | R-Precision: 0.955363 | MAP@R 0.946117 |
+| Epoch  84/250 | Val accuracy: 0.000000 | Duration: 62.29s | ------------
+| Epoch  85/250 | Batch 116/347 | Loss:  1.040041 | Accuracy: 0.000991 
+| Epoch  85/250 | Batch 231/347 | Loss:  1.278598 | Accuracy: 0.001255 
+| Epoch  85/250 | Batch 346/347 | Loss:  1.297947 | Accuracy: 0.001084 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.971429 | R-Precision: 0.907856 | MAP@R 0.889957 |
+| Epoch  85/250 | Val accuracy: 0.000000 | Duration: 62.28s | ------------
+| Epoch  86/250 | Batch 116/347 | Loss:  1.217982 | Accuracy: 0.000517 
+| Epoch  86/250 | Batch 231/347 | Loss:  1.105849 | Accuracy: 0.001104 
+| Epoch  86/250 | Batch 346/347 | Loss:  1.162820 | Accuracy: 0.001055 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.976471 | R-Precision: 0.948577 | MAP@R 0.939233 |
+| Epoch  86/250 | Val accuracy: 0.000000 | Duration: 61.99s | ------------
+| Epoch  87/250 | Batch 116/347 | Loss:  1.111063 | Accuracy: 0.001810 
+| Epoch  87/250 | Batch 231/347 | Loss:  1.444955 | Accuracy: 0.001970 
+| Epoch  87/250 | Batch 346/347 | Loss:  1.360918 | Accuracy: 0.001749 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.978992 | R-Precision: 0.967634 | MAP@R 0.961712 |
+| Epoch  87/250 | Val accuracy: 0.000000 | Duration: 62.04s | ------------
+| Epoch  88/250 | Batch 116/347 | Loss:  1.279911 | Accuracy: 0.000991 
+| Epoch  88/250 | Batch 231/347 | Loss:  1.144906 | Accuracy: 0.001212 
+| Epoch  88/250 | Batch 346/347 | Loss:  1.174719 | Accuracy: 0.001431 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.981513 | R-Precision: 0.964747 | MAP@R 0.958797 |
+| Epoch  88/250 | Val accuracy: 0.000000 | Duration: 62.23s | ------------
+| Epoch  89/250 | Batch 116/347 | Loss:  1.952280 | Accuracy: 0.001681 
+| Epoch  89/250 | Batch 231/347 | Loss:  1.634986 | Accuracy: 0.002316 
+| Epoch  89/250 | Batch 346/347 | Loss:  1.449113 | Accuracy: 0.001951 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.968908 | R-Precision: 0.923862 | MAP@R 0.908452 |
+| Epoch  89/250 | Val accuracy: 0.000000 | Duration: 63.84s | ------------
+| Epoch  90/250 | Batch 116/347 | Loss:  1.822467 | Accuracy: 0.010216 
+| Epoch  90/250 | Batch 231/347 | Loss:  1.398594 | Accuracy: 0.006407 
+| Epoch  90/250 | Batch 346/347 | Loss:  1.552852 | Accuracy: 0.004624 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.976050 | R-Precision: 0.945108 | MAP@R 0.933454 |
+| Epoch  90/250 | Val accuracy: 0.000000 | Duration: 63.06s | ------------
+| Epoch  91/250 | Batch 116/347 | Loss:  0.824437 | Accuracy: 0.002155 
+| Epoch  91/250 | Batch 231/347 | Loss:  1.133121 | Accuracy: 0.002879 
+| Epoch  91/250 | Batch 346/347 | Loss:  1.099436 | Accuracy: 0.002312 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.975210 | R-Precision: 0.952082 | MAP@R 0.942300 |
+| Epoch  91/250 | Val accuracy: 0.000000 | Duration: 63.54s | ------------
+| Epoch  92/250 | Batch 116/347 | Loss:  0.972983 | Accuracy: 0.002931 
+| Epoch  92/250 | Batch 231/347 | Loss:  1.127887 | Accuracy: 0.002468 
+| Epoch  92/250 | Batch 346/347 | Loss:  1.049608 | Accuracy: 0.002832 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.976891 | R-Precision: 0.914936 | MAP@R 0.901901 |
+| Epoch  92/250 | Val accuracy: 0.000000 | Duration: 62.73s | ------------
+| Epoch  93/250 | Batch 116/347 | Loss:  0.902755 | Accuracy: 0.002672 
+| Epoch  93/250 | Batch 231/347 | Loss:  0.992202 | Accuracy: 0.002359 
+| Epoch  93/250 | Batch 346/347 | Loss:  1.011268 | Accuracy: 0.001720 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.980252 | R-Precision: 0.950304 | MAP@R 0.942883 |
+| Epoch  93/250 | Val accuracy: 0.000000 | Duration: 62.47s | ------------
+| Epoch  94/250 | Batch 116/347 | Loss:  1.334756 | Accuracy: 0.000733 
+| Epoch  94/250 | Batch 231/347 | Loss:  1.176544 | Accuracy: 0.001429 
+| Epoch  94/250 | Batch 346/347 | Loss:  1.297420 | Accuracy: 0.001720 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.985714 | R-Precision: 0.925795 | MAP@R 0.913519 |
+| Epoch  94/250 | Val accuracy: 0.000000 | Duration: 62.62s | ------------
+| Epoch  95/250 | Batch 116/347 | Loss:  1.364874 | Accuracy: 0.003836 
+| Epoch  95/250 | Batch 231/347 | Loss:  1.273775 | Accuracy: 0.002857 
+| Epoch  95/250 | Batch 346/347 | Loss:  1.150618 | Accuracy: 0.002486 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.974790 | R-Precision: 0.916537 | MAP@R 0.898850 |
+| Epoch  95/250 | Val accuracy: 0.000000 | Duration: 62.57s | ------------
+| Epoch  96/250 | Batch 116/347 | Loss:  1.051869 | Accuracy: 0.001121 
+| Epoch  96/250 | Batch 231/347 | Loss:  1.193860 | Accuracy: 0.002879 
+| Epoch  96/250 | Batch 346/347 | Loss:  1.070577 | Accuracy: 0.002616 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.978151 | R-Precision: 0.936256 | MAP@R 0.922969 |
+| Epoch  96/250 | Val accuracy: 0.000000 | Duration: 63.27s | ------------
+| Epoch  97/250 | Batch 116/347 | Loss:  0.930336 | Accuracy: 0.001379 
+| Epoch  97/250 | Batch 231/347 | Loss:  1.175075 | Accuracy: 0.001558 
+| Epoch  97/250 | Batch 346/347 | Loss:  1.091270 | Accuracy: 0.001517 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.978992 | R-Precision: 0.950795 | MAP@R 0.941815 |
+| Epoch  97/250 | Val accuracy: 0.000000 | Duration: 61.93s | ------------
+| Epoch  98/250 | Batch 116/347 | Loss:  0.878787 | Accuracy: 0.005388 
+| Epoch  98/250 | Batch 231/347 | Loss:  0.876032 | Accuracy: 0.005043 
+| Epoch  98/250 | Batch 346/347 | Loss:  0.937233 | Accuracy: 0.004017 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.983193 | R-Precision: 0.946275 | MAP@R 0.937288 |
+| Epoch  98/250 | Val accuracy: 0.000000 | Duration: 62.07s | ------------
+| Epoch  99/250 | Batch 116/347 | Loss:  0.928166 | Accuracy: 0.001422 
+| Epoch  99/250 | Batch 231/347 | Loss:  0.877617 | Accuracy: 0.003485 
+| Epoch  99/250 | Batch 346/347 | Loss:  0.892655 | Accuracy: 0.002948 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.968067 | R-Precision: 0.879682 | MAP@R 0.860905 |
+| Epoch  99/250 | Val accuracy: 0.000000 | Duration: 62.02s | ------------
+| Epoch 100/250 | Batch 116/347 | Loss:  0.983392 | Accuracy: 0.002069 
+| Epoch 100/250 | Batch 231/347 | Loss:  1.144254 | Accuracy: 0.001970 
+| Epoch 100/250 | Batch 346/347 | Loss:  1.144677 | Accuracy: 0.001922 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.986975 | R-Precision: 0.966937 | MAP@R 0.961288 |
+| Epoch 100/250 | Val accuracy: 0.000000 | Duration: 61.80s | ------------
+| Epoch 101/250 | Batch 116/347 | Loss:  0.378150 | Accuracy: 0.001293 
+| Epoch 101/250 | Batch 231/347 | Loss:  0.274552 | Accuracy: 0.000866 
+| Epoch 101/250 | Batch 346/347 | Loss:  0.239469 | Accuracy: 0.000636 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.988655 | R-Precision: 0.982758 | MAP@R 0.980895 |
+| Epoch 101/250 | Val accuracy: 0.000000 | Duration: 61.61s | ------------
+| Epoch 102/250 | Batch 116/347 | Loss:  0.106667 | Accuracy: 0.000000 
+| Epoch 102/250 | Batch 231/347 | Loss:  0.133990 | Accuracy: 0.000043 
+| Epoch 102/250 | Batch 346/347 | Loss:  0.144589 | Accuracy: 0.000318 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.990756 | R-Precision: 0.985463 | MAP@R 0.983756 |
+| Epoch 102/250 | Val accuracy: 0.000000 | Duration: 61.97s | ------------
+| Epoch 103/250 | Batch 116/347 | Loss:  0.081820 | Accuracy: 0.000086 
+| Epoch 103/250 | Batch 231/347 | Loss:  0.109175 | Accuracy: 0.000130 
+| Epoch 103/250 | Batch 346/347 | Loss:  0.122478 | Accuracy: 0.000116 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991597 | R-Precision: 0.985748 | MAP@R 0.984370 |
+| Epoch 103/250 | Val accuracy: 0.000000 | Duration: 62.49s | ------------
+| Epoch 104/250 | Batch 116/347 | Loss:  0.108946 | Accuracy: 0.000302 
+| Epoch 104/250 | Batch 231/347 | Loss:  0.103490 | Accuracy: 0.000216 
+| Epoch 104/250 | Batch 346/347 | Loss:  0.108796 | Accuracy: 0.000145 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.989916 | R-Precision: 0.985817 | MAP@R 0.984204 |
+| Epoch 104/250 | Val accuracy: 0.000000 | Duration: 62.20s | ------------
+| Epoch 105/250 | Batch 116/347 | Loss:  0.081630 | Accuracy: 0.000000 
+| Epoch 105/250 | Batch 231/347 | Loss:  0.086694 | Accuracy: 0.000000 
+| Epoch 105/250 | Batch 346/347 | Loss:  0.119861 | Accuracy: 0.000130 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.989496 | R-Precision: 0.983438 | MAP@R 0.981858 |
+| Epoch 105/250 | Val accuracy: 0.000000 | Duration: 62.74s | ------------
+| Epoch 106/250 | Batch 116/347 | Loss:  0.071936 | Accuracy: 0.000086 
+| Epoch 106/250 | Batch 231/347 | Loss:  0.080427 | Accuracy: 0.000043 
+| Epoch 106/250 | Batch 346/347 | Loss:  0.077630 | Accuracy: 0.000116 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992017 | R-Precision: 0.985999 | MAP@R 0.984751 |
+| Epoch 106/250 | Val accuracy: 0.000000 | Duration: 62.13s | ------------
+| Epoch 107/250 | Batch 116/347 | Loss:  0.059087 | Accuracy: 0.000000 
+| Epoch 107/250 | Batch 231/347 | Loss:  0.058224 | Accuracy: 0.000087 
+| Epoch 107/250 | Batch 346/347 | Loss:  0.070430 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991597 | R-Precision: 0.987957 | MAP@R 0.986675 |
+| Epoch 107/250 | Val accuracy: 0.000000 | Duration: 61.83s | ------------
+| Epoch 108/250 | Batch 116/347 | Loss:  0.072597 | Accuracy: 0.000000 
+| Epoch 108/250 | Batch 231/347 | Loss:  0.086485 | Accuracy: 0.000022 
+| Epoch 108/250 | Batch 346/347 | Loss:  0.098815 | Accuracy: 0.000043 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991176 | R-Precision: 0.984731 | MAP@R 0.983109 |
+| Epoch 108/250 | Val accuracy: 0.000000 | Duration: 63.20s | ------------
+| Epoch 109/250 | Batch 116/347 | Loss:  0.077948 | Accuracy: 0.000086 
+| Epoch 109/250 | Batch 231/347 | Loss:  0.070170 | Accuracy: 0.000065 
+| Epoch 109/250 | Batch 346/347 | Loss:  0.069151 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994118 | R-Precision: 0.984608 | MAP@R 0.982858 |
+| Epoch 109/250 | Val accuracy: 0.000000 | Duration: 62.92s | ------------
+| Epoch 110/250 | Batch 116/347 | Loss:  0.077257 | Accuracy: 0.000172 
+| Epoch 110/250 | Batch 231/347 | Loss:  0.066635 | Accuracy: 0.000152 
+| Epoch 110/250 | Batch 346/347 | Loss:  0.069665 | Accuracy: 0.000116 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.987467 | MAP@R 0.985974 |
+| Epoch 110/250 | Val accuracy: 0.000000 | Duration: 63.78s | ------------
+| Epoch 111/250 | Batch 116/347 | Loss:  0.049389 | Accuracy: 0.000259 
+| Epoch 111/250 | Batch 231/347 | Loss:  0.049492 | Accuracy: 0.000152 
+| Epoch 111/250 | Batch 346/347 | Loss:  0.055195 | Accuracy: 0.000159 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993277 | R-Precision: 0.989776 | MAP@R 0.988577 |
+| Epoch 111/250 | Val accuracy: 0.000000 | Duration: 62.37s | ------------
+| Epoch 112/250 | Batch 116/347 | Loss:  0.045213 | Accuracy: 0.000086 
+| Epoch 112/250 | Batch 231/347 | Loss:  0.047380 | Accuracy: 0.000043 
+| Epoch 112/250 | Batch 346/347 | Loss:  0.060848 | Accuracy: 0.000043 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.988046 | MAP@R 0.986889 |
+| Epoch 112/250 | Val accuracy: 0.000000 | Duration: 63.97s | ------------
+| Epoch 113/250 | Batch 116/347 | Loss:  0.085556 | Accuracy: 0.000000 
+| Epoch 113/250 | Batch 231/347 | Loss:  0.084262 | Accuracy: 0.000000 
+| Epoch 113/250 | Batch 346/347 | Loss:  0.073851 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994118 | R-Precision: 0.989480 | MAP@R 0.988178 |
+| Epoch 113/250 | Val accuracy: 0.000000 | Duration: 64.52s | ------------
+| Epoch 114/250 | Batch 116/347 | Loss:  0.057448 | Accuracy: 0.000000 
+| Epoch 114/250 | Batch 231/347 | Loss:  0.068661 | Accuracy: 0.000195 
+| Epoch 114/250 | Batch 346/347 | Loss:  0.061233 | Accuracy: 0.000159 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991597 | R-Precision: 0.988354 | MAP@R 0.987287 |
+| Epoch 114/250 | Val accuracy: 0.000000 | Duration: 64.72s | ------------
+| Epoch 115/250 | Batch 116/347 | Loss:  0.058235 | Accuracy: 0.000000 
+| Epoch 115/250 | Batch 231/347 | Loss:  0.099776 | Accuracy: 0.000238 
+| Epoch 115/250 | Batch 346/347 | Loss:  0.085698 | Accuracy: 0.000173 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.988689 | MAP@R 0.987488 |
+| Epoch 115/250 | Val accuracy: 0.000000 | Duration: 63.95s | ------------
+| Epoch 116/250 | Batch 116/347 | Loss:  0.049098 | Accuracy: 0.000172 
+| Epoch 116/250 | Batch 231/347 | Loss:  0.061082 | Accuracy: 0.000087 
+| Epoch 116/250 | Batch 346/347 | Loss:  0.065984 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993277 | R-Precision: 0.987754 | MAP@R 0.986409 |
+| Epoch 116/250 | Val accuracy: 0.000000 | Duration: 61.63s | ------------
+| Epoch 117/250 | Batch 116/347 | Loss:  0.033913 | Accuracy: 0.000129 
+| Epoch 117/250 | Batch 231/347 | Loss:  0.032979 | Accuracy: 0.000108 
+| Epoch 117/250 | Batch 346/347 | Loss:  0.041322 | Accuracy: 0.000072 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991176 | R-Precision: 0.987220 | MAP@R 0.986329 |
+| Epoch 117/250 | Val accuracy: 0.000000 | Duration: 61.79s | ------------
+| Epoch 118/250 | Batch 116/347 | Loss:  0.076420 | Accuracy: 0.000000 
+| Epoch 118/250 | Batch 231/347 | Loss:  0.074533 | Accuracy: 0.000087 
+| Epoch 118/250 | Batch 346/347 | Loss:  0.064193 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991597 | R-Precision: 0.990143 | MAP@R 0.989411 |
+| Epoch 118/250 | Val accuracy: 0.000000 | Duration: 63.76s | ------------
+| Epoch 119/250 | Batch 116/347 | Loss:  0.074621 | Accuracy: 0.000000 
+| Epoch 119/250 | Batch 231/347 | Loss:  0.056049 | Accuracy: 0.000000 
+| Epoch 119/250 | Batch 346/347 | Loss:  0.066083 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.990756 | R-Precision: 0.986091 | MAP@R 0.984866 |
+| Epoch 119/250 | Val accuracy: 0.000000 | Duration: 61.60s | ------------
+| Epoch 120/250 | Batch 116/347 | Loss:  0.082542 | Accuracy: 0.000043 
+| Epoch 120/250 | Batch 231/347 | Loss:  0.062308 | Accuracy: 0.000022 
+| Epoch 120/250 | Batch 346/347 | Loss:  0.060184 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992017 | R-Precision: 0.988929 | MAP@R 0.987898 |
+| Epoch 120/250 | Val accuracy: 0.000000 | Duration: 61.55s | ------------
+| Epoch 121/250 | Batch 116/347 | Loss:  0.042137 | Accuracy: 0.000000 
+| Epoch 121/250 | Batch 231/347 | Loss:  0.060767 | Accuracy: 0.000000 
+| Epoch 121/250 | Batch 346/347 | Loss:  0.060636 | Accuracy: 0.000101 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992017 | R-Precision: 0.988643 | MAP@R 0.987970 |
+| Epoch 121/250 | Val accuracy: 0.000000 | Duration: 61.14s | ------------
+| Epoch 122/250 | Batch 116/347 | Loss:  0.021889 | Accuracy: 0.000000 
+| Epoch 122/250 | Batch 231/347 | Loss:  0.044901 | Accuracy: 0.000000 
+| Epoch 122/250 | Batch 346/347 | Loss:  0.063596 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992017 | R-Precision: 0.988250 | MAP@R 0.987444 |
+| Epoch 122/250 | Val accuracy: 0.000000 | Duration: 61.46s | ------------
+| Epoch 123/250 | Batch 116/347 | Loss:  0.071609 | Accuracy: 0.000043 
+| Epoch 123/250 | Batch 231/347 | Loss:  0.046273 | Accuracy: 0.000043 
+| Epoch 123/250 | Batch 346/347 | Loss:  0.051921 | Accuracy: 0.000043 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991176 | R-Precision: 0.983288 | MAP@R 0.981802 |
+| Epoch 123/250 | Val accuracy: 0.000000 | Duration: 61.75s | ------------
+| Epoch 124/250 | Batch 116/347 | Loss:  0.073219 | Accuracy: 0.000000 
+| Epoch 124/250 | Batch 231/347 | Loss:  0.073975 | Accuracy: 0.000000 
+| Epoch 124/250 | Batch 346/347 | Loss:  0.065540 | Accuracy: 0.000043 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992017 | R-Precision: 0.988824 | MAP@R 0.987722 |
+| Epoch 124/250 | Val accuracy: 0.000000 | Duration: 62.25s | ------------
+| Epoch 125/250 | Batch 116/347 | Loss:  0.080730 | Accuracy: 0.000086 
+| Epoch 125/250 | Batch 231/347 | Loss:  0.055583 | Accuracy: 0.000065 
+| Epoch 125/250 | Batch 346/347 | Loss:  0.052848 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.987207 | MAP@R 0.985940 |
+| Epoch 125/250 | Val accuracy: 0.000000 | Duration: 61.43s | ------------
+| Epoch 126/250 | Batch 116/347 | Loss:  0.051701 | Accuracy: 0.000043 
+| Epoch 126/250 | Batch 231/347 | Loss:  0.049588 | Accuracy: 0.000022 
+| Epoch 126/250 | Batch 346/347 | Loss:  0.054415 | Accuracy: 0.000072 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.990682 | MAP@R 0.989727 |
+| Epoch 126/250 | Val accuracy: 0.000000 | Duration: 62.00s | ------------
+| Epoch 127/250 | Batch 116/347 | Loss:  0.037608 | Accuracy: 0.000388 
+| Epoch 127/250 | Batch 231/347 | Loss:  0.034345 | Accuracy: 0.000195 
+| Epoch 127/250 | Batch 346/347 | Loss:  0.038225 | Accuracy: 0.000145 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991176 | R-Precision: 0.987593 | MAP@R 0.986754 |
+| Epoch 127/250 | Val accuracy: 0.000000 | Duration: 63.74s | ------------
+| Epoch 128/250 | Batch 116/347 | Loss:  0.039447 | Accuracy: 0.000000 
+| Epoch 128/250 | Batch 231/347 | Loss:  0.041258 | Accuracy: 0.000000 
+| Epoch 128/250 | Batch 346/347 | Loss:  0.042413 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992437 | R-Precision: 0.991640 | MAP@R 0.990944 |
+| Epoch 128/250 | Val accuracy: 0.000000 | Duration: 66.21s | ------------
+| Epoch 129/250 | Batch 116/347 | Loss:  0.025490 | Accuracy: 0.000000 
+| Epoch 129/250 | Batch 231/347 | Loss:  0.025659 | Accuracy: 0.000000 
+| Epoch 129/250 | Batch 346/347 | Loss:  0.039878 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991176 | R-Precision: 0.983426 | MAP@R 0.982025 |
+| Epoch 129/250 | Val accuracy: 0.000000 | Duration: 67.54s | ------------
+| Epoch 130/250 | Batch 116/347 | Loss:  0.037101 | Accuracy: 0.000043 
+| Epoch 130/250 | Batch 231/347 | Loss:  0.033990 | Accuracy: 0.000065 
+| Epoch 130/250 | Batch 346/347 | Loss:  0.036678 | Accuracy: 0.000043 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991176 | R-Precision: 0.985140 | MAP@R 0.983883 |
+| Epoch 130/250 | Val accuracy: 0.000000 | Duration: 66.19s | ------------
+| Epoch 131/250 | Batch 116/347 | Loss:  0.050282 | Accuracy: 0.000086 
+| Epoch 131/250 | Batch 231/347 | Loss:  0.040041 | Accuracy: 0.000108 
+| Epoch 131/250 | Batch 346/347 | Loss:  0.048668 | Accuracy: 0.000101 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994538 | R-Precision: 0.990955 | MAP@R 0.990105 |
+| Epoch 131/250 | Val accuracy: 0.000000 | Duration: 67.62s | ------------
+| Epoch 132/250 | Batch 116/347 | Loss:  0.038529 | Accuracy: 0.000000 
+| Epoch 132/250 | Batch 231/347 | Loss:  0.036991 | Accuracy: 0.000000 
+| Epoch 132/250 | Batch 346/347 | Loss:  0.035231 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.988814 | MAP@R 0.987721 |
+| Epoch 132/250 | Val accuracy: 0.000000 | Duration: 67.77s | ------------
+| Epoch 133/250 | Batch 116/347 | Loss:  0.045267 | Accuracy: 0.000000 
+| Epoch 133/250 | Batch 231/347 | Loss:  0.032155 | Accuracy: 0.000043 
+| Epoch 133/250 | Batch 346/347 | Loss:  0.033001 | Accuracy: 0.000072 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992437 | R-Precision: 0.989890 | MAP@R 0.988834 |
+| Epoch 133/250 | Val accuracy: 0.000000 | Duration: 67.97s | ------------
+| Epoch 134/250 | Batch 116/347 | Loss:  0.018334 | Accuracy: 0.000000 
+| Epoch 134/250 | Batch 231/347 | Loss:  0.036401 | Accuracy: 0.000022 
+| Epoch 134/250 | Batch 346/347 | Loss:  0.030580 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993697 | R-Precision: 0.989543 | MAP@R 0.988323 |
+| Epoch 134/250 | Val accuracy: 0.000000 | Duration: 67.56s | ------------
+| Epoch 135/250 | Batch 116/347 | Loss:  0.025336 | Accuracy: 0.000000 
+| Epoch 135/250 | Batch 231/347 | Loss:  0.067610 | Accuracy: 0.000000 
+| Epoch 135/250 | Batch 346/347 | Loss:  0.061705 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992437 | R-Precision: 0.985817 | MAP@R 0.984405 |
+| Epoch 135/250 | Val accuracy: 0.000000 | Duration: 67.53s | ------------
+| Epoch 136/250 | Batch 116/347 | Loss:  0.059370 | Accuracy: 0.000259 
+| Epoch 136/250 | Batch 231/347 | Loss:  0.052519 | Accuracy: 0.000152 
+| Epoch 136/250 | Batch 346/347 | Loss:  0.052990 | Accuracy: 0.000101 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993277 | R-Precision: 0.990786 | MAP@R 0.989965 |
+| Epoch 136/250 | Val accuracy: 0.000000 | Duration: 67.58s | ------------
+| Epoch 137/250 | Batch 116/347 | Loss:  0.031214 | Accuracy: 0.000086 
+| Epoch 137/250 | Batch 231/347 | Loss:  0.030382 | Accuracy: 0.000043 
+| Epoch 137/250 | Batch 346/347 | Loss:  0.032799 | Accuracy: 0.000087 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991176 | R-Precision: 0.987683 | MAP@R 0.986271 |
+| Epoch 137/250 | Val accuracy: 0.000000 | Duration: 67.75s | ------------
+| Epoch 138/250 | Batch 116/347 | Loss:  0.019228 | Accuracy: 0.000086 
+| Epoch 138/250 | Batch 231/347 | Loss:  0.031322 | Accuracy: 0.000216 
+| Epoch 138/250 | Batch 346/347 | Loss:  0.032081 | Accuracy: 0.000159 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994958 | R-Precision: 0.993697 | MAP@R 0.993011 |
+| Epoch 138/250 | Val accuracy: 0.000000 | Duration: 67.02s | ------------
+| Epoch 139/250 | Batch 116/347 | Loss:  0.043904 | Accuracy: 0.000000 
+| Epoch 139/250 | Batch 231/347 | Loss:  0.045439 | Accuracy: 0.000087 
+| Epoch 139/250 | Batch 346/347 | Loss:  0.043880 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993277 | R-Precision: 0.989264 | MAP@R 0.988204 |
+| Epoch 139/250 | Val accuracy: 0.000000 | Duration: 67.47s | ------------
+| Epoch 140/250 | Batch 116/347 | Loss:  0.056278 | Accuracy: 0.000043 
+| Epoch 140/250 | Batch 231/347 | Loss:  0.042030 | Accuracy: 0.000022 
+| Epoch 140/250 | Batch 346/347 | Loss:  0.032375 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993277 | R-Precision: 0.992841 | MAP@R 0.992259 |
+| Epoch 140/250 | Val accuracy: 0.000000 | Duration: 67.77s | ------------
+| Epoch 141/250 | Batch 116/347 | Loss:  0.042026 | Accuracy: 0.000000 
+| Epoch 141/250 | Batch 231/347 | Loss:  0.030769 | Accuracy: 0.000000 
+| Epoch 141/250 | Batch 346/347 | Loss:  0.037226 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993697 | R-Precision: 0.991166 | MAP@R 0.990386 |
+| Epoch 141/250 | Val accuracy: 0.000000 | Duration: 67.53s | ------------
+| Epoch 142/250 | Batch 116/347 | Loss:  0.036801 | Accuracy: 0.000129 
+| Epoch 142/250 | Batch 231/347 | Loss:  0.039759 | Accuracy: 0.000087 
+| Epoch 142/250 | Batch 346/347 | Loss:  0.031840 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993697 | R-Precision: 0.992451 | MAP@R 0.991577 |
+| Epoch 142/250 | Val accuracy: 0.000000 | Duration: 67.40s | ------------
+| Epoch 143/250 | Batch 116/347 | Loss:  0.018245 | Accuracy: 0.000043 
+| Epoch 143/250 | Batch 231/347 | Loss:  0.017005 | Accuracy: 0.000022 
+| Epoch 143/250 | Batch 346/347 | Loss:  0.017734 | Accuracy: 0.000072 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993697 | R-Precision: 0.992437 | MAP@R 0.991547 |
+| Epoch 143/250 | Val accuracy: 0.000000 | Duration: 67.61s | ------------
+| Epoch 144/250 | Batch 116/347 | Loss:  0.011808 | Accuracy: 0.000000 
+| Epoch 144/250 | Batch 231/347 | Loss:  0.017049 | Accuracy: 0.000022 
+| Epoch 144/250 | Batch 346/347 | Loss:  0.022345 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.990934 | MAP@R 0.990053 |
+| Epoch 144/250 | Val accuracy: 0.000000 | Duration: 67.59s | ------------
+| Epoch 145/250 | Batch 116/347 | Loss:  0.020493 | Accuracy: 0.000000 
+| Epoch 145/250 | Batch 231/347 | Loss:  0.027861 | Accuracy: 0.000000 
+| Epoch 145/250 | Batch 346/347 | Loss:  0.027822 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993697 | R-Precision: 0.992893 | MAP@R 0.992494 |
+| Epoch 145/250 | Val accuracy: 0.000000 | Duration: 67.66s | ------------
+| Epoch 146/250 | Batch 116/347 | Loss:  0.023084 | Accuracy: 0.000000 
+| Epoch 146/250 | Batch 231/347 | Loss:  0.027428 | Accuracy: 0.000195 
+| Epoch 146/250 | Batch 346/347 | Loss:  0.033227 | Accuracy: 0.000130 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992437 | R-Precision: 0.989762 | MAP@R 0.988894 |
+| Epoch 146/250 | Val accuracy: 0.000000 | Duration: 67.55s | ------------
+| Epoch 147/250 | Batch 116/347 | Loss:  0.031337 | Accuracy: 0.000000 
+| Epoch 147/250 | Batch 231/347 | Loss:  0.028665 | Accuracy: 0.000000 
+| Epoch 147/250 | Batch 346/347 | Loss:  0.026956 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.992485 | MAP@R 0.991685 |
+| Epoch 147/250 | Val accuracy: 0.000000 | Duration: 67.81s | ------------
+| Epoch 148/250 | Batch 116/347 | Loss:  0.043638 | Accuracy: 0.000000 
+| Epoch 148/250 | Batch 231/347 | Loss:  0.041540 | Accuracy: 0.000000 
+| Epoch 148/250 | Batch 346/347 | Loss:  0.034192 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994958 | R-Precision: 0.992930 | MAP@R 0.992346 |
+| Epoch 148/250 | Val accuracy: 0.000000 | Duration: 64.48s | ------------
+| Epoch 149/250 | Batch 116/347 | Loss:  0.058462 | Accuracy: 0.000043 
+| Epoch 149/250 | Batch 231/347 | Loss:  0.046713 | Accuracy: 0.000022 
+| Epoch 149/250 | Batch 346/347 | Loss:  0.046613 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.995378 | R-Precision: 0.989574 | MAP@R 0.988445 |
+| Epoch 149/250 | Val accuracy: 0.000000 | Duration: 61.79s | ------------
+| Epoch 150/250 | Batch 116/347 | Loss:  0.073442 | Accuracy: 0.000043 
+| Epoch 150/250 | Batch 231/347 | Loss:  0.045405 | Accuracy: 0.000022 
+| Epoch 150/250 | Batch 346/347 | Loss:  0.036185 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994118 | R-Precision: 0.987321 | MAP@R 0.985815 |
+| Epoch 150/250 | Val accuracy: 0.000000 | Duration: 61.42s | ------------
+| Epoch 151/250 | Batch 116/347 | Loss:  0.025186 | Accuracy: 0.000000 
+| Epoch 151/250 | Batch 231/347 | Loss:  0.024913 | Accuracy: 0.000065 
+| Epoch 151/250 | Batch 346/347 | Loss:  0.022590 | Accuracy: 0.000043 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993697 | R-Precision: 0.989045 | MAP@R 0.987881 |
+| Epoch 151/250 | Val accuracy: 0.000000 | Duration: 61.77s | ------------
+| Epoch 152/250 | Batch 116/347 | Loss:  0.021207 | Accuracy: 0.000000 
+| Epoch 152/250 | Batch 231/347 | Loss:  0.027569 | Accuracy: 0.000022 
+| Epoch 152/250 | Batch 346/347 | Loss:  0.028976 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994538 | R-Precision: 0.986622 | MAP@R 0.984866 |
+| Epoch 152/250 | Val accuracy: 0.000000 | Duration: 61.61s | ------------
+| Epoch 153/250 | Batch 116/347 | Loss:  0.027802 | Accuracy: 0.000000 
+| Epoch 153/250 | Batch 231/347 | Loss:  0.035375 | Accuracy: 0.000000 
+| Epoch 153/250 | Batch 346/347 | Loss:  0.030183 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.990330 | MAP@R 0.989069 |
+| Epoch 153/250 | Val accuracy: 0.000000 | Duration: 61.56s | ------------
+| Epoch 154/250 | Batch 116/347 | Loss:  0.048145 | Accuracy: 0.000000 
+| Epoch 154/250 | Batch 231/347 | Loss:  0.028122 | Accuracy: 0.000000 
+| Epoch 154/250 | Batch 346/347 | Loss:  0.031599 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.990151 | MAP@R 0.989166 |
+| Epoch 154/250 | Val accuracy: 0.000000 | Duration: 61.82s | ------------
+| Epoch 155/250 | Batch 116/347 | Loss:  0.041043 | Accuracy: 0.000000 
+| Epoch 155/250 | Batch 231/347 | Loss:  0.032279 | Accuracy: 0.000022 
+| Epoch 155/250 | Batch 346/347 | Loss:  0.043067 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993277 | R-Precision: 0.991836 | MAP@R 0.991073 |
+| Epoch 155/250 | Val accuracy: 0.000000 | Duration: 61.71s | ------------
+| Epoch 156/250 | Batch 116/347 | Loss:  0.017921 | Accuracy: 0.000043 
+| Epoch 156/250 | Batch 231/347 | Loss:  0.011834 | Accuracy: 0.000022 
+| Epoch 156/250 | Batch 346/347 | Loss:  0.019828 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991597 | R-Precision: 0.989668 | MAP@R 0.988442 |
+| Epoch 156/250 | Val accuracy: 0.000000 | Duration: 61.41s | ------------
+| Epoch 157/250 | Batch 116/347 | Loss:  0.063529 | Accuracy: 0.000129 
+| Epoch 157/250 | Batch 231/347 | Loss:  0.056882 | Accuracy: 0.000087 
+| Epoch 157/250 | Batch 346/347 | Loss:  0.049694 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993277 | R-Precision: 0.992671 | MAP@R 0.992090 |
+| Epoch 157/250 | Val accuracy: 0.000000 | Duration: 61.58s | ------------
+| Epoch 158/250 | Batch 116/347 | Loss:  0.039118 | Accuracy: 0.000000 
+| Epoch 158/250 | Batch 231/347 | Loss:  0.031396 | Accuracy: 0.000000 
+| Epoch 158/250 | Batch 346/347 | Loss:  0.026982 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.990336 | R-Precision: 0.988208 | MAP@R 0.987448 |
+| Epoch 158/250 | Val accuracy: 0.000000 | Duration: 61.64s | ------------
+| Epoch 159/250 | Batch 116/347 | Loss:  0.027249 | Accuracy: 0.000043 
+| Epoch 159/250 | Batch 231/347 | Loss:  0.023698 | Accuracy: 0.000022 
+| Epoch 159/250 | Batch 346/347 | Loss:  0.021987 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994538 | R-Precision: 0.991604 | MAP@R 0.990343 |
+| Epoch 159/250 | Val accuracy: 0.000000 | Duration: 61.58s | ------------
+| Epoch 160/250 | Batch 116/347 | Loss:  0.023627 | Accuracy: 0.000129 
+| Epoch 160/250 | Batch 231/347 | Loss:  0.023087 | Accuracy: 0.000065 
+| Epoch 160/250 | Batch 346/347 | Loss:  0.024791 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.990756 | R-Precision: 0.985504 | MAP@R 0.984220 |
+| Epoch 160/250 | Val accuracy: 0.000000 | Duration: 61.43s | ------------
+| Epoch 161/250 | Batch 116/347 | Loss:  0.022076 | Accuracy: 0.000000 
+| Epoch 161/250 | Batch 231/347 | Loss:  0.032583 | Accuracy: 0.000000 
+| Epoch 161/250 | Batch 346/347 | Loss:  0.044821 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.990756 | R-Precision: 0.986398 | MAP@R 0.985155 |
+| Epoch 161/250 | Val accuracy: 0.000000 | Duration: 61.70s | ------------
+| Epoch 162/250 | Batch 116/347 | Loss:  0.062359 | Accuracy: 0.000043 
+| Epoch 162/250 | Batch 231/347 | Loss:  0.058646 | Accuracy: 0.000022 
+| Epoch 162/250 | Batch 346/347 | Loss:  0.047535 | Accuracy: 0.000043 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993277 | R-Precision: 0.991275 | MAP@R 0.990494 |
+| Epoch 162/250 | Val accuracy: 0.000000 | Duration: 61.51s | ------------
+| Epoch 163/250 | Batch 116/347 | Loss:  0.033261 | Accuracy: 0.000043 
+| Epoch 163/250 | Batch 231/347 | Loss:  0.022569 | Accuracy: 0.000022 
+| Epoch 163/250 | Batch 346/347 | Loss:  0.024684 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994538 | R-Precision: 0.993273 | MAP@R 0.992587 |
+| Epoch 163/250 | Val accuracy: 0.000000 | Duration: 61.32s | ------------
+| Epoch 164/250 | Batch 116/347 | Loss:  0.024331 | Accuracy: 0.000216 
+| Epoch 164/250 | Batch 231/347 | Loss:  0.019147 | Accuracy: 0.000152 
+| Epoch 164/250 | Batch 346/347 | Loss:  0.022476 | Accuracy: 0.000130 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.992484 | MAP@R 0.991635 |
+| Epoch 164/250 | Val accuracy: 0.000000 | Duration: 61.49s | ------------
+| Epoch 165/250 | Batch 116/347 | Loss:  0.028518 | Accuracy: 0.000000 
+| Epoch 165/250 | Batch 231/347 | Loss:  0.022826 | Accuracy: 0.000000 
+| Epoch 165/250 | Batch 346/347 | Loss:  0.021844 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994958 | R-Precision: 0.991763 | MAP@R 0.990750 |
+| Epoch 165/250 | Val accuracy: 0.000000 | Duration: 61.77s | ------------
+| Epoch 166/250 | Batch 116/347 | Loss:  0.015371 | Accuracy: 0.000000 
+| Epoch 166/250 | Batch 231/347 | Loss:  0.018695 | Accuracy: 0.000022 
+| Epoch 166/250 | Batch 346/347 | Loss:  0.017650 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994958 | R-Precision: 0.993849 | MAP@R 0.993174 |
+| Epoch 166/250 | Val accuracy: 0.000000 | Duration: 61.58s | ------------
+| Epoch 167/250 | Batch 116/347 | Loss:  0.013172 | Accuracy: 0.000000 
+| Epoch 167/250 | Batch 231/347 | Loss:  0.016574 | Accuracy: 0.000065 
+| Epoch 167/250 | Batch 346/347 | Loss:  0.035682 | Accuracy: 0.000043 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992437 | R-Precision: 0.991216 | MAP@R 0.990476 |
+| Epoch 167/250 | Val accuracy: 0.000000 | Duration: 61.40s | ------------
+| Epoch 168/250 | Batch 116/347 | Loss:  0.028073 | Accuracy: 0.000000 
+| Epoch 168/250 | Batch 231/347 | Loss:  0.029979 | Accuracy: 0.000000 
+| Epoch 168/250 | Batch 346/347 | Loss:  0.025419 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994958 | R-Precision: 0.991241 | MAP@R 0.990135 |
+| Epoch 168/250 | Val accuracy: 0.000000 | Duration: 61.70s | ------------
+| Epoch 169/250 | Batch 116/347 | Loss:  0.003696 | Accuracy: 0.000000 
+| Epoch 169/250 | Batch 231/347 | Loss:  0.017604 | Accuracy: 0.000000 
+| Epoch 169/250 | Batch 346/347 | Loss:  0.019576 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.995798 | R-Precision: 0.993963 | MAP@R 0.993484 |
+| Epoch 169/250 | Val accuracy: 0.000000 | Duration: 61.59s | ------------
+| Epoch 170/250 | Batch 116/347 | Loss:  0.038654 | Accuracy: 0.000259 
+| Epoch 170/250 | Batch 231/347 | Loss:  0.028089 | Accuracy: 0.000281 
+| Epoch 170/250 | Batch 346/347 | Loss:  0.019539 | Accuracy: 0.000202 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.992360 | MAP@R 0.991696 |
+| Epoch 170/250 | Val accuracy: 0.000000 | Duration: 61.32s | ------------
+| Epoch 171/250 | Batch 116/347 | Loss:  0.025299 | Accuracy: 0.000129 
+| Epoch 171/250 | Batch 231/347 | Loss:  0.035052 | Accuracy: 0.000087 
+| Epoch 171/250 | Batch 346/347 | Loss:  0.042146 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992017 | R-Precision: 0.991345 | MAP@R 0.990741 |
+| Epoch 171/250 | Val accuracy: 0.000000 | Duration: 61.46s | ------------
+| Epoch 172/250 | Batch 116/347 | Loss:  0.020121 | Accuracy: 0.000000 
+| Epoch 172/250 | Batch 231/347 | Loss:  0.015657 | Accuracy: 0.000087 
+| Epoch 172/250 | Batch 346/347 | Loss:  0.018141 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.988262 | MAP@R 0.987520 |
+| Epoch 172/250 | Val accuracy: 0.000000 | Duration: 61.53s | ------------
+| Epoch 173/250 | Batch 116/347 | Loss:  0.035181 | Accuracy: 0.000000 
+| Epoch 173/250 | Batch 231/347 | Loss:  0.034736 | Accuracy: 0.000043 
+| Epoch 173/250 | Batch 346/347 | Loss:  0.032901 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993697 | R-Precision: 0.990901 | MAP@R 0.990201 |
+| Epoch 173/250 | Val accuracy: 0.000000 | Duration: 61.81s | ------------
+| Epoch 174/250 | Batch 116/347 | Loss:  0.021033 | Accuracy: 0.000000 
+| Epoch 174/250 | Batch 231/347 | Loss:  0.029528 | Accuracy: 0.000000 
+| Epoch 174/250 | Batch 346/347 | Loss:  0.022973 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992017 | R-Precision: 0.992741 | MAP@R 0.992014 |
+| Epoch 174/250 | Val accuracy: 0.000000 | Duration: 61.39s | ------------
+| Epoch 175/250 | Batch 116/347 | Loss:  0.020748 | Accuracy: 0.000043 
+| Epoch 175/250 | Batch 231/347 | Loss:  0.025656 | Accuracy: 0.000043 
+| Epoch 175/250 | Batch 346/347 | Loss:  0.031553 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994958 | R-Precision: 0.993196 | MAP@R 0.992362 |
+| Epoch 175/250 | Val accuracy: 0.000000 | Duration: 61.70s | ------------
+| Epoch 176/250 | Batch 116/347 | Loss:  0.017347 | Accuracy: 0.000086 
+| Epoch 176/250 | Batch 231/347 | Loss:  0.025230 | Accuracy: 0.000087 
+| Epoch 176/250 | Batch 346/347 | Loss:  0.026592 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992437 | R-Precision: 0.990744 | MAP@R 0.989753 |
+| Epoch 176/250 | Val accuracy: 0.000000 | Duration: 61.47s | ------------
+| Epoch 177/250 | Batch 116/347 | Loss:  0.020904 | Accuracy: 0.000000 
+| Epoch 177/250 | Batch 231/347 | Loss:  0.018039 | Accuracy: 0.000022 
+| Epoch 177/250 | Batch 346/347 | Loss:  0.021009 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.995378 | R-Precision: 0.993579 | MAP@R 0.992871 |
+| Epoch 177/250 | Val accuracy: 0.000000 | Duration: 61.22s | ------------
+| Epoch 178/250 | Batch 116/347 | Loss:  0.010540 | Accuracy: 0.000000 
+| Epoch 178/250 | Batch 231/347 | Loss:  0.017886 | Accuracy: 0.000022 
+| Epoch 178/250 | Batch 346/347 | Loss:  0.021990 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994538 | R-Precision: 0.991004 | MAP@R 0.990119 |
+| Epoch 178/250 | Val accuracy: 0.000000 | Duration: 61.43s | ------------
+| Epoch 179/250 | Batch 116/347 | Loss:  0.049779 | Accuracy: 0.000000 
+| Epoch 179/250 | Batch 231/347 | Loss:  0.047079 | Accuracy: 0.000043 
+| Epoch 179/250 | Batch 346/347 | Loss:  0.035189 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.990756 | R-Precision: 0.988936 | MAP@R 0.987648 |
+| Epoch 179/250 | Val accuracy: 0.000000 | Duration: 61.63s | ------------
+| Epoch 180/250 | Batch 116/347 | Loss:  0.025468 | Accuracy: 0.000000 
+| Epoch 180/250 | Batch 231/347 | Loss:  0.023019 | Accuracy: 0.000000 
+| Epoch 180/250 | Batch 346/347 | Loss:  0.020662 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992437 | R-Precision: 0.989277 | MAP@R 0.988161 |
+| Epoch 180/250 | Val accuracy: 0.000000 | Duration: 61.60s | ------------
+| Epoch 181/250 | Batch 116/347 | Loss:  0.008787 | Accuracy: 0.000000 
+| Epoch 181/250 | Batch 231/347 | Loss:  0.010987 | Accuracy: 0.000022 
+| Epoch 181/250 | Batch 346/347 | Loss:  0.012637 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.993059 | MAP@R 0.992139 |
+| Epoch 181/250 | Val accuracy: 0.000000 | Duration: 61.46s | ------------
+| Epoch 182/250 | Batch 116/347 | Loss:  0.000681 | Accuracy: 0.000000 
+| Epoch 182/250 | Batch 231/347 | Loss:  0.013245 | Accuracy: 0.000000 
+| Epoch 182/250 | Batch 346/347 | Loss:  0.011205 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.990756 | R-Precision: 0.991298 | MAP@R 0.990409 |
+| Epoch 182/250 | Val accuracy: 0.000000 | Duration: 61.59s | ------------
+| Epoch 183/250 | Batch 116/347 | Loss:  0.007304 | Accuracy: 0.000000 
+| Epoch 183/250 | Batch 231/347 | Loss:  0.009495 | Accuracy: 0.000000 
+| Epoch 183/250 | Batch 346/347 | Loss:  0.017596 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993697 | R-Precision: 0.992819 | MAP@R 0.992029 |
+| Epoch 183/250 | Val accuracy: 0.000000 | Duration: 61.47s | ------------
+| Epoch 184/250 | Batch 116/347 | Loss:  0.009229 | Accuracy: 0.000000 
+| Epoch 184/250 | Batch 231/347 | Loss:  0.024260 | Accuracy: 0.000000 
+| Epoch 184/250 | Batch 346/347 | Loss:  0.031053 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.990756 | R-Precision: 0.989320 | MAP@R 0.988229 |
+| Epoch 184/250 | Val accuracy: 0.000000 | Duration: 61.31s | ------------
+| Epoch 185/250 | Batch 116/347 | Loss:  0.027773 | Accuracy: 0.000086 
+| Epoch 185/250 | Batch 231/347 | Loss:  0.028345 | Accuracy: 0.000065 
+| Epoch 185/250 | Batch 346/347 | Loss:  0.022497 | Accuracy: 0.000043 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994958 | R-Precision: 0.992342 | MAP@R 0.991726 |
+| Epoch 185/250 | Val accuracy: 0.000000 | Duration: 61.52s | ------------
+| Epoch 186/250 | Batch 116/347 | Loss:  0.020703 | Accuracy: 0.000302 
+| Epoch 186/250 | Batch 231/347 | Loss:  0.030613 | Accuracy: 0.000152 
+| Epoch 186/250 | Batch 346/347 | Loss:  0.025283 | Accuracy: 0.000101 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993277 | R-Precision: 0.991569 | MAP@R 0.991054 |
+| Epoch 186/250 | Val accuracy: 0.000000 | Duration: 61.67s | ------------
+| Epoch 187/250 | Batch 116/347 | Loss:  0.015060 | Accuracy: 0.000000 
+| Epoch 187/250 | Batch 231/347 | Loss:  0.014225 | Accuracy: 0.000000 
+| Epoch 187/250 | Batch 346/347 | Loss:  0.016443 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.991597 | R-Precision: 0.991934 | MAP@R 0.991370 |
+| Epoch 187/250 | Val accuracy: 0.000000 | Duration: 61.46s | ------------
+| Epoch 188/250 | Batch 116/347 | Loss:  0.022500 | Accuracy: 0.000000 
+| Epoch 188/250 | Batch 231/347 | Loss:  0.025102 | Accuracy: 0.000043 
+| Epoch 188/250 | Batch 346/347 | Loss:  0.018571 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.995378 | R-Precision: 0.993060 | MAP@R 0.992353 |
+| Epoch 188/250 | Val accuracy: 0.000000 | Duration: 61.38s | ------------
+| Epoch 189/250 | Batch 116/347 | Loss:  0.012102 | Accuracy: 0.000172 
+| Epoch 189/250 | Batch 231/347 | Loss:  0.019774 | Accuracy: 0.000108 
+| Epoch 189/250 | Batch 346/347 | Loss:  0.023487 | Accuracy: 0.000116 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994538 | R-Precision: 0.990929 | MAP@R 0.990220 |
+| Epoch 189/250 | Val accuracy: 0.000000 | Duration: 61.60s | ------------
+| Epoch 190/250 | Batch 116/347 | Loss:  0.024860 | Accuracy: 0.000000 
+| Epoch 190/250 | Batch 231/347 | Loss:  0.025954 | Accuracy: 0.000000 
+| Epoch 190/250 | Batch 346/347 | Loss:  0.020175 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993697 | R-Precision: 0.991452 | MAP@R 0.990440 |
+| Epoch 190/250 | Val accuracy: 0.000000 | Duration: 61.39s | ------------
+| Epoch 191/250 | Batch 116/347 | Loss:  0.007455 | Accuracy: 0.000086 
+| Epoch 191/250 | Batch 231/347 | Loss:  0.023162 | Accuracy: 0.000087 
+| Epoch 191/250 | Batch 346/347 | Loss:  0.020963 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992017 | R-Precision: 0.990599 | MAP@R 0.990061 |
+| Epoch 191/250 | Val accuracy: 0.000000 | Duration: 61.33s | ------------
+| Epoch 192/250 | Batch 116/347 | Loss:  0.015771 | Accuracy: 0.000043 
+| Epoch 192/250 | Batch 231/347 | Loss:  0.022620 | Accuracy: 0.000022 
+| Epoch 192/250 | Batch 346/347 | Loss:  0.021098 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.989916 | R-Precision: 0.989954 | MAP@R 0.989230 |
+| Epoch 192/250 | Val accuracy: 0.000000 | Duration: 61.55s | ------------
+| Epoch 193/250 | Batch 116/347 | Loss:  0.027838 | Accuracy: 0.000043 
+| Epoch 193/250 | Batch 231/347 | Loss:  0.023648 | Accuracy: 0.000152 
+| Epoch 193/250 | Batch 346/347 | Loss:  0.023147 | Accuracy: 0.000188 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.990992 | MAP@R 0.990261 |
+| Epoch 193/250 | Val accuracy: 0.000000 | Duration: 61.57s | ------------
+| Epoch 194/250 | Batch 116/347 | Loss:  0.019254 | Accuracy: 0.000129 
+| Epoch 194/250 | Batch 231/347 | Loss:  0.017993 | Accuracy: 0.000087 
+| Epoch 194/250 | Batch 346/347 | Loss:  0.022394 | Accuracy: 0.000087 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992017 | R-Precision: 0.987024 | MAP@R 0.985852 |
+| Epoch 194/250 | Val accuracy: 0.000000 | Duration: 61.55s | ------------
+| Epoch 195/250 | Batch 116/347 | Loss:  0.021674 | Accuracy: 0.000000 
+| Epoch 195/250 | Batch 231/347 | Loss:  0.027251 | Accuracy: 0.000043 
+| Epoch 195/250 | Batch 346/347 | Loss:  0.032989 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993697 | R-Precision: 0.990198 | MAP@R 0.989670 |
+| Epoch 195/250 | Val accuracy: 0.000000 | Duration: 61.31s | ------------
+| Epoch 196/250 | Batch 116/347 | Loss:  0.026017 | Accuracy: 0.000000 
+| Epoch 196/250 | Batch 231/347 | Loss:  0.021684 | Accuracy: 0.000000 
+| Epoch 196/250 | Batch 346/347 | Loss:  0.016210 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.993277 | R-Precision: 0.991918 | MAP@R 0.991177 |
+| Epoch 196/250 | Val accuracy: 0.000000 | Duration: 61.58s | ------------
+| Epoch 197/250 | Batch 116/347 | Loss:  0.006036 | Accuracy: 0.000000 
+| Epoch 197/250 | Batch 231/347 | Loss:  0.010827 | Accuracy: 0.000000 
+| Epoch 197/250 | Batch 346/347 | Loss:  0.014454 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994958 | R-Precision: 0.994552 | MAP@R 0.994193 |
+| Epoch 197/250 | Val accuracy: 0.000000 | Duration: 61.43s | ------------
+| Epoch 198/250 | Batch 116/347 | Loss:  0.009972 | Accuracy: 0.000000 
+| Epoch 198/250 | Batch 231/347 | Loss:  0.025312 | Accuracy: 0.000022 
+| Epoch 198/250 | Batch 346/347 | Loss:  0.027094 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.989496 | R-Precision: 0.989952 | MAP@R 0.988769 |
+| Epoch 198/250 | Val accuracy: 0.000000 | Duration: 61.32s | ------------
+| Epoch 199/250 | Batch 116/347 | Loss:  0.008727 | Accuracy: 0.000000 
+| Epoch 199/250 | Batch 231/347 | Loss:  0.019896 | Accuracy: 0.000022 
+| Epoch 199/250 | Batch 346/347 | Loss:  0.016921 | Accuracy: 0.000058 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.992857 | R-Precision: 0.989938 | MAP@R 0.988901 |
+| Epoch 199/250 | Val accuracy: 0.000000 | Duration: 61.64s | ------------
+| Epoch 200/250 | Batch 116/347 | Loss:  0.020793 | Accuracy: 0.000000 
+| Epoch 200/250 | Batch 231/347 | Loss:  0.020642 | Accuracy: 0.000022 
+| Epoch 200/250 | Batch 346/347 | Loss:  0.022432 | Accuracy: 0.000029 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994538 | R-Precision: 0.993435 | MAP@R 0.992736 |
+| Epoch 200/250 | Val accuracy: 0.000000 | Duration: 62.05s | ------------
+| Epoch 201/250 | Batch 116/347 | Loss:  0.012778 | Accuracy: 0.000000 
+| Epoch 201/250 | Batch 231/347 | Loss:  0.008496 | Accuracy: 0.000000 
+| Epoch 201/250 | Batch 346/347 | Loss:  0.009503 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994538 | R-Precision: 0.993300 | MAP@R 0.992699 |
+| Epoch 201/250 | Val accuracy: 0.000000 | Duration: 64.68s | ------------
+| Epoch 202/250 | Batch 116/347 | Loss:  0.001130 | Accuracy: 0.000043 
+| Epoch 202/250 | Batch 231/347 | Loss:  0.001918 | Accuracy: 0.000022 
+| Epoch 202/250 | Batch 346/347 | Loss:  0.005744 | Accuracy: 0.000014 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994538 | R-Precision: 0.994157 | MAP@R 0.993724 |
+| Epoch 202/250 | Val accuracy: 0.000000 | Duration: 64.51s | ------------
+| Epoch 203/250 | Batch 116/347 | Loss:  0.007956 | Accuracy: 0.000000 
+| Epoch 203/250 | Batch 231/347 | Loss:  0.006030 | Accuracy: 0.000000 
+| Epoch 203/250 | Batch 346/347 | Loss:  0.005983 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994118 | R-Precision: 0.993376 | MAP@R 0.992964 |
+| Epoch 203/250 | Val accuracy: 0.000000 | Duration: 66.76s | ------------
+| Epoch 204/250 | Batch 116/347 | Loss:  0.002176 | Accuracy: 0.000000 
+| Epoch 204/250 | Batch 231/347 | Loss:  0.001093 | Accuracy: 0.000000 
+| Epoch 204/250 | Batch 346/347 | Loss:  0.003560 | Accuracy: 0.000000 
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Precision@1: 0.994118 | R-Precision: 0.993248 | MAP@R 0.992672 |
+| Epoch 204/250 | Val accuracy: 0.000000 | Duration: 64.53s | ------------

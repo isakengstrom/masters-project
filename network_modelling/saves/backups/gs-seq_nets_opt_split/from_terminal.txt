@@ -1,0 +1,76 @@
+| Total time 255444.44
+| Notable parameters: bidirectional: False | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 25 
+| Accuracy: 0.9514321687126219
+| Notable parameters: bidirectional: False | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 50 
+| Accuracy: 0.8897774979009236
+| Notable parameters: bidirectional: False | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 100 
+| Accuracy: 0.8450609499789827
+| Notable parameters: bidirectional: False | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 200 
+| Accuracy: 0.7696969696969697
+| Notable parameters: bidirectional: False | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 400 
+| Accuracy: 0.6822934232715009
+| Notable parameters: bidirectional: False | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 800 
+| Accuracy: 0.49829931972789115
+| Notable parameters: bidirectional: False | Notable parameters: net_type: gru | Notable parameters: sequence_len: 25 
+| Accuracy: 0.9984471723848495
+| Notable parameters: bidirectional: False | Notable parameters: net_type: gru | Notable parameters: sequence_len: 50 
+| Accuracy: 0.9981947942905122
+| Notable parameters: bidirectional: False | Notable parameters: net_type: gru | Notable parameters: sequence_len: 100 
+| Accuracy: 0.9968053804119378
+| Notable parameters: bidirectional: False | Notable parameters: net_type: gru | Notable parameters: sequence_len: 200 
+| Accuracy: 0.9970538720538721
+| Notable parameters: bidirectional: False | Notable parameters: net_type: gru | Notable parameters: sequence_len: 400 
+| Accuracy: 0.9822934232715008
+| Notable parameters: bidirectional: False | Notable parameters: net_type: gru | Notable parameters: sequence_len: 800 
+| Accuracy: 0.9768707482993197
+| Notable parameters: bidirectional: False | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 25 
+| Accuracy: 0.9977232189696779
+| Notable parameters: bidirectional: False | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 50 
+| Accuracy: 0.9946683459277917
+| Notable parameters: bidirectional: False | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 100 
+| Accuracy: 0.9880622110130307
+| Notable parameters: bidirectional: False | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 200 
+| Accuracy: 0.979040404040404
+| Notable parameters: bidirectional: False | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 400 
+| Accuracy: 0.9435075885328836
+| Notable parameters: bidirectional: False | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 800 
+| Accuracy: 0.9163265306122449
+| Notable parameters: bidirectional: True | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 25 
+| Accuracy: 0.9763508551043962
+| Notable parameters: bidirectional: True | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 50 
+| Accuracy: 0.9632241813602015
+| Notable parameters: bidirectional: True | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 100 
+| Accuracy: 0.9032786885245901
+| Notable parameters: bidirectional: True | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 200 
+| Accuracy: 0.8034511784511784
+| Notable parameters: bidirectional: True | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 400 
+| Accuracy: 0.688026981450253
+| Notable parameters: bidirectional: True | Notable parameters: net_type: rnn | Notable parameters: sequence_len: 800 
+| Accuracy: 0.4870748299319728
+| Notable parameters: bidirectional: True | Notable parameters: net_type: gru | Notable parameters: sequence_len: 25 
+| Accuracy: 0.9982688070506768
+| Notable parameters: bidirectional: True | Notable parameters: net_type: gru | Notable parameters: sequence_len: 50 
+| Accuracy: 0.998320738874895
+| Notable parameters: bidirectional: True | Notable parameters: net_type: gru | Notable parameters: sequence_len: 100 
+| Accuracy: 0.9957545187053384
+| Notable parameters: bidirectional: True | Notable parameters: net_type: gru | Notable parameters: sequence_len: 200 
+| Accuracy: 0.9960437710437711
+| Notable parameters: bidirectional: True | Notable parameters: net_type: gru | Notable parameters: sequence_len: 400 
+| Accuracy: 0.9811129848229343
+| Notable parameters: bidirectional: True | Notable parameters: net_type: gru | Notable parameters: sequence_len: 800 
+| Accuracy: 0.9836734693877551
+| Notable parameters: bidirectional: True | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 25 
+| Accuracy: 0.9980065050886581
+| Notable parameters: bidirectional: True | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 50 
+| Accuracy: 0.9952770780856424
+| Notable parameters: bidirectional: True | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 100 
+| Accuracy: 0.987599831862127
+| Notable parameters: bidirectional: True | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 200 
+| Accuracy: 0.9826599326599327
+| Notable parameters: bidirectional: True | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 400 
+| Accuracy: 0.9448566610455312
+| Notable parameters: bidirectional: True | Notable parameters: net_type: lstm | Notable parameters: sequence_len: 800 
+| Accuracy: 0.9241496598639456
+
+Process finished with exit code 0
+

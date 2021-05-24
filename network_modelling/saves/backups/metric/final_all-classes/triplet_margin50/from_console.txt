@@ -1,0 +1,1425 @@
+| Epoch 221/250 | Batch 346/347 | Loss:  0.003155
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 221/250 | Pre@1: 0.995798 | R-Pre: 0.995386 | MAP@R: 0.995219 | Sil: 0.852 | CH: 19827 | Duration: 61.44s | ------------
+| Epoch 222/250 | Batch 116/347 | Loss:  0.000572
+| Epoch 222/250 | Batch 231/347 | Loss:  0.000305
+| Epoch 222/250 | Batch 346/347 | Loss:  0.000459
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 222/250 | Pre@1: 0.995378 | R-Pre: 0.995127 | MAP@R: 0.994828 | Sil: 0.851 | CH: 19501 | Duration: 61.36s | ------------
+| Epoch 223/250 | Batch 116/347 | Loss:  0.006133
+| Epoch 223/250 | Batch 231/347 | Loss:  0.004285
+| Epoch 223/250 | Batch 346/347 | Loss:  0.005560
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 223/250 | Pre@1: 0.995378 | R-Pre: 0.995144 | MAP@R: 0.994977 | Sil: 0.853 | CH: 20124 | Duration: 61.08s | ------------
+| Epoch 224/250 | Batch 116/347 | Loss:  0.001653
+| Epoch 224/250 | Batch 231/347 | Loss:  0.001408
+| Epoch 224/250 | Batch 346/347 | Loss:  0.000940
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 224/250 | Pre@1: 0.994958 | R-Pre: 0.994758 | MAP@R: 0.994587 | Sil: 0.853 | CH: 19955 | Duration: 61.83s | ------------
+| Epoch 225/250 | Batch 116/347 | Loss:  0.000839
+| Epoch 225/250 | Batch 231/347 | Loss:  0.001068
+| Epoch 225/250 | Batch 346/347 | Loss:  0.000957
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 225/250 | Pre@1: 0.995378 | R-Pre: 0.995198 | MAP@R: 0.995078 | Sil: 0.854 | CH: 20209 | Duration: 61.25s | ------------
+| Epoch 226/250 | Batch 116/347 | Loss:  0.002308
+| Epoch 226/250 | Batch 231/347 | Loss:  0.001706
+| Epoch 226/250 | Batch 346/347 | Loss:  0.004545
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 226/250 | Pre@1: 0.996218 | R-Pre: 0.995680 | MAP@R: 0.995522 | Sil: 0.854 | CH: 20308 | Duration: 61.57s | ------------
+| Epoch 227/250 | Batch 116/347 | Loss:  0.001899
+| Epoch 227/250 | Batch 231/347 | Loss:  0.001542
+| Epoch 227/250 | Batch 346/347 | Loss:  0.002223
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 227/250 | Pre@1: 0.995798 | R-Pre: 0.996111 | MAP@R: 0.995844 | Sil: 0.855 | CH: 20435 | Duration: 61.10s | ------------
+| Epoch 228/250 | Batch 116/347 | Loss:  0.000336
+| Epoch 228/250 | Batch 231/347 | Loss:  0.000939
+| Epoch 228/250 | Batch 346/347 | Loss:  0.001945
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 228/250 | Pre@1: 0.995378 | R-Pre: 0.994750 | MAP@R: 0.994537 | Sil: 0.853 | CH: 19973 | Duration: 61.45s | ------------
+| Epoch 229/250 | Batch 116/347 | Loss:  0.001792
+| Epoch 229/250 | Batch 231/347 | Loss:  0.002305
+| Epoch 229/250 | Batch 346/347 | Loss:  0.004589
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 229/250 | Pre@1: 0.996218 | R-Pre: 0.995641 | MAP@R: 0.995352 | Sil: 0.854 | CH: 20198 | Duration: 61.28s | ------------
+| Epoch 230/250 | Batch 116/347 | Loss:  0.002784
+| Epoch 230/250 | Batch 231/347 | Loss:  0.006082
+| Epoch 230/250 | Batch 346/347 | Loss:  0.005780
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 230/250 | Pre@1: 0.995378 | R-Pre: 0.995639 | MAP@R: 0.995341 | Sil: 0.854 | CH: 20243 | Duration: 61.38s | ------------
+| Epoch 231/250 | Batch 116/347 | Loss:  0.000308
+| Epoch 231/250 | Batch 231/347 | Loss:  0.000535
+| Epoch 231/250 | Batch 346/347 | Loss:  0.000636
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 231/250 | Pre@1: 0.995798 | R-Pre: 0.995699 | MAP@R: 0.995451 | Sil: 0.853 | CH: 19857 | Duration: 61.72s | ------------
+| Epoch 232/250 | Batch 116/347 | Loss:  0.000586
+| Epoch 232/250 | Batch 231/347 | Loss:  0.000714
+| Epoch 232/250 | Batch 346/347 | Loss:  0.000969
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 232/250 | Pre@1: 0.996218 | R-Pre: 0.996112 | MAP@R: 0.995982 | Sil: 0.854 | CH: 20247 | Duration: 61.23s | ------------
+| Epoch 233/250 | Batch 116/347 | Loss:  0.000437
+| Epoch 233/250 | Batch 231/347 | Loss:  0.000219
+| Epoch 233/250 | Batch 346/347 | Loss:  0.002064
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 233/250 | Pre@1: 0.996639 | R-Pre: 0.996024 | MAP@R: 0.995799 | Sil: 0.853 | CH: 20176 | Duration: 61.43s | ------------
+| Epoch 234/250 | Batch 116/347 | Loss:  0.000537
+| Epoch 234/250 | Batch 231/347 | Loss:  0.002131
+| Epoch 234/250 | Batch 346/347 | Loss:  0.001423
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 234/250 | Pre@1: 0.996218 | R-Pre: 0.995459 | MAP@R: 0.994928 | Sil: 0.852 | CH: 19860 | Duration: 61.14s | ------------
+| Epoch 235/250 | Batch 116/347 | Loss:  0.000595
+| Epoch 235/250 | Batch 231/347 | Loss:  0.001914
+| Epoch 235/250 | Batch 346/347 | Loss:  0.001302
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 235/250 | Pre@1: 0.995798 | R-Pre: 0.994791 | MAP@R: 0.994324 | Sil: 0.852 | CH: 19610 | Duration: 61.45s | ------------
+| Epoch 236/250 | Batch 116/347 | Loss:  0.000000
+| Epoch 236/250 | Batch 231/347 | Loss:  0.000000
+| Epoch 236/250 | Batch 346/347 | Loss:  0.000052
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 236/250 | Pre@1: 0.995798 | R-Pre: 0.994580 | MAP@R: 0.994274 | Sil: 0.852 | CH: 19482 | Duration: 61.31s | ------------
+| Epoch 237/250 | Batch 116/347 | Loss:  0.003250
+| Epoch 237/250 | Batch 231/347 | Loss:  0.002962
+| Epoch 237/250 | Batch 346/347 | Loss:  0.002366
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 237/250 | Pre@1: 0.994958 | R-Pre: 0.994831 | MAP@R: 0.994709 | Sil: 0.852 | CH: 19488 | Duration: 61.44s | ------------
+| Epoch 238/250 | Batch 116/347 | Loss:  0.000843
+| Epoch 238/250 | Batch 231/347 | Loss:  0.001968
+| Epoch 238/250 | Batch 346/347 | Loss:  0.002056
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 238/250 | Pre@1: 0.995378 | R-Pre: 0.995180 | MAP@R: 0.994913 | Sil: 0.853 | CH: 19994 | Duration: 61.76s | ------------
+| Epoch 239/250 | Batch 116/347 | Loss:  0.000417
+| Epoch 239/250 | Batch 231/347 | Loss:  0.000209
+| Epoch 239/250 | Batch 346/347 | Loss:  0.001400
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 239/250 | Pre@1: 0.995798 | R-Pre: 0.995015 | MAP@R: 0.994731 | Sil: 0.852 | CH: 19582 | Duration: 61.32s | ------------
+| Epoch 240/250 | Batch 116/347 | Loss:  0.000996
+| Epoch 240/250 | Batch 231/347 | Loss:  0.000500
+| Epoch 240/250 | Batch 346/347 | Loss:  0.001054
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 240/250 | Pre@1: 0.995378 | R-Pre: 0.994882 | MAP@R: 0.994549 | Sil: 0.851 | CH: 19456 | Duration: 61.59s | ------------
+| Epoch 241/250 | Batch 116/347 | Loss:  0.001310
+| Epoch 241/250 | Batch 231/347 | Loss:  0.000658
+| Epoch 241/250 | Batch 346/347 | Loss:  0.000470
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 241/250 | Pre@1: 0.994958 | R-Pre: 0.994393 | MAP@R: 0.994027 | Sil: 0.849 | CH: 19014 | Duration: 61.19s | ------------
+| Epoch 242/250 | Batch 116/347 | Loss:  0.000789
+| Epoch 242/250 | Batch 231/347 | Loss:  0.000396
+| Epoch 242/250 | Batch 346/347 | Loss:  0.001141
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 242/250 | Pre@1: 0.995378 | R-Pre: 0.994713 | MAP@R: 0.994358 | Sil: 0.850 | CH: 19177 | Duration: 61.41s | ------------
+| Epoch 243/250 | Batch 116/347 | Loss:  0.002004
+| Epoch 243/250 | Batch 231/347 | Loss:  0.003021
+| Epoch 243/250 | Batch 346/347 | Loss:  0.002194
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 243/250 | Pre@1: 0.994958 | R-Pre: 0.994782 | MAP@R: 0.994496 | Sil: 0.852 | CH: 19764 | Duration: 61.30s | ------------
+| Epoch 244/250 | Batch 116/347 | Loss:  0.000790
+| Epoch 244/250 | Batch 231/347 | Loss:  0.003554
+| Epoch 244/250 | Batch 346/347 | Loss:  0.003601
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 244/250 | Pre@1: 0.994958 | R-Pre: 0.994761 | MAP@R: 0.994512 | Sil: 0.852 | CH: 19600 | Duration: 60.99s | ------------
+| Epoch 245/250 | Batch 116/347 | Loss:  0.000164
+| Epoch 245/250 | Batch 231/347 | Loss:  0.000334
+| Epoch 245/250 | Batch 346/347 | Loss:  0.000370
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 245/250 | Pre@1: 0.995798 | R-Pre: 0.995327 | MAP@R: 0.994997 | Sil: 0.852 | CH: 19713 | Duration: 61.70s | ------------
+| Epoch 246/250 | Batch 116/347 | Loss:  0.002751
+| Epoch 246/250 | Batch 231/347 | Loss:  0.001835
+| Epoch 246/250 | Batch 346/347 | Loss:  0.002434
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 246/250 | Pre@1: 0.996639 | R-Pre: 0.995514 | MAP@R: 0.995230 | Sil: 0.853 | CH: 20047 | Duration: 61.15s | ------------
+| Epoch 247/250 | Batch 116/347 | Loss:  0.003776
+| Epoch 247/250 | Batch 231/347 | Loss:  0.002800
+| Epoch 247/250 | Batch 346/347 | Loss:  0.002021
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 247/250 | Pre@1: 0.996218 | R-Pre: 0.995385 | MAP@R: 0.995068 | Sil: 0.854 | CH: 20157 | Duration: 61.57s | ------------
+| Epoch 248/250 | Batch 116/347 | Loss:  0.000000
+| Epoch 248/250 | Batch 231/347 | Loss:  0.001175
+| Epoch 248/250 | Batch 346/347 | Loss:  0.001811
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 248/250 | Pre@1: 0.995798 | R-Pre: 0.994786 | MAP@R: 0.994411 | Sil: 0.851 | CH: 19651 | Duration: 61.18s | ------------
+| Epoch 249/250 | Batch 116/347 | Loss:  0.001675
+| Epoch 249/250 | Batch 231/347 | Loss:  0.002073
+| Epoch 249/250 | Batch 346/347 | Loss:  0.001384
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 249/250 | Pre@1: 0.994958 | R-Pre: 0.994770 | MAP@R: 0.994509 | Sil: 0.852 | CH: 19686 | Duration: 61.59s | ------------
+| Epoch 250/250 | Batch 116/347 | Loss:  0.000741
+| Epoch 250/250 | Batch 231/347 | Loss:  0.000482
+| Epoch 250/250 | Batch 346/347 | Loss:  0.000772
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 250/250 | Pre@1: 0.995378 | R-Pre: 0.994965 | MAP@R: 0.994574 | Sil: 0.852 | CH: 19789 | Duration: 61.21s | ------------
+| Finished learning | Learning time: 15408.54s
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Finished testing  | Accuracy: 0.991605 | Run time: 15412.10s
+
+
+| Learning phase - Run 1/1 - Rep 10/10
+| Epoch   1/250 | Batch 116/347 | Loss: 49.768125
+| Epoch   1/250 | Batch 231/347 | Loss: 48.699537
+| Epoch   1/250 | Batch 346/347 | Loss: 48.080309
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch   1/250 | Pre@1: 0.365126 | R-Pre: 0.157686 | MAP@R: 0.046391 | Sil: -0.384 | CH: 64 | Duration: 63.13s | ------------
+| Epoch   2/250 | Batch 116/347 | Loss: 45.057616
+| Epoch   2/250 | Batch 231/347 | Loss: 44.845370
+| Epoch   2/250 | Batch 346/347 | Loss: 44.484710
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch   2/250 | Pre@1: 0.379412 | R-Pre: 0.181982 | MAP@R: 0.054644 | Sil: -0.291 | CH: 182 | Duration: 62.97s | ------------
+| Epoch   3/250 | Batch 116/347 | Loss: 42.287748
+| Epoch   3/250 | Batch 231/347 | Loss: 41.219608
+| Epoch   3/250 | Batch 346/347 | Loss: 41.134737
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch   3/250 | Pre@1: 0.419748 | R-Pre: 0.221370 | MAP@R: 0.081637 | Sil: -0.231 | CH: 246 | Duration: 62.94s | ------------
+| Epoch   4/250 | Batch 116/347 | Loss: 36.524219
+| Epoch   4/250 | Batch 231/347 | Loss: 35.922535
+| Epoch   4/250 | Batch 346/347 | Loss: 35.093481
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch   4/250 | Pre@1: 0.451681 | R-Pre: 0.266557 | MAP@R: 0.112900 | Sil: -0.142 | CH: 1041 | Duration: 62.73s | ------------
+| Epoch   5/250 | Batch 116/347 | Loss: 30.129707
+| Epoch   5/250 | Batch 231/347 | Loss: 29.797225
+| Epoch   5/250 | Batch 346/347 | Loss: 29.047935
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch   5/250 | Pre@1: 0.457143 | R-Pre: 0.282339 | MAP@R: 0.110047 | Sil: -0.152 | CH: 1718 | Duration: 62.78s | ------------
+| Epoch   6/250 | Batch 116/347 | Loss: 27.720629
+| Epoch   6/250 | Batch 231/347 | Loss: 26.356553
+| Epoch   6/250 | Batch 346/347 | Loss: 25.462289
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch   6/250 | Pre@1: 0.452941 | R-Pre: 0.277080 | MAP@R: 0.105374 | Sil: -0.161 | CH: 1394 | Duration: 62.92s | ------------
+| Epoch   7/250 | Batch 116/347 | Loss: 23.193496
+| Epoch   7/250 | Batch 231/347 | Loss: 22.213492
+| Epoch   7/250 | Batch 346/347 | Loss: 22.220487
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch   7/250 | Pre@1: 0.478151 | R-Pre: 0.311392 | MAP@R: 0.132564 | Sil: -0.105 | CH: 2027 | Duration: 62.18s | ------------
+| Epoch   8/250 | Batch 116/347 | Loss: 21.991590
+| Epoch   8/250 | Batch 231/347 | Loss: 21.397724
+| Epoch   8/250 | Batch 346/347 | Loss: 20.964470
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch   8/250 | Pre@1: 0.526471 | R-Pre: 0.360596 | MAP@R: 0.172156 | Sil: -0.069 | CH: 3519 | Duration: 62.89s | ------------
+| Epoch   9/250 | Batch 116/347 | Loss: 18.868527
+| Epoch   9/250 | Batch 231/347 | Loss: 19.111570
+| Epoch   9/250 | Batch 346/347 | Loss: 19.112131
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch   9/250 | Pre@1: 0.551261 | R-Pre: 0.398503 | MAP@R: 0.209640 | Sil: -0.033 | CH: 3268 | Duration: 62.21s | ------------
+| Epoch  10/250 | Batch 116/347 | Loss: 17.440961
+| Epoch  10/250 | Batch 231/347 | Loss: 17.974990
+| Epoch  10/250 | Batch 346/347 | Loss: 17.770442
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  10/250 | Pre@1: 0.540756 | R-Pre: 0.332809 | MAP@R: 0.145419 | Sil: -0.099 | CH: 2752 | Duration: 62.61s | ------------
+| Epoch  11/250 | Batch 116/347 | Loss: 16.351749
+| Epoch  11/250 | Batch 231/347 | Loss: 16.694502
+| Epoch  11/250 | Batch 346/347 | Loss: 17.127921
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  11/250 | Pre@1: 0.572689 | R-Pre: 0.403262 | MAP@R: 0.215480 | Sil: 0.006 | CH: 2995 | Duration: 62.18s | ------------
+| Epoch  12/250 | Batch 116/347 | Loss: 15.755626
+| Epoch  12/250 | Batch 231/347 | Loss: 16.261870
+| Epoch  12/250 | Batch 346/347 | Loss: 16.307964
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  12/250 | Pre@1: 0.603782 | R-Pre: 0.417698 | MAP@R: 0.230678 | Sil: 0.026 | CH: 3760 | Duration: 62.60s | ------------
+| Epoch  13/250 | Batch 116/347 | Loss: 15.295027
+| Epoch  13/250 | Batch 231/347 | Loss: 15.622646
+| Epoch  13/250 | Batch 346/347 | Loss: 15.468968
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  13/250 | Pre@1: 0.621429 | R-Pre: 0.441347 | MAP@R: 0.282941 | Sil: 0.048 | CH: 3091 | Duration: 62.37s | ------------
+| Epoch  14/250 | Batch 116/347 | Loss: 14.498030
+| Epoch  14/250 | Batch 231/347 | Loss: 15.271299
+| Epoch  14/250 | Batch 346/347 | Loss: 14.963124
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  14/250 | Pre@1: 0.634454 | R-Pre: 0.458813 | MAP@R: 0.290888 | Sil: 0.090 | CH: 3761 | Duration: 62.07s | ------------
+| Epoch  15/250 | Batch 116/347 | Loss: 15.080486
+| Epoch  15/250 | Batch 231/347 | Loss: 14.759690
+| Epoch  15/250 | Batch 346/347 | Loss: 14.620849
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  15/250 | Pre@1: 0.642437 | R-Pre: 0.477703 | MAP@R: 0.315352 | Sil: 0.108 | CH: 3741 | Duration: 62.54s | ------------
+| Epoch  16/250 | Batch 116/347 | Loss: 13.871134
+| Epoch  16/250 | Batch 231/347 | Loss: 13.979980
+| Epoch  16/250 | Batch 346/347 | Loss: 13.711523
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  16/250 | Pre@1: 0.656723 | R-Pre: 0.416098 | MAP@R: 0.229261 | Sil: 0.024 | CH: 4076 | Duration: 62.21s | ------------
+| Epoch  17/250 | Batch 116/347 | Loss: 13.817796
+| Epoch  17/250 | Batch 231/347 | Loss: 13.678802
+| Epoch  17/250 | Batch 346/347 | Loss: 13.744501
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  17/250 | Pre@1: 0.665126 | R-Pre: 0.446447 | MAP@R: 0.271611 | Sil: 0.049 | CH: 4880 | Duration: 62.38s | ------------
+| Epoch  18/250 | Batch 116/347 | Loss: 13.814073
+| Epoch  18/250 | Batch 231/347 | Loss: 13.922603
+| Epoch  18/250 | Batch 346/347 | Loss: 13.807385
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  18/250 | Pre@1: 0.676891 | R-Pre: 0.484814 | MAP@R: 0.320735 | Sil: 0.136 | CH: 3965 | Duration: 62.12s | ------------
+| Epoch  19/250 | Batch 116/347 | Loss: 12.246967
+| Epoch  19/250 | Batch 231/347 | Loss: 12.799049
+| Epoch  19/250 | Batch 346/347 | Loss: 12.974078
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  19/250 | Pre@1: 0.685294 | R-Pre: 0.521495 | MAP@R: 0.363837 | Sil: 0.171 | CH: 4879 | Duration: 62.27s | ------------
+| Epoch  20/250 | Batch 116/347 | Loss: 12.302940
+| Epoch  20/250 | Batch 231/347 | Loss: 12.726948
+| Epoch  20/250 | Batch 346/347 | Loss: 12.874249
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  20/250 | Pre@1: 0.715546 | R-Pre: 0.522317 | MAP@R: 0.365415 | Sil: 0.180 | CH: 5514 | Duration: 62.18s | ------------
+| Epoch  21/250 | Batch 116/347 | Loss: 11.519306
+| Epoch  21/250 | Batch 231/347 | Loss: 11.915462
+| Epoch  21/250 | Batch 346/347 | Loss: 12.088803
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  21/250 | Pre@1: 0.716387 | R-Pre: 0.527801 | MAP@R: 0.380364 | Sil: 0.178 | CH: 6740 | Duration: 61.94s | ------------
+| Epoch  22/250 | Batch 116/347 | Loss: 11.765919
+| Epoch  22/250 | Batch 231/347 | Loss: 11.803414
+| Epoch  22/250 | Batch 346/347 | Loss: 12.331496
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  22/250 | Pre@1: 0.722269 | R-Pre: 0.523206 | MAP@R: 0.367557 | Sil: 0.144 | CH: 5126 | Duration: 62.52s | ------------
+| Epoch  23/250 | Batch 116/347 | Loss: 11.197133
+| Epoch  23/250 | Batch 231/347 | Loss: 11.534346
+| Epoch  23/250 | Batch 346/347 | Loss: 11.247679
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  23/250 | Pre@1: 0.736134 | R-Pre: 0.577104 | MAP@R: 0.448081 | Sil: 0.236 | CH: 6374 | Duration: 62.07s | ------------
+| Epoch  24/250 | Batch 116/347 | Loss: 11.806491
+| Epoch  24/250 | Batch 231/347 | Loss: 12.016765
+| Epoch  24/250 | Batch 346/347 | Loss: 11.588765
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  24/250 | Pre@1: 0.740336 | R-Pre: 0.570405 | MAP@R: 0.430786 | Sil: 0.228 | CH: 6362 | Duration: 62.31s | ------------
+| Epoch  25/250 | Batch 116/347 | Loss: 10.315941
+| Epoch  25/250 | Batch 231/347 | Loss: 11.012952
+| Epoch  25/250 | Batch 346/347 | Loss: 11.017217
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  25/250 | Pre@1: 0.734454 | R-Pre: 0.546019 | MAP@R: 0.388643 | Sil: 0.177 | CH: 6696 | Duration: 62.02s | ------------
+| Epoch  26/250 | Batch 116/347 | Loss:  9.573125
+| Epoch  26/250 | Batch 231/347 | Loss: 10.255401
+| Epoch  26/250 | Batch 346/347 | Loss: 10.002719
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  26/250 | Pre@1: 0.734034 | R-Pre: 0.588661 | MAP@R: 0.456404 | Sil: 0.258 | CH: 5605 | Duration: 62.25s | ------------
+| Epoch  27/250 | Batch 116/347 | Loss:  9.852717
+| Epoch  27/250 | Batch 231/347 | Loss: 10.499096
+| Epoch  27/250 | Batch 346/347 | Loss: 10.140433
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  27/250 | Pre@1: 0.716387 | R-Pre: 0.546260 | MAP@R: 0.410782 | Sil: 0.207 | CH: 5056 | Duration: 62.14s | ------------
+| Epoch  28/250 | Batch 116/347 | Loss: 10.078416
+| Epoch  28/250 | Batch 231/347 | Loss:  9.546007
+| Epoch  28/250 | Batch 346/347 | Loss:  9.781142
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  28/250 | Pre@1: 0.740756 | R-Pre: 0.626290 | MAP@R: 0.505727 | Sil: 0.295 | CH: 6818 | Duration: 62.03s | ------------
+| Epoch  29/250 | Batch 116/347 | Loss:  9.783560
+| Epoch  29/250 | Batch 231/347 | Loss:  9.160182
+| Epoch  29/250 | Batch 346/347 | Loss:  9.270926
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  29/250 | Pre@1: 0.763866 | R-Pre: 0.607667 | MAP@R: 0.481295 | Sil: 0.264 | CH: 8434 | Duration: 62.31s | ------------
+| Epoch  30/250 | Batch 116/347 | Loss:  9.436938
+| Epoch  30/250 | Batch 231/347 | Loss:  9.025452
+| Epoch  30/250 | Batch 346/347 | Loss:  8.823060
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  30/250 | Pre@1: 0.765546 | R-Pre: 0.639469 | MAP@R: 0.524584 | Sil: 0.312 | CH: 9232 | Duration: 62.00s | ------------
+| Epoch  31/250 | Batch 116/347 | Loss:  8.695634
+| Epoch  31/250 | Batch 231/347 | Loss:  8.594909
+| Epoch  31/250 | Batch 346/347 | Loss:  8.914842
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  31/250 | Pre@1: 0.759244 | R-Pre: 0.617331 | MAP@R: 0.492301 | Sil: 0.283 | CH: 6774 | Duration: 62.10s | ------------
+| Epoch  32/250 | Batch 116/347 | Loss:  8.109645
+| Epoch  32/250 | Batch 231/347 | Loss:  8.314856
+| Epoch  32/250 | Batch 346/347 | Loss:  8.297320
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  32/250 | Pre@1: 0.792857 | R-Pre: 0.667377 | MAP@R: 0.559475 | Sil: 0.349 | CH: 8474 | Duration: 61.93s | ------------
+| Epoch  33/250 | Batch 116/347 | Loss:  8.527772
+| Epoch  33/250 | Batch 231/347 | Loss:  8.226001
+| Epoch  33/250 | Batch 346/347 | Loss:  8.408450
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  33/250 | Pre@1: 0.793697 | R-Pre: 0.657874 | MAP@R: 0.544675 | Sil: 0.323 | CH: 6797 | Duration: 62.07s | ------------
+| Epoch  34/250 | Batch 116/347 | Loss:  7.865322
+| Epoch  34/250 | Batch 231/347 | Loss:  7.661613
+| Epoch  34/250 | Batch 346/347 | Loss:  7.531376
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  34/250 | Pre@1: 0.767227 | R-Pre: 0.673759 | MAP@R: 0.569583 | Sil: 0.355 | CH: 6288 | Duration: 61.93s | ------------
+| Epoch  35/250 | Batch 116/347 | Loss:  7.562804
+| Epoch  35/250 | Batch 231/347 | Loss:  7.739840
+| Epoch  35/250 | Batch 346/347 | Loss:  7.641716
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  35/250 | Pre@1: 0.789076 | R-Pre: 0.693491 | MAP@R: 0.584736 | Sil: 0.381 | CH: 7453 | Duration: 61.77s | ------------
+| Epoch  36/250 | Batch 116/347 | Loss:  6.453664
+| Epoch  36/250 | Batch 231/347 | Loss:  7.011854
+| Epoch  36/250 | Batch 346/347 | Loss:  7.071804
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  36/250 | Pre@1: 0.792437 | R-Pre: 0.672298 | MAP@R: 0.569505 | Sil: 0.361 | CH: 6214 | Duration: 62.18s | ------------
+| Epoch  37/250 | Batch 116/347 | Loss:  6.976218
+| Epoch  37/250 | Batch 231/347 | Loss:  6.972313
+| Epoch  37/250 | Batch 346/347 | Loss:  7.014999
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  37/250 | Pre@1: 0.839076 | R-Pre: 0.738844 | MAP@R: 0.654437 | Sil: 0.444 | CH: 7104 | Duration: 61.84s | ------------
+| Epoch  38/250 | Batch 116/347 | Loss:  6.705894
+| Epoch  38/250 | Batch 231/347 | Loss:  6.155847
+| Epoch  38/250 | Batch 346/347 | Loss:  6.255084
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  38/250 | Pre@1: 0.822269 | R-Pre: 0.694470 | MAP@R: 0.597361 | Sil: 0.378 | CH: 7153 | Duration: 62.18s | ------------
+| Epoch  39/250 | Batch 116/347 | Loss:  6.298856
+| Epoch  39/250 | Batch 231/347 | Loss:  6.215487
+| Epoch  39/250 | Batch 346/347 | Loss:  6.224401
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  39/250 | Pre@1: 0.808824 | R-Pre: 0.691299 | MAP@R: 0.595847 | Sil: 0.407 | CH: 5671 | Duration: 61.79s | ------------
+| Epoch  40/250 | Batch 116/347 | Loss:  6.276476
+| Epoch  40/250 | Batch 231/347 | Loss:  5.819039
+| Epoch  40/250 | Batch 346/347 | Loss:  5.960310
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  40/250 | Pre@1: 0.859664 | R-Pre: 0.756713 | MAP@R: 0.680306 | Sil: 0.463 | CH: 6242 | Duration: 62.04s | ------------
+| Epoch  41/250 | Batch 116/347 | Loss:  6.480729
+| Epoch  41/250 | Batch 231/347 | Loss:  5.934499
+| Epoch  41/250 | Batch 346/347 | Loss:  5.755328
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  41/250 | Pre@1: 0.890336 | R-Pre: 0.779607 | MAP@R: 0.712526 | Sil: 0.501 | CH: 6647 | Duration: 61.93s | ------------
+| Epoch  42/250 | Batch 116/347 | Loss:  5.146368
+| Epoch  42/250 | Batch 231/347 | Loss:  4.731843
+| Epoch  42/250 | Batch 346/347 | Loss:  5.249302
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  42/250 | Pre@1: 0.837395 | R-Pre: 0.711373 | MAP@R: 0.623278 | Sil: 0.408 | CH: 6363 | Duration: 61.73s | ------------
+| Epoch  43/250 | Batch 116/347 | Loss:  5.267142
+| Epoch  43/250 | Batch 231/347 | Loss:  5.012888
+| Epoch  43/250 | Batch 346/347 | Loss:  4.874666
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  43/250 | Pre@1: 0.886975 | R-Pre: 0.821305 | MAP@R: 0.763437 | Sil: 0.561 | CH: 9671 | Duration: 62.24s | ------------
+| Epoch  44/250 | Batch 116/347 | Loss:  4.248848
+| Epoch  44/250 | Batch 231/347 | Loss:  5.243598
+| Epoch  44/250 | Batch 346/347 | Loss:  5.226816
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  44/250 | Pre@1: 0.884874 | R-Pre: 0.781986 | MAP@R: 0.715336 | Sil: 0.513 | CH: 7131 | Duration: 61.76s | ------------
+| Epoch  45/250 | Batch 116/347 | Loss:  5.245592
+| Epoch  45/250 | Batch 231/347 | Loss:  5.081472
+| Epoch  45/250 | Batch 346/347 | Loss:  4.662644
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  45/250 | Pre@1: 0.827731 | R-Pre: 0.625007 | MAP@R: 0.531620 | Sil: 0.319 | CH: 3255 | Duration: 61.95s | ------------
+| Epoch  46/250 | Batch 116/347 | Loss:  4.580261
+| Epoch  46/250 | Batch 231/347 | Loss:  4.327242
+| Epoch  46/250 | Batch 346/347 | Loss:  4.426844
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  46/250 | Pre@1: 0.903782 | R-Pre: 0.817342 | MAP@R: 0.764631 | Sil: 0.563 | CH: 6915 | Duration: 61.63s | ------------
+| Epoch  47/250 | Batch 116/347 | Loss:  5.230904
+| Epoch  47/250 | Batch 231/347 | Loss:  4.477209
+| Epoch  47/250 | Batch 346/347 | Loss:  4.172834
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  47/250 | Pre@1: 0.921008 | R-Pre: 0.843624 | MAP@R: 0.799357 | Sil: 0.580 | CH: 9120 | Duration: 61.94s | ------------
+| Epoch  48/250 | Batch 116/347 | Loss:  3.846827
+| Epoch  48/250 | Batch 231/347 | Loss:  3.813211
+| Epoch  48/250 | Batch 346/347 | Loss:  3.946008
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  48/250 | Pre@1: 0.918487 | R-Pre: 0.812820 | MAP@R: 0.765800 | Sil: 0.547 | CH: 6641 | Duration: 61.81s | ------------
+| Epoch  49/250 | Batch 116/347 | Loss:  3.458175
+| Epoch  49/250 | Batch 231/347 | Loss:  3.587446
+| Epoch  49/250 | Batch 346/347 | Loss:  3.836545
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  49/250 | Pre@1: 0.888655 | R-Pre: 0.749664 | MAP@R: 0.675739 | Sil: 0.477 | CH: 4945 | Duration: 61.77s | ------------
+| Epoch  50/250 | Batch 116/347 | Loss:  3.835144
+| Epoch  50/250 | Batch 231/347 | Loss:  3.555936
+| Epoch  50/250 | Batch 346/347 | Loss:  3.601986
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  50/250 | Pre@1: 0.921849 | R-Pre: 0.850185 | MAP@R: 0.811558 | Sil: 0.614 | CH: 7161 | Duration: 62.11s | ------------
+| Epoch  51/250 | Batch 116/347 | Loss:  3.558663
+| Epoch  51/250 | Batch 231/347 | Loss:  3.854919
+| Epoch  51/250 | Batch 346/347 | Loss:  3.871636
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  51/250 | Pre@1: 0.908824 | R-Pre: 0.783999 | MAP@R: 0.731399 | Sil: 0.521 | CH: 6009 | Duration: 61.68s | ------------
+| Epoch  52/250 | Batch 116/347 | Loss:  3.252174
+| Epoch  52/250 | Batch 231/347 | Loss:  3.395339
+| Epoch  52/250 | Batch 346/347 | Loss:  3.464661
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  52/250 | Pre@1: 0.906303 | R-Pre: 0.781118 | MAP@R: 0.729186 | Sil: 0.519 | CH: 4936 | Duration: 61.86s | ------------
+| Epoch  53/250 | Batch 116/347 | Loss:  2.721602
+| Epoch  53/250 | Batch 231/347 | Loss:  3.001459
+| Epoch  53/250 | Batch 346/347 | Loss:  3.283969
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  53/250 | Pre@1: 0.938655 | R-Pre: 0.817835 | MAP@R: 0.775519 | Sil: 0.554 | CH: 5917 | Duration: 61.72s | ------------
+| Epoch  54/250 | Batch 116/347 | Loss:  3.860137
+| Epoch  54/250 | Batch 231/347 | Loss:  3.500724
+| Epoch  54/250 | Batch 346/347 | Loss:  3.622006
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  54/250 | Pre@1: 0.941176 | R-Pre: 0.895896 | MAP@R: 0.868035 | Sil: 0.658 | CH: 9934 | Duration: 61.89s | ------------
+| Epoch  55/250 | Batch 116/347 | Loss:  3.302726
+| Epoch  55/250 | Batch 231/347 | Loss:  3.144710
+| Epoch  55/250 | Batch 346/347 | Loss:  3.095851
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  55/250 | Pre@1: 0.956303 | R-Pre: 0.910927 | MAP@R: 0.890140 | Sil: 0.696 | CH: 9864 | Duration: 61.80s | ------------
+| Epoch  56/250 | Batch 116/347 | Loss:  3.361764
+| Epoch  56/250 | Batch 231/347 | Loss:  3.099467
+| Epoch  56/250 | Batch 346/347 | Loss:  2.981716
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  56/250 | Pre@1: 0.931092 | R-Pre: 0.806815 | MAP@R: 0.761029 | Sil: 0.550 | CH: 5690 | Duration: 61.49s | ------------
+| Epoch  57/250 | Batch 116/347 | Loss:  2.981018
+| Epoch  57/250 | Batch 231/347 | Loss:  2.856571
+| Epoch  57/250 | Batch 346/347 | Loss:  3.106197
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  57/250 | Pre@1: 0.960084 | R-Pre: 0.907169 | MAP@R: 0.888937 | Sil: 0.669 | CH: 9271 | Duration: 62.15s | ------------
+| Epoch  58/250 | Batch 116/347 | Loss:  2.900831
+| Epoch  58/250 | Batch 231/347 | Loss:  3.113935
+| Epoch  58/250 | Batch 346/347 | Loss:  2.869270
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  58/250 | Pre@1: 0.950000 | R-Pre: 0.881745 | MAP@R: 0.856085 | Sil: 0.638 | CH: 8717 | Duration: 61.72s | ------------
+| Epoch  59/250 | Batch 116/347 | Loss:  2.449992
+| Epoch  59/250 | Batch 231/347 | Loss:  2.705111
+| Epoch  59/250 | Batch 346/347 | Loss:  2.840968
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  59/250 | Pre@1: 0.934454 | R-Pre: 0.825934 | MAP@R: 0.786542 | Sil: 0.572 | CH: 5640 | Duration: 61.93s | ------------
+| Epoch  60/250 | Batch 116/347 | Loss:  2.513485
+| Epoch  60/250 | Batch 231/347 | Loss:  2.506595
+| Epoch  60/250 | Batch 346/347 | Loss:  2.404198
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  60/250 | Pre@1: 0.962605 | R-Pre: 0.915573 | MAP@R: 0.898122 | Sil: 0.693 | CH: 9945 | Duration: 61.52s | ------------
+| Epoch  61/250 | Batch 116/347 | Loss:  3.119432
+| Epoch  61/250 | Batch 231/347 | Loss:  2.996877
+| Epoch  61/250 | Batch 346/347 | Loss:  2.982204
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  61/250 | Pre@1: 0.939916 | R-Pre: 0.826995 | MAP@R: 0.788133 | Sil: 0.559 | CH: 6360 | Duration: 61.88s | ------------
+| Epoch  62/250 | Batch 116/347 | Loss:  3.031155
+| Epoch  62/250 | Batch 231/347 | Loss:  3.334013
+| Epoch  62/250 | Batch 346/347 | Loss:  3.123791
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  62/250 | Pre@1: 0.962605 | R-Pre: 0.912575 | MAP@R: 0.892386 | Sil: 0.686 | CH: 10069 | Duration: 61.78s | ------------
+| Epoch  63/250 | Batch 116/347 | Loss:  2.521550
+| Epoch  63/250 | Batch 231/347 | Loss:  2.411251
+| Epoch  63/250 | Batch 346/347 | Loss:  2.282877
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  63/250 | Pre@1: 0.968908 | R-Pre: 0.902826 | MAP@R: 0.881668 | Sil: 0.659 | CH: 10471 | Duration: 61.54s | ------------
+| Epoch  64/250 | Batch 116/347 | Loss:  2.069164
+| Epoch  64/250 | Batch 231/347 | Loss:  2.456941
+| Epoch  64/250 | Batch 346/347 | Loss:  2.651688
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  64/250 | Pre@1: 0.942857 | R-Pre: 0.819763 | MAP@R: 0.782021 | Sil: 0.560 | CH: 5580 | Duration: 62.01s | ------------
+| Epoch  65/250 | Batch 116/347 | Loss:  2.347094
+| Epoch  65/250 | Batch 231/347 | Loss:  2.408765
+| Epoch  65/250 | Batch 346/347 | Loss:  2.178796
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  65/250 | Pre@1: 0.966387 | R-Pre: 0.936786 | MAP@R: 0.924817 | Sil: 0.708 | CH: 10111 | Duration: 61.66s | ------------
+| Epoch  66/250 | Batch 116/347 | Loss:  2.478678
+| Epoch  66/250 | Batch 231/347 | Loss:  2.302771
+| Epoch  66/250 | Batch 346/347 | Loss:  2.223952
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  66/250 | Pre@1: 0.964286 | R-Pre: 0.912899 | MAP@R: 0.893192 | Sil: 0.684 | CH: 10643 | Duration: 61.79s | ------------
+| Epoch  67/250 | Batch 116/347 | Loss:  1.793290
+| Epoch  67/250 | Batch 231/347 | Loss:  2.065455
+| Epoch  67/250 | Batch 346/347 | Loss:  2.096791
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  67/250 | Pre@1: 0.967227 | R-Pre: 0.937013 | MAP@R: 0.923399 | Sil: 0.721 | CH: 10783 | Duration: 61.49s | ------------
+| Epoch  68/250 | Batch 116/347 | Loss:  1.700773
+| Epoch  68/250 | Batch 231/347 | Loss:  1.901964
+| Epoch  68/250 | Batch 346/347 | Loss:  2.036810
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  68/250 | Pre@1: 0.953782 | R-Pre: 0.873810 | MAP@R: 0.842792 | Sil: 0.613 | CH: 7560 | Duration: 61.66s | ------------
+| Epoch  69/250 | Batch 116/347 | Loss:  1.975744
+| Epoch  69/250 | Batch 231/347 | Loss:  2.172276
+| Epoch  69/250 | Batch 346/347 | Loss:  2.215540
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  69/250 | Pre@1: 0.944538 | R-Pre: 0.864024 | MAP@R: 0.835110 | Sil: 0.623 | CH: 6731 | Duration: 61.76s | ------------
+| Epoch  70/250 | Batch 116/347 | Loss:  2.212632
+| Epoch  70/250 | Batch 231/347 | Loss:  2.247787
+| Epoch  70/250 | Batch 346/347 | Loss:  2.352978
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  70/250 | Pre@1: 0.968067 | R-Pre: 0.923262 | MAP@R: 0.906801 | Sil: 0.694 | CH: 10012 | Duration: 61.53s | ------------
+| Epoch  71/250 | Batch 116/347 | Loss:  1.674731
+| Epoch  71/250 | Batch 231/347 | Loss:  1.878161
+| Epoch  71/250 | Batch 346/347 | Loss:  1.916665
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  71/250 | Pre@1: 0.959664 | R-Pre: 0.883048 | MAP@R: 0.857450 | Sil: 0.638 | CH: 7561 | Duration: 62.11s | ------------
+| Epoch  72/250 | Batch 116/347 | Loss:  1.839764
+| Epoch  72/250 | Batch 231/347 | Loss:  2.004877
+| Epoch  72/250 | Batch 346/347 | Loss:  1.804916
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  72/250 | Pre@1: 0.963025 | R-Pre: 0.903081 | MAP@R: 0.887732 | Sil: 0.665 | CH: 7278 | Duration: 61.56s | ------------
+| Epoch  73/250 | Batch 116/347 | Loss:  1.913215
+| Epoch  73/250 | Batch 231/347 | Loss:  1.866444
+| Epoch  73/250 | Batch 346/347 | Loss:  1.902789
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  73/250 | Pre@1: 0.962185 | R-Pre: 0.917587 | MAP@R: 0.903206 | Sil: 0.688 | CH: 8719 | Duration: 61.79s | ------------
+| Epoch  74/250 | Batch 116/347 | Loss:  1.384440
+| Epoch  74/250 | Batch 231/347 | Loss:  1.959254
+| Epoch  74/250 | Batch 346/347 | Loss:  2.026382
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  74/250 | Pre@1: 0.971008 | R-Pre: 0.892252 | MAP@R: 0.871915 | Sil: 0.645 | CH: 6194 | Duration: 61.42s | ------------
+| Epoch  75/250 | Batch 116/347 | Loss:  2.037066
+| Epoch  75/250 | Batch 231/347 | Loss:  2.149827
+| Epoch  75/250 | Batch 346/347 | Loss:  2.013369
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  75/250 | Pre@1: 0.978992 | R-Pre: 0.957561 | MAP@R: 0.949816 | Sil: 0.740 | CH: 11507 | Duration: 61.78s | ------------
+| Epoch  76/250 | Batch 116/347 | Loss:  1.515587
+| Epoch  76/250 | Batch 231/347 | Loss:  1.592107
+| Epoch  76/250 | Batch 346/347 | Loss:  1.630616
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  76/250 | Pre@1: 0.978151 | R-Pre: 0.940646 | MAP@R: 0.931050 | Sil: 0.714 | CH: 10233 | Duration: 61.65s | ------------
+| Epoch  77/250 | Batch 116/347 | Loss:  1.684941
+| Epoch  77/250 | Batch 231/347 | Loss:  1.505305
+| Epoch  77/250 | Batch 346/347 | Loss:  1.396342
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  77/250 | Pre@1: 0.970168 | R-Pre: 0.913249 | MAP@R: 0.897928 | Sil: 0.675 | CH: 6710 | Duration: 61.48s | ------------
+| Epoch  78/250 | Batch 116/347 | Loss:  1.360246
+| Epoch  78/250 | Batch 231/347 | Loss:  1.573793
+| Epoch  78/250 | Batch 346/347 | Loss:  1.582102
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  78/250 | Pre@1: 0.975210 | R-Pre: 0.937963 | MAP@R: 0.926906 | Sil: 0.699 | CH: 8778 | Duration: 61.90s | ------------
+| Epoch  79/250 | Batch 116/347 | Loss:  1.354198
+| Epoch  79/250 | Batch 231/347 | Loss:  1.467625
+| Epoch  79/250 | Batch 346/347 | Loss:  1.468763
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  79/250 | Pre@1: 0.967227 | R-Pre: 0.912560 | MAP@R: 0.896813 | Sil: 0.668 | CH: 6894 | Duration: 61.57s | ------------
+| Epoch  80/250 | Batch 116/347 | Loss:  1.669620
+| Epoch  80/250 | Batch 231/347 | Loss:  1.535225
+| Epoch  80/250 | Batch 346/347 | Loss:  1.511014
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  80/250 | Pre@1: 0.965966 | R-Pre: 0.924032 | MAP@R: 0.911237 | Sil: 0.690 | CH: 7620 | Duration: 61.75s | ------------
+| Epoch  81/250 | Batch 116/347 | Loss:  1.773907
+| Epoch  81/250 | Batch 231/347 | Loss:  1.411094
+| Epoch  81/250 | Batch 346/347 | Loss:  1.308262
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  81/250 | Pre@1: 0.973950 | R-Pre: 0.950911 | MAP@R: 0.942641 | Sil: 0.728 | CH: 9402 | Duration: 61.46s | ------------
+| Epoch  82/250 | Batch 116/347 | Loss:  1.609843
+| Epoch  82/250 | Batch 231/347 | Loss:  1.472322
+| Epoch  82/250 | Batch 346/347 | Loss:  1.364576
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  82/250 | Pre@1: 0.964706 | R-Pre: 0.877071 | MAP@R: 0.856326 | Sil: 0.618 | CH: 5327 | Duration: 61.67s | ------------
+| Epoch  83/250 | Batch 116/347 | Loss:  1.422695
+| Epoch  83/250 | Batch 231/347 | Loss:  1.296493
+| Epoch  83/250 | Batch 346/347 | Loss:  1.250627
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  83/250 | Pre@1: 0.973950 | R-Pre: 0.921947 | MAP@R: 0.908254 | Sil: 0.668 | CH: 6461 | Duration: 61.71s | ------------
+| Epoch  84/250 | Batch 116/347 | Loss:  1.168591
+| Epoch  84/250 | Batch 231/347 | Loss:  1.035801
+| Epoch  84/250 | Batch 346/347 | Loss:  1.081238
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  84/250 | Pre@1: 0.973529 | R-Pre: 0.931929 | MAP@R: 0.921570 | Sil: 0.701 | CH: 7732 | Duration: 61.23s | ------------
+| Epoch  85/250 | Batch 116/347 | Loss:  1.273418
+| Epoch  85/250 | Batch 231/347 | Loss:  1.258627
+| Epoch  85/250 | Batch 346/347 | Loss:  1.180931
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  85/250 | Pre@1: 0.980672 | R-Pre: 0.937894 | MAP@R: 0.926441 | Sil: 0.714 | CH: 7836 | Duration: 62.27s | ------------
+| Epoch  86/250 | Batch 116/347 | Loss:  1.170934
+| Epoch  86/250 | Batch 231/347 | Loss:  1.080425
+| Epoch  86/250 | Batch 346/347 | Loss:  1.149046
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  86/250 | Pre@1: 0.982353 | R-Pre: 0.954705 | MAP@R: 0.944309 | Sil: 0.733 | CH: 10352 | Duration: 61.46s | ------------
+| Epoch  87/250 | Batch 116/347 | Loss:  1.374994
+| Epoch  87/250 | Batch 231/347 | Loss:  1.562891
+| Epoch  87/250 | Batch 346/347 | Loss:  1.465191
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  87/250 | Pre@1: 0.984454 | R-Pre: 0.944074 | MAP@R: 0.933986 | Sil: 0.701 | CH: 6941 | Duration: 61.75s | ------------
+| Epoch  88/250 | Batch 116/347 | Loss:  1.104515
+| Epoch  88/250 | Batch 231/347 | Loss:  1.280021
+| Epoch  88/250 | Batch 346/347 | Loss:  1.413400
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  88/250 | Pre@1: 0.975630 | R-Pre: 0.903031 | MAP@R: 0.882507 | Sil: 0.630 | CH: 5499 | Duration: 61.36s | ------------
+| Epoch  89/250 | Batch 116/347 | Loss:  1.083138
+| Epoch  89/250 | Batch 231/347 | Loss:  1.148473
+| Epoch  89/250 | Batch 346/347 | Loss:  1.095120
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  89/250 | Pre@1: 0.981092 | R-Pre: 0.960256 | MAP@R: 0.953062 | Sil: 0.725 | CH: 8285 | Duration: 61.63s | ------------
+| Epoch  90/250 | Batch 116/347 | Loss:  1.054887
+| Epoch  90/250 | Batch 231/347 | Loss:  1.164362
+| Epoch  90/250 | Batch 346/347 | Loss:  1.114115
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  90/250 | Pre@1: 0.973529 | R-Pre: 0.947990 | MAP@R: 0.938732 | Sil: 0.718 | CH: 7647 | Duration: 61.57s | ------------
+| Epoch  91/250 | Batch 116/347 | Loss:  1.225292
+| Epoch  91/250 | Batch 231/347 | Loss:  1.044992
+| Epoch  91/250 | Batch 346/347 | Loss:  0.996893
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  91/250 | Pre@1: 0.975630 | R-Pre: 0.909253 | MAP@R: 0.892197 | Sil: 0.646 | CH: 5386 | Duration: 61.44s | ------------
+| Epoch  92/250 | Batch 116/347 | Loss:  0.951606
+| Epoch  92/250 | Batch 231/347 | Loss:  0.812147
+| Epoch  92/250 | Batch 346/347 | Loss:  0.773082
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  92/250 | Pre@1: 0.966807 | R-Pre: 0.908155 | MAP@R: 0.890142 | Sil: 0.651 | CH: 5093 | Duration: 61.98s | ------------
+| Epoch  93/250 | Batch 116/347 | Loss:  1.124187
+| Epoch  93/250 | Batch 231/347 | Loss:  1.024173
+| Epoch  93/250 | Batch 346/347 | Loss:  1.047031
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  93/250 | Pre@1: 0.983193 | R-Pre: 0.942139 | MAP@R: 0.930484 | Sil: 0.700 | CH: 6864 | Duration: 61.41s | ------------
+| Epoch  94/250 | Batch 116/347 | Loss:  1.021194
+| Epoch  94/250 | Batch 231/347 | Loss:  0.942228
+| Epoch  94/250 | Batch 346/347 | Loss:  0.920442
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  94/250 | Pre@1: 0.982353 | R-Pre: 0.952662 | MAP@R: 0.945029 | Sil: 0.722 | CH: 6288 | Duration: 61.73s | ------------
+| Epoch  95/250 | Batch 116/347 | Loss:  1.004706
+| Epoch  95/250 | Batch 231/347 | Loss:  0.933963
+| Epoch  95/250 | Batch 346/347 | Loss:  0.891229
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  95/250 | Pre@1: 0.981513 | R-Pre: 0.957071 | MAP@R: 0.949149 | Sil: 0.728 | CH: 7114 | Duration: 61.27s | ------------
+| Epoch  96/250 | Batch 116/347 | Loss:  0.911197
+| Epoch  96/250 | Batch 231/347 | Loss:  0.972517
+| Epoch  96/250 | Batch 346/347 | Loss:  0.985148
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  96/250 | Pre@1: 0.966807 | R-Pre: 0.929085 | MAP@R: 0.915622 | Sil: 0.683 | CH: 5259 | Duration: 61.70s | ------------
+| Epoch  97/250 | Batch 116/347 | Loss:  0.760367
+| Epoch  97/250 | Batch 231/347 | Loss:  0.947536
+| Epoch  97/250 | Batch 346/347 | Loss:  1.030602
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  97/250 | Pre@1: 0.963025 | R-Pre: 0.905670 | MAP@R: 0.886632 | Sil: 0.657 | CH: 4916 | Duration: 61.51s | ------------
+| Epoch  98/250 | Batch 116/347 | Loss:  0.879812
+| Epoch  98/250 | Batch 231/347 | Loss:  0.969312
+| Epoch  98/250 | Batch 346/347 | Loss:  1.027641
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  98/250 | Pre@1: 0.975210 | R-Pre: 0.922334 | MAP@R: 0.909594 | Sil: 0.688 | CH: 5911 | Duration: 61.30s | ------------
+| Epoch  99/250 | Batch 116/347 | Loss:  0.740088
+| Epoch  99/250 | Batch 231/347 | Loss:  0.885320
+| Epoch  99/250 | Batch 346/347 | Loss:  0.919999
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch  99/250 | Pre@1: 0.978151 | R-Pre: 0.949490 | MAP@R: 0.942036 | Sil: 0.712 | CH: 5912 | Duration: 61.80s | ------------
+| Epoch 100/250 | Batch 116/347 | Loss:  0.774064
+| Epoch 100/250 | Batch 231/347 | Loss:  0.701818
+| Epoch 100/250 | Batch 346/347 | Loss:  0.788115
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 100/250 | Pre@1: 0.982353 | R-Pre: 0.939688 | MAP@R: 0.929989 | Sil: 0.685 | CH: 5362 | Duration: 61.46s | ------------
+| Epoch 101/250 | Batch 116/347 | Loss:  0.356927
+| Epoch 101/250 | Batch 231/347 | Loss:  0.285033
+| Epoch 101/250 | Batch 346/347 | Loss:  0.224132
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 101/250 | Pre@1: 0.987815 | R-Pre: 0.983257 | MAP@R: 0.981471 | Sil: 0.781 | CH: 9668 | Duration: 61.53s | ------------
+| Epoch 102/250 | Batch 116/347 | Loss:  0.148627
+| Epoch 102/250 | Batch 231/347 | Loss:  0.137942
+| Epoch 102/250 | Batch 346/347 | Loss:  0.121784
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 102/250 | Pre@1: 0.989916 | R-Pre: 0.987088 | MAP@R: 0.985660 | Sil: 0.795 | CH: 10718 | Duration: 61.30s | ------------
+| Epoch 103/250 | Batch 116/347 | Loss:  0.067558
+| Epoch 103/250 | Batch 231/347 | Loss:  0.109291
+| Epoch 103/250 | Batch 346/347 | Loss:  0.094368
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 103/250 | Pre@1: 0.990756 | R-Pre: 0.986810 | MAP@R: 0.985410 | Sil: 0.796 | CH: 10825 | Duration: 61.43s | ------------
+| Epoch 104/250 | Batch 116/347 | Loss:  0.112233
+| Epoch 104/250 | Batch 231/347 | Loss:  0.087792
+| Epoch 104/250 | Batch 346/347 | Loss:  0.083477
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 104/250 | Pre@1: 0.987815 | R-Pre: 0.985258 | MAP@R: 0.983727 | Sil: 0.800 | CH: 11098 | Duration: 61.42s | ------------
+| Epoch 105/250 | Batch 116/347 | Loss:  0.054365
+| Epoch 105/250 | Batch 231/347 | Loss:  0.068678
+| Epoch 105/250 | Batch 346/347 | Loss:  0.076665
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 105/250 | Pre@1: 0.990336 | R-Pre: 0.988079 | MAP@R: 0.986457 | Sil: 0.804 | CH: 11519 | Duration: 61.30s | ------------
+| Epoch 106/250 | Batch 116/347 | Loss:  0.066519
+| Epoch 106/250 | Batch 231/347 | Loss:  0.078948
+| Epoch 106/250 | Batch 346/347 | Loss:  0.075200
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 106/250 | Pre@1: 0.991176 | R-Pre: 0.989769 | MAP@R: 0.988725 | Sil: 0.810 | CH: 12000 | Duration: 61.76s | ------------
+| Epoch 107/250 | Batch 116/347 | Loss:  0.063927
+| Epoch 107/250 | Batch 231/347 | Loss:  0.070951
+| Epoch 107/250 | Batch 346/347 | Loss:  0.061861
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 107/250 | Pre@1: 0.991176 | R-Pre: 0.988050 | MAP@R: 0.986386 | Sil: 0.809 | CH: 12084 | Duration: 61.22s | ------------
+| Epoch 108/250 | Batch 116/347 | Loss:  0.038463
+| Epoch 108/250 | Batch 231/347 | Loss:  0.039575
+| Epoch 108/250 | Batch 346/347 | Loss:  0.059270
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 108/250 | Pre@1: 0.990756 | R-Pre: 0.990761 | MAP@R: 0.989911 | Sil: 0.813 | CH: 12409 | Duration: 61.49s | ------------
+| Epoch 109/250 | Batch 116/347 | Loss:  0.058156
+| Epoch 109/250 | Batch 231/347 | Loss:  0.062575
+| Epoch 109/250 | Batch 346/347 | Loss:  0.057022
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 109/250 | Pre@1: 0.991176 | R-Pre: 0.990660 | MAP@R: 0.989678 | Sil: 0.821 | CH: 13233 | Duration: 61.16s | ------------
+| Epoch 110/250 | Batch 116/347 | Loss:  0.098018
+| Epoch 110/250 | Batch 231/347 | Loss:  0.075030
+| Epoch 110/250 | Batch 346/347 | Loss:  0.067300
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 110/250 | Pre@1: 0.992017 | R-Pre: 0.990089 | MAP@R: 0.988943 | Sil: 0.821 | CH: 13288 | Duration: 61.51s | ------------
+| Epoch 111/250 | Batch 116/347 | Loss:  0.016335
+| Epoch 111/250 | Batch 231/347 | Loss:  0.020062
+| Epoch 111/250 | Batch 346/347 | Loss:  0.028422
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 111/250 | Pre@1: 0.991597 | R-Pre: 0.989278 | MAP@R: 0.987995 | Sil: 0.819 | CH: 12725 | Duration: 61.25s | ------------
+| Epoch 112/250 | Batch 116/347 | Loss:  0.044251
+| Epoch 112/250 | Batch 231/347 | Loss:  0.051105
+| Epoch 112/250 | Batch 346/347 | Loss:  0.049234
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 112/250 | Pre@1: 0.992857 | R-Pre: 0.990686 | MAP@R: 0.989646 | Sil: 0.819 | CH: 13121 | Duration: 61.06s | ------------
+| Epoch 113/250 | Batch 116/347 | Loss:  0.050191
+| Epoch 113/250 | Batch 231/347 | Loss:  0.049053
+| Epoch 113/250 | Batch 346/347 | Loss:  0.043688
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 113/250 | Pre@1: 0.993277 | R-Pre: 0.990695 | MAP@R: 0.990100 | Sil: 0.818 | CH: 12822 | Duration: 61.62s | ------------
+| Epoch 114/250 | Batch 116/347 | Loss:  0.035165
+| Epoch 114/250 | Batch 231/347 | Loss:  0.059570
+| Epoch 114/250 | Batch 346/347 | Loss:  0.069831
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 114/250 | Pre@1: 0.991597 | R-Pre: 0.986348 | MAP@R: 0.985107 | Sil: 0.807 | CH: 11514 | Duration: 61.30s | ------------
+| Epoch 115/250 | Batch 116/347 | Loss:  0.059250
+| Epoch 115/250 | Batch 231/347 | Loss:  0.043312
+| Epoch 115/250 | Batch 346/347 | Loss:  0.044075
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 115/250 | Pre@1: 0.992017 | R-Pre: 0.990357 | MAP@R: 0.989470 | Sil: 0.816 | CH: 12561 | Duration: 61.42s | ------------
+| Epoch 116/250 | Batch 116/347 | Loss:  0.016533
+| Epoch 116/250 | Batch 231/347 | Loss:  0.043698
+| Epoch 116/250 | Batch 346/347 | Loss:  0.057107
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 116/250 | Pre@1: 0.991597 | R-Pre: 0.986648 | MAP@R: 0.985278 | Sil: 0.804 | CH: 10964 | Duration: 61.14s | ------------
+| Epoch 117/250 | Batch 116/347 | Loss:  0.047005
+| Epoch 117/250 | Batch 231/347 | Loss:  0.046915
+| Epoch 117/250 | Batch 346/347 | Loss:  0.050836
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 117/250 | Pre@1: 0.993277 | R-Pre: 0.991184 | MAP@R: 0.990396 | Sil: 0.820 | CH: 13156 | Duration: 61.47s | ------------
+| Epoch 118/250 | Batch 116/347 | Loss:  0.044316
+| Epoch 118/250 | Batch 231/347 | Loss:  0.052777
+| Epoch 118/250 | Batch 346/347 | Loss:  0.046182
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 118/250 | Pre@1: 0.988655 | R-Pre: 0.986764 | MAP@R: 0.985737 | Sil: 0.809 | CH: 11249 | Duration: 61.27s | ------------
+| Epoch 119/250 | Batch 116/347 | Loss:  0.048563
+| Epoch 119/250 | Batch 231/347 | Loss:  0.043713
+| Epoch 119/250 | Batch 346/347 | Loss:  0.037362
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 119/250 | Pre@1: 0.989916 | R-Pre: 0.988907 | MAP@R: 0.988046 | Sil: 0.818 | CH: 12743 | Duration: 61.13s | ------------
+| Epoch 120/250 | Batch 116/347 | Loss:  0.025454
+| Epoch 120/250 | Batch 231/347 | Loss:  0.038642
+| Epoch 120/250 | Batch 346/347 | Loss:  0.047356
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 120/250 | Pre@1: 0.991176 | R-Pre: 0.989997 | MAP@R: 0.988674 | Sil: 0.819 | CH: 12835 | Duration: 61.60s | ------------
+| Epoch 121/250 | Batch 116/347 | Loss:  0.071297
+| Epoch 121/250 | Batch 231/347 | Loss:  0.062066
+| Epoch 121/250 | Batch 346/347 | Loss:  0.051023
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 121/250 | Pre@1: 0.992437 | R-Pre: 0.989404 | MAP@R: 0.988551 | Sil: 0.820 | CH: 12587 | Duration: 61.26s | ------------
+| Epoch 122/250 | Batch 116/347 | Loss:  0.049265
+| Epoch 122/250 | Batch 231/347 | Loss:  0.048873
+| Epoch 122/250 | Batch 346/347 | Loss:  0.043140
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 122/250 | Pre@1: 0.992437 | R-Pre: 0.991660 | MAP@R: 0.990372 | Sil: 0.824 | CH: 13575 | Duration: 61.53s | ------------
+| Epoch 123/250 | Batch 116/347 | Loss:  0.021008
+| Epoch 123/250 | Batch 231/347 | Loss:  0.029595
+| Epoch 123/250 | Batch 346/347 | Loss:  0.029524
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 123/250 | Pre@1: 0.992017 | R-Pre: 0.990926 | MAP@R: 0.989712 | Sil: 0.821 | CH: 13278 | Duration: 61.17s | ------------
+| Epoch 124/250 | Batch 116/347 | Loss:  0.022296
+| Epoch 124/250 | Batch 231/347 | Loss:  0.025059
+| Epoch 124/250 | Batch 346/347 | Loss:  0.028423
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 124/250 | Pre@1: 0.992437 | R-Pre: 0.989842 | MAP@R: 0.988687 | Sil: 0.823 | CH: 13465 | Duration: 61.42s | ------------
+| Epoch 125/250 | Batch 116/347 | Loss:  0.022638
+| Epoch 125/250 | Batch 231/347 | Loss:  0.025703
+| Epoch 125/250 | Batch 346/347 | Loss:  0.028913
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 125/250 | Pre@1: 0.993277 | R-Pre: 0.991334 | MAP@R: 0.990115 | Sil: 0.824 | CH: 13455 | Duration: 61.39s | ------------
+| Epoch 126/250 | Batch 116/347 | Loss:  0.031747
+| Epoch 126/250 | Batch 231/347 | Loss:  0.030836
+| Epoch 126/250 | Batch 346/347 | Loss:  0.044916
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 126/250 | Pre@1: 0.992857 | R-Pre: 0.990864 | MAP@R: 0.989900 | Sil: 0.827 | CH: 13822 | Duration: 61.25s | ------------
+| Epoch 127/250 | Batch 116/347 | Loss:  0.009175
+| Epoch 127/250 | Batch 231/347 | Loss:  0.044438
+| Epoch 127/250 | Batch 346/347 | Loss:  0.041797
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 127/250 | Pre@1: 0.992437 | R-Pre: 0.988836 | MAP@R: 0.987776 | Sil: 0.816 | CH: 12386 | Duration: 61.64s | ------------
+| Epoch 128/250 | Batch 116/347 | Loss:  0.124201
+| Epoch 128/250 | Batch 231/347 | Loss:  0.080686
+| Epoch 128/250 | Batch 346/347 | Loss:  0.058516
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 128/250 | Pre@1: 0.994118 | R-Pre: 0.989614 | MAP@R: 0.988535 | Sil: 0.821 | CH: 13348 | Duration: 61.33s | ------------
+| Epoch 129/250 | Batch 116/347 | Loss:  0.059990
+| Epoch 129/250 | Batch 231/347 | Loss:  0.046455
+| Epoch 129/250 | Batch 346/347 | Loss:  0.037437
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 129/250 | Pre@1: 0.994118 | R-Pre: 0.991461 | MAP@R: 0.990459 | Sil: 0.826 | CH: 13963 | Duration: 61.39s | ------------
+| Epoch 130/250 | Batch 116/347 | Loss:  0.077756
+| Epoch 130/250 | Batch 231/347 | Loss:  0.050564
+| Epoch 130/250 | Batch 346/347 | Loss:  0.048568
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 130/250 | Pre@1: 0.995798 | R-Pre: 0.993953 | MAP@R: 0.993205 | Sil: 0.830 | CH: 14355 | Duration: 61.16s | ------------
+| Epoch 131/250 | Batch 116/347 | Loss:  0.032034
+| Epoch 131/250 | Batch 231/347 | Loss:  0.021212
+| Epoch 131/250 | Batch 346/347 | Loss:  0.025687
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 131/250 | Pre@1: 0.992017 | R-Pre: 0.990055 | MAP@R: 0.988871 | Sil: 0.826 | CH: 13612 | Duration: 61.34s | ------------
+| Epoch 132/250 | Batch 116/347 | Loss:  0.043957
+| Epoch 132/250 | Batch 231/347 | Loss:  0.048245
+| Epoch 132/250 | Batch 346/347 | Loss:  0.046151
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 132/250 | Pre@1: 0.989076 | R-Pre: 0.989214 | MAP@R: 0.988018 | Sil: 0.823 | CH: 13011 | Duration: 61.35s | ------------
+| Epoch 133/250 | Batch 116/347 | Loss:  0.026378
+| Epoch 133/250 | Batch 231/347 | Loss:  0.023202
+| Epoch 133/250 | Batch 346/347 | Loss:  0.026089
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 133/250 | Pre@1: 0.989496 | R-Pre: 0.989423 | MAP@R: 0.988345 | Sil: 0.822 | CH: 13265 | Duration: 61.22s | ------------
+| Epoch 134/250 | Batch 116/347 | Loss:  0.024233
+| Epoch 134/250 | Batch 231/347 | Loss:  0.025731
+| Epoch 134/250 | Batch 346/347 | Loss:  0.024341
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 134/250 | Pre@1: 0.992437 | R-Pre: 0.988224 | MAP@R: 0.987262 | Sil: 0.815 | CH: 12156 | Duration: 61.68s | ------------
+| Epoch 135/250 | Batch 116/347 | Loss:  0.029135
+| Epoch 135/250 | Batch 231/347 | Loss:  0.030938
+| Epoch 135/250 | Batch 346/347 | Loss:  0.031484
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 135/250 | Pre@1: 0.994118 | R-Pre: 0.993169 | MAP@R: 0.992623 | Sil: 0.828 | CH: 13934 | Duration: 61.20s | ------------
+| Epoch 136/250 | Batch 116/347 | Loss:  0.043685
+| Epoch 136/250 | Batch 231/347 | Loss:  0.047979
+| Epoch 136/250 | Batch 346/347 | Loss:  0.038992
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 136/250 | Pre@1: 0.992017 | R-Pre: 0.991172 | MAP@R: 0.990293 | Sil: 0.822 | CH: 12685 | Duration: 61.43s | ------------
+| Epoch 137/250 | Batch 116/347 | Loss:  0.047851
+| Epoch 137/250 | Batch 231/347 | Loss:  0.044417
+| Epoch 137/250 | Batch 346/347 | Loss:  0.034455
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 137/250 | Pre@1: 0.992857 | R-Pre: 0.992411 | MAP@R: 0.991868 | Sil: 0.831 | CH: 14042 | Duration: 61.28s | ------------
+| Epoch 138/250 | Batch 116/347 | Loss:  0.031408
+| Epoch 138/250 | Batch 231/347 | Loss:  0.032550
+| Epoch 138/250 | Batch 346/347 | Loss:  0.031534
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 138/250 | Pre@1: 0.992857 | R-Pre: 0.991822 | MAP@R: 0.991204 | Sil: 0.831 | CH: 14171 | Duration: 61.36s | ------------
+| Epoch 139/250 | Batch 116/347 | Loss:  0.002334
+| Epoch 139/250 | Batch 231/347 | Loss:  0.012232
+| Epoch 139/250 | Batch 346/347 | Loss:  0.027921
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 139/250 | Pre@1: 0.992017 | R-Pre: 0.990559 | MAP@R: 0.989614 | Sil: 0.830 | CH: 14374 | Duration: 61.23s | ------------
+| Epoch 140/250 | Batch 116/347 | Loss:  0.034980
+| Epoch 140/250 | Batch 231/347 | Loss:  0.030287
+| Epoch 140/250 | Batch 346/347 | Loss:  0.029645
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 140/250 | Pre@1: 0.992857 | R-Pre: 0.992148 | MAP@R: 0.991195 | Sil: 0.830 | CH: 14179 | Duration: 61.09s | ------------
+| Epoch 141/250 | Batch 116/347 | Loss:  0.024598
+| Epoch 141/250 | Batch 231/347 | Loss:  0.027642
+| Epoch 141/250 | Batch 346/347 | Loss:  0.024752
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 141/250 | Pre@1: 0.994538 | R-Pre: 0.988149 | MAP@R: 0.986834 | Sil: 0.823 | CH: 12890 | Duration: 61.89s | ------------
+| Epoch 142/250 | Batch 116/347 | Loss:  0.016272
+| Epoch 142/250 | Batch 231/347 | Loss:  0.021534
+| Epoch 142/250 | Batch 346/347 | Loss:  0.024637
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 142/250 | Pre@1: 0.991597 | R-Pre: 0.988589 | MAP@R: 0.987515 | Sil: 0.825 | CH: 12875 | Duration: 61.21s | ------------
+| Epoch 143/250 | Batch 116/347 | Loss:  0.018188
+| Epoch 143/250 | Batch 231/347 | Loss:  0.018849
+| Epoch 143/250 | Batch 346/347 | Loss:  0.020282
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 143/250 | Pre@1: 0.990756 | R-Pre: 0.989395 | MAP@R: 0.988785 | Sil: 0.831 | CH: 13405 | Duration: 61.51s | ------------
+| Epoch 144/250 | Batch 116/347 | Loss:  0.016788
+| Epoch 144/250 | Batch 231/347 | Loss:  0.016037
+| Epoch 144/250 | Batch 346/347 | Loss:  0.022973
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 144/250 | Pre@1: 0.991597 | R-Pre: 0.986749 | MAP@R: 0.985684 | Sil: 0.822 | CH: 12032 | Duration: 61.18s | ------------
+| Epoch 145/250 | Batch 116/347 | Loss:  0.031630
+| Epoch 145/250 | Batch 231/347 | Loss:  0.035243
+| Epoch 145/250 | Batch 346/347 | Loss:  0.031516
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 145/250 | Pre@1: 0.993277 | R-Pre: 0.992791 | MAP@R: 0.992073 | Sil: 0.839 | CH: 14831 | Duration: 61.50s | ------------
+| Epoch 146/250 | Batch 116/347 | Loss:  0.025455
+| Epoch 146/250 | Batch 231/347 | Loss:  0.032560
+| Epoch 146/250 | Batch 346/347 | Loss:  0.042477
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 146/250 | Pre@1: 0.993277 | R-Pre: 0.991973 | MAP@R: 0.991409 | Sil: 0.835 | CH: 14503 | Duration: 61.34s | ------------
+| Epoch 147/250 | Batch 116/347 | Loss:  0.016716
+| Epoch 147/250 | Batch 231/347 | Loss:  0.020973
+| Epoch 147/250 | Batch 346/347 | Loss:  0.027732
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 147/250 | Pre@1: 0.992017 | R-Pre: 0.989472 | MAP@R: 0.988517 | Sil: 0.831 | CH: 13875 | Duration: 61.30s | ------------
+| Epoch 148/250 | Batch 116/347 | Loss:  0.029507
+| Epoch 148/250 | Batch 231/347 | Loss:  0.041049
+| Epoch 148/250 | Batch 346/347 | Loss:  0.044337
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 148/250 | Pre@1: 0.992437 | R-Pre: 0.991009 | MAP@R: 0.990334 | Sil: 0.830 | CH: 13252 | Duration: 61.59s | ------------
+| Epoch 149/250 | Batch 116/347 | Loss:  0.022991
+| Epoch 149/250 | Batch 231/347 | Loss:  0.050111
+| Epoch 149/250 | Batch 346/347 | Loss:  0.037411
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 149/250 | Pre@1: 0.991597 | R-Pre: 0.990966 | MAP@R: 0.990166 | Sil: 0.833 | CH: 14288 | Duration: 61.18s | ------------
+| Epoch 150/250 | Batch 116/347 | Loss:  0.023666
+| Epoch 150/250 | Batch 231/347 | Loss:  0.014871
+| Epoch 150/250 | Batch 346/347 | Loss:  0.013846
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 150/250 | Pre@1: 0.992437 | R-Pre: 0.991411 | MAP@R: 0.990575 | Sil: 0.833 | CH: 14139 | Duration: 61.49s | ------------
+| Epoch 151/250 | Batch 116/347 | Loss:  0.010731
+| Epoch 151/250 | Batch 231/347 | Loss:  0.021618
+| Epoch 151/250 | Batch 346/347 | Loss:  0.037165
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 151/250 | Pre@1: 0.991176 | R-Pre: 0.988496 | MAP@R: 0.987558 | Sil: 0.822 | CH: 12419 | Duration: 61.27s | ------------
+| Epoch 152/250 | Batch 116/347 | Loss:  0.044284
+| Epoch 152/250 | Batch 231/347 | Loss:  0.033216
+| Epoch 152/250 | Batch 346/347 | Loss:  0.028157
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 152/250 | Pre@1: 0.992857 | R-Pre: 0.990765 | MAP@R: 0.989962 | Sil: 0.832 | CH: 13833 | Duration: 61.48s | ------------
+| Epoch 153/250 | Batch 116/347 | Loss:  0.028865
+| Epoch 153/250 | Batch 231/347 | Loss:  0.020644
+| Epoch 153/250 | Batch 346/347 | Loss:  0.030299
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 153/250 | Pre@1: 0.992017 | R-Pre: 0.990522 | MAP@R: 0.989640 | Sil: 0.832 | CH: 14088 | Duration: 61.34s | ------------
+| Epoch 154/250 | Batch 116/347 | Loss:  0.020304
+| Epoch 154/250 | Batch 231/347 | Loss:  0.020344
+| Epoch 154/250 | Batch 346/347 | Loss:  0.020069
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 154/250 | Pre@1: 0.990756 | R-Pre: 0.989882 | MAP@R: 0.989237 | Sil: 0.830 | CH: 13351 | Duration: 61.11s | ------------
+| Epoch 155/250 | Batch 116/347 | Loss:  0.077419
+| Epoch 155/250 | Batch 231/347 | Loss:  0.052729
+| Epoch 155/250 | Batch 346/347 | Loss:  0.043361
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 155/250 | Pre@1: 0.993697 | R-Pre: 0.989139 | MAP@R: 0.988334 | Sil: 0.827 | CH: 12991 | Duration: 61.77s | ------------
+| Epoch 156/250 | Batch 116/347 | Loss:  0.009446
+| Epoch 156/250 | Batch 231/347 | Loss:  0.030943
+| Epoch 156/250 | Batch 346/347 | Loss:  0.031774
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 156/250 | Pre@1: 0.990756 | R-Pre: 0.988261 | MAP@R: 0.987462 | Sil: 0.821 | CH: 12177 | Duration: 61.23s | ------------
+| Epoch 157/250 | Batch 116/347 | Loss:  0.017184
+| Epoch 157/250 | Batch 231/347 | Loss:  0.019709
+| Epoch 157/250 | Batch 346/347 | Loss:  0.053789
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 157/250 | Pre@1: 0.993277 | R-Pre: 0.990900 | MAP@R: 0.989953 | Sil: 0.828 | CH: 13783 | Duration: 61.46s | ------------
+| Epoch 158/250 | Batch 116/347 | Loss:  0.011948
+| Epoch 158/250 | Batch 231/347 | Loss:  0.014273
+| Epoch 158/250 | Batch 346/347 | Loss:  0.011483
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 158/250 | Pre@1: 0.992017 | R-Pre: 0.991494 | MAP@R: 0.990874 | Sil: 0.833 | CH: 14372 | Duration: 61.03s | ------------
+| Epoch 159/250 | Batch 116/347 | Loss:  0.046778
+| Epoch 159/250 | Batch 231/347 | Loss:  0.038740
+| Epoch 159/250 | Batch 346/347 | Loss:  0.036711
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 159/250 | Pre@1: 0.993277 | R-Pre: 0.990689 | MAP@R: 0.989890 | Sil: 0.835 | CH: 14434 | Duration: 61.55s | ------------
+| Epoch 160/250 | Batch 116/347 | Loss:  0.045314
+| Epoch 160/250 | Batch 231/347 | Loss:  0.038108
+| Epoch 160/250 | Batch 346/347 | Loss:  0.031693
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 160/250 | Pre@1: 0.993697 | R-Pre: 0.991542 | MAP@R: 0.990371 | Sil: 0.833 | CH: 14357 | Duration: 61.34s | ------------
+| Epoch 161/250 | Batch 116/347 | Loss:  0.005357
+| Epoch 161/250 | Batch 231/347 | Loss:  0.007560
+| Epoch 161/250 | Batch 346/347 | Loss:  0.018645
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 161/250 | Pre@1: 0.989496 | R-Pre: 0.985346 | MAP@R: 0.983475 | Sil: 0.818 | CH: 12135 | Duration: 61.21s | ------------
+| Epoch 162/250 | Batch 116/347 | Loss:  0.027921
+| Epoch 162/250 | Batch 231/347 | Loss:  0.030839
+| Epoch 162/250 | Batch 346/347 | Loss:  0.029237
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 162/250 | Pre@1: 0.991176 | R-Pre: 0.989097 | MAP@R: 0.988169 | Sil: 0.830 | CH: 13884 | Duration: 61.56s | ------------
+| Epoch 163/250 | Batch 116/347 | Loss:  0.040415
+| Epoch 163/250 | Batch 231/347 | Loss:  0.038611
+| Epoch 163/250 | Batch 346/347 | Loss:  0.029555
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 163/250 | Pre@1: 0.992437 | R-Pre: 0.988886 | MAP@R: 0.987556 | Sil: 0.826 | CH: 13090 | Duration: 61.20s | ------------
+| Epoch 164/250 | Batch 116/347 | Loss:  0.020699
+| Epoch 164/250 | Batch 231/347 | Loss:  0.015104
+| Epoch 164/250 | Batch 346/347 | Loss:  0.020284
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 164/250 | Pre@1: 0.993697 | R-Pre: 0.992073 | MAP@R: 0.991481 | Sil: 0.834 | CH: 14294 | Duration: 61.46s | ------------
+| Epoch 165/250 | Batch 116/347 | Loss:  0.002012
+| Epoch 165/250 | Batch 231/347 | Loss:  0.003979
+| Epoch 165/250 | Batch 346/347 | Loss:  0.017969
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 165/250 | Pre@1: 0.991597 | R-Pre: 0.990136 | MAP@R: 0.989323 | Sil: 0.825 | CH: 12605 | Duration: 61.15s | ------------
+| Epoch 166/250 | Batch 116/347 | Loss:  0.025263
+| Epoch 166/250 | Batch 231/347 | Loss:  0.032182
+| Epoch 166/250 | Batch 346/347 | Loss:  0.024006
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 166/250 | Pre@1: 0.992437 | R-Pre: 0.991083 | MAP@R: 0.990064 | Sil: 0.828 | CH: 13307 | Duration: 61.40s | ------------
+| Epoch 167/250 | Batch 116/347 | Loss:  0.004787
+| Epoch 167/250 | Batch 231/347 | Loss:  0.013449
+| Epoch 167/250 | Batch 346/347 | Loss:  0.019634
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 167/250 | Pre@1: 0.994538 | R-Pre: 0.991432 | MAP@R: 0.990341 | Sil: 0.832 | CH: 13985 | Duration: 61.42s | ------------
+| Epoch 168/250 | Batch 116/347 | Loss:  0.034050
+| Epoch 168/250 | Batch 231/347 | Loss:  0.029075
+| Epoch 168/250 | Batch 346/347 | Loss:  0.029083
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 168/250 | Pre@1: 0.994538 | R-Pre: 0.991932 | MAP@R: 0.991132 | Sil: 0.834 | CH: 14492 | Duration: 61.06s | ------------
+| Epoch 169/250 | Batch 116/347 | Loss:  0.011805
+| Epoch 169/250 | Batch 231/347 | Loss:  0.011649
+| Epoch 169/250 | Batch 346/347 | Loss:  0.011070
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 169/250 | Pre@1: 0.993697 | R-Pre: 0.992080 | MAP@R: 0.991234 | Sil: 0.834 | CH: 14275 | Duration: 61.61s | ------------
+| Epoch 170/250 | Batch 116/347 | Loss:  0.020073
+| Epoch 170/250 | Batch 231/347 | Loss:  0.018631
+| Epoch 170/250 | Batch 346/347 | Loss:  0.022693
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 170/250 | Pre@1: 0.993697 | R-Pre: 0.992784 | MAP@R: 0.992228 | Sil: 0.836 | CH: 14845 | Duration: 61.19s | ------------
+| Epoch 171/250 | Batch 116/347 | Loss:  0.012831
+| Epoch 171/250 | Batch 231/347 | Loss:  0.012249
+| Epoch 171/250 | Batch 346/347 | Loss:  0.009628
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 171/250 | Pre@1: 0.992437 | R-Pre: 0.989086 | MAP@R: 0.988191 | Sil: 0.827 | CH: 12799 | Duration: 61.43s | ------------
+| Epoch 172/250 | Batch 116/347 | Loss:  0.015604
+| Epoch 172/250 | Batch 231/347 | Loss:  0.018161
+| Epoch 172/250 | Batch 346/347 | Loss:  0.018618
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 172/250 | Pre@1: 0.992857 | R-Pre: 0.990990 | MAP@R: 0.989875 | Sil: 0.832 | CH: 13979 | Duration: 61.02s | ------------
+| Epoch 173/250 | Batch 116/347 | Loss:  0.027294
+| Epoch 173/250 | Batch 231/347 | Loss:  0.027700
+| Epoch 173/250 | Batch 346/347 | Loss:  0.032143
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 173/250 | Pre@1: 0.993697 | R-Pre: 0.991301 | MAP@R: 0.990387 | Sil: 0.833 | CH: 14200 | Duration: 61.40s | ------------
+| Epoch 174/250 | Batch 116/347 | Loss:  0.022729
+| Epoch 174/250 | Batch 231/347 | Loss:  0.015368
+| Epoch 174/250 | Batch 346/347 | Loss:  0.023542
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 174/250 | Pre@1: 0.994118 | R-Pre: 0.990661 | MAP@R: 0.989570 | Sil: 0.832 | CH: 14064 | Duration: 61.27s | ------------
+| Epoch 175/250 | Batch 116/347 | Loss:  0.021060
+| Epoch 175/250 | Batch 231/347 | Loss:  0.022179
+| Epoch 175/250 | Batch 346/347 | Loss:  0.024601
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 175/250 | Pre@1: 0.992857 | R-Pre: 0.991970 | MAP@R: 0.991195 | Sil: 0.838 | CH: 15181 | Duration: 61.18s | ------------
+| Epoch 176/250 | Batch 116/347 | Loss:  0.013435
+| Epoch 176/250 | Batch 231/347 | Loss:  0.017811
+| Epoch 176/250 | Batch 346/347 | Loss:  0.016966
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 176/250 | Pre@1: 0.993697 | R-Pre: 0.992017 | MAP@R: 0.991344 | Sil: 0.837 | CH: 14586 | Duration: 61.65s | ------------
+| Epoch 177/250 | Batch 116/347 | Loss:  0.015858
+| Epoch 177/250 | Batch 231/347 | Loss:  0.023868
+| Epoch 177/250 | Batch 346/347 | Loss:  0.024228
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 177/250 | Pre@1: 0.992017 | R-Pre: 0.988534 | MAP@R: 0.987493 | Sil: 0.821 | CH: 12456 | Duration: 61.24s | ------------
+| Epoch 178/250 | Batch 116/347 | Loss:  0.023403
+| Epoch 178/250 | Batch 231/347 | Loss:  0.020290
+| Epoch 178/250 | Batch 346/347 | Loss:  0.023417
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 178/250 | Pre@1: 0.992857 | R-Pre: 0.991057 | MAP@R: 0.990305 | Sil: 0.830 | CH: 13800 | Duration: 61.40s | ------------
+| Epoch 179/250 | Batch 116/347 | Loss:  0.026955
+| Epoch 179/250 | Batch 231/347 | Loss:  0.029494
+| Epoch 179/250 | Batch 346/347 | Loss:  0.021941
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 179/250 | Pre@1: 0.994538 | R-Pre: 0.992718 | MAP@R: 0.991912 | Sil: 0.836 | CH: 15226 | Duration: 61.14s | ------------
+| Epoch 180/250 | Batch 116/347 | Loss:  0.030654
+| Epoch 180/250 | Batch 231/347 | Loss:  0.021997
+| Epoch 180/250 | Batch 346/347 | Loss:  0.020894
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 180/250 | Pre@1: 0.993277 | R-Pre: 0.992187 | MAP@R: 0.991947 | Sil: 0.834 | CH: 14248 | Duration: 61.40s | ------------
+| Epoch 181/250 | Batch 116/347 | Loss:  0.019693
+| Epoch 181/250 | Batch 231/347 | Loss:  0.014450
+| Epoch 181/250 | Batch 346/347 | Loss:  0.012586
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 181/250 | Pre@1: 0.991597 | R-Pre: 0.989397 | MAP@R: 0.988345 | Sil: 0.828 | CH: 12680 | Duration: 61.43s | ------------
+| Epoch 182/250 | Batch 116/347 | Loss:  0.007108
+| Epoch 182/250 | Batch 231/347 | Loss:  0.022053
+| Epoch 182/250 | Batch 346/347 | Loss:  0.027714
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 182/250 | Pre@1: 0.992437 | R-Pre: 0.989985 | MAP@R: 0.989142 | Sil: 0.829 | CH: 13327 | Duration: 61.01s | ------------
+| Epoch 183/250 | Batch 116/347 | Loss:  0.014640
+| Epoch 183/250 | Batch 231/347 | Loss:  0.025276
+| Epoch 183/250 | Batch 346/347 | Loss:  0.029174
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 183/250 | Pre@1: 0.994118 | R-Pre: 0.993364 | MAP@R: 0.992699 | Sil: 0.837 | CH: 14906 | Duration: 61.73s | ------------
+| Epoch 184/250 | Batch 116/347 | Loss:  0.041285
+| Epoch 184/250 | Batch 231/347 | Loss:  0.042336
+| Epoch 184/250 | Batch 346/347 | Loss:  0.039644
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 184/250 | Pre@1: 0.994118 | R-Pre: 0.992098 | MAP@R: 0.991109 | Sil: 0.830 | CH: 13964 | Duration: 61.23s | ------------
+| Epoch 185/250 | Batch 116/347 | Loss:  0.014205
+| Epoch 185/250 | Batch 231/347 | Loss:  0.018562
+| Epoch 185/250 | Batch 346/347 | Loss:  0.017796
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 185/250 | Pre@1: 0.993277 | R-Pre: 0.991668 | MAP@R: 0.991219 | Sil: 0.836 | CH: 14468 | Duration: 61.39s | ------------
+| Epoch 186/250 | Batch 116/347 | Loss:  0.037367
+| Epoch 186/250 | Batch 231/347 | Loss:  0.026351
+| Epoch 186/250 | Batch 346/347 | Loss:  0.022689
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 186/250 | Pre@1: 0.993697 | R-Pre: 0.991643 | MAP@R: 0.990954 | Sil: 0.835 | CH: 14312 | Duration: 61.07s | ------------
+| Epoch 187/250 | Batch 116/347 | Loss:  0.015847
+| Epoch 187/250 | Batch 231/347 | Loss:  0.014970
+| Epoch 187/250 | Batch 346/347 | Loss:  0.021201
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 187/250 | Pre@1: 0.993277 | R-Pre: 0.992459 | MAP@R: 0.992061 | Sil: 0.838 | CH: 15025 | Duration: 61.46s | ------------
+| Epoch 188/250 | Batch 116/347 | Loss:  0.004999
+| Epoch 188/250 | Batch 231/347 | Loss:  0.010690
+| Epoch 188/250 | Batch 346/347 | Loss:  0.013331
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 188/250 | Pre@1: 0.992857 | R-Pre: 0.991198 | MAP@R: 0.990396 | Sil: 0.832 | CH: 14143 | Duration: 61.41s | ------------
+| Epoch 189/250 | Batch 116/347 | Loss:  0.047050
+| Epoch 189/250 | Batch 231/347 | Loss:  0.027474
+| Epoch 189/250 | Batch 346/347 | Loss:  0.026676
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 189/250 | Pre@1: 0.992857 | R-Pre: 0.991082 | MAP@R: 0.990538 | Sil: 0.832 | CH: 13781 | Duration: 61.05s | ------------
+| Epoch 190/250 | Batch 116/347 | Loss:  0.025571
+| Epoch 190/250 | Batch 231/347 | Loss:  0.031347
+| Epoch 190/250 | Batch 346/347 | Loss:  0.027347
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 190/250 | Pre@1: 0.993697 | R-Pre: 0.992603 | MAP@R: 0.992004 | Sil: 0.832 | CH: 14242 | Duration: 61.76s | ------------
+| Epoch 191/250 | Batch 116/347 | Loss:  0.070736
+| Epoch 191/250 | Batch 231/347 | Loss:  0.037460
+| Epoch 191/250 | Batch 346/347 | Loss:  0.033430
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 191/250 | Pre@1: 0.994538 | R-Pre: 0.990971 | MAP@R: 0.990105 | Sil: 0.832 | CH: 13868 | Duration: 61.21s | ------------
+| Epoch 192/250 | Batch 116/347 | Loss:  0.031099
+| Epoch 192/250 | Batch 231/347 | Loss:  0.023084
+| Epoch 192/250 | Batch 346/347 | Loss:  0.020224
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 192/250 | Pre@1: 0.994118 | R-Pre: 0.994078 | MAP@R: 0.993464 | Sil: 0.840 | CH: 15375 | Duration: 61.53s | ------------
+| Epoch 193/250 | Batch 116/347 | Loss:  0.029232
+| Epoch 193/250 | Batch 231/347 | Loss:  0.023434
+| Epoch 193/250 | Batch 346/347 | Loss:  0.022656
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 193/250 | Pre@1: 0.992857 | R-Pre: 0.986405 | MAP@R: 0.985105 | Sil: 0.819 | CH: 12025 | Duration: 61.13s | ------------
+| Epoch 194/250 | Batch 116/347 | Loss:  0.077144
+| Epoch 194/250 | Batch 231/347 | Loss:  0.044567
+| Epoch 194/250 | Batch 346/347 | Loss:  0.037131
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 194/250 | Pre@1: 0.992017 | R-Pre: 0.990444 | MAP@R: 0.990007 | Sil: 0.832 | CH: 13167 | Duration: 61.52s | ------------
+| Epoch 195/250 | Batch 116/347 | Loss:  0.022031
+| Epoch 195/250 | Batch 231/347 | Loss:  0.023088
+| Epoch 195/250 | Batch 346/347 | Loss:  0.028449
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 195/250 | Pre@1: 0.994958 | R-Pre: 0.992460 | MAP@R: 0.991955 | Sil: 0.835 | CH: 14533 | Duration: 61.27s | ------------
+| Epoch 196/250 | Batch 116/347 | Loss:  0.013833
+| Epoch 196/250 | Batch 231/347 | Loss:  0.012392
+| Epoch 196/250 | Batch 346/347 | Loss:  0.009814
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 196/250 | Pre@1: 0.991597 | R-Pre: 0.987144 | MAP@R: 0.986162 | Sil: 0.819 | CH: 12154 | Duration: 61.09s | ------------
+| Epoch 197/250 | Batch 116/347 | Loss:  0.063341
+| Epoch 197/250 | Batch 231/347 | Loss:  0.037454
+| Epoch 197/250 | Batch 346/347 | Loss:  0.036267
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 197/250 | Pre@1: 0.993277 | R-Pre: 0.991930 | MAP@R: 0.991382 | Sil: 0.836 | CH: 14365 | Duration: 61.59s | ------------
+| Epoch 198/250 | Batch 116/347 | Loss:  0.018753
+| Epoch 198/250 | Batch 231/347 | Loss:  0.019342
+| Epoch 198/250 | Batch 346/347 | Loss:  0.024604
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 198/250 | Pre@1: 0.993277 | R-Pre: 0.990672 | MAP@R: 0.990192 | Sil: 0.836 | CH: 14363 | Duration: 61.21s | ------------
+| Epoch 199/250 | Batch 116/347 | Loss:  0.021084
+| Epoch 199/250 | Batch 231/347 | Loss:  0.024015
+| Epoch 199/250 | Batch 346/347 | Loss:  0.022889
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 199/250 | Pre@1: 0.993277 | R-Pre: 0.993562 | MAP@R: 0.993218 | Sil: 0.843 | CH: 15390 | Duration: 61.44s | ------------
+| Epoch 200/250 | Batch 116/347 | Loss:  0.009731
+| Epoch 200/250 | Batch 231/347 | Loss:  0.005331
+| Epoch 200/250 | Batch 346/347 | Loss:  0.005457
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 200/250 | Pre@1: 0.994958 | R-Pre: 0.994462 | MAP@R: 0.994169 | Sil: 0.848 | CH: 16058 | Duration: 61.21s | ------------
+| Epoch 201/250 | Batch 116/347 | Loss:  0.013070
+| Epoch 201/250 | Batch 231/347 | Loss:  0.026168
+| Epoch 201/250 | Batch 346/347 | Loss:  0.021140
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 201/250 | Pre@1: 0.993697 | R-Pre: 0.993221 | MAP@R: 0.992873 | Sil: 0.846 | CH: 15652 | Duration: 61.44s | ------------
+| Epoch 202/250 | Batch 116/347 | Loss:  0.007007
+| Epoch 202/250 | Batch 231/347 | Loss:  0.007040
+| Epoch 202/250 | Batch 346/347 | Loss:  0.005861
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 202/250 | Pre@1: 0.993697 | R-Pre: 0.993359 | MAP@R: 0.993044 | Sil: 0.846 | CH: 15747 | Duration: 61.41s | ------------
+| Epoch 203/250 | Batch 116/347 | Loss:  0.003744
+| Epoch 203/250 | Batch 231/347 | Loss:  0.007088
+| Epoch 203/250 | Batch 346/347 | Loss:  0.005023
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 203/250 | Pre@1: 0.993697 | R-Pre: 0.993149 | MAP@R: 0.992754 | Sil: 0.845 | CH: 15701 | Duration: 61.21s | ------------
+| Epoch 204/250 | Batch 116/347 | Loss:  0.000660
+| Epoch 204/250 | Batch 231/347 | Loss:  0.004898
+| Epoch 204/250 | Batch 346/347 | Loss:  0.003809
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 204/250 | Pre@1: 0.993697 | R-Pre: 0.993562 | MAP@R: 0.993266 | Sil: 0.846 | CH: 15936 | Duration: 61.80s | ------------
+| Epoch 205/250 | Batch 116/347 | Loss:  0.006071
+| Epoch 205/250 | Batch 231/347 | Loss:  0.005175
+| Epoch 205/250 | Batch 346/347 | Loss:  0.003944
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 205/250 | Pre@1: 0.994118 | R-Pre: 0.993632 | MAP@R: 0.993320 | Sil: 0.847 | CH: 16219 | Duration: 61.20s | ------------
+| Epoch 206/250 | Batch 116/347 | Loss:  0.019316
+| Epoch 206/250 | Batch 231/347 | Loss:  0.012212
+| Epoch 206/250 | Batch 346/347 | Loss:  0.009953
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 206/250 | Pre@1: 0.994538 | R-Pre: 0.994098 | MAP@R: 0.993805 | Sil: 0.848 | CH: 16486 | Duration: 61.42s | ------------
+| Epoch 207/250 | Batch 116/347 | Loss:  0.000951
+| Epoch 207/250 | Batch 231/347 | Loss:  0.001747
+| Epoch 207/250 | Batch 346/347 | Loss:  0.002638
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 207/250 | Pre@1: 0.994118 | R-Pre: 0.993747 | MAP@R: 0.993410 | Sil: 0.846 | CH: 16065 | Duration: 61.06s | ------------
+| Epoch 208/250 | Batch 116/347 | Loss:  0.004764
+| Epoch 208/250 | Batch 231/347 | Loss:  0.003425
+| Epoch 208/250 | Batch 346/347 | Loss:  0.004321
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 208/250 | Pre@1: 0.994118 | R-Pre: 0.993927 | MAP@R: 0.993633 | Sil: 0.847 | CH: 16314 | Duration: 61.40s | ------------
+| Epoch 209/250 | Batch 116/347 | Loss:  0.007356
+| Epoch 209/250 | Batch 231/347 | Loss:  0.005691
+| Epoch 209/250 | Batch 346/347 | Loss:  0.004302
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 209/250 | Pre@1: 0.994538 | R-Pre: 0.994212 | MAP@R: 0.993847 | Sil: 0.848 | CH: 16464 | Duration: 61.54s | ------------
+| Epoch 210/250 | Batch 116/347 | Loss:  0.002172
+| Epoch 210/250 | Batch 231/347 | Loss:  0.001728
+| Epoch 210/250 | Batch 346/347 | Loss:  0.004729
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 210/250 | Pre@1: 0.994118 | R-Pre: 0.994262 | MAP@R: 0.993837 | Sil: 0.847 | CH: 16370 | Duration: 61.07s | ------------
+| Epoch 211/250 | Batch 116/347 | Loss:  0.003903
+| Epoch 211/250 | Batch 231/347 | Loss:  0.002595
+| Epoch 211/250 | Batch 346/347 | Loss:  0.005392
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 211/250 | Pre@1: 0.994118 | R-Pre: 0.993899 | MAP@R: 0.993491 | Sil: 0.846 | CH: 16233 | Duration: 61.66s | ------------
+| Epoch 212/250 | Batch 116/347 | Loss:  0.000000
+| Epoch 212/250 | Batch 231/347 | Loss:  0.002406
+| Epoch 212/250 | Batch 346/347 | Loss:  0.001989
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 212/250 | Pre@1: 0.994118 | R-Pre: 0.993763 | MAP@R: 0.993386 | Sil: 0.846 | CH: 16054 | Duration: 61.20s | ------------
+| Epoch 213/250 | Batch 116/347 | Loss:  0.003671
+| Epoch 213/250 | Batch 231/347 | Loss:  0.003762
+| Epoch 213/250 | Batch 346/347 | Loss:  0.004267
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 213/250 | Pre@1: 0.994538 | R-Pre: 0.993614 | MAP@R: 0.993277 | Sil: 0.846 | CH: 16007 | Duration: 61.42s | ------------
+| Epoch 214/250 | Batch 116/347 | Loss:  0.003833
+| Epoch 214/250 | Batch 231/347 | Loss:  0.004201
+| Epoch 214/250 | Batch 346/347 | Loss:  0.004943
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 214/250 | Pre@1: 0.994118 | R-Pre: 0.993736 | MAP@R: 0.993275 | Sil: 0.846 | CH: 16187 | Duration: 61.17s | ------------
+| Epoch 215/250 | Batch 116/347 | Loss:  0.004723
+| Epoch 215/250 | Batch 231/347 | Loss:  0.003493
+| Epoch 215/250 | Batch 346/347 | Loss:  0.004193
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 215/250 | Pre@1: 0.993697 | R-Pre: 0.993366 | MAP@R: 0.992942 | Sil: 0.845 | CH: 15968 | Duration: 61.36s | ------------
+| Epoch 216/250 | Batch 116/347 | Loss:  0.007042
+| Epoch 216/250 | Batch 231/347 | Loss:  0.003829
+| Epoch 216/250 | Batch 346/347 | Loss:  0.003333
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 216/250 | Pre@1: 0.994538 | R-Pre: 0.993801 | MAP@R: 0.993340 | Sil: 0.845 | CH: 15936 | Duration: 61.36s | ------------
+| Epoch 217/250 | Batch 116/347 | Loss:  0.000476
+| Epoch 217/250 | Batch 231/347 | Loss:  0.004346
+| Epoch 217/250 | Batch 346/347 | Loss:  0.003770
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 217/250 | Pre@1: 0.994118 | R-Pre: 0.993137 | MAP@R: 0.992728 | Sil: 0.844 | CH: 15695 | Duration: 61.04s | ------------
+| Epoch 218/250 | Batch 116/347 | Loss:  0.000000
+| Epoch 218/250 | Batch 231/347 | Loss:  0.000550
+| Epoch 218/250 | Batch 346/347 | Loss:  0.002010
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 218/250 | Pre@1: 0.993697 | R-Pre: 0.993188 | MAP@R: 0.992928 | Sil: 0.845 | CH: 15739 | Duration: 61.74s | ------------
+| Epoch 219/250 | Batch 116/347 | Loss:  0.000584
+| Epoch 219/250 | Batch 231/347 | Loss:  0.001511
+| Epoch 219/250 | Batch 346/347 | Loss:  0.001417
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 219/250 | Pre@1: 0.993697 | R-Pre: 0.992889 | MAP@R: 0.992272 | Sil: 0.843 | CH: 15697 | Duration: 61.16s | ------------
+| Epoch 220/250 | Batch 116/347 | Loss:  0.007552
+| Epoch 220/250 | Batch 231/347 | Loss:  0.005863
+| Epoch 220/250 | Batch 346/347 | Loss:  0.004402
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 220/250 | Pre@1: 0.994538 | R-Pre: 0.993112 | MAP@R: 0.992744 | Sil: 0.844 | CH: 15771 | Duration: 61.48s | ------------
+| Epoch 221/250 | Batch 116/347 | Loss:  0.002370
+| Epoch 221/250 | Batch 231/347 | Loss:  0.004285
+| Epoch 221/250 | Batch 346/347 | Loss:  0.004393
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 221/250 | Pre@1: 0.993697 | R-Pre: 0.993546 | MAP@R: 0.993081 | Sil: 0.845 | CH: 15956 | Duration: 61.14s | ------------
+| Epoch 222/250 | Batch 116/347 | Loss:  0.005463
+| Epoch 222/250 | Batch 231/347 | Loss:  0.004945
+| Epoch 222/250 | Batch 346/347 | Loss:  0.004016
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 222/250 | Pre@1: 0.993277 | R-Pre: 0.993064 | MAP@R: 0.992580 | Sil: 0.843 | CH: 15587 | Duration: 61.54s | ------------
+| Epoch 223/250 | Batch 116/347 | Loss:  0.005236
+| Epoch 223/250 | Batch 231/347 | Loss:  0.003543
+| Epoch 223/250 | Batch 346/347 | Loss:  0.002699
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 223/250 | Pre@1: 0.994538 | R-Pre: 0.993714 | MAP@R: 0.993352 | Sil: 0.845 | CH: 16067 | Duration: 61.28s | ------------
+| Epoch 224/250 | Batch 116/347 | Loss:  0.001068
+| Epoch 224/250 | Batch 231/347 | Loss:  0.001378
+| Epoch 224/250 | Batch 346/347 | Loss:  0.001445
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 224/250 | Pre@1: 0.993697 | R-Pre: 0.993180 | MAP@R: 0.992748 | Sil: 0.845 | CH: 15967 | Duration: 61.09s | ------------
+| Epoch 225/250 | Batch 116/347 | Loss:  0.001035
+| Epoch 225/250 | Batch 231/347 | Loss:  0.004818
+| Epoch 225/250 | Batch 346/347 | Loss:  0.005627
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 225/250 | Pre@1: 0.993277 | R-Pre: 0.993223 | MAP@R: 0.992793 | Sil: 0.846 | CH: 15982 | Duration: 61.78s | ------------
+| Epoch 226/250 | Batch 116/347 | Loss:  0.000000
+| Epoch 226/250 | Batch 231/347 | Loss:  0.000354
+| Epoch 226/250 | Batch 346/347 | Loss:  0.001076
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 226/250 | Pre@1: 0.993697 | R-Pre: 0.993504 | MAP@R: 0.992996 | Sil: 0.847 | CH: 16355 | Duration: 61.34s | ------------
+| Epoch 227/250 | Batch 116/347 | Loss:  0.001226
+| Epoch 227/250 | Batch 231/347 | Loss:  0.004049
+| Epoch 227/250 | Batch 346/347 | Loss:  0.003119
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 227/250 | Pre@1: 0.994118 | R-Pre: 0.993748 | MAP@R: 0.993244 | Sil: 0.847 | CH: 16400 | Duration: 61.40s | ------------
+| Epoch 228/250 | Batch 116/347 | Loss:  0.001436
+| Epoch 228/250 | Batch 231/347 | Loss:  0.002629
+| Epoch 228/250 | Batch 346/347 | Loss:  0.003501
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 228/250 | Pre@1: 0.994538 | R-Pre: 0.994062 | MAP@R: 0.993628 | Sil: 0.848 | CH: 16570 | Duration: 61.28s | ------------
+| Epoch 229/250 | Batch 116/347 | Loss:  0.000000
+| Epoch 229/250 | Batch 231/347 | Loss:  0.001475
+| Epoch 229/250 | Batch 346/347 | Loss:  0.001214
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 229/250 | Pre@1: 0.994118 | R-Pre: 0.993806 | MAP@R: 0.993380 | Sil: 0.847 | CH: 16404 | Duration: 61.30s | ------------
+| Epoch 230/250 | Batch 116/347 | Loss:  0.000433
+| Epoch 230/250 | Batch 231/347 | Loss:  0.000656
+| Epoch 230/250 | Batch 346/347 | Loss:  0.001391
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 230/250 | Pre@1: 0.994538 | R-Pre: 0.993967 | MAP@R: 0.993602 | Sil: 0.846 | CH: 16201 | Duration: 61.28s | ------------
+| Epoch 231/250 | Batch 116/347 | Loss:  0.004160
+| Epoch 231/250 | Batch 231/347 | Loss:  0.002089
+| Epoch 231/250 | Batch 346/347 | Loss:  0.002130
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 231/250 | Pre@1: 0.994538 | R-Pre: 0.993890 | MAP@R: 0.993478 | Sil: 0.846 | CH: 16260 | Duration: 61.13s | ------------
+| Epoch 232/250 | Batch 116/347 | Loss:  0.002708
+| Epoch 232/250 | Batch 231/347 | Loss:  0.004991
+| Epoch 232/250 | Batch 346/347 | Loss:  0.005439
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 232/250 | Pre@1: 0.994538 | R-Pre: 0.994241 | MAP@R: 0.994016 | Sil: 0.846 | CH: 16166 | Duration: 61.71s | ------------
+| Epoch 233/250 | Batch 116/347 | Loss:  0.001568
+| Epoch 233/250 | Batch 231/347 | Loss:  0.002150
+| Epoch 233/250 | Batch 346/347 | Loss:  0.001435
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 233/250 | Pre@1: 0.994538 | R-Pre: 0.994176 | MAP@R: 0.993910 | Sil: 0.846 | CH: 16319 | Duration: 61.20s | ------------
+| Epoch 234/250 | Batch 116/347 | Loss:  0.001256
+| Epoch 234/250 | Batch 231/347 | Loss:  0.001742
+| Epoch 234/250 | Batch 346/347 | Loss:  0.002388
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 234/250 | Pre@1: 0.994538 | R-Pre: 0.993790 | MAP@R: 0.993429 | Sil: 0.844 | CH: 15897 | Duration: 61.45s | ------------
+| Epoch 235/250 | Batch 116/347 | Loss:  0.000588
+| Epoch 235/250 | Batch 231/347 | Loss:  0.001029
+| Epoch 235/250 | Batch 346/347 | Loss:  0.000917
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 235/250 | Pre@1: 0.994538 | R-Pre: 0.994174 | MAP@R: 0.993799 | Sil: 0.845 | CH: 16013 | Duration: 61.11s | ------------
+| Epoch 236/250 | Batch 116/347 | Loss:  0.001994
+| Epoch 236/250 | Batch 231/347 | Loss:  0.006212
+| Epoch 236/250 | Batch 346/347 | Loss:  0.004447
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 236/250 | Pre@1: 0.994118 | R-Pre: 0.994364 | MAP@R: 0.994131 | Sil: 0.847 | CH: 16398 | Duration: 61.42s | ------------
+| Epoch 237/250 | Batch 116/347 | Loss:  0.001114
+| Epoch 237/250 | Batch 231/347 | Loss:  0.002163
+| Epoch 237/250 | Batch 346/347 | Loss:  0.003535
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 237/250 | Pre@1: 0.993697 | R-Pre: 0.993870 | MAP@R: 0.993367 | Sil: 0.846 | CH: 16188 | Duration: 61.28s | ------------
+| Epoch 238/250 | Batch 116/347 | Loss:  0.003280
+| Epoch 238/250 | Batch 231/347 | Loss:  0.001647
+| Epoch 238/250 | Batch 346/347 | Loss:  0.002685
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 238/250 | Pre@1: 0.994118 | R-Pre: 0.993917 | MAP@R: 0.993574 | Sil: 0.847 | CH: 16273 | Duration: 61.19s | ------------
+| Epoch 239/250 | Batch 116/347 | Loss:  0.005741
+| Epoch 239/250 | Batch 231/347 | Loss:  0.002953
+| Epoch 239/250 | Batch 346/347 | Loss:  0.002203
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 239/250 | Pre@1: 0.994538 | R-Pre: 0.994554 | MAP@R: 0.994251 | Sil: 0.847 | CH: 16438 | Duration: 61.67s | ------------
+| Epoch 240/250 | Batch 116/347 | Loss:  0.004899
+| Epoch 240/250 | Batch 231/347 | Loss:  0.006196
+| Epoch 240/250 | Batch 346/347 | Loss:  0.004137
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 240/250 | Pre@1: 0.994538 | R-Pre: 0.994593 | MAP@R: 0.994219 | Sil: 0.847 | CH: 16505 | Duration: 61.17s | ------------
+| Epoch 241/250 | Batch 116/347 | Loss:  0.001853
+| Epoch 241/250 | Batch 231/347 | Loss:  0.001855
+| Epoch 241/250 | Batch 346/347 | Loss:  0.001238
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 241/250 | Pre@1: 0.994958 | R-Pre: 0.994612 | MAP@R: 0.994182 | Sil: 0.848 | CH: 16529 | Duration: 61.41s | ------------
+| Epoch 242/250 | Batch 116/347 | Loss:  0.012055
+| Epoch 242/250 | Batch 231/347 | Loss:  0.006332
+| Epoch 242/250 | Batch 346/347 | Loss:  0.007251
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 242/250 | Pre@1: 0.994538 | R-Pre: 0.994020 | MAP@R: 0.993543 | Sil: 0.847 | CH: 16274 | Duration: 61.15s | ------------
+| Epoch 243/250 | Batch 116/347 | Loss:  0.000376
+| Epoch 243/250 | Batch 231/347 | Loss:  0.001015
+| Epoch 243/250 | Batch 346/347 | Loss:  0.001018
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 243/250 | Pre@1: 0.994958 | R-Pre: 0.994587 | MAP@R: 0.994305 | Sil: 0.846 | CH: 16213 | Duration: 61.56s | ------------
+| Epoch 244/250 | Batch 116/347 | Loss:  0.001542
+| Epoch 244/250 | Batch 231/347 | Loss:  0.000774
+| Epoch 244/250 | Batch 346/347 | Loss:  0.000517
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 244/250 | Pre@1: 0.994958 | R-Pre: 0.994519 | MAP@R: 0.994230 | Sil: 0.846 | CH: 16141 | Duration: 61.30s | ------------
+| Epoch 245/250 | Batch 116/347 | Loss:  0.000739
+| Epoch 245/250 | Batch 231/347 | Loss:  0.001285
+| Epoch 245/250 | Batch 346/347 | Loss:  0.000858
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 245/250 | Pre@1: 0.994958 | R-Pre: 0.994665 | MAP@R: 0.994435 | Sil: 0.846 | CH: 16243 | Duration: 61.08s | ------------
+| Epoch 246/250 | Batch 116/347 | Loss:  0.000766
+| Epoch 246/250 | Batch 231/347 | Loss:  0.000385
+| Epoch 246/250 | Batch 346/347 | Loss:  0.000257
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 246/250 | Pre@1: 0.995378 | R-Pre: 0.994543 | MAP@R: 0.994217 | Sil: 0.846 | CH: 16231 | Duration: 61.63s | ------------
+| Epoch 247/250 | Batch 116/347 | Loss:  0.000000
+| Epoch 247/250 | Batch 231/347 | Loss:  0.001287
+| Epoch 247/250 | Batch 346/347 | Loss:  0.003747
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 247/250 | Pre@1: 0.994958 | R-Pre: 0.993639 | MAP@R: 0.992973 | Sil: 0.844 | CH: 15913 | Duration: 61.28s | ------------
+| Epoch 248/250 | Batch 116/347 | Loss:  0.000000
+| Epoch 248/250 | Batch 231/347 | Loss:  0.000112
+| Epoch 248/250 | Batch 346/347 | Loss:  0.000074
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 248/250 | Pre@1: 0.993697 | R-Pre: 0.992893 | MAP@R: 0.992297 | Sil: 0.842 | CH: 15551 | Duration: 61.44s | ------------
+| Epoch 249/250 | Batch 116/347 | Loss:  0.001195
+| Epoch 249/250 | Batch 231/347 | Loss:  0.004492
+| Epoch 249/250 | Batch 346/347 | Loss:  0.003749
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 249/250 | Pre@1: 0.994958 | R-Pre: 0.994167 | MAP@R: 0.993806 | Sil: 0.846 | CH: 16182 | Duration: 61.21s | ------------
+| Epoch 250/250 | Batch 116/347 | Loss:  0.000734
+| Epoch 250/250 | Batch 231/347 | Loss:  0.000628
+| Epoch 250/250 | Batch 346/347 | Loss:  0.001349
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Epoch 250/250 | Pre@1: 0.993697 | R-Pre: 0.993867 | MAP@R: 0.993342 | Sil: 0.846 | CH: 16208 | Duration: 61.37s | ------------
+| Finished learning | Learning time: 15409.08s
+Using CPU for k-nn search because k = 11104 > 2048, which is the maximum allowable on GPU.
+| Finished testing  | Accuracy: 0.991797 | Run time: 15412.58s
+
+
+---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*
+| Total time 155004.07
+| Notable parameters - loss_margin: 50 | loss_type: triplet | task: metric | step_size: 100 | num_epochs: 250 |
+| Scores:
+| - mean_average_precision_at_r: 0.991 +/- 0.002
+| - precision_at_1: 0.992 +/- 0.002
+| - r_precision: 0.992 +/- 0.002
+| - accuracy: 0.991 +/- 0.002
+| - silhouette: 0.847 +/- 0.005
+| - ch: 19650.104 +/- 1677.724
+|---------
+|  _____-----_____-----_____-----_____-----_____-----_____-----_____-----_____-----_____-----_____-----
+| Grid 3/3
+| Grid 1
+| Run 1/1
+| 1. loss_margin: 100 | 2. loss_type: triplet | 3. task: metric | 4. step_size: 100 | 5. num_epochs: 250
