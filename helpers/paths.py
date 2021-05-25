@@ -31,4 +31,4 @@ CC_OFFSETS_PATH = os.path.join(os.environ['DATASET_DIR'], "/isaeng_extr/json_dum
 # Path for TensorBoard's SummaryWriter
 TB_RUNS_PATH = os.path.join(os.environ['STATES_PATH'], "runs/")
 
-
+RUNS_INFO_PATH = os.path.join(os.environ['REPO_PATH'], "users/isaeng/network_modelling/saves/")
