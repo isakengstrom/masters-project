@@ -14,20 +14,23 @@ import torch.backends.cudnn as cudnn
 import torchvision.transforms as transforms
 
 # To start board, type the following in the terminal: tensorboard --logdir=runs
-#from torch.utils.tensorboard import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
+
 from torch.utils.data import DataLoader
 
 from learn import learn
-from evaluate import evaluate, evaluate_metric
+from evaluate import evaluate
+from evaluate_metric import evaluate_metric
 
 from models.RNN import GenNet
-from losses.margin_losses import TripletMarginLoss
+#from losses.margin_losses import TripletMarginLoss
 
 from dataset import FOIKinematicPoseDataset, DataLimiter, LoadData, create_samplers
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
 
 from helpers import write_to_json, read_from_json
 from helpers.paths import EXTR_PATH_SSD, TB_RUNS_PATH
+from helpers.result_formatter import mean_confidence_interval
 
 
 # Const paths
@@ -40,13 +43,13 @@ DATA_LIMITER = DataLimiter(
     sessions=[0],
     views=None,
 )
-'''
+
 DATA_LIMITER_EVAL = DataLimiter(
-    subjects=[8,9],
-    sessions=[0],
+    subjects=[0, 1],
+    sessions=[1],
     views=None,
 )
-'''
+
 
 # Load the data into memory
 print(f"| Loading data into memory..")
@@ -55,9 +58,14 @@ LOADED_DATA = LoadData(root_dir=ROOT_DIR_SSD, data_limiter=DATA_LIMITER, num_wor
 print(f"| Loading finished in {time.time() - load_start_time:0.1f}s")
 print('-' * 72)
 
+print(f"| Loading data into memory..")
+load_start_time = time.time()
+LOADED_DATA_EVAL = LoadData(root_dir=ROOT_DIR_SSD, data_limiter=DATA_LIMITER_EVAL, num_workers=8)
+print(f"| Loading finished in {time.time() - load_start_time:0.1f}s")
+print('-' * 72)
 
-def print_setup(setup: dict):
-    params = setup['params']
+
+def print_setup(setup: dict, params):
     split = setup['split']
 
     print('-' * 32, 'Setup', '-' * 33)
@@ -104,18 +112,6 @@ def make_save_dirs():
 
     if not os.path.isdir('./saves/runs'):
         os.mkdir('./saves/runs')
-
-
-def mean_confidence_interval(data, confidence=0.95):
-
-    if len(data) <= 1:
-        return data[0], 0
-
-    a = 1.0 * np.array(data)
-    n = len(a)
-    m, se = np.mean(a), scipy.stats.sem(a)
-    h = se * scipy.stats.t.ppf((1 + confidence) / 2., n-1)
-    return m, h
 
 
 def parameters():
@@ -180,78 +176,28 @@ def parameters():
     params['loss_type'] = 'single'  # 'single'/'triplet'
     params['loss_margin'] = 25  # The margin for certain loss functions
 
+    params['should_train'] = False
+    params['should_write'] = True
+    params['should_load_checkpoints'] = True
+    params['should_test_unseen_sessions'] = True
+
     return params
 
 
-def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
-    reps_start = str(datetime.datetime.now()).split('.')[0]
-    reps_start_time = time.time()
-
-    if params is None:
-        params = parameters()
-
-    params['num_reps'] = num_repeats
-    repetitions = dict()
-    test_scores = dict()
-    confusion_matrices = dict()
-    test_accs = []
-    for rep_idx in range(num_repeats):
-        params['rep_idx'] = rep_idx
-
-        run_info = run_network(params)
-
-        test_accs.append(run_info['test_info']['accuracy'])
-        confusion_matrices[rep_idx] = run_info['test_info'].pop('confusion_matrix', None)
-        test_scores[rep_idx] = run_info['test_info']
-        repetitions[rep_idx] = run_info
-
-
-    # Prepare
-    scores_concat = next(iter(test_scores.values()))
-    for key in scores_concat:
-        score_list = []
-        for rep_scores in test_scores.values():
-            score_list.append(rep_scores[key])
-        scores_concat[key] = score_list
-
-    confidence_scores = dict()
-    for score_name, score in scores_concat.items():
-        confidence_scores[score_name] = mean_confidence_interval(score)
-
-    #print(confidence_scores)
-
-    reps_info = {
-        'at': reps_start,
-        'duration': time.time() - reps_start_time,
-        'accuracies_mean': mean(test_accs),
-        'accuracies': test_accs,
-        'repetitions': repetitions,
-        'scores': scores_concat,
-        'confidence_scores': confidence_scores,
-        'confusion_matrices': confusion_matrices
-    }
-
-    return reps_info
-
-
-def multi_grid(num_repeats=10):
-
+def multi_grid(num_repeats=1):
+    """"""
+    
     grids = [
         {
-            'loss_type': 'single',
-            'task': 'metric',
-            'step_size': 40,
-            'num_epochs': 100,
-        },
-        {
-            'loss_margin': 50,
+            'loss_margin': 5,
             'loss_type': 'triplet',
             'task': 'metric',
             'step_size': 100,
             'num_epochs': 250,
         },
+
         {
-            'loss_margin': 100,
+            'loss_margin': 10,
             'loss_type': 'triplet',
             'task': 'metric',
             'step_size': 100,
@@ -357,23 +303,66 @@ def grid_search(num_repeats=1, outer_grid_idx=-1, grid=None):
             print(f"|---------")
 
 
+def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
+    reps_start = str(datetime.datetime.now()).split('.')[0]
+    reps_start_time = time.time()
+
+    if params is None:
+        params = parameters()
+
+    params['num_reps'] = num_repeats
+    repetitions = dict()
+    test_scores = dict()
+    confusion_matrices = dict()
+    test_accs = []
+    for rep_idx in range(num_repeats):
+        params['rep_idx'] = rep_idx
+
+        run_info = run_network(params)
+
+        test_accs.append(run_info['test_info']['accuracy'])
+        confusion_matrices[rep_idx] = run_info['test_info'].pop('confusion_matrix', None)
+        test_scores[rep_idx] = run_info['test_info']
+        repetitions[rep_idx] = run_info
+
+
+    # Prepare
+    scores_concat = next(iter(test_scores.values()))
+    for key in scores_concat:
+        score_list = []
+        for rep_scores in test_scores.values():
+            score_list.append(rep_scores[key])
+        scores_concat[key] = score_list
+
+    confidence_scores = dict()
+    for score_name, score in scores_concat.items():
+        confidence_scores[score_name] = mean_confidence_interval(score)
+
+    #print(confidence_scores)
+
+    reps_info = {
+        'at': reps_start,
+        'duration': time.time() - reps_start_time,
+        'accuracies_mean': mean(test_accs),
+        'accuracies': test_accs,
+        'repetitions': repetitions,
+        'scores': scores_concat,
+        'confidence_scores': confidence_scores,
+        'confusion_matrices': confusion_matrices
+    }
+
+    return reps_info
+
+
 def run_network(params: dict = None) -> dict:
     """
     Run the network. Either called directly, or from repeat_run()
-
-    :param params: hyperparameters and some other passed down info
-    :return:
     """
 
     if params is None:
         params = parameters()
 
     run_start = datetime.datetime.now()  # Save Date and time of run
-
-    # Dict to save all the run info. When learning and evaluating is finished, this will be saved to disk.
-    run_info = dict()
-    run_info['at'] = str(run_start).split('.')[0]
-    run_info['duration'] = None
 
     # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
     num_classes = len(DATA_LIMITER.subjects)
@@ -412,23 +401,30 @@ def run_network(params: dict = None) -> dict:
     test_loader = DataLoader(train_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
     val_loader = DataLoader(train_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
 
-    # Store all the info of how the data is split into train, val and test
-    run_info['split'] = {
-        'tot_num_seqs': len(train_dataset), 'batch_size': params['batch_size'], 'train_split': len(train_sampler),
-        'val_split': len(val_sampler), 'test_split': len(test_sampler), 'num_train_batches': len(train_loader),
-        'num_val_batches': len(val_loader), 'num_test_batches': len(test_loader)
-    }
+    if params['should_test_unseen_sessions']:
+        test_dataset = FOIKinematicPoseDataset(
+            data=LOADED_DATA_EVAL,
+            json_path=JSON_PATH_SSD,
+            sequence_len=params['sequence_len'],
+            data_limiter=DATA_LIMITER_EVAL,
+            transform=composed
+        )
+
+        _, test_sampler, _ = create_samplers(
+            dataset_len=len(test_dataset),
+            train_split=.0,
+            val_split=.0,
+            val_from_train=False,
+            shuffle=True,
+            # split_limit_factor=params['sequence_len']/params['simulated_len']
+        )
+
+        test_loader = DataLoader(test_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
 
     # Use cuda if possible
-    if torch.cuda.is_available():
-        device = torch.device('cuda')
-        cudnn.benchmark = True
-    else:
-        # TODO: Bug - Not everything is being sent to the cpu, fix in other parts of the scripts
-        device = torch.device('cpu')
-
-    # Store runtime information
-    run_info['device'] = str(device)
+    # TODO: Bug - Not everything is being sent to the cpu, fix in other parts of the scripts
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    cudnn.benchmark = torch.cuda.is_available()
 
     # The recurrent neural net model, RNN, GRU or LSTM
     model = GenNet(
@@ -443,7 +439,6 @@ def run_network(params: dict = None) -> dict:
 
     # The optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=params['learning_rate'])
-    #optimizer = torch.optim.SGD(model.parameters(), lr=params["learning_rate"], momentum=0.9)
 
     # Pick loss function depending on params
     if params['loss_type'] == "single":
@@ -452,49 +447,50 @@ def run_network(params: dict = None) -> dict:
         raise NotImplementedError
     elif params['loss_type'] == "triplet":
         loss_function = nn.TripletMarginLoss(margin=params['loss_margin'])
-        #loss_function = TripletMarginLoss(margin=params['loss_margin'])
     else:
         raise Exception("Invalid network_type")
 
-    # Store runtime information
-    # Get the names as strings for the pytorch objects of interest
-    run_info['model_name'] = str(type(model)).split('.')[-1][:-2]
-    run_info['optimizer_name'] = str(type(optimizer)).split('.')[-1][:-2]
-    run_info['loss_function_name'] = str(type(loss_function)).split('.')[-1][:-2]
-    run_info['transforms'] = [transform.split(' ')[0].split('.')[1] for transform in str(composed).split('<')[1:]]
+    #print_setup(setup=run_info, params=params)
 
-    #print_setup(setup=run_info)
+    writer = SummaryWriter(TB_RUNS_PATH) if params['should_write'] else None
 
-    writer=None#: SummaryWriter = SummaryWriter(TB_RUNS_PATH)  # TensorBoard writer
     start_time = time.time()
 
-    # Print runtime information
-    if 'num_runs' in params and 'num_reps' in params:
-        run_formatter = int(math.log10(params['num_runs'])) + 1
-        rep_formatter = int(math.log10(params['num_reps'])) + 1
+    learn_info = None
+    if params['should_train']:
+        # Print runtime information
+        if 'num_runs' in params and 'num_reps' in params:
+            run_formatter = int(math.log10(params['num_runs'])) + 1
+            rep_formatter = int(math.log10(params['num_reps'])) + 1
 
-        print(f"| Learning phase"
-              f" - Run {params['run_idx']+1:{run_formatter}.0f}/{params['num_runs']}"
-              f" - Rep {params['rep_idx']+1:{rep_formatter}.0f}/{params['num_reps']}")
-    else:
-        print('-' * 28, 'Learning phase', '-' * 28)
+            print(f"| Learning phase"
+                  f" - Run {params['run_idx']+1:{run_formatter}.0f}/{params['num_runs']}"
+                  f" - Rep {params['rep_idx']+1:{rep_formatter}.0f}/{params['num_reps']}")
+        else:
+            print('-' * 28, 'Learning phase', '-' * 28)
 
-    model, learn_info = learn(
-        train_loader=train_loader,
-        val_loader=val_loader,
-        model=model,
-        optimizer=optimizer,
-        loss_function=loss_function,
-        num_epochs=params['num_epochs'],
-        device=device,
-        classes=DATA_LIMITER.subjects,
-        lr_lim=params['learning_rate_lim'],
-        loss_type=params['loss_type'],
-        task=params['task'],
-        max_norm=params['max_norm'],
-        step_size=params['step_size'],
-        tb_writer=writer
-    )
+        model, learn_info = learn(
+            train_loader=train_loader,
+            val_loader=val_loader,
+            model=model,
+            optimizer=optimizer,
+            loss_function=loss_function,
+            num_epochs=params['num_epochs'],
+            device=device,
+            classes=DATA_LIMITER.subjects,
+            lr_lim=params['learning_rate_lim'],
+            loss_type=params['loss_type'],
+            task=params['task'],
+            max_norm=params['max_norm'],
+            step_size=params['step_size'],
+            tb_writer=writer,
+            params=params
+        )
+
+    if params['should_load_checkpoints']:
+        print('Loading network checkpoints for testing..')
+        checkpoint = torch.load('./saves/backup_models/triplet_margin5_allClasses/checkpoint_margin_5_epoch_150.pth')
+        model.load_state_dict(checkpoint['net'])
 
     if params['task'] == 'classification':
         test_info = evaluate(
@@ -511,19 +507,33 @@ def run_network(params: dict = None) -> dict:
             model=model,
             device=device,
             classes=DATA_LIMITER.subjects,
-            is_test=False
+            is_test=False,
+            tb_writer=writer
         )
     else:
         raise Exception("Invalid task type, should either by 'classification' or 'metric'")
 
     # Close TensorBoard writer if it exists
-    #if writer is not None:
-    #    writer.close()
+    if writer is not None:
+        writer.close()
 
-    # Store runtime information
-    run_info['duration'] = time.time() - start_time
-    run_info['learn_info'] = learn_info
-    run_info['test_info'] = test_info
+    # Dict to save all the run info. When learning and evaluating is finished, this will be saved to disk.
+    run_info = {
+        'at': str(run_start).split('.')[0],
+        'duration': time.time() - start_time,
+        'device': str(device),
+        'model_name': str(type(model)).split('.')[-1][:-2],
+        'optimizer_name': str(type(optimizer)).split('.')[-1][:-2],
+        'loss_function_name': str(type(loss_function)).split('.')[-1][:-2],
+        'transforms': [transform.split(' ')[0].split('.')[1] for transform in str(composed).split('<')[1:]],
+        'split': {
+            'tot_num_seqs': len(train_dataset), 'batch_size': params['batch_size'], 'train_split': len(train_sampler),
+            'val_split': len(val_sampler), 'test_split': len(test_sampler), 'num_train_batches': len(train_loader),
+            'num_val_batches': len(val_loader), 'num_test_batches': len(test_loader)
+        },
+        'learn_info': learn_info,
+        'test_info': test_info
+    }
 
     print(f"| Finished testing  | Accuracy: {test_info['accuracy']:.6f} | Run time: {run_info['duration'] :.2f}s\n\n")
 
@@ -531,7 +541,8 @@ def run_network(params: dict = None) -> dict:
 
 
 if __name__ == "__main__":
-    multi_grid(num_repeats=10)
+
+    multi_grid(num_repeats=1)
     #grid_search(num_repeats=1)
     #run_network()
     #result_info_path = os.path.join('./saves/runs', 'r_' + run_name)
