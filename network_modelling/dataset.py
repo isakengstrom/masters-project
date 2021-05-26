@@ -1,8 +1,6 @@
-import random
 import numpy as np
 import os
 import multiprocessing
-from typing import Tuple
 
 import torch
 from torch.utils.data import Dataset
@@ -50,9 +48,6 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
         test_indices = indices[train_test_split:]
     else:
         test_split = 1 - (train_split + val_split)
-
-        # Check that there is a somewhat reasonable split left for testing
-        assert test_split >= 0.1
 
         first_split = int(np.floor(train_split * dataset_len))
         second_split = int(np.floor((train_split + test_split) * dataset_len))
