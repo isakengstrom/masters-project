@@ -1,14 +1,30 @@
+import sys
 import time
 import math
 
 import torch.optim.lr_scheduler
 
 from train import train
-from evaluate import evaluate, evaluate_metric
+from evaluate import evaluate
 
 
 def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs, device, classes, lr_lim, loss_type,
-          task, max_norm, step_size, tb_writer):
+          task, max_norm, step_size, tb_writer, params):
+
+    if not params['should_learn']:
+        print(f"| Did not learn, as 'should_learn' was false")
+        return model, None
+    else:
+        # Print runtime information
+        if 'num_runs' in params and 'num_reps' in params:
+            run_formatter = int(math.log10(params['num_runs'])) + 1
+            rep_formatter = int(math.log10(params['num_reps'])) + 1
+
+            print(f"| Learning phase"
+                  f" - Run {params['run_idx'] + 1:{run_formatter}.0f}/{params['num_runs']}"
+                  f" - Rep {params['rep_idx'] + 1:{rep_formatter}.0f}/{params['num_reps']}")
+        else:
+            print('-' * 28, 'Learning phase', '-' * 28)
 
     learn_start_time = time.time()
 
@@ -24,6 +40,8 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
     bad_val_lim = 30
 
     learn_info = dict()
+
+    best_epoch_acc = {'epoch': -1, 'accuracy': -1}
 
     for epoch_idx in range(1, num_epochs + 1):
         epoch_start_time = time.time()
@@ -59,33 +77,22 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
         )
 
         # Validate the epoch
-        if task == 'classification':
-            val_info = evaluate(
-                data_loader=val_loader,
-                model=model,
-                device=device,
-                is_test=False
-            )
+        val_info, val_message = evaluate(
+            train_loader=train_loader,
+            eval_loader=val_loader,
+            model=model,
+            task=task,
+            device=device,
+            classes=classes,
+            is_test=False
+        )
 
-            epoch_status_message += f"| Val accuracy: {val_info['accuracy']:.6f} "
+        epoch_status_message += val_message
 
-        elif task == 'metric':
-            val_info = evaluate_metric(
-                train_loader=train_loader,
-                eval_loader=val_loader,
-                model=model,
-                device=device,
-                classes=classes,
-                is_test=False
-            )
-
-            epoch_status_message += f"| Pre@1: {val_info['precision_at_1']:.6f} " \
-                                    f"| R-Pre: {val_info['r_precision']:.6f} " \
-                                    f"| MAP@R: {val_info['mean_average_precision_at_r']:.6f} " \
-                                    f"| Sil: {val_info['silhouette']:.3f} " \
-                                    f"| CH: {val_info['ch']:.0f} "
-        else:
-            raise Exception("Invalid task type, should either by 'classification' or 'metric'")
+        # Store the best epoch based on validation accuracy
+        #  which is regular accuracy for classification and MAP@R for metric
+        if val_info['accuracy'] > best_epoch_acc['accuracy']:
+            best_epoch_acc = {'epoch': epoch_idx, 'accuracy': val_info['accuracy']}
 
         epoch_time = time.time() - epoch_start_time
 
@@ -101,7 +108,7 @@ def learn(train_loader, val_loader, model, optimizer, loss_function, num_epochs,
 
         # Save a checkpoint when the epoch finishes
         state = {'epoch': epoch_idx, 'net': model.state_dict(), 'optimizer': optimizer.state_dict()}
-        file_path = f'./saves/checkpoints/checkpoint_{epoch_idx}.pth'
+        file_path = f"./saves/checkpoints/checkpoint_margin_{params['loss_margin']}_epoch_{epoch_idx}.pth"
         torch.save(state, file_path)
 
         if lr_lim is not None:

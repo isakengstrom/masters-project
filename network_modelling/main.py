@@ -1,34 +1,24 @@
 import itertools
-import json
 import math
 import os
 import time
 import datetime
-import scipy.stats
-import numpy as np
 from statistics import mean
 
 import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
 import torchvision.transforms as transforms
-
-# To start board, type the following in the terminal: tensorboard --logdir=runs
-from torch.utils.tensorboard import SummaryWriter
-
+from torch.utils.tensorboard import SummaryWriter # tensorboard --logdir /home/isaeng/Exjobb/states/runs/
 from torch.utils.data import DataLoader
 
 from learn import learn
 from evaluate import evaluate
-from evaluate_metric import evaluate_metric
-
 from models.RNN import GenNet
-#from losses.margin_losses import TripletMarginLoss
-
 from dataset import FOIKinematicPoseDataset, DataLimiter, LoadData, create_samplers
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
 
-from helpers import write_to_json, read_from_json
+from helpers import write_to_json
 from helpers.paths import EXTR_PATH_SSD, TB_RUNS_PATH
 from helpers.result_formatter import mean_confidence_interval
 
@@ -37,6 +27,9 @@ from helpers.result_formatter import mean_confidence_interval
 JSON_PATH_SSD = os.path.join(EXTR_PATH_SSD, "final_data_info.json")
 ROOT_DIR_SSD = os.path.join(EXTR_PATH_SSD, "final/")
 
+
+# TODO: Bug - subjects can only be in order and if, for example, we want sub3, then subsequent subs must be used too,
+#  - i.e. [sub0, sub1, sub2, sub3], cannot be [sub2, sub3] or [sub3]
 # Data limiter: Go to definition for more info
 DATA_LIMITER = DataLimiter(
     subjects=None,
@@ -47,7 +40,7 @@ DATA_LIMITER = DataLimiter(
 DATA_LIMITER_EVAL = DataLimiter(
     subjects=[0, 1],
     sessions=[1],
-    views=None,
+    views=[0],
 )
 
 
@@ -176,10 +169,12 @@ def parameters():
     params['loss_type'] = 'single'  # 'single'/'triplet'
     params['loss_margin'] = 25  # The margin for certain loss functions
 
-    params['should_train'] = False
-    params['should_write'] = True
-    params['should_load_checkpoints'] = True
-    params['should_test_unseen_sessions'] = True
+    # Settings for the network run
+    params['should_learn'] = True
+    params['should_write'] = False
+    params['should_load_checkpoints'] = False
+    params['should_test_unseen_sessions'] = False  # Test the unseen sessions (sess1) for sub 0 and 1
+    params['should_val_unseen_sessions'] = False  # Val split from unseen sessions, otherwise uses seen session (sess0)
 
     return params
 
@@ -189,15 +184,28 @@ def multi_grid(num_repeats=1):
     
     grids = [
         {
-            'loss_margin': 5,
+            'loss_margin': 0.1,
             'loss_type': 'triplet',
             'task': 'metric',
             'step_size': 100,
             'num_epochs': 250,
         },
-
         {
-            'loss_margin': 10,
+            'loss_margin': 0.5,
+            'loss_type': 'triplet',
+            'task': 'metric',
+            'step_size': 100,
+            'num_epochs': 250,
+        },
+        {
+            'loss_margin': 1,
+            'loss_type': 'triplet',
+            'task': 'metric',
+            'step_size': 100,
+            'num_epochs': 250,
+        },
+        {
+            'loss_margin': 2,
             'loss_type': 'triplet',
             'task': 'metric',
             'step_size': 100,
@@ -320,13 +328,13 @@ def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
 
         run_info = run_network(params)
 
+        # Store runtime information
         test_accs.append(run_info['test_info']['accuracy'])
         confusion_matrices[rep_idx] = run_info['test_info'].pop('confusion_matrix', None)
         test_scores[rep_idx] = run_info['test_info']
         repetitions[rep_idx] = run_info
 
-
-    # Prepare
+    # Add the scores from each rep into lists, one list for each score type
     scores_concat = next(iter(test_scores.values()))
     for key in scores_concat:
         score_list = []
@@ -334,12 +342,12 @@ def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
             score_list.append(rep_scores[key])
         scores_concat[key] = score_list
 
+    # Calculate the confidence interval for the different scores
     confidence_scores = dict()
     for score_name, score in scores_concat.items():
         confidence_scores[score_name] = mean_confidence_interval(score)
 
-    #print(confidence_scores)
-
+    # Store runtime information
     reps_info = {
         'at': reps_start,
         'duration': time.time() - reps_start_time,
@@ -390,7 +398,7 @@ def run_network(params: dict = None) -> dict:
 
     train_sampler, test_sampler, val_sampler = create_samplers(
         dataset_len=len(train_dataset),
-        train_split=.7,
+        train_split=.70,
         val_split=.15,
         val_from_train=False,
         shuffle=True,
@@ -410,16 +418,21 @@ def run_network(params: dict = None) -> dict:
             transform=composed
         )
 
-        _, test_sampler, _ = create_samplers(
+        _, test_sampler, temp_sampler = create_samplers(
             dataset_len=len(test_dataset),
             train_split=.0,
-            val_split=.0,
+            val_split=.3,
             val_from_train=False,
             shuffle=True,
             # split_limit_factor=params['sequence_len']/params['simulated_len']
         )
 
         test_loader = DataLoader(test_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
+
+        if params['should_val_unseen_sessions']:
+            val_sampler = temp_sampler
+            val_loader = DataLoader(test_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
+
 
     # Use cuda if possible
     # TODO: Bug - Not everything is being sent to the cpu, fix in other parts of the scripts
@@ -456,62 +469,39 @@ def run_network(params: dict = None) -> dict:
 
     start_time = time.time()
 
-    learn_info = None
-    if params['should_train']:
-        # Print runtime information
-        if 'num_runs' in params and 'num_reps' in params:
-            run_formatter = int(math.log10(params['num_runs'])) + 1
-            rep_formatter = int(math.log10(params['num_reps'])) + 1
-
-            print(f"| Learning phase"
-                  f" - Run {params['run_idx']+1:{run_formatter}.0f}/{params['num_runs']}"
-                  f" - Rep {params['rep_idx']+1:{rep_formatter}.0f}/{params['num_reps']}")
-        else:
-            print('-' * 28, 'Learning phase', '-' * 28)
-
-        model, learn_info = learn(
-            train_loader=train_loader,
-            val_loader=val_loader,
-            model=model,
-            optimizer=optimizer,
-            loss_function=loss_function,
-            num_epochs=params['num_epochs'],
-            device=device,
-            classes=DATA_LIMITER.subjects,
-            lr_lim=params['learning_rate_lim'],
-            loss_type=params['loss_type'],
-            task=params['task'],
-            max_norm=params['max_norm'],
-            step_size=params['step_size'],
-            tb_writer=writer,
-            params=params
-        )
+    model, learn_info = learn(
+        train_loader=train_loader,
+        val_loader=val_loader,
+        model=model,
+        optimizer=optimizer,
+        loss_function=loss_function,
+        num_epochs=params['num_epochs'],
+        device=device,
+        classes=DATA_LIMITER.subjects,
+        lr_lim=params['learning_rate_lim'],
+        loss_type=params['loss_type'],
+        task=params['task'],
+        max_norm=params['max_norm'],
+        step_size=params['step_size'],
+        tb_writer=writer,
+        params=params
+    )
 
     if params['should_load_checkpoints']:
         print('Loading network checkpoints for testing..')
-        checkpoint = torch.load('./saves/backup_models/triplet_margin5_allClasses/checkpoint_margin_5_epoch_150.pth')
+        # network_modelling/saves/checkpoints/checkpoint_margin_5_epoch_65.pth
+        checkpoint = torch.load('./saves/checkpoints/checkpoint_margin_5_epoch_65.pth')
         model.load_state_dict(checkpoint['net'])
 
-    if params['task'] == 'classification':
-        test_info = evaluate(
-            data_loader=test_loader,
-            model=model,
-            device=device,
-            is_test=True,
-            classes=DATA_LIMITER.subjects,
-        )
-    elif params['task'] == 'metric':
-        test_info = evaluate_metric(
-            train_loader=train_loader,
-            eval_loader=test_loader,
-            model=model,
-            device=device,
-            classes=DATA_LIMITER.subjects,
-            is_test=False,
-            tb_writer=writer
-        )
-    else:
-        raise Exception("Invalid task type, should either by 'classification' or 'metric'")
+    test_info, _ = evaluate(
+        train_loader=train_loader,
+        eval_loader=val_loader,
+        model=model,
+        task=params['task'],
+        device=device,
+        classes=DATA_LIMITER.subjects,
+        is_test=False
+    )
 
     # Close TensorBoard writer if it exists
     if writer is not None:
