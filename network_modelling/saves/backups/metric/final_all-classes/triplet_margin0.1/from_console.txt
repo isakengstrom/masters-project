@@ -1,0 +1,1271 @@
+| Grid 1/4
+| Grid 1
+| Run 1/1
+| 1. loss_margin: 0.1 | 2. loss_type: triplet | 3. task: metric | 4. step_size: 100 | 5. num_epochs: 250
+
+| Learning phase - Run 1/1 - Rep 1/1
+| Epoch   1/250 | Batch 116/347 | Loss:  0.110422
+| Epoch   1/250 | Batch 231/347 | Loss:  0.095277
+| Epoch   1/250 | Batch 346/347 | Loss:  0.085217
+| Epoch   1/250 | Pre@1: 0.679832 | R-Pre: 0.310407 | MAP@R: 0.167594
+| Sil: -0.010 | CH: 542 | Duration: 65.33s | ------------
+| Epoch   2/250 | Batch 116/347 | Loss:  0.053972
+| Epoch   2/250 | Batch 231/347 | Loss:  0.051999
+| Epoch   2/250 | Batch 346/347 | Loss:  0.051268
+| Epoch   2/250 | Pre@1: 0.720588 | R-Pre: 0.344035 | MAP@R: 0.197263
+| Sil: 0.018 | CH: 770 | Duration: 65.81s | ------------
+| Epoch   3/250 | Batch 116/347 | Loss:  0.045691
+| Epoch   3/250 | Batch 231/347 | Loss:  0.043375
+| Epoch   3/250 | Batch 346/347 | Loss:  0.041422
+| Epoch   3/250 | Pre@1: 0.756723 | R-Pre: 0.394591 | MAP@R: 0.261051
+| Sil: 0.077 | CH: 923 | Duration: 66.67s | ------------
+| Epoch   4/250 | Batch 116/347 | Loss:  0.038338
+| Epoch   4/250 | Batch 231/347 | Loss:  0.036607
+| Epoch   4/250 | Batch 346/347 | Loss:  0.036510
+| Epoch   4/250 | Pre@1: 0.799160 | R-Pre: 0.457260 | MAP@R: 0.316717
+| Sil: 0.127 | CH: 1133 | Duration: 66.43s | ------------
+| Epoch   5/250 | Batch 116/347 | Loss:  0.031657
+| Epoch   5/250 | Batch 231/347 | Loss:  0.030692
+| Epoch   5/250 | Batch 346/347 | Loss:  0.031550
+| Epoch   5/250 | Pre@1: 0.825210 | R-Pre: 0.509797 | MAP@R: 0.380574
+| Sil: 0.168 | CH: 1176 | Duration: 64.10s | ------------
+| Epoch   6/250 | Batch 116/347 | Loss:  0.028899
+| Epoch   6/250 | Batch 231/347 | Loss:  0.030187
+| Epoch   6/250 | Batch 346/347 | Loss:  0.029797
+| Epoch   6/250 | Pre@1: 0.818067 | R-Pre: 0.485607 | MAP@R: 0.358308
+| Sil: 0.158 | CH: 998 | Duration: 62.71s | ------------
+| Epoch   7/250 | Batch 116/347 | Loss:  0.028090
+| Epoch   7/250 | Batch 231/347 | Loss:  0.027867
+| Epoch   7/250 | Batch 346/347 | Loss:  0.026792
+| Epoch   7/250 | Pre@1: 0.826471 | R-Pre: 0.518765 | MAP@R: 0.393964
+| Sil: 0.186 | CH: 1241 | Duration: 62.61s | ------------
+| Epoch   8/250 | Batch 116/347 | Loss:  0.023424
+| Epoch   8/250 | Batch 231/347 | Loss:  0.024777
+| Epoch   8/250 | Batch 346/347 | Loss:  0.024970
+| Epoch   8/250 | Pre@1: 0.882353 | R-Pre: 0.562952 | MAP@R: 0.445386
+| Sil: 0.227 | CH: 1654 | Duration: 62.69s | ------------
+| Epoch   9/250 | Batch 116/347 | Loss:  0.024300
+| Epoch   9/250 | Batch 231/347 | Loss:  0.023739
+| Epoch   9/250 | Batch 346/347 | Loss:  0.023525
+| Epoch   9/250 | Pre@1: 0.876050 | R-Pre: 0.590500 | MAP@R: 0.480581
+| Sil: 0.246 | CH: 1428 | Duration: 62.55s | ------------
+| Epoch  10/250 | Batch 116/347 | Loss:  0.022196
+| Epoch  10/250 | Batch 231/347 | Loss:  0.022534
+| Epoch  10/250 | Batch 346/347 | Loss:  0.021897
+| Epoch  10/250 | Pre@1: 0.878151 | R-Pre: 0.579566 | MAP@R: 0.473815
+| Sil: 0.232 | CH: 1330 | Duration: 62.79s | ------------
+| Epoch  11/250 | Batch 116/347 | Loss:  0.018087
+| Epoch  11/250 | Batch 231/347 | Loss:  0.018713
+| Epoch  11/250 | Batch 346/347 | Loss:  0.018786
+| Epoch  11/250 | Pre@1: 0.914706 | R-Pre: 0.665875 | MAP@R: 0.574558
+| Sil: 0.308 | CH: 1635 | Duration: 62.80s | ------------
+| Epoch  12/250 | Batch 116/347 | Loss:  0.017853
+| Epoch  12/250 | Batch 231/347 | Loss:  0.017205
+| Epoch  12/250 | Batch 346/347 | Loss:  0.016832
+| Epoch  12/250 | Pre@1: 0.912185 | R-Pre: 0.647007 | MAP@R: 0.552414
+| Sil: 0.303 | CH: 1177 | Duration: 62.57s | ------------
+| Epoch  13/250 | Batch 116/347 | Loss:  0.015053
+| Epoch  13/250 | Batch 231/347 | Loss:  0.014986
+| Epoch  13/250 | Batch 346/347 | Loss:  0.015174
+| Epoch  13/250 | Pre@1: 0.937815 | R-Pre: 0.713765 | MAP@R: 0.635019
+| Sil: 0.355 | CH: 1989 | Duration: 62.39s | ------------
+| Epoch  14/250 | Batch 116/347 | Loss:  0.012581
+| Epoch  14/250 | Batch 231/347 | Loss:  0.013887
+| Epoch  14/250 | Batch 346/347 | Loss:  0.013228
+| Epoch  14/250 | Pre@1: 0.957983 | R-Pre: 0.734236 | MAP@R: 0.664301
+| Sil: 0.365 | CH: 1450 | Duration: 62.47s | ------------
+| Epoch  15/250 | Batch 116/347 | Loss:  0.012352
+| Epoch  15/250 | Batch 231/347 | Loss:  0.011854
+| Epoch  15/250 | Batch 346/347 | Loss:  0.011804
+| Epoch  15/250 | Pre@1: 0.946639 | R-Pre: 0.743839 | MAP@R: 0.670770
+| Sil: 0.372 | CH: 1735 | Duration: 62.46s | ------------
+| Epoch  16/250 | Batch 116/347 | Loss:  0.011265
+| Epoch  16/250 | Batch 231/347 | Loss:  0.011085
+| Epoch  16/250 | Batch 346/347 | Loss:  0.011338
+| Epoch  16/250 | Pre@1: 0.940336 | R-Pre: 0.712322 | MAP@R: 0.636196
+| Sil: 0.349 | CH: 1627 | Duration: 62.58s | ------------
+| Epoch  17/250 | Batch 116/347 | Loss:  0.010393
+| Epoch  17/250 | Batch 231/347 | Loss:  0.010259
+| Epoch  17/250 | Batch 346/347 | Loss:  0.010091
+| Epoch  17/250 | Pre@1: 0.974790 | R-Pre: 0.803270 | MAP@R: 0.756394
+| Sil: 0.440 | CH: 2292 | Duration: 62.51s | ------------
+| Epoch  18/250 | Batch 116/347 | Loss:  0.009059
+| Epoch  18/250 | Batch 231/347 | Loss:  0.009050
+| Epoch  18/250 | Batch 346/347 | Loss:  0.009123
+| Epoch  18/250 | Pre@1: 0.961345 | R-Pre: 0.778139 | MAP@R: 0.721530
+| Sil: 0.406 | CH: 1693 | Duration: 62.75s | ------------
+| Epoch  19/250 | Batch 116/347 | Loss:  0.008784
+| Epoch  19/250 | Batch 231/347 | Loss:  0.008598
+| Epoch  19/250 | Batch 346/347 | Loss:  0.008878
+| Epoch  19/250 | Pre@1: 0.969328 | R-Pre: 0.747928 | MAP@R: 0.688245
+| Sil: 0.381 | CH: 1599 | Duration: 62.15s | ------------
+| Epoch  20/250 | Batch 116/347 | Loss:  0.007394
+| Epoch  20/250 | Batch 231/347 | Loss:  0.007839
+| Epoch  20/250 | Batch 346/347 | Loss:  0.008204
+| Epoch  20/250 | Pre@1: 0.977731 | R-Pre: 0.805665 | MAP@R: 0.758148
+| Sil: 0.425 | CH: 1876 | Duration: 62.46s | ------------
+| Epoch  21/250 | Batch 116/347 | Loss:  0.007038
+| Epoch  21/250 | Batch 231/347 | Loss:  0.008077
+| Epoch  21/250 | Batch 346/347 | Loss:  0.008380
+| Epoch  21/250 | Pre@1: 0.957983 | R-Pre: 0.782433 | MAP@R: 0.725608
+| Sil: 0.414 | CH: 1893 | Duration: 62.42s | ------------
+| Epoch  22/250 | Batch 116/347 | Loss:  0.007848
+| Epoch  22/250 | Batch 231/347 | Loss:  0.007731
+| Epoch  22/250 | Batch 346/347 | Loss:  0.007532
+| Epoch  22/250 | Pre@1: 0.985294 | R-Pre: 0.862163 | MAP@R: 0.829660
+| Sil: 0.498 | CH: 2715 | Duration: 62.47s | ------------
+| Epoch  23/250 | Batch 116/347 | Loss:  0.007917
+| Epoch  23/250 | Batch 231/347 | Loss:  0.007683
+| Epoch  23/250 | Batch 346/347 | Loss:  0.008230
+| Epoch  23/250 | Pre@1: 0.972689 | R-Pre: 0.794972 | MAP@R: 0.743767
+| Sil: 0.426 | CH: 1790 | Duration: 62.30s | ------------
+| Epoch  24/250 | Batch 116/347 | Loss:  0.007808
+| Epoch  24/250 | Batch 231/347 | Loss:  0.007500
+| Epoch  24/250 | Batch 346/347 | Loss:  0.007669
+| Epoch  24/250 | Pre@1: 0.980672 | R-Pre: 0.839717 | MAP@R: 0.800073
+| Sil: 0.473 | CH: 2117 | Duration: 62.57s | ------------
+| Epoch  25/250 | Batch 116/347 | Loss:  0.007801
+| Epoch  25/250 | Batch 231/347 | Loss:  0.007793
+| Epoch  25/250 | Batch 346/347 | Loss:  0.007621
+| Epoch  25/250 | Pre@1: 0.979832 | R-Pre: 0.869341 | MAP@R: 0.836844
+| Sil: 0.493 | CH: 2241 | Duration: 62.43s | ------------
+| Epoch  26/250 | Batch 116/347 | Loss:  0.006439
+| Epoch  26/250 | Batch 231/347 | Loss:  0.006795
+| Epoch  26/250 | Batch 346/347 | Loss:  0.006557
+| Epoch  26/250 | Pre@1: 0.971429 | R-Pre: 0.816993 | MAP@R: 0.770660
+| Sil: 0.434 | CH: 2034 | Duration: 62.43s | ------------
+| Epoch  27/250 | Batch 116/347 | Loss:  0.006587
+| Epoch  27/250 | Batch 231/347 | Loss:  0.006389
+| Epoch  27/250 | Batch 346/347 | Loss:  0.006016
+| Epoch  27/250 | Pre@1: 0.987395 | R-Pre: 0.867671 | MAP@R: 0.838567
+| Sil: 0.495 | CH: 2144 | Duration: 62.24s | ------------
+| Epoch  28/250 | Batch 116/347 | Loss:  0.005857
+| Epoch  28/250 | Batch 231/347 | Loss:  0.005928
+| Epoch  28/250 | Batch 346/347 | Loss:  0.005784
+| Epoch  28/250 | Pre@1: 0.971849 | R-Pre: 0.796450 | MAP@R: 0.748683
+| Sil: 0.426 | CH: 1709 | Duration: 62.42s | ------------
+| Epoch  29/250 | Batch 116/347 | Loss:  0.006425
+| Epoch  29/250 | Batch 231/347 | Loss:  0.006719
+| Epoch  29/250 | Batch 346/347 | Loss:  0.006667
+| Epoch  29/250 | Pre@1: 0.983613 | R-Pre: 0.874865 | MAP@R: 0.846822
+| Sil: 0.496 | CH: 1908 | Duration: 62.31s | ------------
+| Epoch  30/250 | Batch 116/347 | Loss:  0.005508
+| Epoch  30/250 | Batch 231/347 | Loss:  0.005605
+| Epoch  30/250 | Batch 346/347 | Loss:  0.005311
+| Epoch  30/250 | Pre@1: 0.984874 | R-Pre: 0.877152 | MAP@R: 0.850534
+| Sil: 0.514 | CH: 2569 | Duration: 62.15s | ------------
+| Epoch  31/250 | Batch 116/347 | Loss:  0.004923
+| Epoch  31/250 | Batch 231/347 | Loss:  0.004751
+| Epoch  31/250 | Batch 346/347 | Loss:  0.005228
+| Epoch  31/250 | Pre@1: 0.980252 | R-Pre: 0.841066 | MAP@R: 0.803576
+| Sil: 0.471 | CH: 1894 | Duration: 62.42s | ------------
+| Epoch  32/250 | Batch 116/347 | Loss:  0.005408
+| Epoch  32/250 | Batch 231/347 | Loss:  0.005530
+| Epoch  32/250 | Batch 346/347 | Loss:  0.005538
+| Epoch  32/250 | Pre@1: 0.973529 | R-Pre: 0.760237 | MAP@R: 0.707324
+| Sil: 0.383 | CH: 1418 | Duration: 62.41s | ------------
+| Epoch  33/250 | Batch 116/347 | Loss:  0.004813
+| Epoch  33/250 | Batch 231/347 | Loss:  0.005693
+| Epoch  33/250 | Batch 346/347 | Loss:  0.005408
+| Epoch  33/250 | Pre@1: 0.981933 | R-Pre: 0.871113 | MAP@R: 0.841232
+| Sil: 0.505 | CH: 2561 | Duration: 62.25s | ------------
+| Epoch  34/250 | Batch 116/347 | Loss:  0.005181
+| Epoch  34/250 | Batch 231/347 | Loss:  0.004692
+| Epoch  34/250 | Batch 346/347 | Loss:  0.004656
+| Epoch  34/250 | Pre@1: 0.980252 | R-Pre: 0.829395 | MAP@R: 0.793541
+| Sil: 0.460 | CH: 2190 | Duration: 62.16s | ------------
+| Epoch  35/250 | Batch 116/347 | Loss:  0.004643
+| Epoch  35/250 | Batch 231/347 | Loss:  0.004873
+| Epoch  35/250 | Batch 346/347 | Loss:  0.004954
+| Epoch  35/250 | Pre@1: 0.983613 | R-Pre: 0.826393 | MAP@R: 0.786246
+| Sil: 0.468 | CH: 1902 | Duration: 62.27s | ------------
+| Epoch  36/250 | Batch 116/347 | Loss:  0.004892
+| Epoch  36/250 | Batch 231/347 | Loss:  0.004985
+| Epoch  36/250 | Batch 346/347 | Loss:  0.005007
+| Epoch  36/250 | Pre@1: 0.985714 | R-Pre: 0.882575 | MAP@R: 0.855899
+| Sil: 0.524 | CH: 2518 | Duration: 62.36s | ------------
+| Epoch  37/250 | Batch 116/347 | Loss:  0.004362
+| Epoch  37/250 | Batch 231/347 | Loss:  0.004475
+| Epoch  37/250 | Batch 346/347 | Loss:  0.004306
+| Epoch  37/250 | Pre@1: 0.987815 | R-Pre: 0.842381 | MAP@R: 0.807807
+| Sil: 0.481 | CH: 2093 | Duration: 62.30s | ------------
+| Epoch  38/250 | Batch 116/347 | Loss:  0.004819
+| Epoch  38/250 | Batch 231/347 | Loss:  0.004453
+| Epoch  38/250 | Batch 346/347 | Loss:  0.004275
+| Epoch  38/250 | Pre@1: 0.985714 | R-Pre: 0.887349 | MAP@R: 0.860762
+| Sil: 0.516 | CH: 2237 | Duration: 62.29s | ------------
+| Epoch  39/250 | Batch 116/347 | Loss:  0.004365
+| Epoch  39/250 | Batch 231/347 | Loss:  0.004131
+| Epoch  39/250 | Batch 346/347 | Loss:  0.004384
+| Epoch  39/250 | Pre@1: 0.980672 | R-Pre: 0.831518 | MAP@R: 0.790084
+| Sil: 0.455 | CH: 1858 | Duration: 62.62s | ------------
+| Epoch  40/250 | Batch 116/347 | Loss:  0.004597
+| Epoch  40/250 | Batch 231/347 | Loss:  0.004167
+| Epoch  40/250 | Batch 346/347 | Loss:  0.004299
+| Epoch  40/250 | Pre@1: 0.981092 | R-Pre: 0.896215 | MAP@R: 0.873261
+| Sil: 0.519 | CH: 2150 | Duration: 62.18s | ------------
+| Epoch  41/250 | Batch 116/347 | Loss:  0.004395
+| Epoch  41/250 | Batch 231/347 | Loss:  0.004243
+| Epoch  41/250 | Batch 346/347 | Loss:  0.003949
+| Epoch  41/250 | Pre@1: 0.986975 | R-Pre: 0.832897 | MAP@R: 0.798700
+| Sil: 0.473 | CH: 1946 | Duration: 62.10s | ------------
+| Epoch  42/250 | Batch 116/347 | Loss:  0.003625
+| Epoch  42/250 | Batch 231/347 | Loss:  0.003535
+| Epoch  42/250 | Batch 346/347 | Loss:  0.003639
+| Epoch  42/250 | Pre@1: 0.992437 | R-Pre: 0.917726 | MAP@R: 0.901106
+| Sil: 0.551 | CH: 2777 | Duration: 62.24s | ------------
+| Epoch  43/250 | Batch 116/347 | Loss:  0.003309
+| Epoch  43/250 | Batch 231/347 | Loss:  0.003500
+| Epoch  43/250 | Batch 346/347 | Loss:  0.003703
+| Epoch  43/250 | Pre@1: 0.990756 | R-Pre: 0.905260 | MAP@R: 0.883848
+| Sil: 0.539 | CH: 2445 | Duration: 62.33s | ------------
+| Epoch  44/250 | Batch 116/347 | Loss:  0.003418
+| Epoch  44/250 | Batch 231/347 | Loss:  0.003175
+| Epoch  44/250 | Batch 346/347 | Loss:  0.003650
+| Epoch  44/250 | Pre@1: 0.987395 | R-Pre: 0.838153 | MAP@R: 0.805859
+| Sil: 0.476 | CH: 2056 | Duration: 62.26s | ------------
+| Epoch  45/250 | Batch 116/347 | Loss:  0.003908
+| Epoch  45/250 | Batch 231/347 | Loss:  0.004030
+| Epoch  45/250 | Batch 346/347 | Loss:  0.003644
+| Epoch  45/250 | Pre@1: 0.989496 | R-Pre: 0.929919 | MAP@R: 0.915504
+| Sil: 0.562 | CH: 2774 | Duration: 62.21s | ------------
+| Epoch  46/250 | Batch 116/347 | Loss:  0.003114
+| Epoch  46/250 | Batch 231/347 | Loss:  0.003380
+| Epoch  46/250 | Batch 346/347 | Loss:  0.003455
+| Epoch  46/250 | Pre@1: 0.992857 | R-Pre: 0.918307 | MAP@R: 0.901275
+| Sil: 0.553 | CH: 2581 | Duration: 62.34s | ------------
+| Epoch  47/250 | Batch 116/347 | Loss:  0.003285
+| Epoch  47/250 | Batch 231/347 | Loss:  0.003492
+| Epoch  47/250 | Batch 346/347 | Loss:  0.003245
+| Epoch  47/250 | Pre@1: 0.989076 | R-Pre: 0.902742 | MAP@R: 0.882664
+| Sil: 0.525 | CH: 2410 | Duration: 62.04s | ------------
+| Epoch  48/250 | Batch 116/347 | Loss:  0.003247
+| Epoch  48/250 | Batch 231/347 | Loss:  0.003168
+| Epoch  48/250 | Batch 346/347 | Loss:  0.002897
+| Epoch  48/250 | Pre@1: 0.989496 | R-Pre: 0.882030 | MAP@R: 0.859744
+| Sil: 0.517 | CH: 1988 | Duration: 62.08s | ------------
+| Epoch  49/250 | Batch 116/347 | Loss:  0.002446
+| Epoch  49/250 | Batch 231/347 | Loss:  0.003352
+| Epoch  49/250 | Batch 346/347 | Loss:  0.003215
+| Epoch  49/250 | Pre@1: 0.992857 | R-Pre: 0.882690 | MAP@R: 0.860396
+| Sil: 0.517 | CH: 2106 | Duration: 62.20s | ------------
+| Epoch  50/250 | Batch 116/347 | Loss:  0.003188
+| Epoch  50/250 | Batch 231/347 | Loss:  0.003356
+| Epoch  50/250 | Batch 346/347 | Loss:  0.003233
+| Epoch  50/250 | Pre@1: 0.991597 | R-Pre: 0.915790 | MAP@R: 0.898888
+| Sil: 0.558 | CH: 2625 | Duration: 62.23s | ------------
+| Epoch  51/250 | Batch 116/347 | Loss:  0.002737
+| Epoch  51/250 | Batch 231/347 | Loss:  0.002820
+| Epoch  51/250 | Batch 346/347 | Loss:  0.002720
+| Epoch  51/250 | Pre@1: 0.991597 | R-Pre: 0.922536 | MAP@R: 0.905801
+| Sil: 0.560 | CH: 2968 | Duration: 62.26s | ------------
+| Epoch  52/250 | Batch 116/347 | Loss:  0.002919
+| Epoch  52/250 | Batch 231/347 | Loss:  0.002530
+| Epoch  52/250 | Batch 346/347 | Loss:  0.002614
+| Epoch  52/250 | Pre@1: 0.988235 | R-Pre: 0.910089 | MAP@R: 0.890529
+| Sil: 0.546 | CH: 2793 | Duration: 62.23s | ------------
+| Epoch  53/250 | Batch 116/347 | Loss:  0.003198
+| Epoch  53/250 | Batch 231/347 | Loss:  0.003053
+| Epoch  53/250 | Batch 346/347 | Loss:  0.002972
+| Epoch  53/250 | Pre@1: 0.994958 | R-Pre: 0.895178 | MAP@R: 0.872764
+| Sil: 0.533 | CH: 2603 | Duration: 62.46s | ------------
+| Epoch  54/250 | Batch 116/347 | Loss:  0.002514
+| Epoch  54/250 | Batch 231/347 | Loss:  0.002724
+| Epoch  54/250 | Batch 346/347 | Loss:  0.002920
+| Epoch  54/250 | Pre@1: 0.971429 | R-Pre: 0.786736 | MAP@R: 0.732216
+| Sil: 0.411 | CH: 1685 | Duration: 62.19s | ------------
+| Epoch  55/250 | Batch 116/347 | Loss:  0.003300
+| Epoch  55/250 | Batch 231/347 | Loss:  0.002895
+| Epoch  55/250 | Batch 346/347 | Loss:  0.002813
+| Epoch  55/250 | Pre@1: 0.986134 | R-Pre: 0.869288 | MAP@R: 0.841873
+| Sil: 0.494 | CH: 2046 | Duration: 62.20s | ------------
+| Epoch  56/250 | Batch 116/347 | Loss:  0.003112
+| Epoch  56/250 | Batch 231/347 | Loss:  0.002979
+| Epoch  56/250 | Batch 346/347 | Loss:  0.002875
+| Epoch  56/250 | Pre@1: 0.989076 | R-Pre: 0.927191 | MAP@R: 0.911095
+| Sil: 0.565 | CH: 2609 | Duration: 62.09s | ------------
+| Epoch  57/250 | Batch 116/347 | Loss:  0.002925
+| Epoch  57/250 | Batch 231/347 | Loss:  0.003041
+| Epoch  57/250 | Batch 346/347 | Loss:  0.002701
+| Epoch  57/250 | Pre@1: 0.992437 | R-Pre: 0.939994 | MAP@R: 0.928762
+| Sil: 0.578 | CH: 2874 | Duration: 62.17s | ------------
+| Epoch  58/250 | Batch 116/347 | Loss:  0.002229
+| Epoch  58/250 | Batch 231/347 | Loss:  0.002196
+| Epoch  58/250 | Batch 346/347 | Loss:  0.002496
+| Epoch  58/250 | Pre@1: 0.993277 | R-Pre: 0.932745 | MAP@R: 0.920708
+| Sil: 0.565 | CH: 2867 | Duration: 62.16s | ------------
+| Epoch  59/250 | Batch 116/347 | Loss:  0.002460
+| Epoch  59/250 | Batch 231/347 | Loss:  0.002456
+| Epoch  59/250 | Batch 346/347 | Loss:  0.002434
+| Epoch  59/250 | Pre@1: 0.994118 | R-Pre: 0.933490 | MAP@R: 0.920297
+| Sil: 0.577 | CH: 2958 | Duration: 62.26s | ------------
+| Epoch  60/250 | Batch 116/347 | Loss:  0.002746
+| Epoch  60/250 | Batch 231/347 | Loss:  0.002750
+| Epoch  60/250 | Batch 346/347 | Loss:  0.002508
+| Epoch  60/250 | Pre@1: 0.992017 | R-Pre: 0.904922 | MAP@R: 0.884124
+| Sil: 0.552 | CH: 2650 | Duration: 62.22s | ------------
+| Epoch  61/250 | Batch 116/347 | Loss:  0.002970
+| Epoch  61/250 | Batch 231/347 | Loss:  0.002459
+| Epoch  61/250 | Batch 346/347 | Loss:  0.002269
+| Epoch  61/250 | Pre@1: 0.992017 | R-Pre: 0.936625 | MAP@R: 0.923984
+| Sil: 0.577 | CH: 2728 | Duration: 62.11s | ------------
+| Epoch  62/250 | Batch 116/347 | Loss:  0.002737
+| Epoch  62/250 | Batch 231/347 | Loss:  0.002278
+| Epoch  62/250 | Batch 346/347 | Loss:  0.002185
+| Epoch  62/250 | Pre@1: 0.991597 | R-Pre: 0.880196 | MAP@R: 0.856060
+| Sil: 0.512 | CH: 2083 | Duration: 61.97s | ------------
+| Epoch  63/250 | Batch 116/347 | Loss:  0.002453
+| Epoch  63/250 | Batch 231/347 | Loss:  0.002591
+| Epoch  63/250 | Batch 346/347 | Loss:  0.002481
+| Epoch  63/250 | Pre@1: 0.993697 | R-Pre: 0.895657 | MAP@R: 0.874606
+| Sil: 0.530 | CH: 2167 | Duration: 62.25s | ------------
+| Epoch  64/250 | Batch 116/347 | Loss:  0.001811
+| Epoch  64/250 | Batch 231/347 | Loss:  0.002197
+| Epoch  64/250 | Batch 346/347 | Loss:  0.002041
+| Epoch  64/250 | Pre@1: 0.996218 | R-Pre: 0.943444 | MAP@R: 0.931750
+| Sil: 0.589 | CH: 2876 | Duration: 62.16s | ------------
+| Epoch  65/250 | Batch 116/347 | Loss:  0.002343
+| Epoch  65/250 | Batch 231/347 | Loss:  0.002143
+| Epoch  65/250 | Batch 346/347 | Loss:  0.002193
+| Epoch  65/250 | Pre@1: 0.994958 | R-Pre: 0.933886 | MAP@R: 0.920702
+| Sil: 0.575 | CH: 2511 | Duration: 62.06s | ------------
+| Epoch  66/250 | Batch 116/347 | Loss:  0.001941
+| Epoch  66/250 | Batch 231/347 | Loss:  0.001715
+| Epoch  66/250 | Batch 346/347 | Loss:  0.001888
+| Epoch  66/250 | Pre@1: 0.988655 | R-Pre: 0.897505 | MAP@R: 0.877001
+| Sil: 0.543 | CH: 2489 | Duration: 62.19s | ------------
+| Epoch  67/250 | Batch 116/347 | Loss:  0.001920
+| Epoch  67/250 | Batch 231/347 | Loss:  0.001934
+| Epoch  67/250 | Batch 346/347 | Loss:  0.001962
+| Epoch  67/250 | Pre@1: 0.993697 | R-Pre: 0.863806 | MAP@R: 0.836453
+| Sil: 0.510 | CH: 2035 | Duration: 62.37s | ------------
+| Epoch  68/250 | Batch 116/347 | Loss:  0.002616
+| Epoch  68/250 | Batch 231/347 | Loss:  0.003078
+| Epoch  68/250 | Batch 346/347 | Loss:  0.002783
+| Epoch  68/250 | Pre@1: 0.995378 | R-Pre: 0.951664 | MAP@R: 0.942113
+| Sil: 0.593 | CH: 2912 | Duration: 62.03s | ------------
+| Epoch  69/250 | Batch 116/347 | Loss:  0.001889
+| Epoch  69/250 | Batch 231/347 | Loss:  0.002227
+| Epoch  69/250 | Batch 346/347 | Loss:  0.002097
+| Epoch  69/250 | Pre@1: 0.996639 | R-Pre: 0.952619 | MAP@R: 0.943330
+| Sil: 0.602 | CH: 3076 | Duration: 62.03s | ------------
+| Epoch  70/250 | Batch 116/347 | Loss:  0.002306
+| Epoch  70/250 | Batch 231/347 | Loss:  0.001988
+| Epoch  70/250 | Batch 346/347 | Loss:  0.001930
+| Epoch  70/250 | Pre@1: 0.992437 | R-Pre: 0.926548 | MAP@R: 0.911094
+| Sil: 0.561 | CH: 2474 | Duration: 62.01s | ------------
+| Epoch  71/250 | Batch 116/347 | Loss:  0.001925
+| Epoch  71/250 | Batch 231/347 | Loss:  0.001774
+| Epoch  71/250 | Batch 346/347 | Loss:  0.001843
+| Epoch  71/250 | Pre@1: 0.991597 | R-Pre: 0.907436 | MAP@R: 0.888341
+| Sil: 0.542 | CH: 2539 | Duration: 62.19s | ------------
+| Epoch  72/250 | Batch 116/347 | Loss:  0.001741
+| Epoch  72/250 | Batch 231/347 | Loss:  0.001600
+| Epoch  72/250 | Batch 346/347 | Loss:  0.001701
+| Epoch  72/250 | Pre@1: 0.993697 | R-Pre: 0.958705 | MAP@R: 0.950496
+| Sil: 0.604 | CH: 3178 | Duration: 61.99s | ------------
+| Epoch  73/250 | Batch 116/347 | Loss:  0.001678
+| Epoch  73/250 | Batch 231/347 | Loss:  0.001962
+| Epoch  73/250 | Batch 346/347 | Loss:  0.001856
+| Epoch  73/250 | Pre@1: 0.995378 | R-Pre: 0.961780 | MAP@R: 0.956195
+| Sil: 0.619 | CH: 3335 | Duration: 62.13s | ------------
+| Epoch  74/250 | Batch 116/347 | Loss:  0.001715
+| Epoch  74/250 | Batch 231/347 | Loss:  0.001757
+| Epoch  74/250 | Batch 346/347 | Loss:  0.002031
+| Epoch  74/250 | Pre@1: 0.997059 | R-Pre: 0.941756 | MAP@R: 0.931322
+| Sil: 0.584 | CH: 2784 | Duration: 62.27s | ------------
+| Epoch  75/250 | Batch 116/347 | Loss:  0.002062
+| Epoch  75/250 | Batch 231/347 | Loss:  0.002305
+| Epoch  75/250 | Batch 346/347 | Loss:  0.002199
+| Epoch  75/250 | Pre@1: 0.996218 | R-Pre: 0.961986 | MAP@R: 0.955929
+| Sil: 0.621 | CH: 3460 | Duration: 62.00s | ------------
+| Epoch  76/250 | Batch 116/347 | Loss:  0.001586
+| Epoch  76/250 | Batch 231/347 | Loss:  0.001817
+| Epoch  76/250 | Batch 346/347 | Loss:  0.001997
+| Epoch  76/250 | Pre@1: 0.992437 | R-Pre: 0.934388 | MAP@R: 0.920167
+| Sil: 0.576 | CH: 2411 | Duration: 62.04s | ------------
+| Epoch  77/250 | Batch 116/347 | Loss:  0.001975
+| Epoch  77/250 | Batch 231/347 | Loss:  0.002040
+| Epoch  77/250 | Batch 346/347 | Loss:  0.002003
+| Epoch  77/250 | Pre@1: 0.994958 | R-Pre: 0.931753 | MAP@R: 0.917892
+| Sil: 0.575 | CH: 2677 | Duration: 62.24s | ------------
+| Epoch  78/250 | Batch 116/347 | Loss:  0.001293
+| Epoch  78/250 | Batch 231/347 | Loss:  0.001242
+| Epoch  78/250 | Batch 346/347 | Loss:  0.001581
+| Epoch  78/250 | Pre@1: 0.990756 | R-Pre: 0.871361 | MAP@R: 0.844559
+| Sil: 0.517 | CH: 2067 | Duration: 62.17s | ------------
+| Epoch  79/250 | Batch 116/347 | Loss:  0.001402
+| Epoch  79/250 | Batch 231/347 | Loss:  0.001377
+| Epoch  79/250 | Batch 346/347 | Loss:  0.001426
+| Epoch  79/250 | Pre@1: 0.997059 | R-Pre: 0.947938 | MAP@R: 0.938229
+| Sil: 0.594 | CH: 2886 | Duration: 62.07s | ------------
+| Epoch  80/250 | Batch 116/347 | Loss:  0.001781
+| Epoch  80/250 | Batch 231/347 | Loss:  0.001790
+| Epoch  80/250 | Batch 346/347 | Loss:  0.001956
+| Epoch  80/250 | Pre@1: 0.994538 | R-Pre: 0.936861 | MAP@R: 0.924633
+| Sil: 0.586 | CH: 3096 | Duration: 62.20s | ------------
+| Epoch  81/250 | Batch 116/347 | Loss:  0.001673
+| Epoch  81/250 | Batch 231/347 | Loss:  0.001958
+| Epoch  81/250 | Batch 346/347 | Loss:  0.001745
+| Epoch  81/250 | Pre@1: 0.991597 | R-Pre: 0.903578 | MAP@R: 0.884065
+| Sil: 0.538 | CH: 2528 | Duration: 62.29s | ------------
+| Epoch  82/250 | Batch 116/347 | Loss:  0.002278
+| Epoch  82/250 | Batch 231/347 | Loss:  0.001749
+| Epoch  82/250 | Batch 346/347 | Loss:  0.001675
+| Epoch  82/250 | Pre@1: 0.994958 | R-Pre: 0.927104 | MAP@R: 0.913475
+| Sil: 0.574 | CH: 2538 | Duration: 61.96s | ------------
+| Epoch  83/250 | Batch 116/347 | Loss:  0.001512
+| Epoch  83/250 | Batch 231/347 | Loss:  0.001539
+| Epoch  83/250 | Batch 346/347 | Loss:  0.001719
+| Epoch  83/250 | Pre@1: 0.995798 | R-Pre: 0.947833 | MAP@R: 0.937986
+| Sil: 0.603 | CH: 2907 | Duration: 62.02s | ------------
+| Epoch  84/250 | Batch 116/347 | Loss:  0.001596
+| Epoch  84/250 | Batch 231/347 | Loss:  0.001657
+| Epoch  84/250 | Batch 346/347 | Loss:  0.001603
+| Epoch  84/250 | Pre@1: 0.991176 | R-Pre: 0.869468 | MAP@R: 0.843364
+| Sil: 0.502 | CH: 2100 | Duration: 62.02s | ------------
+| Epoch  85/250 | Batch 116/347 | Loss:  0.001543
+| Epoch  85/250 | Batch 231/347 | Loss:  0.002057
+| Epoch  85/250 | Batch 346/347 | Loss:  0.001830
+| Epoch  85/250 | Pre@1: 0.993277 | R-Pre: 0.891229 | MAP@R: 0.869577
+| Sil: 0.523 | CH: 2406 | Duration: 62.14s | ------------
+| Epoch  86/250 | Batch 116/347 | Loss:  0.001212
+| Epoch  86/250 | Batch 231/347 | Loss:  0.001257
+| Epoch  86/250 | Batch 346/347 | Loss:  0.001236
+| Epoch  86/250 | Pre@1: 0.995798 | R-Pre: 0.949867 | MAP@R: 0.941531
+| Sil: 0.587 | CH: 2801 | Duration: 62.10s | ------------
+| Epoch  87/250 | Batch 116/347 | Loss:  0.001348
+| Epoch  87/250 | Batch 231/347 | Loss:  0.001384
+| Epoch  87/250 | Batch 346/347 | Loss:  0.001317
+| Epoch  87/250 | Pre@1: 0.991597 | R-Pre: 0.938464 | MAP@R: 0.924604
+| Sil: 0.589 | CH: 2645 | Duration: 62.23s | ------------
+| Epoch  88/250 | Batch 116/347 | Loss:  0.001337
+| Epoch  88/250 | Batch 231/347 | Loss:  0.001407
+| Epoch  88/250 | Batch 346/347 | Loss:  0.001624
+| Epoch  88/250 | Pre@1: 0.996218 | R-Pre: 0.949434 | MAP@R: 0.940396
+| Sil: 0.595 | CH: 2678 | Duration: 62.26s | ------------
+| Epoch  89/250 | Batch 116/347 | Loss:  0.001937
+| Epoch  89/250 | Batch 231/347 | Loss:  0.001908
+| Epoch  89/250 | Batch 346/347 | Loss:  0.001928
+| Epoch  89/250 | Pre@1: 0.995378 | R-Pre: 0.946736 | MAP@R: 0.937794
+| Sil: 0.589 | CH: 2707 | Duration: 62.23s | ------------
+| Epoch  90/250 | Batch 116/347 | Loss:  0.001651
+| Epoch  90/250 | Batch 231/347 | Loss:  0.001562
+| Epoch  90/250 | Batch 346/347 | Loss:  0.001535
+| Epoch  90/250 | Pre@1: 0.993697 | R-Pre: 0.922338 | MAP@R: 0.909412
+| Sil: 0.568 | CH: 2367 | Duration: 62.04s | ------------
+| Epoch  91/250 | Batch 116/347 | Loss:  0.001752
+| Epoch  91/250 | Batch 231/347 | Loss:  0.001452
+| Epoch  91/250 | Batch 346/347 | Loss:  0.001477
+| Epoch  91/250 | Pre@1: 0.997899 | R-Pre: 0.967450 | MAP@R: 0.962167
+| Sil: 0.625 | CH: 3447 | Duration: 62.17s | ------------
+| Epoch  92/250 | Batch 116/347 | Loss:  0.001681
+| Epoch  92/250 | Batch 231/347 | Loss:  0.001835
+| Epoch  92/250 | Batch 346/347 | Loss:  0.001759
+| Epoch  92/250 | Pre@1: 0.996639 | R-Pre: 0.961378 | MAP@R: 0.954570
+| Sil: 0.620 | CH: 3009 | Duration: 62.10s | ------------
+| Epoch  93/250 | Batch 116/347 | Loss:  0.000963
+| Epoch  93/250 | Batch 231/347 | Loss:  0.001275
+| Epoch  93/250 | Batch 346/347 | Loss:  0.001565
+| Epoch  93/250 | Pre@1: 0.994958 | R-Pre: 0.943515 | MAP@R: 0.933512
+| Sil: 0.588 | CH: 2763 | Duration: 61.92s | ------------
+| Epoch  94/250 | Batch 116/347 | Loss:  0.001060
+| Epoch  94/250 | Batch 231/347 | Loss:  0.001117
+| Epoch  94/250 | Batch 346/347 | Loss:  0.001289
+| Epoch  94/250 | Pre@1: 0.997899 | R-Pre: 0.978923 | MAP@R: 0.975598
+| Sil: 0.655 | CH: 3437 | Duration: 61.97s | ------------
+| Epoch  95/250 | Batch 116/347 | Loss:  0.001227
+| Epoch  95/250 | Batch 231/347 | Loss:  0.001372
+| Epoch  95/250 | Batch 346/347 | Loss:  0.001290
+| Epoch  95/250 | Pre@1: 0.996218 | R-Pre: 0.974671 | MAP@R: 0.970917
+| Sil: 0.649 | CH: 3471 | Duration: 62.29s | ------------
+| Epoch  96/250 | Batch 116/347 | Loss:  0.000996
+| Epoch  96/250 | Batch 231/347 | Loss:  0.001262
+| Epoch  96/250 | Batch 346/347 | Loss:  0.001416
+| Epoch  96/250 | Pre@1: 0.995798 | R-Pre: 0.942404 | MAP@R: 0.932702
+| Sil: 0.581 | CH: 2626 | Duration: 62.08s | ------------
+| Epoch  97/250 | Batch 116/347 | Loss:  0.001576
+| Epoch  97/250 | Batch 231/347 | Loss:  0.001731
+| Epoch  97/250 | Batch 346/347 | Loss:  0.001836
+| Epoch  97/250 | Pre@1: 0.996218 | R-Pre: 0.945843 | MAP@R: 0.936546
+| Sil: 0.583 | CH: 2758 | Duration: 62.02s | ------------
+| Epoch  98/250 | Batch 116/347 | Loss:  0.001391
+| Epoch  98/250 | Batch 231/347 | Loss:  0.001440
+| Epoch  98/250 | Batch 346/347 | Loss:  0.001297
+| Epoch  98/250 | Pre@1: 0.997059 | R-Pre: 0.941685 | MAP@R: 0.932761
+| Sil: 0.590 | CH: 2593 | Duration: 62.10s | ------------
+| Epoch  99/250 | Batch 116/347 | Loss:  0.001840
+| Epoch  99/250 | Batch 231/347 | Loss:  0.001441
+| Epoch  99/250 | Batch 346/347 | Loss:  0.001382
+| Epoch  99/250 | Pre@1: 0.992857 | R-Pre: 0.874191 | MAP@R: 0.848224
+| Sil: 0.504 | CH: 2007 | Duration: 62.12s | ------------
+| Epoch 100/250 | Batch 116/347 | Loss:  0.001499
+| Epoch 100/250 | Batch 231/347 | Loss:  0.001207
+| Epoch 100/250 | Batch 346/347 | Loss:  0.001270
+| Epoch 100/250 | Pre@1: 0.996639 | R-Pre: 0.954332 | MAP@R: 0.945417
+| Sil: 0.606 | CH: 2926 | Duration: 62.14s | ------------
+| Epoch 101/250 | Batch 116/347 | Loss:  0.000534
+| Epoch 101/250 | Batch 231/347 | Loss:  0.000390
+| Epoch 101/250 | Batch 346/347 | Loss:  0.000327
+| Epoch 101/250 | Pre@1: 0.999160 | R-Pre: 0.990945 | MAP@R: 0.989489
+| Sil: 0.695 | CH: 4328 | Duration: 62.01s | ------------
+| Epoch 102/250 | Batch 116/347 | Loss:  0.000183
+| Epoch 102/250 | Batch 231/347 | Loss:  0.000179
+| Epoch 102/250 | Batch 346/347 | Loss:  0.000174
+| Epoch 102/250 | Pre@1: 0.999160 | R-Pre: 0.991712 | MAP@R: 0.990460
+| Sil: 0.698 | CH: 4360 | Duration: 62.31s | ------------
+| Epoch 103/250 | Batch 116/347 | Loss:  0.000159
+| Epoch 103/250 | Batch 231/347 | Loss:  0.000182
+| Epoch 103/250 | Batch 346/347 | Loss:  0.000176
+| Epoch 103/250 | Pre@1: 0.998740 | R-Pre: 0.992398 | MAP@R: 0.991192
+| Sil: 0.703 | CH: 4476 | Duration: 61.77s | ------------
+| Epoch 104/250 | Batch 116/347 | Loss:  0.000143
+| Epoch 104/250 | Batch 231/347 | Loss:  0.000163
+| Epoch 104/250 | Batch 346/347 | Loss:  0.000149
+| Epoch 104/250 | Pre@1: 0.998740 | R-Pre: 0.992555 | MAP@R: 0.991516
+| Sil: 0.704 | CH: 4492 | Duration: 62.05s | ------------
+| Epoch 105/250 | Batch 116/347 | Loss:  0.000154
+| Epoch 105/250 | Batch 231/347 | Loss:  0.000167
+| Epoch 105/250 | Batch 346/347 | Loss:  0.000168
+| Epoch 105/250 | Pre@1: 0.998740 | R-Pre: 0.992607 | MAP@R: 0.991459
+| Sil: 0.706 | CH: 4526 | Duration: 61.98s | ------------
+| Epoch 106/250 | Batch 116/347 | Loss:  0.000050
+| Epoch 106/250 | Batch 231/347 | Loss:  0.000095
+| Epoch 106/250 | Batch 346/347 | Loss:  0.000101
+| Epoch 106/250 | Pre@1: 0.998740 | R-Pre: 0.992514 | MAP@R: 0.991402
+| Sil: 0.707 | CH: 4537 | Duration: 62.01s | ------------
+| Epoch 107/250 | Batch 116/347 | Loss:  0.000154
+| Epoch 107/250 | Batch 231/347 | Loss:  0.000153
+| Epoch 107/250 | Batch 346/347 | Loss:  0.000139
+| Epoch 107/250 | Pre@1: 0.997899 | R-Pre: 0.991787 | MAP@R: 0.990575
+| Sil: 0.707 | CH: 4504 | Duration: 61.85s | ------------
+| Epoch 108/250 | Batch 116/347 | Loss:  0.000123
+| Epoch 108/250 | Batch 231/347 | Loss:  0.000162
+| Epoch 108/250 | Batch 346/347 | Loss:  0.000181
+| Epoch 108/250 | Pre@1: 0.997899 | R-Pre: 0.992370 | MAP@R: 0.991024
+| Sil: 0.712 | CH: 4551 | Duration: 62.02s | ------------
+| Epoch 109/250 | Batch 116/347 | Loss:  0.000216
+| Epoch 109/250 | Batch 231/347 | Loss:  0.000165
+| Epoch 109/250 | Batch 346/347 | Loss:  0.000160
+| Epoch 109/250 | Pre@1: 0.997899 | R-Pre: 0.993561 | MAP@R: 0.992548
+| Sil: 0.719 | CH: 4871 | Duration: 62.07s | ------------
+| Epoch 110/250 | Batch 116/347 | Loss:  0.000198
+| Epoch 110/250 | Batch 231/347 | Loss:  0.000166
+| Epoch 110/250 | Batch 346/347 | Loss:  0.000190
+| Epoch 110/250 | Pre@1: 0.997899 | R-Pre: 0.993173 | MAP@R: 0.992130
+| Sil: 0.714 | CH: 4723 | Duration: 61.93s | ------------
+| Epoch 111/250 | Batch 116/347 | Loss:  0.000122
+| Epoch 111/250 | Batch 231/347 | Loss:  0.000138
+| Epoch 111/250 | Batch 346/347 | Loss:  0.000123
+| Epoch 111/250 | Pre@1: 0.998319 | R-Pre: 0.991812 | MAP@R: 0.990459
+| Sil: 0.705 | CH: 4398 | Duration: 61.91s | ------------
+| Epoch 112/250 | Batch 116/347 | Loss:  0.000223
+| Epoch 112/250 | Batch 231/347 | Loss:  0.000242
+| Epoch 112/250 | Batch 346/347 | Loss:  0.000205
+| Epoch 112/250 | Pre@1: 0.999160 | R-Pre: 0.992522 | MAP@R: 0.991352
+| Sil: 0.712 | CH: 4543 | Duration: 62.23s | ------------
+| Epoch 113/250 | Batch 116/347 | Loss:  0.000131
+| Epoch 113/250 | Batch 231/347 | Loss:  0.000132
+| Epoch 113/250 | Batch 346/347 | Loss:  0.000136
+| Epoch 113/250 | Pre@1: 0.998740 | R-Pre: 0.992453 | MAP@R: 0.991273
+| Sil: 0.705 | CH: 4469 | Duration: 62.04s | ------------
+| Epoch 114/250 | Batch 116/347 | Loss:  0.000152
+| Epoch 114/250 | Batch 231/347 | Loss:  0.000115
+| Epoch 114/250 | Batch 346/347 | Loss:  0.000166
+| Epoch 114/250 | Pre@1: 0.997059 | R-Pre: 0.992656 | MAP@R: 0.991343
+| Sil: 0.711 | CH: 4586 | Duration: 61.81s | ------------
+| Epoch 115/250 | Batch 116/347 | Loss:  0.000101
+| Epoch 115/250 | Batch 231/347 | Loss:  0.000116
+| Epoch 115/250 | Batch 346/347 | Loss:  0.000128
+| Epoch 115/250 | Pre@1: 0.998319 | R-Pre: 0.992065 | MAP@R: 0.990596
+| Sil: 0.703 | CH: 4386 | Duration: 62.18s | ------------
+| Epoch 116/250 | Batch 116/347 | Loss:  0.000143
+| Epoch 116/250 | Batch 231/347 | Loss:  0.000186
+| Epoch 116/250 | Batch 346/347 | Loss:  0.000166
+| Epoch 116/250 | Pre@1: 0.997899 | R-Pre: 0.992115 | MAP@R: 0.990723
+| Sil: 0.707 | CH: 4393 | Duration: 62.25s | ------------
+| Epoch 117/250 | Batch 116/347 | Loss:  0.000130
+| Epoch 117/250 | Batch 231/347 | Loss:  0.000125
+| Epoch 117/250 | Batch 346/347 | Loss:  0.000139
+| Epoch 117/250 | Pre@1: 0.998740 | R-Pre: 0.992429 | MAP@R: 0.991333
+| Sil: 0.703 | CH: 4275 | Duration: 61.90s | ------------
+| Epoch 118/250 | Batch 116/347 | Loss:  0.000180
+| Epoch 118/250 | Batch 231/347 | Loss:  0.000136
+| Epoch 118/250 | Batch 346/347 | Loss:  0.000141
+| Epoch 118/250 | Pre@1: 0.997899 | R-Pre: 0.992804 | MAP@R: 0.991816
+| Sil: 0.709 | CH: 4494 | Duration: 61.92s | ------------
+| Epoch 119/250 | Batch 116/347 | Loss:  0.000123
+| Epoch 119/250 | Batch 231/347 | Loss:  0.000127
+| Epoch 119/250 | Batch 346/347 | Loss:  0.000136
+| Epoch 119/250 | Pre@1: 0.998319 | R-Pre: 0.993500 | MAP@R: 0.992491
+| Sil: 0.709 | CH: 4468 | Duration: 61.84s | ------------
+| Epoch 120/250 | Batch 116/347 | Loss:  0.000078
+| Epoch 120/250 | Batch 231/347 | Loss:  0.000084
+| Epoch 120/250 | Batch 346/347 | Loss:  0.000083
+| Epoch 120/250 | Pre@1: 0.998740 | R-Pre: 0.994221 | MAP@R: 0.993147
+| Sil: 0.720 | CH: 4768 | Duration: 62.08s | ------------
+| Epoch 121/250 | Batch 116/347 | Loss:  0.000125
+| Epoch 121/250 | Batch 231/347 | Loss:  0.000121
+| Epoch 121/250 | Batch 346/347 | Loss:  0.000153
+| Epoch 121/250 | Pre@1: 0.999160 | R-Pre: 0.990865 | MAP@R: 0.989254
+| Sil: 0.703 | CH: 4304 | Duration: 62.03s | ------------
+| Epoch 122/250 | Batch 116/347 | Loss:  0.000083
+| Epoch 122/250 | Batch 231/347 | Loss:  0.000076
+| Epoch 122/250 | Batch 346/347 | Loss:  0.000103
+| Epoch 122/250 | Pre@1: 0.998319 | R-Pre: 0.992923 | MAP@R: 0.991701
+| Sil: 0.704 | CH: 4409 | Duration: 61.85s | ------------
+| Epoch 123/250 | Batch 116/347 | Loss:  0.000210
+| Epoch 123/250 | Batch 231/347 | Loss:  0.000175
+| Epoch 123/250 | Batch 346/347 | Loss:  0.000163
+| Epoch 123/250 | Pre@1: 0.998740 | R-Pre: 0.993106 | MAP@R: 0.991871
+| Sil: 0.706 | CH: 4342 | Duration: 62.18s | ------------
+| Epoch 124/250 | Batch 116/347 | Loss:  0.000082
+| Epoch 124/250 | Batch 231/347 | Loss:  0.000102
+| Epoch 124/250 | Batch 346/347 | Loss:  0.000130
+| Epoch 124/250 | Pre@1: 0.997899 | R-Pre: 0.994195 | MAP@R: 0.993160
+| Sil: 0.723 | CH: 4814 | Duration: 61.92s | ------------
+| Epoch 125/250 | Batch 116/347 | Loss:  0.000167
+| Epoch 125/250 | Batch 231/347 | Loss:  0.000154
+| Epoch 125/250 | Batch 346/347 | Loss:  0.000148
+| Epoch 125/250 | Pre@1: 0.998740 | R-Pre: 0.994347 | MAP@R: 0.993452
+| Sil: 0.719 | CH: 4832 | Duration: 61.85s | ------------
+| Epoch 126/250 | Batch 116/347 | Loss:  0.000045
+| Epoch 126/250 | Batch 231/347 | Loss:  0.000084
+| Epoch 126/250 | Batch 346/347 | Loss:  0.000083
+| Epoch 126/250 | Pre@1: 0.998740 | R-Pre: 0.994138 | MAP@R: 0.993085
+| Sil: 0.714 | CH: 4671 | Duration: 62.21s | ------------
+| Epoch 127/250 | Batch 116/347 | Loss:  0.000127
+| Epoch 127/250 | Batch 231/347 | Loss:  0.000147
+| Epoch 127/250 | Batch 346/347 | Loss:  0.000133
+| Epoch 127/250 | Pre@1: 0.998319 | R-Pre: 0.993471 | MAP@R: 0.992325
+| Sil: 0.707 | CH: 4432 | Duration: 61.84s | ------------
+| Epoch 128/250 | Batch 116/347 | Loss:  0.000138
+| Epoch 128/250 | Batch 231/347 | Loss:  0.000108
+| Epoch 128/250 | Batch 346/347 | Loss:  0.000116
+| Epoch 128/250 | Pre@1: 0.998740 | R-Pre: 0.993205 | MAP@R: 0.992197
+| Sil: 0.714 | CH: 4587 | Duration: 62.01s | ------------
+| Epoch 129/250 | Batch 116/347 | Loss:  0.000088
+| Epoch 129/250 | Batch 231/347 | Loss:  0.000080
+| Epoch 129/250 | Batch 346/347 | Loss:  0.000098
+| Epoch 129/250 | Pre@1: 0.998740 | R-Pre: 0.994595 | MAP@R: 0.993596
+| Sil: 0.719 | CH: 4868 | Duration: 61.96s | ------------
+| Epoch 130/250 | Batch 116/347 | Loss:  0.000150
+| Epoch 130/250 | Batch 231/347 | Loss:  0.000136
+| Epoch 130/250 | Batch 346/347 | Loss:  0.000139
+| Epoch 130/250 | Pre@1: 0.998740 | R-Pre: 0.993376 | MAP@R: 0.992147
+| Sil: 0.713 | CH: 4583 | Duration: 62.29s | ------------
+| Epoch 131/250 | Batch 116/347 | Loss:  0.000082
+| Epoch 131/250 | Batch 231/347 | Loss:  0.000092
+| Epoch 131/250 | Batch 346/347 | Loss:  0.000095
+| Epoch 131/250 | Pre@1: 0.997899 | R-Pre: 0.993411 | MAP@R: 0.992591
+| Sil: 0.719 | CH: 4697 | Duration: 61.80s | ------------
+| Epoch 132/250 | Batch 116/347 | Loss:  0.000126
+| Epoch 132/250 | Batch 231/347 | Loss:  0.000132
+| Epoch 132/250 | Batch 346/347 | Loss:  0.000122
+| Epoch 132/250 | Pre@1: 0.998740 | R-Pre: 0.994410 | MAP@R: 0.993390
+| Sil: 0.719 | CH: 4697 | Duration: 61.70s | ------------
+| Epoch 133/250 | Batch 116/347 | Loss:  0.000053
+| Epoch 133/250 | Batch 231/347 | Loss:  0.000114
+| Epoch 133/250 | Batch 346/347 | Loss:  0.000110
+| Epoch 133/250 | Pre@1: 0.999160 | R-Pre: 0.994064 | MAP@R: 0.993113
+| Sil: 0.713 | CH: 4604 | Duration: 62.09s | ------------
+| Epoch 134/250 | Batch 116/347 | Loss:  0.000101
+| Epoch 134/250 | Batch 231/347 | Loss:  0.000169
+| Epoch 134/250 | Batch 346/347 | Loss:  0.000139
+| Epoch 134/250 | Pre@1: 0.999160 | R-Pre: 0.993864 | MAP@R: 0.992694
+| Sil: 0.716 | CH: 4711 | Duration: 62.09s | ------------
+| Epoch 135/250 | Batch 116/347 | Loss:  0.000130
+| Epoch 135/250 | Batch 231/347 | Loss:  0.000133
+| Epoch 135/250 | Batch 346/347 | Loss:  0.000123
+| Epoch 135/250 | Pre@1: 0.997899 | R-Pre: 0.993498 | MAP@R: 0.992300
+| Sil: 0.716 | CH: 4720 | Duration: 62.12s | ------------
+| Epoch 136/250 | Batch 116/347 | Loss:  0.000105
+| Epoch 136/250 | Batch 231/347 | Loss:  0.000101
+| Epoch 136/250 | Batch 346/347 | Loss:  0.000112
+| Epoch 136/250 | Pre@1: 0.999160 | R-Pre: 0.991137 | MAP@R: 0.989709
+| Sil: 0.697 | CH: 4231 | Duration: 62.06s | ------------
+| Epoch 137/250 | Batch 116/347 | Loss:  0.000179
+| Epoch 137/250 | Batch 231/347 | Loss:  0.000130
+| Epoch 137/250 | Batch 346/347 | Loss:  0.000127
+| Epoch 137/250 | Pre@1: 0.998740 | R-Pre: 0.994349 | MAP@R: 0.993563
+| Sil: 0.718 | CH: 4755 | Duration: 62.32s | ------------
+| Epoch 138/250 | Batch 116/347 | Loss:  0.000175
+| Epoch 138/250 | Batch 231/347 | Loss:  0.000136
+| Epoch 138/250 | Batch 346/347 | Loss:  0.000144
+| Epoch 138/250 | Pre@1: 0.997479 | R-Pre: 0.994353 | MAP@R: 0.993490
+| Sil: 0.716 | CH: 4673 | Duration: 62.06s | ------------
+| Epoch 139/250 | Batch 116/347 | Loss:  0.000075
+| Epoch 139/250 | Batch 231/347 | Loss:  0.000081
+| Epoch 139/250 | Batch 346/347 | Loss:  0.000086
+| Epoch 139/250 | Pre@1: 0.998319 | R-Pre: 0.993072 | MAP@R: 0.992045
+| Sil: 0.705 | CH: 4499 | Duration: 61.97s | ------------
+| Epoch 140/250 | Batch 116/347 | Loss:  0.000067
+| Epoch 140/250 | Batch 231/347 | Loss:  0.000074
+| Epoch 140/250 | Batch 346/347 | Loss:  0.000099
+| Epoch 140/250 | Pre@1: 0.998740 | R-Pre: 0.994281 | MAP@R: 0.993283
+| Sil: 0.717 | CH: 4716 | Duration: 61.80s | ------------
+| Epoch 141/250 | Batch 116/347 | Loss:  0.000094
+| Epoch 141/250 | Batch 231/347 | Loss:  0.000092
+| Epoch 141/250 | Batch 346/347 | Loss:  0.000105
+| Epoch 141/250 | Pre@1: 0.997479 | R-Pre: 0.992822 | MAP@R: 0.991580
+| Sil: 0.713 | CH: 4588 | Duration: 62.07s | ------------
+| Epoch 142/250 | Batch 116/347 | Loss:  0.000079
+| Epoch 142/250 | Batch 231/347 | Loss:  0.000079
+| Epoch 142/250 | Batch 346/347 | Loss:  0.000083
+| Epoch 142/250 | Pre@1: 0.997899 | R-Pre: 0.993302 | MAP@R: 0.992199
+| Sil: 0.709 | CH: 4410 | Duration: 61.77s | ------------
+| Epoch 143/250 | Batch 116/347 | Loss:  0.000097
+| Epoch 143/250 | Batch 231/347 | Loss:  0.000121
+| Epoch 143/250 | Batch 346/347 | Loss:  0.000109
+| Epoch 143/250 | Pre@1: 0.997899 | R-Pre: 0.995221 | MAP@R: 0.994364
+| Sil: 0.726 | CH: 4991 | Duration: 62.06s | ------------
+| Epoch 144/250 | Batch 116/347 | Loss:  0.000122
+| Epoch 144/250 | Batch 231/347 | Loss:  0.000102
+| Epoch 144/250 | Batch 346/347 | Loss:  0.000091
+| Epoch 144/250 | Pre@1: 0.997899 | R-Pre: 0.993518 | MAP@R: 0.992458
+| Sil: 0.717 | CH: 4710 | Duration: 62.19s | ------------
+| Epoch 145/250 | Batch 116/347 | Loss:  0.000130
+| Epoch 145/250 | Batch 231/347 | Loss:  0.000097
+| Epoch 145/250 | Batch 346/347 | Loss:  0.000099
+| Epoch 145/250 | Pre@1: 0.997059 | R-Pre: 0.991703 | MAP@R: 0.990377
+| Sil: 0.706 | CH: 4494 | Duration: 62.02s | ------------
+| Epoch 146/250 | Batch 116/347 | Loss:  0.000179
+| Epoch 146/250 | Batch 231/347 | Loss:  0.000139
+| Epoch 146/250 | Batch 346/347 | Loss:  0.000119
+| Epoch 146/250 | Pre@1: 0.998740 | R-Pre: 0.995666 | MAP@R: 0.994948
+| Sil: 0.726 | CH: 4985 | Duration: 62.01s | ------------
+| Epoch 147/250 | Batch 116/347 | Loss:  0.000104
+| Epoch 147/250 | Batch 231/347 | Loss:  0.000090
+| Epoch 147/250 | Batch 346/347 | Loss:  0.000090
+| Epoch 147/250 | Pre@1: 0.998319 | R-Pre: 0.994280 | MAP@R: 0.993317
+| Sil: 0.719 | CH: 4799 | Duration: 62.13s | ------------
+| Epoch 148/250 | Batch 116/347 | Loss:  0.000106
+| Epoch 148/250 | Batch 231/347 | Loss:  0.000094
+| Epoch 148/250 | Batch 346/347 | Loss:  0.000094
+| Epoch 148/250 | Pre@1: 0.998740 | R-Pre: 0.994192 | MAP@R: 0.993204
+| Sil: 0.718 | CH: 4657 | Duration: 61.95s | ------------
+| Epoch 149/250 | Batch 116/347 | Loss:  0.000101
+| Epoch 149/250 | Batch 231/347 | Loss:  0.000103
+| Epoch 149/250 | Batch 346/347 | Loss:  0.000124
+| Epoch 149/250 | Pre@1: 0.998319 | R-Pre: 0.994726 | MAP@R: 0.993813
+| Sil: 0.718 | CH: 4614 | Duration: 61.84s | ------------
+| Epoch 150/250 | Batch 116/347 | Loss:  0.000095
+| Epoch 150/250 | Batch 231/347 | Loss:  0.000072
+| Epoch 150/250 | Batch 346/347 | Loss:  0.000085
+| Epoch 150/250 | Pre@1: 0.998740 | R-Pre: 0.994708 | MAP@R: 0.993684
+| Sil: 0.713 | CH: 4571 | Duration: 61.97s | ------------
+| Epoch 151/250 | Batch 116/347 | Loss:  0.000051
+| Epoch 151/250 | Batch 231/347 | Loss:  0.000084
+| Epoch 151/250 | Batch 346/347 | Loss:  0.000073
+| Epoch 151/250 | Pre@1: 0.998319 | R-Pre: 0.995744 | MAP@R: 0.994937
+| Sil: 0.730 | CH: 5072 | Duration: 62.51s | ------------
+| Epoch 152/250 | Batch 116/347 | Loss:  0.000051
+| Epoch 152/250 | Batch 231/347 | Loss:  0.000079
+| Epoch 152/250 | Batch 346/347 | Loss:  0.000100
+| Epoch 152/250 | Pre@1: 0.998740 | R-Pre: 0.994122 | MAP@R: 0.993202
+| Sil: 0.709 | CH: 4542 | Duration: 61.84s | ------------
+| Epoch 153/250 | Batch 116/347 | Loss:  0.000168
+| Epoch 153/250 | Batch 231/347 | Loss:  0.000164
+| Epoch 153/250 | Batch 346/347 | Loss:  0.000144
+| Epoch 153/250 | Pre@1: 0.997059 | R-Pre: 0.993492 | MAP@R: 0.992433
+| Sil: 0.710 | CH: 4493 | Duration: 61.92s | ------------
+| Epoch 154/250 | Batch 116/347 | Loss:  0.000104
+| Epoch 154/250 | Batch 231/347 | Loss:  0.000092
+| Epoch 154/250 | Batch 346/347 | Loss:  0.000096
+| Epoch 154/250 | Pre@1: 0.999160 | R-Pre: 0.992926 | MAP@R: 0.991586
+| Sil: 0.709 | CH: 4569 | Duration: 61.81s | ------------
+| Epoch 155/250 | Batch 116/347 | Loss:  0.000120
+| Epoch 155/250 | Batch 231/347 | Loss:  0.000080
+| Epoch 155/250 | Batch 346/347 | Loss:  0.000077
+| Epoch 155/250 | Pre@1: 0.998740 | R-Pre: 0.995107 | MAP@R: 0.994295
+| Sil: 0.723 | CH: 4837 | Duration: 62.19s | ------------
+| Epoch 156/250 | Batch 116/347 | Loss:  0.000047
+| Epoch 156/250 | Batch 231/347 | Loss:  0.000046
+| Epoch 156/250 | Batch 346/347 | Loss:  0.000069
+| Epoch 156/250 | Pre@1: 0.997899 | R-Pre: 0.994384 | MAP@R: 0.993420
+| Sil: 0.715 | CH: 4514 | Duration: 61.69s | ------------
+| Epoch 157/250 | Batch 116/347 | Loss:  0.000143
+| Epoch 157/250 | Batch 231/347 | Loss:  0.000124
+| Epoch 157/250 | Batch 346/347 | Loss:  0.000097
+| Epoch 157/250 | Pre@1: 0.998319 | R-Pre: 0.991345 | MAP@R: 0.989860
+| Sil: 0.708 | CH: 4361 | Duration: 62.13s | ------------
+| Epoch 158/250 | Batch 116/347 | Loss:  0.000072
+| Epoch 158/250 | Batch 231/347 | Loss:  0.000105
+| Epoch 158/250 | Batch 346/347 | Loss:  0.000095
+| Epoch 158/250 | Pre@1: 0.998740 | R-Pre: 0.995330 | MAP@R: 0.994481
+| Sil: 0.721 | CH: 4743 | Duration: 62.01s | ------------
+| Epoch 159/250 | Batch 116/347 | Loss:  0.000045
+| Epoch 159/250 | Batch 231/347 | Loss:  0.000057
+| Epoch 159/250 | Batch 346/347 | Loss:  0.000070
+| Epoch 159/250 | Pre@1: 0.998319 | R-Pre: 0.995123 | MAP@R: 0.994098
+| Sil: 0.714 | CH: 4723 | Duration: 61.92s | ------------
+| Epoch 160/250 | Batch 116/347 | Loss:  0.000058
+| Epoch 160/250 | Batch 231/347 | Loss:  0.000075
+| Epoch 160/250 | Batch 346/347 | Loss:  0.000083
+| Epoch 160/250 | Pre@1: 0.998319 | R-Pre: 0.995037 | MAP@R: 0.994090
+| Sil: 0.721 | CH: 4782 | Duration: 61.90s | ------------
+| Epoch 161/250 | Batch 116/347 | Loss:  0.000070
+| Epoch 161/250 | Batch 231/347 | Loss:  0.000099
+| Epoch 161/250 | Batch 346/347 | Loss:  0.000109
+| Epoch 161/250 | Pre@1: 0.998319 | R-Pre: 0.994478 | MAP@R: 0.993663
+| Sil: 0.712 | CH: 4499 | Duration: 61.91s | ------------
+| Epoch 162/250 | Batch 116/347 | Loss:  0.000100
+| Epoch 162/250 | Batch 231/347 | Loss:  0.000090
+| Epoch 162/250 | Batch 346/347 | Loss:  0.000107
+| Epoch 162/250 | Pre@1: 0.998740 | R-Pre: 0.992769 | MAP@R: 0.991430
+| Sil: 0.706 | CH: 4381 | Duration: 61.99s | ------------
+| Epoch 163/250 | Batch 116/347 | Loss:  0.000146
+| Epoch 163/250 | Batch 231/347 | Loss:  0.000129
+| Epoch 163/250 | Batch 346/347 | Loss:  0.000116
+| Epoch 163/250 | Pre@1: 0.998319 | R-Pre: 0.995515 | MAP@R: 0.994772
+| Sil: 0.727 | CH: 4912 | Duration: 61.93s | ------------
+| Epoch 164/250 | Batch 116/347 | Loss:  0.000083
+| Epoch 164/250 | Batch 231/347 | Loss:  0.000089
+| Epoch 164/250 | Batch 346/347 | Loss:  0.000095
+| Epoch 164/250 | Pre@1: 0.998319 | R-Pre: 0.995683 | MAP@R: 0.994870
+| Sil: 0.728 | CH: 4970 | Duration: 62.14s | ------------
+| Epoch 165/250 | Batch 116/347 | Loss:  0.000051
+| Epoch 165/250 | Batch 231/347 | Loss:  0.000056
+| Epoch 165/250 | Batch 346/347 | Loss:  0.000071
+| Epoch 165/250 | Pre@1: 0.998740 | R-Pre: 0.992432 | MAP@R: 0.991380
+| Sil: 0.704 | CH: 4181 | Duration: 62.15s | ------------
+| Epoch 166/250 | Batch 116/347 | Loss:  0.000091
+| Epoch 166/250 | Batch 231/347 | Loss:  0.000081
+| Epoch 166/250 | Batch 346/347 | Loss:  0.000090
+| Epoch 166/250 | Pre@1: 0.998319 | R-Pre: 0.995298 | MAP@R: 0.994415
+| Sil: 0.719 | CH: 4686 | Duration: 61.75s | ------------
+| Epoch 167/250 | Batch 116/347 | Loss:  0.000067
+| Epoch 167/250 | Batch 231/347 | Loss:  0.000080
+| Epoch 167/250 | Batch 346/347 | Loss:  0.000088
+| Epoch 167/250 | Pre@1: 0.998740 | R-Pre: 0.995961 | MAP@R: 0.995214
+| Sil: 0.727 | CH: 4985 | Duration: 61.94s | ------------
+| Epoch 168/250 | Batch 116/347 | Loss:  0.000094
+| Epoch 168/250 | Batch 231/347 | Loss:  0.000093
+| Epoch 168/250 | Batch 346/347 | Loss:  0.000096
+| Epoch 168/250 | Pre@1: 0.998740 | R-Pre: 0.995658 | MAP@R: 0.994983
+| Sil: 0.727 | CH: 5028 | Duration: 62.01s | ------------
+| Epoch 169/250 | Batch 116/347 | Loss:  0.000104
+| Epoch 169/250 | Batch 231/347 | Loss:  0.000088
+| Epoch 169/250 | Batch 346/347 | Loss:  0.000088
+| Epoch 169/250 | Pre@1: 0.998740 | R-Pre: 0.994940 | MAP@R: 0.994231
+| Sil: 0.725 | CH: 4848 | Duration: 61.97s | ------------
+| Epoch 170/250 | Batch 116/347 | Loss:  0.000058
+| Epoch 170/250 | Batch 231/347 | Loss:  0.000055
+| Epoch 170/250 | Batch 346/347 | Loss:  0.000055
+| Epoch 170/250 | Pre@1: 0.998740 | R-Pre: 0.995436 | MAP@R: 0.994560
+| Sil: 0.729 | CH: 4925 | Duration: 61.96s | ------------
+| Epoch 171/250 | Batch 116/347 | Loss:  0.000101
+| Epoch 171/250 | Batch 231/347 | Loss:  0.000105
+| Epoch 171/250 | Batch 346/347 | Loss:  0.000101
+| Epoch 171/250 | Pre@1: 0.998319 | R-Pre: 0.994868 | MAP@R: 0.994060
+| Sil: 0.724 | CH: 4912 | Duration: 62.02s | ------------
+| Epoch 172/250 | Batch 116/347 | Loss:  0.000073
+| Epoch 172/250 | Batch 231/347 | Loss:  0.000067
+| Epoch 172/250 | Batch 346/347 | Loss:  0.000085
+| Epoch 172/250 | Pre@1: 0.998740 | R-Pre: 0.995679 | MAP@R: 0.994946
+| Sil: 0.726 | CH: 5039 | Duration: 62.24s | ------------
+| Epoch 173/250 | Batch 116/347 | Loss:  0.000052
+| Epoch 173/250 | Batch 231/347 | Loss:  0.000083
+| Epoch 173/250 | Batch 346/347 | Loss:  0.000066
+| Epoch 173/250 | Pre@1: 0.998319 | R-Pre: 0.994997 | MAP@R: 0.994232
+| Sil: 0.722 | CH: 4812 | Duration: 61.98s | ------------
+| Epoch 174/250 | Batch 116/347 | Loss:  0.000080
+| Epoch 174/250 | Batch 231/347 | Loss:  0.000059
+| Epoch 174/250 | Batch 346/347 | Loss:  0.000056
+| Epoch 174/250 | Pre@1: 0.998740 | R-Pre: 0.995711 | MAP@R: 0.994868
+| Sil: 0.720 | CH: 4739 | Duration: 62.02s | ------------
+| Epoch 175/250 | Batch 116/347 | Loss:  0.000102
+| Epoch 175/250 | Batch 231/347 | Loss:  0.000069
+| Epoch 175/250 | Batch 346/347 | Loss:  0.000061
+| Epoch 175/250 | Pre@1: 0.998740 | R-Pre: 0.994139 | MAP@R: 0.993020
+| Sil: 0.714 | CH: 4600 | Duration: 61.95s | ------------
+| Epoch 176/250 | Batch 116/347 | Loss:  0.000062
+| Epoch 176/250 | Batch 231/347 | Loss:  0.000103
+| Epoch 176/250 | Batch 346/347 | Loss:  0.000100
+| Epoch 176/250 | Pre@1: 0.998319 | R-Pre: 0.994263 | MAP@R: 0.993237
+| Sil: 0.709 | CH: 4520 | Duration: 61.92s | ------------
+| Epoch 177/250 | Batch 116/347 | Loss:  0.000053
+| Epoch 177/250 | Batch 231/347 | Loss:  0.000085
+| Epoch 177/250 | Batch 346/347 | Loss:  0.000084
+| Epoch 177/250 | Pre@1: 0.998740 | R-Pre: 0.995835 | MAP@R: 0.995117
+| Sil: 0.724 | CH: 4882 | Duration: 62.09s | ------------
+| Epoch 178/250 | Batch 116/347 | Loss:  0.000085
+| Epoch 178/250 | Batch 231/347 | Loss:  0.000145
+| Epoch 178/250 | Batch 346/347 | Loss:  0.000119
+| Epoch 178/250 | Pre@1: 0.997899 | R-Pre: 0.994781 | MAP@R: 0.993764
+| Sil: 0.720 | CH: 4850 | Duration: 62.05s | ------------
+| Epoch 179/250 | Batch 116/347 | Loss:  0.000066
+| Epoch 179/250 | Batch 231/347 | Loss:  0.000091
+| Epoch 179/250 | Batch 346/347 | Loss:  0.000082
+| Epoch 179/250 | Pre@1: 0.998319 | R-Pre: 0.994274 | MAP@R: 0.993452
+| Sil: 0.707 | CH: 4540 | Duration: 62.41s | ------------
+| Epoch 180/250 | Batch 116/347 | Loss:  0.000098
+| Epoch 180/250 | Batch 231/347 | Loss:  0.000087
+| Epoch 180/250 | Batch 346/347 | Loss:  0.000068
+| Epoch 180/250 | Pre@1: 0.998319 | R-Pre: 0.991864 | MAP@R: 0.990520
+| Sil: 0.706 | CH: 4550 | Duration: 62.00s | ------------
+| Epoch 181/250 | Batch 116/347 | Loss:  0.000103
+| Epoch 181/250 | Batch 231/347 | Loss:  0.000086
+| Epoch 181/250 | Batch 346/347 | Loss:  0.000101
+| Epoch 181/250 | Pre@1: 0.998319 | R-Pre: 0.993407 | MAP@R: 0.992371
+| Sil: 0.706 | CH: 4480 | Duration: 61.87s | ------------
+| Epoch 182/250 | Batch 116/347 | Loss:  0.000083
+| Epoch 182/250 | Batch 231/347 | Loss:  0.000088
+| Epoch 182/250 | Batch 346/347 | Loss:  0.000062
+| Epoch 182/250 | Pre@1: 0.998319 | R-Pre: 0.993963 | MAP@R: 0.992853
+| Sil: 0.713 | CH: 4510 | Duration: 61.86s | ------------
+| Epoch 183/250 | Batch 116/347 | Loss:  0.000062
+| Epoch 183/250 | Batch 231/347 | Loss:  0.000094
+| Epoch 183/250 | Batch 346/347 | Loss:  0.000091
+| Epoch 183/250 | Pre@1: 0.999160 | R-Pre: 0.995964 | MAP@R: 0.995134
+| Sil: 0.732 | CH: 5111 | Duration: 61.98s | ------------
+| Epoch 184/250 | Batch 116/347 | Loss:  0.000126
+| Epoch 184/250 | Batch 231/347 | Loss:  0.000130
+| Epoch 184/250 | Batch 346/347 | Loss:  0.000102
+| Epoch 184/250 | Pre@1: 0.997899 | R-Pre: 0.995146 | MAP@R: 0.994205
+| Sil: 0.726 | CH: 4860 | Duration: 62.03s | ------------
+| Epoch 185/250 | Batch 116/347 | Loss:  0.000089
+| Epoch 185/250 | Batch 231/347 | Loss:  0.000075
+| Epoch 185/250 | Batch 346/347 | Loss:  0.000088
+| Epoch 185/250 | Pre@1: 0.998740 | R-Pre: 0.992665 | MAP@R: 0.991115
+| Sil: 0.707 | CH: 4384 | Duration: 62.02s | ------------
+| Epoch 186/250 | Batch 116/347 | Loss:  0.000085
+| Epoch 186/250 | Batch 231/347 | Loss:  0.000055
+| Epoch 186/250 | Batch 346/347 | Loss:  0.000100
+| Epoch 186/250 | Pre@1: 0.998319 | R-Pre: 0.991259 | MAP@R: 0.989796
+| Sil: 0.705 | CH: 4332 | Duration: 61.97s | ------------
+| Epoch 187/250 | Batch 116/347 | Loss:  0.000126
+| Epoch 187/250 | Batch 231/347 | Loss:  0.000078
+| Epoch 187/250 | Batch 346/347 | Loss:  0.000071
+| Epoch 187/250 | Pre@1: 0.998740 | R-Pre: 0.995027 | MAP@R: 0.994200
+| Sil: 0.724 | CH: 4805 | Duration: 62.04s | ------------
+| Epoch 188/250 | Batch 116/347 | Loss:  0.000057
+| Epoch 188/250 | Batch 231/347 | Loss:  0.000054
+| Epoch 188/250 | Batch 346/347 | Loss:  0.000048
+| Epoch 188/250 | Pre@1: 0.997899 | R-Pre: 0.995790 | MAP@R: 0.994917
+| Sil: 0.730 | CH: 5127 | Duration: 61.72s | ------------
+| Epoch 189/250 | Batch 116/347 | Loss:  0.000025
+| Epoch 189/250 | Batch 231/347 | Loss:  0.000059
+| Epoch 189/250 | Batch 346/347 | Loss:  0.000081
+| Epoch 189/250 | Pre@1: 0.999160 | R-Pre: 0.993203 | MAP@R: 0.992180
+| Sil: 0.707 | CH: 4393 | Duration: 62.03s | ------------
+| Epoch 190/250 | Batch 116/347 | Loss:  0.000121
+| Epoch 190/250 | Batch 231/347 | Loss:  0.000090
+| Epoch 190/250 | Batch 346/347 | Loss:  0.000087
+| Epoch 190/250 | Pre@1: 0.998740 | R-Pre: 0.994454 | MAP@R: 0.993477
+| Sil: 0.722 | CH: 4781 | Duration: 62.22s | ------------
+| Epoch 191/250 | Batch 116/347 | Loss:  0.000043
+| Epoch 191/250 | Batch 231/347 | Loss:  0.000062
+| Epoch 191/250 | Batch 346/347 | Loss:  0.000063
+| Epoch 191/250 | Pre@1: 0.998740 | R-Pre: 0.996417 | MAP@R: 0.995710
+| Sil: 0.734 | CH: 5143 | Duration: 61.83s | ------------
+| Epoch 192/250 | Batch 116/347 | Loss:  0.000070
+| Epoch 192/250 | Batch 231/347 | Loss:  0.000079
+| Epoch 192/250 | Batch 346/347 | Loss:  0.000070
+| Epoch 192/250 | Pre@1: 0.999160 | R-Pre: 0.995959 | MAP@R: 0.995098
+| Sil: 0.725 | CH: 4839 | Duration: 61.85s | ------------
+| Epoch 193/250 | Batch 116/347 | Loss:  0.000059
+| Epoch 193/250 | Batch 231/347 | Loss:  0.000064
+| Epoch 193/250 | Batch 346/347 | Loss:  0.000058
+| Epoch 193/250 | Pre@1: 0.999580 | R-Pre: 0.996445 | MAP@R: 0.995642
+| Sil: 0.731 | CH: 5033 | Duration: 62.10s | ------------
+| Epoch 194/250 | Batch 116/347 | Loss:  0.000080
+| Epoch 194/250 | Batch 231/347 | Loss:  0.000121
+| Epoch 194/250 | Batch 346/347 | Loss:  0.000101
+| Epoch 194/250 | Pre@1: 0.998740 | R-Pre: 0.995333 | MAP@R: 0.994442
+| Sil: 0.716 | CH: 4621 | Duration: 62.00s | ------------
+| Epoch 195/250 | Batch 116/347 | Loss:  0.000103
+| Epoch 195/250 | Batch 231/347 | Loss:  0.000090
+| Epoch 195/250 | Batch 346/347 | Loss:  0.000077
+| Epoch 195/250 | Pre@1: 0.998319 | R-Pre: 0.995145 | MAP@R: 0.994223
+| Sil: 0.721 | CH: 4732 | Duration: 61.96s | ------------
+| Epoch 196/250 | Batch 116/347 | Loss:  0.000041
+| Epoch 196/250 | Batch 231/347 | Loss:  0.000033
+| Epoch 196/250 | Batch 346/347 | Loss:  0.000046
+| Epoch 196/250 | Pre@1: 0.998740 | R-Pre: 0.994036 | MAP@R: 0.993154
+| Sil: 0.712 | CH: 4398 | Duration: 61.96s | ------------
+| Epoch 197/250 | Batch 116/347 | Loss:  0.000107
+| Epoch 197/250 | Batch 231/347 | Loss:  0.000103
+| Epoch 197/250 | Batch 346/347 | Loss:  0.000096
+| Epoch 197/250 | Pre@1: 0.999580 | R-Pre: 0.996236 | MAP@R: 0.995538
+| Sil: 0.732 | CH: 5074 | Duration: 61.85s | ------------
+| Epoch 198/250 | Batch 116/347 | Loss:  0.000104
+| Epoch 198/250 | Batch 231/347 | Loss:  0.000112
+| Epoch 198/250 | Batch 346/347 | Loss:  0.000091
+| Epoch 198/250 | Pre@1: 0.998740 | R-Pre: 0.993244 | MAP@R: 0.991978
+| Sil: 0.706 | CH: 4456 | Duration: 61.96s | ------------
+| Epoch 199/250 | Batch 116/347 | Loss:  0.000052
+| Epoch 199/250 | Batch 231/347 | Loss:  0.000066
+| Epoch 199/250 | Batch 346/347 | Loss:  0.000056
+| Epoch 199/250 | Pre@1: 0.999160 | R-Pre: 0.995250 | MAP@R: 0.994360
+| Sil: 0.724 | CH: 4840 | Duration: 62.01s | ------------
+| Epoch 200/250 | Batch 116/347 | Loss:  0.000069
+| Epoch 200/250 | Batch 231/347 | Loss:  0.000055
+| Epoch 200/250 | Batch 346/347 | Loss:  0.000067
+| Epoch 200/250 | Pre@1: 0.998740 | R-Pre: 0.995149 | MAP@R: 0.994314
+| Sil: 0.719 | CH: 4743 | Duration: 62.06s | ------------
+| Epoch 201/250 | Batch 116/347 | Loss:  0.000119
+| Epoch 201/250 | Batch 231/347 | Loss:  0.000080
+| Epoch 201/250 | Batch 346/347 | Loss:  0.000071
+| Epoch 201/250 | Pre@1: 0.999160 | R-Pre: 0.996565 | MAP@R: 0.995843
+| Sil: 0.737 | CH: 5295 | Duration: 61.87s | ------------
+| Epoch 202/250 | Batch 116/347 | Loss:  0.000063
+| Epoch 202/250 | Batch 231/347 | Loss:  0.000053
+| Epoch 202/250 | Batch 346/347 | Loss:  0.000046
+| Epoch 202/250 | Pre@1: 0.999580 | R-Pre: 0.997014 | MAP@R: 0.996350
+| Sil: 0.741 | CH: 5407 | Duration: 62.00s | ------------
+| Epoch 203/250 | Batch 116/347 | Loss:  0.000064
+| Epoch 203/250 | Batch 231/347 | Loss:  0.000045
+| Epoch 203/250 | Batch 346/347 | Loss:  0.000056
+| Epoch 203/250 | Pre@1: 0.999580 | R-Pre: 0.996896 | MAP@R: 0.996225
+| Sil: 0.741 | CH: 5352 | Duration: 61.94s | ------------
+| Epoch 204/250 | Batch 116/347 | Loss:  0.000022
+| Epoch 204/250 | Batch 231/347 | Loss:  0.000036
+| Epoch 204/250 | Batch 346/347 | Loss:  0.000032
+| Epoch 204/250 | Pre@1: 0.999580 | R-Pre: 0.996995 | MAP@R: 0.996356
+| Sil: 0.742 | CH: 5375 | Duration: 62.14s | ------------
+| Epoch 205/250 | Batch 116/347 | Loss:  0.000021
+| Epoch 205/250 | Batch 231/347 | Loss:  0.000020
+| Epoch 205/250 | Batch 346/347 | Loss:  0.000026
+| Epoch 205/250 | Pre@1: 0.999580 | R-Pre: 0.996963 | MAP@R: 0.996290
+| Sil: 0.742 | CH: 5407 | Duration: 61.76s | ------------
+| Epoch 206/250 | Batch 116/347 | Loss:  0.000029
+| Epoch 206/250 | Batch 231/347 | Loss:  0.000025
+| Epoch 206/250 | Batch 346/347 | Loss:  0.000029
+| Epoch 206/250 | Pre@1: 0.999580 | R-Pre: 0.997198 | MAP@R: 0.996587
+| Sil: 0.743 | CH: 5447 | Duration: 62.08s | ------------
+| Epoch 207/250 | Batch 116/347 | Loss:  0.000036
+| Epoch 207/250 | Batch 231/347 | Loss:  0.000026
+| Epoch 207/250 | Batch 346/347 | Loss:  0.000027
+| Epoch 207/250 | Pre@1: 0.999160 | R-Pre: 0.997376 | MAP@R: 0.996837
+| Sil: 0.744 | CH: 5496 | Duration: 62.12s | ------------
+| Epoch 208/250 | Batch 116/347 | Loss:  0.000013
+| Epoch 208/250 | Batch 231/347 | Loss:  0.000021
+| Epoch 208/250 | Batch 346/347 | Loss:  0.000018
+| Epoch 208/250 | Pre@1: 0.999580 | R-Pre: 0.997309 | MAP@R: 0.996779
+| Sil: 0.744 | CH: 5485 | Duration: 62.07s | ------------
+| Epoch 209/250 | Batch 116/347 | Loss:  0.000014
+| Epoch 209/250 | Batch 231/347 | Loss:  0.000012
+| Epoch 209/250 | Batch 346/347 | Loss:  0.000021
+| Epoch 209/250 | Pre@1: 0.999160 | R-Pre: 0.997387 | MAP@R: 0.996877
+| Sil: 0.745 | CH: 5524 | Duration: 61.56s | ------------
+| Epoch 210/250 | Batch 116/347 | Loss:  0.000053
+| Epoch 210/250 | Batch 231/347 | Loss:  0.000045
+| Epoch 210/250 | Batch 346/347 | Loss:  0.000035
+| Epoch 210/250 | Pre@1: 0.999160 | R-Pre: 0.997288 | MAP@R: 0.996762
+| Sil: 0.745 | CH: 5491 | Duration: 62.13s | ------------
+| Epoch 211/250 | Batch 116/347 | Loss:  0.000032
+| Epoch 211/250 | Batch 231/347 | Loss:  0.000026
+| Epoch 211/250 | Batch 346/347 | Loss:  0.000035
+| Epoch 211/250 | Pre@1: 0.999160 | R-Pre: 0.997552 | MAP@R: 0.997112
+| Sil: 0.746 | CH: 5572 | Duration: 61.86s | ------------
+| Epoch 212/250 | Batch 116/347 | Loss:  0.000014
+| Epoch 212/250 | Batch 231/347 | Loss:  0.000023
+| Epoch 212/250 | Batch 346/347 | Loss:  0.000019
+| Epoch 212/250 | Pre@1: 0.999160 | R-Pre: 0.997506 | MAP@R: 0.997075
+| Sil: 0.744 | CH: 5506 | Duration: 61.82s | ------------
+| Epoch 213/250 | Batch 116/347 | Loss:  0.000007
+| Epoch 213/250 | Batch 231/347 | Loss:  0.000014
+| Epoch 213/250 | Batch 346/347 | Loss:  0.000022
+| Epoch 213/250 | Pre@1: 0.999160 | R-Pre: 0.997556 | MAP@R: 0.997136
+| Sil: 0.746 | CH: 5521 | Duration: 62.00s | ------------
+| Epoch 214/250 | Batch 116/347 | Loss:  0.000050
+| Epoch 214/250 | Batch 231/347 | Loss:  0.000028
+| Epoch 214/250 | Batch 346/347 | Loss:  0.000033
+| Epoch 214/250 | Pre@1: 0.999160 | R-Pre: 0.997440 | MAP@R: 0.996985
+| Sil: 0.744 | CH: 5436 | Duration: 62.27s | ------------
+| Epoch 215/250 | Batch 116/347 | Loss:  0.000009
+| Epoch 215/250 | Batch 231/347 | Loss:  0.000015
+| Epoch 215/250 | Batch 346/347 | Loss:  0.000021
+| Epoch 215/250 | Pre@1: 0.999160 | R-Pre: 0.997390 | MAP@R: 0.996918
+| Sil: 0.743 | CH: 5409 | Duration: 61.76s | ------------
+| Epoch 216/250 | Batch 116/347 | Loss:  0.000031
+| Epoch 216/250 | Batch 231/347 | Loss:  0.000027
+| Epoch 216/250 | Batch 346/347 | Loss:  0.000021
+| Epoch 216/250 | Pre@1: 0.999160 | R-Pre: 0.997368 | MAP@R: 0.996844
+| Sil: 0.744 | CH: 5450 | Duration: 61.79s | ------------
+| Epoch 217/250 | Batch 116/347 | Loss:  0.000027
+| Epoch 217/250 | Batch 231/347 | Loss:  0.000018
+| Epoch 217/250 | Batch 346/347 | Loss:  0.000026
+| Epoch 217/250 | Pre@1: 0.999160 | R-Pre: 0.997330 | MAP@R: 0.996775
+| Sil: 0.745 | CH: 5469 | Duration: 61.86s | ------------
+| Epoch 218/250 | Batch 116/347 | Loss:  0.000004
+| Epoch 218/250 | Batch 231/347 | Loss:  0.000009
+| Epoch 218/250 | Batch 346/347 | Loss:  0.000013
+| Epoch 218/250 | Pre@1: 0.999160 | R-Pre: 0.997258 | MAP@R: 0.996708
+| Sil: 0.743 | CH: 5403 | Duration: 61.95s | ------------
+| Epoch 219/250 | Batch 116/347 | Loss:  0.000005
+| Epoch 219/250 | Batch 231/347 | Loss:  0.000018
+| Epoch 219/250 | Batch 346/347 | Loss:  0.000013
+| Epoch 219/250 | Pre@1: 0.999160 | R-Pre: 0.997163 | MAP@R: 0.996565
+| Sil: 0.742 | CH: 5365 | Duration: 61.99s | ------------
+| Epoch 220/250 | Batch 116/347 | Loss:  0.000019
+| Epoch 220/250 | Batch 231/347 | Loss:  0.000024
+| Epoch 220/250 | Batch 346/347 | Loss:  0.000024
+| Epoch 220/250 | Pre@1: 0.999160 | R-Pre: 0.997208 | MAP@R: 0.996601
+| Sil: 0.745 | CH: 5530 | Duration: 62.14s | ------------
+| Epoch 221/250 | Batch 116/347 | Loss:  0.000014
+| Epoch 221/250 | Batch 231/347 | Loss:  0.000010
+| Epoch 221/250 | Batch 346/347 | Loss:  0.000024
+| Epoch 221/250 | Pre@1: 0.999160 | R-Pre: 0.997038 | MAP@R: 0.996449
+| Sil: 0.742 | CH: 5408 | Duration: 62.08s | ------------
+| Epoch 222/250 | Batch 116/347 | Loss:  0.000021
+| Epoch 222/250 | Batch 231/347 | Loss:  0.000028
+| Epoch 222/250 | Batch 346/347 | Loss:  0.000032
+| Epoch 222/250 | Pre@1: 0.999160 | R-Pre: 0.997275 | MAP@R: 0.996748
+| Sil: 0.744 | CH: 5440 | Duration: 61.87s | ------------
+| Epoch 223/250 | Batch 116/347 | Loss:  0.000033
+| Epoch 223/250 | Batch 231/347 | Loss:  0.000021
+| Epoch 223/250 | Batch 346/347 | Loss:  0.000025
+| Epoch 223/250 | Pre@1: 0.999160 | R-Pre: 0.997207 | MAP@R: 0.996636
+| Sil: 0.744 | CH: 5437 | Duration: 61.57s | ------------
+| Epoch 224/250 | Batch 116/347 | Loss:  0.000037
+| Epoch 224/250 | Batch 231/347 | Loss:  0.000025
+| Epoch 224/250 | Batch 346/347 | Loss:  0.000032
+| Epoch 224/250 | Pre@1: 0.999160 | R-Pre: 0.997181 | MAP@R: 0.996599
+| Sil: 0.742 | CH: 5385 | Duration: 62.05s | ------------
+| Epoch 225/250 | Batch 116/347 | Loss:  0.000040
+| Epoch 225/250 | Batch 231/347 | Loss:  0.000030
+| Epoch 225/250 | Batch 346/347 | Loss:  0.000030
+| Epoch 225/250 | Pre@1: 0.999160 | R-Pre: 0.997117 | MAP@R: 0.996541
+| Sil: 0.744 | CH: 5440 | Duration: 61.91s | ------------
+| Epoch 226/250 | Batch 116/347 | Loss:  0.000017
+| Epoch 226/250 | Batch 231/347 | Loss:  0.000024
+| Epoch 226/250 | Batch 346/347 | Loss:  0.000029
+| Epoch 226/250 | Pre@1: 0.999160 | R-Pre: 0.997340 | MAP@R: 0.996806
+| Sil: 0.744 | CH: 5513 | Duration: 61.94s | ------------
+| Epoch 227/250 | Batch 116/347 | Loss:  0.000009
+| Epoch 227/250 | Batch 231/347 | Loss:  0.000023
+| Epoch 227/250 | Batch 346/347 | Loss:  0.000024
+| Epoch 227/250 | Pre@1: 0.999160 | R-Pre: 0.997391 | MAP@R: 0.996835
+| Sil: 0.743 | CH: 5517 | Duration: 62.18s | ------------
+| Epoch 228/250 | Batch 116/347 | Loss:  0.000052
+| Epoch 228/250 | Batch 231/347 | Loss:  0.000054
+| Epoch 228/250 | Batch 346/347 | Loss:  0.000051
+| Epoch 228/250 | Pre@1: 0.999160 | R-Pre: 0.997504 | MAP@R: 0.997011
+| Sil: 0.745 | CH: 5547 | Duration: 62.33s | ------------
+| Epoch 229/250 | Batch 116/347 | Loss:  0.000034
+| Epoch 229/250 | Batch 231/347 | Loss:  0.000033
+| Epoch 229/250 | Batch 346/347 | Loss:  0.000029
+| Epoch 229/250 | Pre@1: 0.999160 | R-Pre: 0.997432 | MAP@R: 0.996950
+| Sil: 0.745 | CH: 5490 | Duration: 61.93s | ------------
+| Epoch 230/250 | Batch 116/347 | Loss:  0.000011
+| Epoch 230/250 | Batch 231/347 | Loss:  0.000015
+| Epoch 230/250 | Batch 346/347 | Loss:  0.000032
+| Epoch 230/250 | Pre@1: 0.999160 | R-Pre: 0.997391 | MAP@R: 0.996927
+| Sil: 0.744 | CH: 5470 | Duration: 62.00s | ------------
+| Epoch 231/250 | Batch 116/347 | Loss:  0.000019
+| Epoch 231/250 | Batch 231/347 | Loss:  0.000019
+| Epoch 231/250 | Batch 346/347 | Loss:  0.000027
+| Epoch 231/250 | Pre@1: 0.999580 | R-Pre: 0.997518 | MAP@R: 0.996988
+| Sil: 0.746 | CH: 5565 | Duration: 61.93s | ------------
+| Epoch 232/250 | Batch 116/347 | Loss:  0.000024
+| Epoch 232/250 | Batch 231/347 | Loss:  0.000031
+| Epoch 232/250 | Batch 346/347 | Loss:  0.000034
+| Epoch 232/250 | Pre@1: 0.999160 | R-Pre: 0.997589 | MAP@R: 0.997094
+| Sil: 0.747 | CH: 5583 | Duration: 62.00s | ------------
+| Epoch 233/250 | Batch 116/347 | Loss:  0.000056
+| Epoch 233/250 | Batch 231/347 | Loss:  0.000039
+| Epoch 233/250 | Batch 346/347 | Loss:  0.000032
+| Epoch 233/250 | Pre@1: 0.999160 | R-Pre: 0.997503 | MAP@R: 0.997004
+| Sil: 0.746 | CH: 5586 | Duration: 61.81s | ------------
+| Epoch 234/250 | Batch 116/347 | Loss:  0.000020
+| Epoch 234/250 | Batch 231/347 | Loss:  0.000021
+| Epoch 234/250 | Batch 346/347 | Loss:  0.000018
+| Epoch 234/250 | Pre@1: 0.999160 | R-Pre: 0.997390 | MAP@R: 0.996878
+| Sil: 0.746 | CH: 5546 | Duration: 62.05s | ------------
+| Epoch 235/250 | Batch 116/347 | Loss:  0.000018
+| Epoch 235/250 | Batch 231/347 | Loss:  0.000015
+| Epoch 235/250 | Batch 346/347 | Loss:  0.000023
+| Epoch 235/250 | Pre@1: 0.999160 | R-Pre: 0.997463 | MAP@R: 0.996960
+| Sil: 0.746 | CH: 5539 | Duration: 62.06s | ------------
+| Epoch 236/250 | Batch 116/347 | Loss:  0.000050
+| Epoch 236/250 | Batch 231/347 | Loss:  0.000041
+| Epoch 236/250 | Batch 346/347 | Loss:  0.000033
+| Epoch 236/250 | Pre@1: 0.998740 | R-Pre: 0.997481 | MAP@R: 0.996977
+| Sil: 0.746 | CH: 5524 | Duration: 61.88s | ------------
+| Epoch 237/250 | Batch 116/347 | Loss:  0.000030
+| Epoch 237/250 | Batch 231/347 | Loss:  0.000032
+| Epoch 237/250 | Batch 346/347 | Loss:  0.000024
+| Epoch 237/250 | Pre@1: 0.998740 | R-Pre: 0.997552 | MAP@R: 0.997027
+| Sil: 0.747 | CH: 5576 | Duration: 61.90s | ------------
+| Epoch 238/250 | Batch 116/347 | Loss:  0.000036
+| Epoch 238/250 | Batch 231/347 | Loss:  0.000032
+| Epoch 238/250 | Batch 346/347 | Loss:  0.000026
+| Epoch 238/250 | Pre@1: 0.999160 | R-Pre: 0.997566 | MAP@R: 0.997066
+| Sil: 0.746 | CH: 5565 | Duration: 61.89s | ------------
+| Epoch 239/250 | Batch 116/347 | Loss:  0.000024
+| Epoch 239/250 | Batch 231/347 | Loss:  0.000029
+| Epoch 239/250 | Batch 346/347 | Loss:  0.000026
+| Epoch 239/250 | Pre@1: 0.999160 | R-Pre: 0.997531 | MAP@R: 0.997019
+| Sil: 0.746 | CH: 5592 | Duration: 61.92s | ------------
+| Epoch 240/250 | Batch 116/347 | Loss:  0.000015
+| Epoch 240/250 | Batch 231/347 | Loss:  0.000014
+| Epoch 240/250 | Batch 346/347 | Loss:  0.000015
+| Epoch 240/250 | Pre@1: 0.999160 | R-Pre: 0.997415 | MAP@R: 0.996872
+| Sil: 0.745 | CH: 5527 | Duration: 61.89s | ------------
+| Epoch 241/250 | Batch 116/347 | Loss:  0.000027
+| Epoch 241/250 | Batch 231/347 | Loss:  0.000027
+| Epoch 241/250 | Batch 346/347 | Loss:  0.000028
+| Epoch 241/250 | Pre@1: 0.999160 | R-Pre: 0.997581 | MAP@R: 0.997124
+| Sil: 0.745 | CH: 5541 | Duration: 61.95s | ------------
+| Epoch 242/250 | Batch 116/347 | Loss:  0.000023
+| Epoch 242/250 | Batch 231/347 | Loss:  0.000019
+| Epoch 242/250 | Batch 346/347 | Loss:  0.000024
+| Epoch 242/250 | Pre@1: 0.999160 | R-Pre: 0.997582 | MAP@R: 0.997089
+| Sil: 0.747 | CH: 5576 | Duration: 62.13s | ------------
+| Epoch 243/250 | Batch 116/347 | Loss:  0.000022
+| Epoch 243/250 | Batch 231/347 | Loss:  0.000016
+| Epoch 243/250 | Batch 346/347 | Loss:  0.000031
+| Epoch 243/250 | Pre@1: 0.999160 | R-Pre: 0.997602 | MAP@R: 0.997137
+| Sil: 0.747 | CH: 5601 | Duration: 61.76s | ------------
+| Epoch 244/250 | Batch 116/347 | Loss:  0.000017
+| Epoch 244/250 | Batch 231/347 | Loss:  0.000015
+| Epoch 244/250 | Batch 346/347 | Loss:  0.000014
+| Epoch 244/250 | Pre@1: 0.999160 | R-Pre: 0.997517 | MAP@R: 0.997021
+| Sil: 0.747 | CH: 5613 | Duration: 61.58s | ------------
+| Epoch 245/250 | Batch 116/347 | Loss:  0.000023
+| Epoch 245/250 | Batch 231/347 | Loss:  0.000017
+| Epoch 245/250 | Batch 346/347 | Loss:  0.000019
+| Epoch 245/250 | Pre@1: 0.998740 | R-Pre: 0.997486 | MAP@R: 0.996994
+| Sil: 0.747 | CH: 5587 | Duration: 62.05s | ------------
+| Epoch 246/250 | Batch 116/347 | Loss:  0.000004
+| Epoch 246/250 | Batch 231/347 | Loss:  0.000019
+| Epoch 246/250 | Batch 346/347 | Loss:  0.000024
+| Epoch 246/250 | Pre@1: 0.998740 | R-Pre: 0.997379 | MAP@R: 0.996875
+| Sil: 0.744 | CH: 5480 | Duration: 61.97s | ------------
+| Epoch 247/250 | Batch 116/347 | Loss:  0.000028
+| Epoch 247/250 | Batch 231/347 | Loss:  0.000026
+| Epoch 247/250 | Batch 346/347 | Loss:  0.000022
+| Epoch 247/250 | Pre@1: 0.998740 | R-Pre: 0.997536 | MAP@R: 0.997046
+| Sil: 0.745 | CH: 5529 | Duration: 61.91s | ------------
+| Epoch 248/250 | Batch 116/347 | Loss:  0.000049
+| Epoch 248/250 | Batch 231/347 | Loss:  0.000046
+| Epoch 248/250 | Batch 346/347 | Loss:  0.000050
+| Epoch 248/250 | Pre@1: 0.998740 | R-Pre: 0.997580 | MAP@R: 0.997116
+| Sil: 0.746 | CH: 5551 | Duration: 62.15s | ------------
+| Epoch 249/250 | Batch 116/347 | Loss:  0.000008
+| Epoch 249/250 | Batch 231/347 | Loss:  0.000013
+| Epoch 249/250 | Batch 346/347 | Loss:  0.000013
+| Epoch 249/250 | Pre@1: 0.998740 | R-Pre: 0.997447 | MAP@R: 0.996974
+| Sil: 0.744 | CH: 5466 | Duration: 62.24s | ------------
+| Epoch 250/250 | Batch 116/347 | Loss:  0.000022
+| Epoch 250/250 | Batch 231/347 | Loss:  0.000015
+| Epoch 250/250 | Batch 346/347 | Loss:  0.000015
+| Epoch 250/250 | Pre@1: 0.998740 | R-Pre: 0.997435 | MAP@R: 0.996953
+| Sil: 0.742 | CH: 5430 | Duration: 61.77s | ------------
+| Finished learning | Learning time: 15550.77s
+| Finished testing  | Accuracy: 0.996066 | Run time: 15555.90s
+
+
+---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*---*
+| Total time 15558.00
+| Notable parameters - loss_margin: 0.1 | loss_type: triplet | task: metric | step_size: 100 | num_epochs: 250 |
+| Scores:
+| - mean_average_precision_at_r: 0.996 +/- 0.000
+| - precision_at_1: 1.000 +/- 0.000
+| - r_precision: 0.997 +/- 0.000
+| - accuracy: 0.996 +/- 0.000
+| - silhouette: 0.738 +/- 0.000
+| - ch: 5262.505 +/- 0.000
+|---------
