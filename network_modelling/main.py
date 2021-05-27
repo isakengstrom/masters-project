@@ -9,17 +9,19 @@ import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
 import torchvision.transforms as transforms
-from torch.utils.tensorboard import SummaryWriter # tensorboard --logdir /home/isaeng/Exjobb/states/runs/
+from torch.utils.tensorboard import SummaryWriter  # tensorboard --logdir /home/isaeng/Exjobb/states/runs/
 from torch.utils.data import DataLoader
+
+from pytorch_metric_learning import losses, miners, distances, reducers
 
 from learn import learn
 from evaluate import evaluate
 from models.RNN import GenNet
 from dataset import FOIKinematicPoseDataset, DataLimiter, LoadData, create_samplers
-from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, AddNoise, ReshapePoses
+from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, ReshapePoses  # AddNoise
 
-from helpers import write_to_json
-from helpers.paths import EXTR_PATH_SSD, TB_RUNS_PATH
+from helpers import write_to_json, print_setup, make_save_dirs_for_net
+from helpers.paths import EXTR_PATH_SSD, TB_RUNS_PATH, BACKUP_MODELS_PATH
 from helpers.result_formatter import mean_confidence_interval
 
 
@@ -40,7 +42,7 @@ DATA_LIMITER = DataLimiter(
 DATA_LIMITER_EVAL = DataLimiter(
     subjects=[0, 1],
     sessions=[1],
-    views=[0],
+    views=None,
 )
 
 
@@ -58,66 +60,13 @@ print(f"| Loading finished in {time.time() - load_start_time:0.1f}s")
 print('-' * 72)
 
 
-def print_setup(setup: dict, params):
-    split = setup['split']
-
-    print('-' * 32, 'Setup', '-' * 33)
-    print(f"| Model: {setup['model_name']}\n"
-          f"| Optimizer: {setup['optimizer_name']}\n"
-          f"| Loss type: {params['loss_type']}\n"
-          f"| Loss function: {setup['loss_function_name']}\n"
-          f"| Device: {setup['device']}\n"
-          f"|")
-
-    print(f"| Sequence transforms:")
-    [print(f"| {name_idx + 1}: {name}") for name_idx, name in enumerate(setup["transforms"])]
-    print(f"|")
-
-    print(f"| Total sequences: {split['tot_num_seqs']}\n"
-          f"| Train split: {split['train_split']}\n"
-          f"| Val split: {split['val_split']}\n"
-          f"| Test split: {split['test_split']}\n"
-          f"|")
-
-    print(f"| Learning phase:\n"
-          f"| Epochs: {params['num_epochs']}\n"
-          f"| Batch size: {params['batch_size']}\n"
-          f"| Train batches: {split['num_train_batches']}\n"
-          f"| Val batches: {split['num_val_batches']}\n"
-          f"|")
-
-    print(f"| Testing phase:\n"
-          f"| Batch size: {params['batch_size']}\n"
-          f"| Test batches: {split['num_test_batches']}")
-
-
-def make_save_dirs():
-    if not os.path.isdir('./saves'):
-        os.mkdir('./saves')
-
-    # Add checkpoint dir if it doesn't exist
-    if not os.path.isdir('./saves/checkpoints'):
-        os.mkdir('./saves/checkpoints')
-
-    # Add saved_models dir if it doesn't exist
-    if not os.path.isdir('./saves/models'):
-        os.mkdir('./saves/models')
-
-    if not os.path.isdir('./saves/runs'):
-        os.mkdir('./saves/runs')
-
-
 def parameters():
     """
     Initialise the hyperparameters (+ some other params)
 
     - Batch size - tightly linked with gradient descent. The number of samples worked through before the params of the
       model are updated.
-      - Batch Gradient Descent: batch_size = len(dataset)
-      - Stochastic Gradient descent: batch_size = 1
-      - Mini-Batch Gradient descent: 1 < batch_size < len(dataset)
       - Advice from Yann LeCun, batch_size <= 32: arxiv.org/abs/1804.07612
-
 
     :return: params: dict()
     """
@@ -138,8 +87,8 @@ def parameters():
 
     params['num_epochs'] = 250
     params['batch_size'] = 32
-    params['learning_rate'] = 0.0005  #5e-4  # 0.05 5e-4 5e-8
-    params['learning_rate_lim'] = None #5.1e-7
+    params['learning_rate'] = 0.0005  # 5e-4  # 0.05 5e-4 5e-8
+    params['learning_rate_lim'] = 5.1e-6  # None, was 5.1e-7
     params['step_size'] = 100
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
@@ -166,13 +115,17 @@ def parameters():
 
     params['task'] = 'metric'  # 'classification'/'metric'
     # Loss function
-    params['loss_type'] = 'single'  # 'single'/'triplet'
+    params['loss_type'] = 'musgrave'  # 'single'/'triplet'
     params['loss_margin'] = 25  # The margin for certain loss functions
 
     # Settings for the network run
+
+    which_margin = '1'
+    params['checkpoint_to_load'] = BACKUP_MODELS_PATH + f'triplet_margin{which_margin}_allClasses/checkpoint_margin_{which_margin}_epoch_250.pth'
+    #params['checkpoint_to_load'] = BACKUP_MODELS_PATH + f'triplet_margin{which_margin}_allClasses/checkpoint_250.pth'
+    params['should_load_checkpoints'] = False
     params['should_learn'] = True
     params['should_write'] = False
-    params['should_load_checkpoints'] = False
     params['should_test_unseen_sessions'] = False  # Test the unseen sessions (sess1) for sub 0 and 1
     params['should_val_unseen_sessions'] = False  # Val split from unseen sessions, otherwise uses seen session (sess0)
 
@@ -184,33 +137,41 @@ def multi_grid(num_repeats=1):
     
     grids = [
         {
-            'loss_margin': 0.1,
-            'loss_type': 'triplet',
-            'task': 'metric',
-            'step_size': 100,
-            'num_epochs': 250,
-        },
-        {
-            'loss_margin': 0.5,
-            'loss_type': 'triplet',
-            'task': 'metric',
-            'step_size': 100,
-            'num_epochs': 250,
-        },
-        {
             'loss_margin': 1,
-            'loss_type': 'triplet',
+            'loss_type': 'musgrave',
             'task': 'metric',
-            'step_size': 100,
+            'step_size': 1,
             'num_epochs': 250,
         },
         {
             'loss_margin': 2,
-            'loss_type': 'triplet',
+            'loss_type': 'musgrave',
             'task': 'metric',
-            'step_size': 100,
+            'step_size': 1,
             'num_epochs': 250,
         },
+        {
+            'loss_margin': 4,
+            'loss_type': 'musgrave',
+            'task': 'metric',
+            'step_size': 1,
+            'num_epochs': 250,
+        },
+        {
+            'loss_margin': 8,
+            'loss_type': 'musgrave',
+            'task': 'metric',
+            'step_size': 1,
+            'num_epochs': 250,
+        },
+        {
+            'loss_margin': 16,
+            'loss_type': 'musgrave',
+            'task': 'metric',
+            'step_size': 1,
+            'num_epochs': 250,
+        },
+
     ]
 
     num_grids = len(grids)
@@ -227,13 +188,13 @@ def grid_search(num_repeats=1, outer_grid_idx=-1, grid=None):
     if grid is None:
         # Override any parameter in parameter()
         grid = {
-            #'bidirectional': [False, True],
-            #'net_type': ['gru'],
-            #'sequence_len': [5, 10, 15, 20, 25],
-            #'hidden_size': [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024],
-            #'max_norm': [0.01, 0.1, 1]
-            #'num_epochs': 2
-            #'loss_margin': [50, 100]
+            # 'bidirectional': [False, True],
+            # 'net_type': ['gru'],
+            # 'sequence_len': [5, 10, 15, 20, 25],
+            # 'hidden_size': [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024],
+            # 'max_norm': [0.01, 0.1, 1]
+            # 'num_epochs': 2
+            # 'loss_margin': [50, 100]
         }
 
     # Wrap every value in a list if it isn't already the case
@@ -254,6 +215,10 @@ def grid_search(num_repeats=1, outer_grid_idx=-1, grid=None):
 
     params = parameters()
     params['num_runs'] = num_runs
+
+    # Formatting of run_info save file name
+    run_name = f'd{multi_start.strftime("%y")}{multi_start.strftime("%m")}{multi_start.strftime("%d")}_h{multi_start.strftime("%H")}m{multi_start.strftime("%M")}.json'
+    params['run_name'] = run_name
 
     # Run the network by firstly overriding the params with the grid.
     for grid_idx, override_params in enumerate(all_grid_combinations):
@@ -292,7 +257,6 @@ def grid_search(num_repeats=1, outer_grid_idx=-1, grid=None):
     multi_results['duration'] = multi_info['duration']
 
     # Formatting of run_info save file name
-    run_name = f'd{multi_start.strftime("%y")}{multi_start.strftime("%m")}{multi_start.strftime("%d")}_h{multi_start.strftime("%H")}m{multi_start.strftime("%M")}.json'
     full_info_path = os.path.join('./saves/runs', run_name)
     result_info_path = os.path.join('./saves/runs', 'r_' + run_name)
 
@@ -381,12 +345,12 @@ def run_network(params: dict = None) -> dict:
         ChangePoseOrigin(),
         FilterJoints(activator=params['joints_activator'], joint_filter=params['joint_filter']),
         ReshapePoses(),
-        #AddNoise(scale=1),
+        # AddNoise(scale=1),
         ToTensor()
     ])
 
     # Create save dir if they don't exist
-    make_save_dirs()
+    make_save_dirs_for_net()
 
     train_dataset = FOIKinematicPoseDataset(
         data=LOADED_DATA,
@@ -402,7 +366,7 @@ def run_network(params: dict = None) -> dict:
         val_split=.15,
         val_from_train=False,
         shuffle=True,
-        #split_limit_factor=params['sequence_len']/params['simulated_len']
+        # split_limit_factor=params['sequence_len']/params['simulated_len']
     )
 
     train_loader = DataLoader(train_dataset, params['batch_size'], sampler=train_sampler, num_workers=4)
@@ -410,6 +374,7 @@ def run_network(params: dict = None) -> dict:
     val_loader = DataLoader(train_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
 
     if params['should_test_unseen_sessions']:
+        print("| Getting unseen sessions")
         test_dataset = FOIKinematicPoseDataset(
             data=LOADED_DATA_EVAL,
             json_path=JSON_PATH_SSD,
@@ -421,7 +386,7 @@ def run_network(params: dict = None) -> dict:
         _, test_sampler, temp_sampler = create_samplers(
             dataset_len=len(test_dataset),
             train_split=.0,
-            val_split=.3,
+            val_split=.0,
             val_from_train=False,
             shuffle=True,
             # split_limit_factor=params['sequence_len']/params['simulated_len']
@@ -432,7 +397,6 @@ def run_network(params: dict = None) -> dict:
         if params['should_val_unseen_sessions']:
             val_sampler = temp_sampler
             val_loader = DataLoader(test_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
-
 
     # Use cuda if possible
     # TODO: Bug - Not everything is being sent to the cpu, fix in other parts of the scripts
@@ -453,18 +417,21 @@ def run_network(params: dict = None) -> dict:
     # The optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=params['learning_rate'])
 
+    distance = distances.CosineSimilarity()
+    reducer = reducers.ThresholdReducer(low=0)
     # Pick loss function depending on params
     if params['loss_type'] == "single":
         loss_function = nn.CrossEntropyLoss()
     elif params['loss_type'] == "siamese":
         raise NotImplementedError
+    elif params['loss_type'] == "musgrave":
+        loss_function = losses.TripletMarginLoss(margin=params['loss_margin'], distance=distance, reducer=reducer)
     elif params['loss_type'] == "triplet":
         loss_function = nn.TripletMarginLoss(margin=params['loss_margin'])
     else:
         raise Exception("Invalid network_type")
 
-    #print_setup(setup=run_info, params=params)
-
+    # print_setup(setup=run_info, params=params)
     writer = SummaryWriter(TB_RUNS_PATH) if params['should_write'] else None
 
     start_time = time.time()
@@ -484,22 +451,24 @@ def run_network(params: dict = None) -> dict:
         max_norm=params['max_norm'],
         step_size=params['step_size'],
         tb_writer=writer,
-        params=params
+        params=params,
+        reducer=reducer,
+        mining_func=miners.TripletMarginMiner(margin=params['loss_margin'], distance=distance, type_of_triplets="semihard")
     )
 
     if params['should_load_checkpoints']:
-        print('Loading network checkpoints for testing..')
-        # network_modelling/saves/checkpoints/checkpoint_margin_5_epoch_65.pth
-        checkpoint = torch.load('./saves/checkpoints/checkpoint_margin_5_epoch_65.pth')
+        print('| Loading network checkpoints for testing..')
+        checkpoint = torch.load(params['checkpoint_to_load'])
         model.load_state_dict(checkpoint['net'])
 
     test_info, _ = evaluate(
         train_loader=train_loader,
-        eval_loader=val_loader,
+        eval_loader=test_loader,
         model=model,
         task=params['task'],
         device=device,
         classes=DATA_LIMITER.subjects,
+        tb_writer=writer,
         is_test=False
     )
 
@@ -532,12 +501,9 @@ def run_network(params: dict = None) -> dict:
 
 if __name__ == "__main__":
 
-    multi_grid(num_repeats=1)
-    #grid_search(num_repeats=1)
-    #run_network()
-    #result_info_path = os.path.join('./saves/runs', 'r_' + run_name)
-    #res = read_from_json('./saves/runs/r_d210511_h17m18.json')
-    #print(res)
-
-
-
+    multi_grid(num_repeats=10)
+    # grid_search(num_repeats=1)
+    # run_network()
+    # result_info_path = os.path.join('./saves/runs', 'r_' + run_name)
+    # res = read_from_json('./saves/runs/r_d210511_h17m18.json')
+    # print(res)
