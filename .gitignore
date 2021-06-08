@@ -4,10 +4,7 @@
 /**/*.wav
 
 # Ignore any saves folder
-/**/saves/checkpoints
-/**/saves/models
-/**/saves/runs
-/**/saves/backup_models
+/**/saves
 
 
 # Ignore Pytorch checkpoints
