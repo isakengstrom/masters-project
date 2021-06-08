@@ -97,7 +97,7 @@ def extract_poses(media_path=None, media_type='video', should_extract=True, shou
 
                 if should_display:
                     cv2.imshow("OpenPose 1.7.0 - Video Stream", datum.cvOutputData)
-                    key = cv2.waitKey(1)
+                    key = cv2.waitKey(1)  # 1 for continuous stream, 0 for stills
 
                     # Press "Esc", 'q' or 'Q' to exit stream
                     if key == 27 or key == ord('q') or key == ord('Q'):
@@ -157,6 +157,6 @@ if __name__ == "__main__":
     #extract_poses()
     #extract_poses("/home/isaeng/Exjobb/media/mini.jpg", 'image')
     #extract_poses("/home/isaeng/Exjobb/media/tompa_flip_0_25.MOV", 'video')
-    extract_poses("/home/isaeng/Exjobb/media/front.mp4", 'video')
+    extract_poses("/home/isaeng/Exjobb/images/walking/sub0b_sess0.png", 'image')
     #extract_poses("/home/isaeng/Exjobb/media/dir", 'images')
     #extract_poses(media_path=os.environ['DATASET_DIR'] + "/VIDEO/SUBJECT_0/SEQ_0/skew.MTS", media_type='video')

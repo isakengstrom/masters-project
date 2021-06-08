@@ -1,5 +1,6 @@
 import cv2
 import os
+import numpy as np
 from helpers import read_from_json, LIMIT_PARAMS, SHOULD_LIMIT
 from helpers.paths import CC_OFFSETS_PATH
 from data_processing.pre_processing.pre_config import USE_OFFSET, FIX_BACK_CAMERA
@@ -24,7 +25,19 @@ def draw_label(img, text, pos=(20, 20), bg_color=(200, 200, 200)):
     cv2.putText(img, text, pos, font_face, scale, color, 1, cv2.LINE_AA)
 
 
+def white_balance(img_):
+    result = cv2.cvtColor(img_, cv2.COLOR_BGR2LAB)
+    avg_a = np.average(result[:, :, 1])
+    avg_b = np.average(result[:, :, 2])
+    result[:, :, 1] = result[:, :, 1] - ((avg_a - 128) * (result[:, :, 0] / 255.0) * 1.1)
+    result[:, :, 2] = result[:, :, 2] - ((avg_b - 128) * (result[:, :, 0] / 255.0) * 1.1)
+    result = cv2.cvtColor(result, cv2.COLOR_LAB2BGR)
+    return result
+
+
 def display_session(session_dir, subject_idx, session_idx, views):
+    row_display = True
+
     offsets_data = read_from_json(CC_OFFSETS_PATH)
     print(offsets_data)
 
@@ -70,7 +83,7 @@ def display_session(session_dir, subject_idx, session_idx, views):
                 continue
             rets.append(ret)
 
-            if stream_idx == 0:
+            if stream_idx == 0 and not row_display:
                 scale_percent = 50
             else:
                 scale_percent = 25
@@ -84,32 +97,41 @@ def display_session(session_dir, subject_idx, session_idx, views):
             labels = [
                 "View: {}".format(views[stream_idx]),
                 "FPS: {}".format(stream.get(cv2.CAP_PROP_FPS)),
-                "Start frame: {}".format(starting_frames[stream_idx]),
+                #"Start frame: {}".format(starting_frames[stream_idx]),
                 "Curr frame {}".format(int(stream.get(cv2.CAP_PROP_POS_FRAMES))),
-                "Start ms: {:.1f}".format(starting_msec[stream_idx]),
+                #"Start ms: {:.1f}".format(starting_msec[stream_idx]),
                 "Curr ms: {:.0f}".format(stream.get(cv2.CAP_PROP_POS_MSEC)),
+                "num frames {}".format(stream.get(cv2.CAP_PROP_FRAME_COUNT))
             ]
 
             for i, label in enumerate(labels):
                 draw_label(img, text=label, pos=(20, 20*(i+1)))
 
-            if stream_idx == 0:
+            if stream_idx == 0 and not row_display:
                 draw_label(img, text="- REF VIEW", pos=(130, 20))
 
+            img = white_balance(img)
             imgs.append(img)
             dims.append(dim)
+
 
         if not any(rets):
             print("Could not read from cameras")
             break
 
-        row1 = cv2.hconcat([imgs[1], imgs[2]])
-        row2 = cv2.hconcat([imgs[3], imgs[4]])
-        col1_col2 = cv2.vconcat([row1, row2])
-        col1_col2_col3 = cv2.vconcat([col1_col2, imgs[0]])
+        if row_display:
+            concat = cv2.hconcat([imgs[1], imgs[4]]) # [imgs[1], imgs[4], imgs[3], imgs[0], imgs[2]]
+            concat = cv2.hconcat([concat, imgs[3]])
+            concat = cv2.hconcat([concat, imgs[0]])
+            concat = cv2.hconcat([concat, imgs[2]])
+        else:
+            row1 = cv2.hconcat([imgs[1], imgs[2]])
+            row2 = cv2.hconcat([imgs[3], imgs[4]])
+            col1_col2 = cv2.vconcat([row1, row2])
+            concat = cv2.vconcat([col1_col2, imgs[0]])
 
-        cv2.imshow("Subject {} - Session {}".format(subject_idx, session_idx), col1_col2_col3)
-        key = cv2.waitKey(1)
+        cv2.imshow("Subject {} - Session {}".format(subject_idx, session_idx), concat)
+        key = cv2.waitKey(0)
 
         # Press "Esc", 'q' or 'Q' to exit stream
         if key == 27 or key == ord('q') or key == ord('Q'):

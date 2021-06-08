@@ -126,7 +126,7 @@ if __name__ == "__main__":
     #print(data_info)
 
     #combine_json_files(EXTR_PATH + "final/")
-    data = read_from_json(EXTR_PATH_SSD + "final/combined/combined.json")
-    print(np.array(data["SUB5_SESS0_VIEW3.json"]).shape)
+    #data = read_from_json(EXTR_PATH_SSD + "final/combined/combined.json")
+    #print(np.array(data["SUB5_SESS0_VIEW3.json"]).shape)
 
-    print(f"Main finished in {time.time()-start_time:0.1f}s")
+    #print(f"Main finished in {time.time()-start_time:0.1f}s")
