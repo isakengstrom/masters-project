@@ -1,11 +1,7 @@
 import math
 import torch
 import torch.nn as nn
-from collections import Counter
-
 import torch.nn.utils as utils
-#from torch.utils.tensorboard import SummaryWriter
-from sklearn.neighbors import KNeighborsRegressor, KNeighborsClassifier
 
 
 def get_all_triplets_indices(labels):
@@ -25,8 +21,8 @@ def get_all_triplets_indices(labels):
 
 
 #  https://www.kaggle.com/hirotaka0122/triplet-loss-with-pytorch
-def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch_idx, num_epochs, classes, max_norm,
-          task, tb_writer):#: SummaryWriter = None):
+def train(data_loader, model, optimizer, loss_function, device, epoch_idx, num_epochs, classes, max_norm, task,
+          tb_writer, mining_function, params, class_loss_function=None, class_mining_function=None):
 
     num_triplets = 200
 
@@ -45,8 +41,10 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
 
     # Tensorboard variables
     global_step = (epoch_idx - 1) * num_batches  # Global step, unique for each combination of epoch and batch index.
-    embeddings = torch.zeros(0, num_classes).to(device)
-    tb_classes = [f"sub{class_idx}" for class_idx in classes]
+    embeddings = torch.zeros(0, params['embedding_dims']).to(device)
+
+    fake_classes = [0,1,2,3,4,5,6,7,8,9]
+    tb_classes = [f"sub{class_idx}" for class_idx in fake_classes]
     tb_class_labels = []
 
     # Store runtime information
@@ -63,12 +61,34 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
     for batch_idx, (sequences, labels) in enumerate(data_loader):
         global_step += 1  # Update to make it unique
 
+        full_labels = None
+        if params['label_type'] == 'full':
+            full_labels, labels = labels
+            full_labels = full_labels.to(device)
+
         sequences, labels = sequences.to(device), labels.to(device)
 
         # Clear the gradients of all variables
         optimizer.zero_grad()
 
-        if loss_type == "single":
+        if params['use_musgrave']:
+            sequences_out = model(sequences)
+            indices_tuple = mining_function(sequences_out, labels)
+            loss = loss_function(sequences_out, labels, indices_tuple)
+
+            if params['penalise_view']:
+                class_sequence_out = model(sequences)
+                class_indices_tuple = class_mining_function(class_sequence_out, full_labels)
+                class_loss = class_loss_function(class_sequence_out, full_labels, class_indices_tuple)
+
+                # Feed Backward
+                loss.backward()
+                class_loss.backward()
+            else:
+                # Feed Backward
+                loss.backward()
+
+        elif params['loss_type'] == "single":
 
             # Feed the network forward
             sequences_out = model(sequences)
@@ -76,10 +96,10 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
             # Calculate the loss
             loss = loss_function(sequences_out, labels)
 
-        elif loss_type == "siamese":
-            raise NotImplementedError
+            # Feed Backward
+            loss.backward()
 
-        elif loss_type == "triplet":
+        elif params['loss_type'] == 'triplet':
             # Get all possible triplets
             anc_indices, pos_indices, neg_indices = get_all_triplets_indices(labels)
             # Select a number of triplets at random, amount defined by num_triplets
@@ -104,11 +124,11 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
             loss = loss_function(anc_sequences_out, pos_sequences_out, neg_sequences_out)
 
             sequences_out, labels = anc_sequences_out, anc_labels
+
+            # Feed Backward
+            loss.backward()
         else:
             raise Exception("Invalid network_type, should be 'single', 'siamese' or 'triplet'")
-
-        # Feed Backward
-        loss.backward()
 
         # Clip norms, to avoid exploding gradient problems
         if max_norm is not None:
@@ -117,24 +137,26 @@ def train(data_loader, model, optimizer, loss_function, device, loss_type, epoch
         # Update the weights
         optimizer.step()
 
-        _, predicted_labels = torch.max(sequences_out, 1)
+        if task == 'classification':
+            _, predicted_labels = torch.max(sequences_out, 1)
+            total_accuracy += (predicted_labels == labels).sum().item()
+            total_count += labels.size(0)
 
-        total_accuracy += (predicted_labels == labels).sum().item()
-        total_count += labels.size(0)
         total_loss += loss.item()
 
         if tb_writer is not None:
             # Store the information for the tensorboard embeddings
             embeddings = torch.cat((embeddings, sequences_out), 0)
-            tb_class_labels.extend([tb_classes[label] for label in labels])
-
+            if params['penalise_view']:
+                tb_class_labels.extend([tb_classes[label // 10 ** 0 % 10] for label in full_labels])
+            else:
+                tb_class_labels.extend([tb_classes[label] for label in full_labels])
         # Don't want an update of the status or of tensorboard at first batch_idx, therefore continue
         if batch_idx <= 0:
             continue
 
         if batch_idx % log_interval == 0:
-
-            curr_accuracy = total_accuracy / total_count
+            #  curr_accuracy = total_accuracy / total_count
             curr_loss = total_loss / (batch_idx + 1)
 
             print(f"| Epoch {epoch_idx:{epoch_formatter}.0f}/{num_epochs} "

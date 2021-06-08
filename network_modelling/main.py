@@ -1,6 +1,7 @@
 import itertools
 import math
 import os
+import random
 import time
 import datetime
 from statistics import mean
@@ -21,7 +22,7 @@ from dataset import FOIKinematicPoseDataset, DataLimiter, LoadData, create_sampl
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, ReshapePoses  # AddNoise
 
 from helpers import write_to_json, print_setup, make_save_dirs_for_net
-from helpers.paths import EXTR_PATH_SSD, TB_RUNS_PATH, BACKUP_MODELS_PATH
+from helpers.paths import EXTR_PATH_SSD, TB_RUNS_PATH, BACKUP_MODELS_PATH, RUNS_INFO_PATH
 from helpers.result_formatter import mean_confidence_interval
 
 
@@ -30,33 +31,19 @@ JSON_PATH_SSD = os.path.join(EXTR_PATH_SSD, "final_data_info.json")
 ROOT_DIR_SSD = os.path.join(EXTR_PATH_SSD, "final/")
 
 
-# TODO: Bug - subjects can only be in order and if, for example, we want sub3, then subsequent subs must be used too,
-#  - i.e. [sub0, sub1, sub2, sub3], cannot be [sub2, sub3] or [sub3]
 # Data limiter: Go to definition for more info
-DATA_LIMITER = DataLimiter(
+DATA_LOAD_LIMITER = DataLimiter(
     subjects=None,
     sessions=[0],
-    views=None,
-)
-
-DATA_LIMITER_EVAL = DataLimiter(
-    subjects=[0, 1],
-    sessions=[1],
     views=None,
 )
 
 
 # Load the data into memory
 print(f"| Loading data into memory..")
-load_start_time = time.time()
-LOADED_DATA = LoadData(root_dir=ROOT_DIR_SSD, data_limiter=DATA_LIMITER, num_workers=8)
-print(f"| Loading finished in {time.time() - load_start_time:0.1f}s")
-print('-' * 72)
-
-print(f"| Loading data into memory..")
-load_start_time = time.time()
-LOADED_DATA_EVAL = LoadData(root_dir=ROOT_DIR_SSD, data_limiter=DATA_LIMITER_EVAL, num_workers=8)
-print(f"| Loading finished in {time.time() - load_start_time:0.1f}s")
+LOAD_START_TIME = time.time()
+LOADED_DATA = LoadData(root_dir=ROOT_DIR_SSD, data_limiter=DATA_LOAD_LIMITER, num_workers=8)
+print(f"| Loading finished in {time.time() - LOAD_START_TIME:0.1f}s")
 print('-' * 72)
 
 
@@ -85,11 +72,16 @@ def parameters():
     else:
         NotImplementedError(f"The Joint filter of the '{params['joints_activator']}' activator is not implemented.")
 
+    params['views'] = list(DATA_LOAD_LIMITER.views)
+
     params['num_epochs'] = 250
     params['batch_size'] = 32
     params['learning_rate'] = 0.0005  # 5e-4  # 0.05 5e-4 5e-8
     params['learning_rate_lim'] = 5.1e-6  # None, was 5.1e-7
-    params['step_size'] = 100
+    params['load_best_post_lr_step'] = False
+    params['bad_val_lim_first'] = 1
+    params['bad_val_lim'] = 1
+    params['step_size'] = 1
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
     # The joint_filter will also be applied further down, in the FilterJoints() transform.
@@ -113,75 +105,108 @@ def parameters():
     params['bidirectional'] = False
     params['max_norm'] = 1
 
+    # If the fc layer is used, the network will apply a fully connected layer to transform
+    #  the embedding space to the dimensionality of embedding_dims
+    params['use_fc_layer'] = True
+
+    # Reduce the embedding space if fully connected layer is used, otherwise, the embedding space will have the same
+    #  dimensionality as the hidden_size of the RNN network
+    if params['use_fc_layer']:
+        params['embedding_dims'] = 10
+    else:
+        params['embedding_dims'] = params['hidden_size']
+
+    # Loss settings
     params['task'] = 'metric'  # 'classification'/'metric'
-    # Loss function
-    params['loss_type'] = 'musgrave'  # 'single'/'triplet'
-    params['loss_margin'] = 25  # The margin for certain loss functions
+    params['loss_type'] = 'triplet'  # 'single'/'triplet'/'contrastive'
+    params['loss_margin'] = 0.1  # The margin for certain loss functions
+    params['class_loss_margin'] = 0.1
+    params['metric_distance'] = 'lp_distance'
+    params['use_musgrave'] = True
+    params['penalise_view'] = True
+    params['label_type'] = 'sub'
+
+
 
     # Settings for the network run
+    params['num_repeats'] = 1
 
-    which_margin = '1'
-    params['checkpoint_to_load'] = BACKUP_MODELS_PATH + f'triplet_margin{which_margin}_allClasses/checkpoint_margin_{which_margin}_epoch_250.pth'
-    #params['checkpoint_to_load'] = BACKUP_MODELS_PATH + f'triplet_margin{which_margin}_allClasses/checkpoint_250.pth'
-    params['should_load_checkpoints'] = False
     params['should_learn'] = True
-    params['should_write'] = False
+    params['should_write'] = True
     params['should_test_unseen_sessions'] = False  # Test the unseen sessions (sess1) for sub 0 and 1
     params['should_val_unseen_sessions'] = False  # Val split from unseen sessions, otherwise uses seen session (sess0)
+    params['should_test_unseen_subjects'] = False
+    params['num_unseen_sub'] = 3
+
+    params['checkpoint_to_load'] = os.path.join(RUNS_INFO_PATH, 'backups/512_dim/d210601_h09m46_ṛun1_rep1_e58_best.pth')
+
+    if params['should_learn']:
+        params['should_load_checkpoints'] = False
+    else:
+        params['should_load_checkpoints'] = True
 
     return params
 
 
-def multi_grid(num_repeats=1):
+def multi_grid():
     """"""
-    
+
     grids = [
+
+
         {
-            'loss_margin': 1,
-            'loss_type': 'musgrave',
-            'task': 'metric',
-            'step_size': 1,
+           'num_repeats': 1,
+            'loss_margin': 0.1,
+            'class_loss_margin': 0.1,
+            'penalise_view': False,
+            'batch_size': 64,
+            'loss_type': 'triplet',
             'num_epochs': 250,
-        },
-        {
-            'loss_margin': 2,
-            'loss_type': 'musgrave',
-            'task': 'metric',
-            'step_size': 1,
-            'num_epochs': 250,
-        },
-        {
-            'loss_margin': 4,
-            'loss_type': 'musgrave',
-            'task': 'metric',
-            'step_size': 1,
-            'num_epochs': 250,
-        },
-        {
-            'loss_margin': 8,
-            'loss_type': 'musgrave',
-            'task': 'metric',
-            'step_size': 1,
-            'num_epochs': 250,
-        },
-        {
-            'loss_margin': 16,
-            'loss_type': 'musgrave',
-            'task': 'metric',
-            'step_size': 1,
-            'num_epochs': 250,
+            'use_fc_layer': False,
+            'embedding_dims': 512,
+            'bad_val_lim_first': 12,
+            'bad_val_lim': 5,
         },
 
+
+
+
+
     ]
+
+
+    scores = {
+        "precision_at_1": [],
+        "r_precision": [],
+        "mean_average_precision_at_r": [],
+        "silhouette": [],
+
+    }
 
     num_grids = len(grids)
     for grid_idx, grid in enumerate(grids):
         print(f"| Grid {grid_idx+1}/{num_grids}")
-        grid_search(num_repeats, grid_idx, grid)
+        multi_results = grid_search(grid_idx, grid)
         print(f"| ", "_____-----"*10)
+    '''
+        for grid_idxa, grid_result in multi_results.items():
+            if isinstance(grid_idxa, int):
+                [scores[name].append(score) for name, (score, conf) in
+                 grid_result['confidence_scores'].items() if name != 'ch' and name != 'accuracy']
 
+    print(scores)
 
-def grid_search(num_repeats=1, outer_grid_idx=-1, grid=None):
+    for key, score_a in scores.items():
+        score = mean_confidence_interval(score_a)
+
+        if key != 'silhouette':
+            print(
+                f"{round(score[0] * 100, 2)} $\pm$ {round(score[1] * 100, 2)} &", end=' ')
+        else:
+            print(f"{round(score[0], 2)} $\pm$ {round(score[1], 2) } &", end=' ')
+    '''
+
+def grid_search(outer_grid_idx=-1, grid=None):
     multi_start = datetime.datetime.now()  # Date and time of start
     multi_start_time = time.time()  # Time of start
 
@@ -195,12 +220,18 @@ def grid_search(num_repeats=1, outer_grid_idx=-1, grid=None):
             # 'max_norm': [0.01, 0.1, 1]
             # 'num_epochs': 2
             # 'loss_margin': [50, 100]
+
         }
 
     # Wrap every value in a list if it isn't already the case
     for key, value in grid.items():
+        '''
         if not isinstance(value, list):
             grid[key] = [value]
+        '''
+
+        grid[key] = [value]
+
 
     # Create every combination from the lists in grid
     all_grid_combinations = [dict(zip(grid, value)) for value in itertools.product(*grid.values())]
@@ -208,13 +239,13 @@ def grid_search(num_repeats=1, outer_grid_idx=-1, grid=None):
     num_runs = len(all_grid_combinations)
     run_formatter = int(math.log10(num_runs)) + 1  # Used for printing spacing
 
-    # Store runtime information
-    multi_info = {'at': str(multi_start).split('.')[0], 'duration': None, 'num_runs': num_runs, 'num_reps': num_repeats}
-    multi_runs = dict()
-    multi_results = dict()
-
     params = parameters()
     params['num_runs'] = num_runs
+
+    # Store runtime information
+    multi_info = {'at': str(multi_start).split('.')[0], 'duration': None, 'num_runs': num_runs, 'num_reps': params['num_repeats']}
+    multi_runs = dict()
+    multi_results = dict()
 
     # Formatting of run_info save file name
     run_name = f'd{multi_start.strftime("%y")}{multi_start.strftime("%m")}{multi_start.strftime("%d")}_h{multi_start.strftime("%H")}m{multi_start.strftime("%M")}.json'
@@ -233,7 +264,7 @@ def grid_search(num_repeats=1, outer_grid_idx=-1, grid=None):
         params['run_idx'] = grid_idx
 
         # Run the network num_reps times
-        reps_info = repeat_run(params, num_repeats=num_repeats)
+        reps_info = repeat_run(params)
 
         # Store runtime information
         multi_runs[grid_idx] = dict()
@@ -264,6 +295,8 @@ def grid_search(num_repeats=1, outer_grid_idx=-1, grid=None):
     write_to_json(multi_info, full_info_path)  # Naming format: dYYMMDD_hHHmMM.json
     write_to_json(multi_results, result_info_path)  # Naming format: r_dYYMMDD_hHHmMM.json
 
+
+
     # Print the results
     print(f"| Total time {multi_results['duration']:.2f}")
     for grid_idx, grid_result in multi_results.items():
@@ -274,20 +307,22 @@ def grid_search(num_repeats=1, outer_grid_idx=-1, grid=None):
             [print(f"| - {name}: {score:.3f} +/- {conf:.3f} ") for name, (score, conf) in grid_result['confidence_scores'].items()]
             print(f"|---------")
 
+    return multi_results
 
-def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
+
+def repeat_run(params: dict = None) -> dict:
     reps_start = str(datetime.datetime.now()).split('.')[0]
     reps_start_time = time.time()
 
     if params is None:
         params = parameters()
 
-    params['num_reps'] = num_repeats
     repetitions = dict()
     test_scores = dict()
     confusion_matrices = dict()
     test_accs = []
-    for rep_idx in range(num_repeats):
+
+    for rep_idx in range(params['num_repeats']):
         params['rep_idx'] = rep_idx
 
         run_info = run_network(params)
@@ -326,6 +361,15 @@ def repeat_run(params: dict = None, num_repeats: int = 2) -> dict:
     return reps_info
 
 
+def generate_random_class_split(num_classes=10, test_split=3):
+    classes = set(range(num_classes))
+    assert test_split < num_classes
+    test_classes = set(random.sample(classes, test_split))
+    learn_classes = list([x for x in classes if x not in test_classes])
+    test_classes = list(test_classes)
+    return learn_classes, test_classes
+
+
 def run_network(params: dict = None) -> dict:
     """
     Run the network. Either called directly, or from repeat_run()
@@ -336,8 +380,11 @@ def run_network(params: dict = None) -> dict:
 
     run_start = datetime.datetime.now()  # Save Date and time of run
 
-    # There are 10 people in the dataset that we want to classify correctly. Might be limited by data_limiter though
-    num_classes = len(DATA_LIMITER.subjects)
+    data_limiter = DataLimiter(
+        subjects=None,
+        sessions=[0],
+        views=params['views'],
+    )
 
     # Transforms
     composed = transforms.Compose([
@@ -356,8 +403,9 @@ def run_network(params: dict = None) -> dict:
         data=LOADED_DATA,
         json_path=JSON_PATH_SSD,
         sequence_len=params['sequence_len'],
-        data_limiter=DATA_LIMITER,
-        transform=composed
+        data_limiter=data_limiter,
+        transform=composed,
+        label_type=params['label_type']
     )
 
     train_sampler, test_sampler, val_sampler = create_samplers(
@@ -372,15 +420,30 @@ def run_network(params: dict = None) -> dict:
     train_loader = DataLoader(train_dataset, params['batch_size'], sampler=train_sampler, num_workers=4)
     test_loader = DataLoader(train_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
     val_loader = DataLoader(train_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
+    comparison_loader = train_loader
 
     if params['should_test_unseen_sessions']:
         print("| Getting unseen sessions")
+
+        unseen_sessions_limiter = DataLimiter(
+            subjects=[0, 1],
+            sessions=[1],
+            views=DATA_LOAD_LIMITER.views,
+        )
+
+        print(f"| Loading data into memory..")
+        load_start_time = time.time()
+        unseen_sessions_data = LoadData(root_dir=ROOT_DIR_SSD, data_limiter=unseen_sessions_limiter, num_workers=8)
+        print(f"| Loading finished in {time.time() - load_start_time:0.1f}s")
+        print('-' * 72)
+
         test_dataset = FOIKinematicPoseDataset(
-            data=LOADED_DATA_EVAL,
+            data=unseen_sessions_data,
             json_path=JSON_PATH_SSD,
             sequence_len=params['sequence_len'],
-            data_limiter=DATA_LIMITER_EVAL,
-            transform=composed
+            data_limiter=unseen_sessions_limiter,
+            transform=composed,
+            label_type=params['label_type']
         )
 
         _, test_sampler, temp_sampler = create_samplers(
@@ -389,7 +452,6 @@ def run_network(params: dict = None) -> dict:
             val_split=.0,
             val_from_train=False,
             shuffle=True,
-            # split_limit_factor=params['sequence_len']/params['simulated_len']
         )
 
         test_loader = DataLoader(test_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
@@ -397,6 +459,64 @@ def run_network(params: dict = None) -> dict:
         if params['should_val_unseen_sessions']:
             val_sampler = temp_sampler
             val_loader = DataLoader(test_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
+
+    if params['should_test_unseen_subjects']:
+
+        learn_classes, test_classes = generate_random_class_split(len(DATA_LOAD_LIMITER.subjects), params['num_unseen_sub'])
+
+        data_limiter = DataLimiter(
+            subjects=learn_classes,
+            sessions=[0],
+            views=params['views'],
+        )
+
+        test_limiter = DataLimiter(
+            subjects=test_classes,
+            sessions=[0],
+            views=params['views'],
+        )
+
+        print("| Running on unseen subjects")
+        print(f'| Learning classes: {data_limiter.subjects} | Testing Classes: {test_limiter.subjects}')
+
+        train_dataset = FOIKinematicPoseDataset(
+            data=LOADED_DATA,
+            json_path=JSON_PATH_SSD,
+            sequence_len=params['sequence_len'],
+            data_limiter=data_limiter,
+            transform=composed,
+            label_type=params['label_type']
+        )
+
+        test_dataset = FOIKinematicPoseDataset(
+            data=LOADED_DATA,
+            json_path=JSON_PATH_SSD,
+            sequence_len=params['sequence_len'],
+            data_limiter=test_limiter,
+            transform=composed,
+            label_type=params['label_type']
+        )
+
+        train_sampler, _, val_sampler = create_samplers(
+            dataset_len=len(train_dataset),
+            train_split=.85,
+            val_split=.15,
+            val_from_train=False,
+            shuffle=True,
+        )
+
+        comparison_sampler, test_sampler, _ = create_samplers(
+            dataset_len=len(test_dataset),
+            train_split=.7,
+            val_split=.0,
+            val_from_train=False,
+            shuffle=True,
+        )
+
+        train_loader = DataLoader(train_dataset, params['batch_size'], sampler=train_sampler, num_workers=4)
+        val_loader = DataLoader(train_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
+        test_loader = DataLoader(test_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
+        comparison_loader = DataLoader(test_dataset, params['batch_size'], sampler=comparison_sampler, num_workers=4)
 
     # Use cuda if possible
     # TODO: Bug - Not everything is being sent to the cpu, fix in other parts of the scripts
@@ -408,28 +528,61 @@ def run_network(params: dict = None) -> dict:
         input_size=params['input_size'],
         hidden_size=params['hidden_size'],
         num_layers=params['num_layers'],
-        num_classes=num_classes,
+        use_fc_layer=params['use_fc_layer'],
+        embedding_dims=params['embedding_dims'],
         device=device,
         bidirectional=params['bidirectional'],
-        net_type=params['net_type']
+        net_type=params['net_type'],
     ).to(device)
 
     # The optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=params['learning_rate'])
 
-    distance = distances.CosineSimilarity()
-    reducer = reducers.ThresholdReducer(low=0)
-    # Pick loss function depending on params
-    if params['loss_type'] == "single":
-        loss_function = nn.CrossEntropyLoss()
-    elif params['loss_type'] == "siamese":
-        raise NotImplementedError
-    elif params['loss_type'] == "musgrave":
-        loss_function = losses.TripletMarginLoss(margin=params['loss_margin'], distance=distance, reducer=reducer)
-    elif params['loss_type'] == "triplet":
-        loss_function = nn.TripletMarginLoss(margin=params['loss_margin'])
+    loss_function = None
+    mining_function = None
+
+    class_loss_function = None
+    class_mining_function = None
+
+    #reducer = None
+
+    if params['use_musgrave']:
+        reducer = reducers.ThresholdReducer(low=0)
+
+        if params['metric_distance'] == 'cosine_similarity':
+            distance = distances.CosineSimilarity()
+        elif params['metric_distance'] == 'lp_distance':
+            distance = distances.LpDistance()
+        else:
+            raise Exception("Invalid metric distance")
+
+        if params['loss_type'] == "single":
+            raise NotImplementedError
+        elif params['loss_type'] == 'contrastive':
+            mining_function = miners.PairMarginMiner(pos_margin=0, neg_margin=params['loss_margin'])
+            loss_function = losses.ContrastiveLoss(pos_margin=0, neg_margin=params['loss_margin'])
+
+        elif params['loss_type'] == "triplet":
+            print('Using Musgrave triplet')
+            mining_function = miners.TripletMarginMiner(margin=params['loss_margin'], distance=distance, type_of_triplets="semihard")
+            loss_function = losses.TripletMarginLoss(margin=params['loss_margin'], distance=distance, reducer=reducer)
+
+            if params['penalise_view']:
+                print(f"| Penalising views")
+                class_mining_function = miners.TripletMarginMiner(margin=params['class_loss_margin'], distance=distance, type_of_triplets="semihard")
+                class_loss_function = losses.TripletMarginLoss(margin=params['class_loss_margin'], distance=distance, reducer=reducer)
+
+        elif params['loss_type'] == 'n_pairs':
+            loss_function = losses.NPairsLoss()
+
     else:
-        raise Exception("Invalid network_type")
+        if params['loss_type'] == "single":
+            loss_function = nn.CrossEntropyLoss()
+
+        elif params['loss_type'] == "triplet":
+            loss_function = nn.TripletMarginLoss(margin=params['loss_margin'])
+        else:
+            raise Exception("Invalid loss type when not using musgrave implementation")
 
     # print_setup(setup=run_info, params=params)
     writer = SummaryWriter(TB_RUNS_PATH) if params['should_write'] else None
@@ -442,18 +595,15 @@ def run_network(params: dict = None) -> dict:
         model=model,
         optimizer=optimizer,
         loss_function=loss_function,
+        class_loss_function=class_loss_function,
+        mining_function=mining_function,
+        class_mining_function=class_mining_function,
         num_epochs=params['num_epochs'],
         device=device,
-        classes=DATA_LIMITER.subjects,
-        lr_lim=params['learning_rate_lim'],
-        loss_type=params['loss_type'],
+        classes=data_limiter.subjects,
         task=params['task'],
-        max_norm=params['max_norm'],
-        step_size=params['step_size'],
         tb_writer=writer,
         params=params,
-        reducer=reducer,
-        mining_func=miners.TripletMarginMiner(margin=params['loss_margin'], distance=distance, type_of_triplets="semihard")
     )
 
     if params['should_load_checkpoints']:
@@ -462,14 +612,14 @@ def run_network(params: dict = None) -> dict:
         model.load_state_dict(checkpoint['net'])
 
     test_info, _ = evaluate(
-        train_loader=train_loader,
+        train_loader=comparison_loader,
         eval_loader=test_loader,
         model=model,
         task=params['task'],
         device=device,
-        classes=DATA_LIMITER.subjects,
         tb_writer=writer,
-        is_test=False
+        is_test=False,
+        embedding_dims=params['embedding_dims'],
     )
 
     # Close TensorBoard writer if it exists
@@ -501,8 +651,8 @@ def run_network(params: dict = None) -> dict:
 
 if __name__ == "__main__":
 
-    multi_grid(num_repeats=10)
-    # grid_search(num_repeats=1)
+    multi_grid()
+    # grid_search()
     # run_network()
     # result_info_path = os.path.join('./saves/runs', 'r_' + run_name)
     # res = read_from_json('./saves/runs/r_d210511_h17m18.json')

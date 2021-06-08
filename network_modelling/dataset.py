@@ -9,7 +9,7 @@ from torch.utils.data.sampler import SubsetRandomSampler
 from helpers import read_from_json
 
 
-def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=True, shuffle=True, split_limit_factor=None):
+def create_samplers(dataset_len, train_split=.75, val_split=.15, val_from_train=False, shuffle=True, split_limit_factor=None):
     """
     Influenced by: https://stackoverflow.com/a/50544887
 
@@ -60,7 +60,7 @@ def create_samplers(dataset_len, train_split=.8, val_split=.2, val_from_train=Tr
 
 
 class DatasetElement:
-    def __init__(self, element):
+    def __init__(self, element, label_type='sub'):
         self.file_name = element["file_name"]
         self.sub_name = element["sub_name"]
         self.sess_name = element["sess_name"]
@@ -70,7 +70,17 @@ class DatasetElement:
         self.sess = int(self.sess_name[-1])
         self.view = int(self.view_name[-1])
 
-        self.label = self.sub
+        if label_type == 'sub':
+            self.label = self.sub
+        elif label_type == 'sess':
+            self.label = self.sess
+        elif label_type == 'view':
+            self.label = self.view
+        elif label_type == 'full':
+            self.label = self.view*10 + self.sub, self.view
+        else:
+            raise Exception("Wrong label type")
+
         self.key = "{}{}{}".format(self.sub, self.sess, self.view)
 
 
@@ -83,8 +93,8 @@ class DimensionsElement(DatasetElement):
 
 
 class SequenceElement(DatasetElement):
-    def __init__(self, element):
-        super().__init__(element)
+    def __init__(self, element, label_type):
+        super().__init__(element, label_type)
 
         self.start = int(element["start"])
         self.end = int(element["end"])
@@ -177,11 +187,12 @@ class LoadData:
 
 
 class Sequences:
-    def __init__(self, instantiated_data):
+    def __init__(self, instantiated_data, label_type='sub'):
         self.instantiated_data = instantiated_data
+        self.label_type = label_type
 
     def __call__(self, item: dict) -> tuple:
-        seq_info = SequenceElement(item)
+        seq_info = SequenceElement(item, label_type=self.label_type)
 
         sequence = self.instantiated_data.data[seq_info.file_name][seq_info.start:seq_info.end]
 
@@ -189,15 +200,16 @@ class Sequences:
 
 
 class FOIKinematicPoseDataset(Dataset):
-    def __init__(self, data, json_path, sequence_len, data_limiter=None, transform=None):
+    def __init__(self, data, json_path, sequence_len, data_limiter=None, transform=None, label_type='sub'):
         # Data loading
         self.json_path = json_path
         self.sequence_len = sequence_len
         self.data_limiter = data_limiter
         self.transform = transform
         self.instantiated_data = data
+        #self.label_type = label_type
 
-        self.sequences = Sequences(self.instantiated_data)
+        self.sequences = Sequences(self.instantiated_data, label_type=label_type)
         self.lookup = self.create_lookup()
 
     def __len__(self):

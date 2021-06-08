@@ -2,10 +2,9 @@ import torch
 from pytorch_metric_learning.utils.accuracy_calculator import AccuracyCalculator
 
 from sklearn import metrics
-#from sklearn.cluster import KMeans
 
 
-def evaluate(train_loader, eval_loader, model, task, device, classes, is_test):
+def evaluate(train_loader, eval_loader, model, task, device, embedding_dims, is_test, tb_writer=None):
 
     if task == 'classification':
         val_info = evaluate_classification(
@@ -23,13 +22,14 @@ def evaluate(train_loader, eval_loader, model, task, device, classes, is_test):
             eval_loader=eval_loader,
             model=model,
             device=device,
-            classes=classes,
-            is_test=is_test
+            embedding_dims=embedding_dims,
+            is_test=is_test,
+            tb_writer=tb_writer
         )
 
         val_message = f"| Pre@1: {val_info['precision_at_1']:.6f} " \
                       f"| R-Pre: {val_info['r_precision']:.6f} " \
-                      f"| MAP@R: {val_info['mean_average_precision_at_r']:.6f} \n" \
+                      f"| MAP@R: {val_info['mean_average_precision_at_r']:.6f} " \
                       f"| Sil: {val_info['silhouette']:.3f} " \
                       f"| CH: {val_info['ch']:.0f} "
 
@@ -74,14 +74,19 @@ def evaluate_classification(eval_loader, model, device, is_test, classes=None):
     return eval_info
 
 
-def get_all_embeddings(data_loader, model, device, num_classes):
-    embeddings = torch.zeros(0, num_classes).to(device)
+def get_all_embeddings(data_loader, model, device, embedding_dims):
+    embeddings = torch.zeros(0, embedding_dims).to(device)
     all_labels = []
 
     model.eval()
     with torch.no_grad():
         for batch_idx, (sequences, labels) in enumerate(data_loader):
-            sequences, labels = sequences.to(device), labels.to(device)
+            if isinstance(labels, tuple) or isinstance(labels, list):
+                labels = labels[0].to(device)
+            else:
+                labels = labels.to(device)
+
+            sequences, labels = sequences.to(device),  labels.to(device)
 
             sequences_out = model(sequences)
             embeddings = torch.cat((embeddings, sequences_out), 0)
@@ -90,7 +95,7 @@ def get_all_embeddings(data_loader, model, device, num_classes):
     return embeddings, torch.Tensor(all_labels).to(device)
 
 
-def evaluate_metric(train_loader, eval_loader, model, device, classes, is_test, tb_writer=None):
+def evaluate_metric(train_loader, eval_loader, model, device, embedding_dims, is_test, tb_writer):
     """
     Calculates Precision@1 (Recall@1), R-Precision and MAP@R directly from the embedding space
 
@@ -106,9 +111,8 @@ def evaluate_metric(train_loader, eval_loader, model, device, classes, is_test, 
             include=("precision_at_1", "r_precision", "mean_average_precision_at_r"), k=None
         )
 
-        num_classes = len(classes)
-        train_embeddings, train_labels = get_all_embeddings(train_loader, model, device, num_classes)
-        eval_embeddings, eval_labels = get_all_embeddings(eval_loader, model, device, num_classes)
+        train_embeddings, train_labels = get_all_embeddings(train_loader, model, device, embedding_dims)
+        eval_embeddings, eval_labels = get_all_embeddings(eval_loader, model, device, embedding_dims)
 
         scores = accuracy_calculator.get_accuracy(
             query=eval_embeddings,
