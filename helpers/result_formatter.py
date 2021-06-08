@@ -257,44 +257,56 @@ def to_latex_embedding_scores(info):
     settings = []
     confs = []
     for run_idx, run in info['multi_runs'].items():
+        '''
         if int(run_idx) > 0:
             break
 
         for key in run:
             print(key)
         '''
-        '''
         settings.append(run['notable_params'])
         confs.append(run['confidence_scores'])
-    print(confs)
+    #print(confs)
     scores_to_latex = [
         confs[0]['precision_at_1'],
         confs[0]['r_precision'],
         confs[0]['mean_average_precision_at_r'],
         confs[0]['silhouette'],
-        confs[0]['ch']
+        #confs[0]['ch']
     ]
 
     for idx, score in enumerate(scores_to_latex):
+        replace_interval = "\\textcolor{red}{-}"
+
         if idx < 3:
-            print(f"{round(score[0] * 100, 2)} $\pm$ {round(score[1] * 100, 2)} &", end=' ')
+            print(f"{round(score[0] * 100, 2)} $\pm$ {round(score[1] * 100, 2) if score[1]!=0 else replace_interval} &", end=' ')
         else:
-            print(f"{round(score[0], 2)} $\pm$ {round(score[1], 2)} &", end=' ')
+            print(f"{round(score[0], 2)} $\pm$ {round(score[1], 2) if score[1]!=0 else replace_interval} &", end=' ')
     print()
-    print(scores_to_latex)
+    #print(scores_to_latex)
 
 
-def fetch_run_info(relative_path, info_file_name):
+def fetch_run_info(relative_path, info_file_name=None):
+
+    relative_path = os.path.join(RUNS_INFO_PATH, relative_path)
+
+    # If no specific file name is given, find the file
+    if info_file_name is None:
+        _, _, files = next(os.walk(relative_path))
+        info_file_names = [file for file in files if str(file).split('.')[-1] == 'json' and str(file)[0] == 'd']
+        info_file_name = info_file_names[0]
+
+        if len(info_file_names) > 1:
+            raise Exception(f"Got too many json files, should be one per dir if no info_file_name is given, "
+                            f" got these {info_file_names}")
+
     result_file_name = 'r_' + info_file_name
 
-    info_path = os.path.join(RUNS_INFO_PATH, relative_path, info_file_name)
-    result_path = os.path.join(RUNS_INFO_PATH, relative_path, result_file_name)
+    info_path = os.path.join(relative_path, info_file_name)
+    result_path = os.path.join(relative_path, result_file_name)
 
     info = read_from_json(info_path)
     result = read_from_json(result_path)
-
-    #print(json.dumps(info))
-    # print(json.dumps(result))
 
     return info, result
 
@@ -312,24 +324,8 @@ def main():
     #to_latex_rnns_seqs(settings, intervals)
 
 
-    # Embedding scores fetch
-    #info, result = fetch_run_info(relative_path='backups/metric/final_all-classes/single', info_file_name='d210520_h18m32.json')
-    #info, result = fetch_run_info(relative_path='backups/metric/final_all-classes/triplet_margin50', info_file_name='d210520_h21m58.json')
-    #info, result = fetch_run_info(relative_path='backups/metric/final_all-classes/triplet_margin100', info_file_name='d210522_h17m01.json')
-    #to_latex_embedding_scores(info)
-
-
-    # Embedding scores fetch for unseen sessions
-    #info, result = fetch_run_info(relative_path='backups/unseen_sessions', info_file_name='d210524_h17m45.json')
-    #info, result = fetch_run_info(relative_path='backups/unseen_sessions', info_file_name='d210524_h18m21.json')
-    info, result = fetch_run_info(relative_path='backups/unseen_sessions', info_file_name='d210524_h22m53.json')
-    #to_latex_embedding_scores(info)
-    # confusion_to_scores()
-
-    best_epoch_acc = {'epoch': -1, 'accuracy': -1}
-    best_epoch_loss = {'epoch': -1, 'loss': sys.maxsize}
-
-    print(best_epoch_acc, best_epoch_loss)
+    info, result = fetch_run_info('backups/dim_10/double_loss/all')
+    to_latex_embedding_scores(info)
 
 
 if __name__ == "__main__":
