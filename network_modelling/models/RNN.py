@@ -2,20 +2,18 @@ import torch
 import torch.nn as nn
 
 
-class GenNet(nn.Module):
+class GenRNNNet(nn.Module):
     """
     A General Net for RNNs. The available Nets are RNN, GRU and LSTM
 
     - Add bidirectionality through the bidirectional param
     - Add dropout with the dropout param,
-    -
-
     """
 
     def __init__(self, input_size, hidden_size, num_layers, embedding_dims, device, dropout: float = .5,
                  bidirectional=False, use_fc_layer=True, net_type="lstm"):
 
-        super(GenNet, self).__init__()
+        super(GenRNNNet, self).__init__()
         self.num_layers = num_layers
         self.hidden_size = hidden_size
         self.device = device
