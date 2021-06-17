@@ -6,7 +6,6 @@
 # Ignore any saves folder
 /**/saves
 
-
 # Ignore Pytorch checkpoints
 *.ckpt
 *.pth
@@ -16,7 +15,3 @@
 
 # Ignore test with MNIST dataset
 network_modelling/dataset/
-
-# Ignore main_2.py, a debugging entry while main.py is busy
-network_modelling/main_2.py
-network_modelling/double_net.py

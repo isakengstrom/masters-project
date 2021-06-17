@@ -61,7 +61,8 @@ def create_samplers(dataset_len, train_split=.75, val_split=.15, val_from_train=
 
 class DatasetElement:
     """
-    Parent class for the FOI Gait Dataset elements.
+    Parent class for the FOI Gait Dataset elements. Can fetch an element with four types of labels. The 'sub' label is
+    mainly used, but the 'all' can be used to add view dependency to the data.
     """
     def __init__(self, element, label_type='sub'):
         self.file_name = element["file_name"]

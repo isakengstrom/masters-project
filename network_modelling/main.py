@@ -39,7 +39,7 @@ DATA_LOAD_LIMITER = DataLimiter(
 )
 
 
-# Load the data into memory
+# Load the data of the dataset into memory from json
 print(f"| Loading data into memory..")
 LOAD_START_TIME = time.time()
 LOADED_DATA = LoadData(root_dir=ROOT_DIR_SSD, data_limiter=DATA_LOAD_LIMITER, num_workers=8)
@@ -77,11 +77,12 @@ def parameters():
     params['num_epochs'] = 250
     params['batch_size'] = 32
     params['learning_rate'] = 0.0005  # 5e-4  # 0.05 5e-4 5e-8
-    params['learning_rate_lim'] = 5.1e-6  # None, was 5.1e-7
-    params['load_best_post_lr_step'] = False
-    params['bad_val_lim_first'] = 1
-    params['bad_val_lim'] = 1
-    params['step_size'] = 1
+
+    params['learning_rate_lim'] = 5.1e-6  # The network starts its breaking phase when this LR is reached
+    params['load_best_post_lr_step'] = False  # If the best performing model should be loaded before a LR step
+    params['step_size'] = 1  # Used in the lr_scheduler of Torch
+    params['bad_val_lim_first'] = 1  # How many un-increasing validations to allow before taking the FIRST step
+    params['bad_val_lim'] = 1  # How many un-increasing validations to allow before taking the REMAINING steps
 
     # Get the active number of OpenPose joints from the joint_filter. For full kinetic pose, this will be 25,
     # The joint_filter will also be applied further down, in the FilterJoints() transform.
@@ -96,7 +97,7 @@ def parameters():
     # Length of a sequence, the length represent the number of frames.
     # The FOI dataset is captured at 50 fps
     params['sequence_len'] = 100
-    params['simulated_len'] = 800
+    params['simulated_len'] = 800  # A limiter to how many sequences can be created (weird param used to evaluate RNNs)
 
     # Network / Model params
     params['num_layers'] = 2  # Number of stacked RNN layers
@@ -120,20 +121,24 @@ def parameters():
     params['task'] = 'metric'  # 'classification'/'metric'
     params['loss_type'] = 'triplet'  # 'single'/'triplet'/'contrastive'
     params['loss_margin'] = 0.1  # The margin for certain loss functions
+
+    # PyTorch Deep metric learning specific params
+    params['use_musgrave'] = True  # Use the PyTorch deep metric library?
+    params['metric_distance'] = 'lp_distance'  # Which distance metric to use
+
+    # Settings for running double losses, one for subject, the other for view
+    params['penalise_view'] = True  # Run a second loss function for the deep metric learning to penalise the view?
+    params['label_type'] = 'sub'  # How to label each sequence of the dataset. See more in
     params['class_loss_margin'] = 0.1
-    params['metric_distance'] = 'lp_distance'
-    params['use_musgrave'] = True
-    params['penalise_view'] = True
-    params['label_type'] = 'sub'
 
     # Settings for the network run
-    params['num_repeats'] = 1
+    params['num_repeats'] = 1  # Run a network setup multiple times? Will save the confidence score
 
-    params['should_learn'] = True
-    params['should_write'] = True
+    params['should_learn'] = True  # Learn/train the network?
+    params['should_write'] = True  # Write to TensorBoard?
     params['should_test_unseen_sessions'] = False  # Test the unseen sessions (sess1) for sub 0 and 1
     params['should_val_unseen_sessions'] = False  # Val split from unseen sessions, otherwise uses seen session (sess0)
-    params['should_test_unseen_subjects'] = False
+    params['should_test_unseen_subjects'] = False  # Test
     params['should_test_unseen_views'] = True
     params['num_unseen_sub'] = 3
 
@@ -198,13 +203,7 @@ def grid_search(outer_grid_idx=-1, grid=None):
 
     # Wrap every value in a list if it isn't already the case
     for key, value in grid.items():
-        '''
-        if not isinstance(value, list):
-            grid[key] = [value]
-        '''
-
         grid[key] = [value]
-
 
     # Create every combination from the lists in grid
     all_grid_combinations = [dict(zip(grid, value)) for value in itertools.product(*grid.values())]
@@ -268,8 +267,6 @@ def grid_search(outer_grid_idx=-1, grid=None):
     write_to_json(multi_info, full_info_path)  # Naming format: dYYMMDD_hHHmMM.json
     write_to_json(multi_results, result_info_path)  # Naming format: r_dYYMMDD_hHHmMM.json
 
-
-
     # Print the results
     print(f"| Total time {multi_results['duration']:.2f}")
     for grid_idx, grid_result in multi_results.items():
@@ -284,6 +281,10 @@ def grid_search(outer_grid_idx=-1, grid=None):
 
 
 def repeat_run(params: dict = None) -> dict:
+    """
+    Run a network of the same settings a number of times. Used to get the confidence interval scores of several runs
+    """
+
     reps_start = str(datetime.datetime.now()).split('.')[0]
     reps_start_time = time.time()
 
@@ -298,6 +299,7 @@ def repeat_run(params: dict = None) -> dict:
     for rep_idx in range(params['num_repeats']):
         params['rep_idx'] = rep_idx
 
+        # Run the network
         run_info = run_network(params)
 
         # Store runtime information
@@ -335,6 +337,9 @@ def repeat_run(params: dict = None) -> dict:
 
 
 def generate_random_class_split(num_classes=10, test_split=3):
+    """
+    Generates a random class split used when training on some subjects and tested on others
+    """
     classes = set(range(num_classes))
     assert test_split < num_classes
     test_classes = set(random.sample(classes, test_split))
@@ -353,6 +358,7 @@ def run_network(params: dict = None) -> dict:
 
     run_start = datetime.datetime.now()  # Save Date and time of run
 
+    # Instantiate new data limiter
     data_limiter = DataLimiter(
         subjects=None,
         sessions=[0],
@@ -381,6 +387,7 @@ def run_network(params: dict = None) -> dict:
         label_type=params['label_type']
     )
 
+    # Create samplers, see definition for details
     train_sampler, test_sampler, val_sampler = create_samplers(
         dataset_len=len(train_dataset),
         train_split=.70,
@@ -390,11 +397,13 @@ def run_network(params: dict = None) -> dict:
         # split_limit_factor=params['sequence_len']/params['simulated_len']
     )
 
+    # Create DataLoaders
     train_loader = DataLoader(train_dataset, params['batch_size'], sampler=train_sampler, num_workers=4)
     test_loader = DataLoader(train_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
     val_loader = DataLoader(train_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
-    comparison_loader = train_loader
+    comparison_loader = train_loader  # Used for comparing embeddings
 
+    # This block is run when the task is to test unseen sessions
     if params['should_test_unseen_sessions']:
         print("| Getting unseen sessions")
 
@@ -433,8 +442,8 @@ def run_network(params: dict = None) -> dict:
             val_sampler = temp_sampler
             val_loader = DataLoader(test_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
 
+    # This block is run when the task is to test unseen subjects
     if params['should_test_unseen_subjects']:
-
         learn_classes, test_classes = generate_random_class_split(len(DATA_LOAD_LIMITER.subjects), params['num_unseen_sub'])
 
         data_limiter = DataLimiter(
@@ -491,6 +500,7 @@ def run_network(params: dict = None) -> dict:
         test_loader = DataLoader(test_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
         comparison_loader = DataLoader(test_dataset, params['batch_size'], sampler=comparison_sampler, num_workers=4)
 
+    # This block is run when the task is to test unseen views
     if params['should_test_unseen_views']:
 
         learn_views, test_view = generate_random_class_split(len(DATA_LOAD_LIMITER.views), 1)
@@ -576,6 +586,7 @@ def run_network(params: dict = None) -> dict:
     class_mining_function = None
 
     #reducer = None
+
 
     if params['use_musgrave']:
         reducer = reducers.ThresholdReducer(low=0)
