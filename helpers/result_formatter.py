@@ -1,8 +1,11 @@
+"""
+This file contains code used to format the results, mainly for the thesis report.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import json
 import os
-import sys
 import scipy.stats
 
 from helpers import read_from_json
@@ -254,6 +257,9 @@ def to_latex_rnns_seqs(settings, intervals):
 
 
 def to_latex_embedding_scores(info):
+    """
+    Convert confidence scores to the table format used in the thesis
+    """
     settings = []
     confs = []
     for run_idx, run in info['multi_runs'].items():
@@ -322,7 +328,6 @@ def main():
     #print(intervals)
     #bar_plot_rnns_seqs(settings, intervals)
     #to_latex_rnns_seqs(settings, intervals)
-
 
     info, result = fetch_run_info('backups/dim_10/double_loss/all')
     to_latex_embedding_scores(info)
