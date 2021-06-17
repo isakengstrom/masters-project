@@ -60,6 +60,9 @@ def create_samplers(dataset_len, train_split=.75, val_split=.15, val_from_train=
 
 
 class DatasetElement:
+    """
+    Parent class for the FOI Gait Dataset elements.
+    """
     def __init__(self, element, label_type='sub'):
         self.file_name = element["file_name"]
         self.sub_name = element["sub_name"]
@@ -85,14 +88,20 @@ class DatasetElement:
 
 
 class DimensionsElement(DatasetElement):
+    """
+    A sequence element from the FOI Gait dataset, with the length of a sequence.
+    """
     def __init__(self, element):
         super().__init__(element)
 
         self.len = element["len"]
-        self.shape = element["shape"]
+        # self.shape = element["shape"]
 
 
 class SequenceElement(DatasetElement):
+    """
+    A sequence element from the FOI Gait dataset, with the start and end frames of a sequence.
+    """
     def __init__(self, element, label_type):
         super().__init__(element, label_type)
 
@@ -187,6 +196,9 @@ class LoadData:
 
 
 class Sequences:
+    """
+    Get a sequence from the Foi Gait Dataset using instantiated data.
+    """
     def __init__(self, instantiated_data, label_type='sub'):
         self.instantiated_data = instantiated_data
         self.label_type = label_type
@@ -200,6 +212,13 @@ class Sequences:
 
 
 class FOIKinematicPoseDataset(Dataset):
+    """
+    The main part of the the dataset logic. Used to get dataset items using data loaders.
+
+    When the dataset is instantiated, it creates a lookup table with all the sequences of the dataset that are not
+        limited by the data_limiter.
+
+    """
     def __init__(self, data, json_path, sequence_len, data_limiter=None, transform=None, label_type='sub'):
         # Data loading
         self.json_path = json_path
@@ -244,10 +263,11 @@ class FOIKinematicPoseDataset(Dataset):
                         "sess_name": element_info.sess_name, "view_name": element_info.view_name,
                         "key": element_info.key}
 
+            # Append to the lookup
             for i in range(0, element_info.len, self.sequence_len):
                 seq_info["start"] = i
                 seq_info["end"] = i + self.sequence_len
-                lookup.append(seq_info.copy())
+                lookup.append(seq_info.copy())  # Note the use of .copy(). Otherwise, it appends references
 
             # Fix the last sequence's end frame
             lookup[-1]["end"] = min(lookup[-1]["end"], element_info.len)

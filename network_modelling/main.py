@@ -17,7 +17,7 @@ from pytorch_metric_learning import losses, miners, distances, reducers
 
 from learn import learn
 from evaluate import evaluate
-from models.RNN import GenNet
+from models.RNN import GenRNNNet
 from dataset import FOIKinematicPoseDataset, DataLimiter, LoadData, create_samplers
 from sequence_transforms import FilterJoints, ChangePoseOrigin, ToTensor, NormalisePoses, ReshapePoses  # AddNoise
 
@@ -126,8 +126,6 @@ def parameters():
     params['penalise_view'] = True
     params['label_type'] = 'sub'
 
-
-
     # Settings for the network run
     params['num_repeats'] = 1
 
@@ -136,6 +134,7 @@ def parameters():
     params['should_test_unseen_sessions'] = False  # Test the unseen sessions (sess1) for sub 0 and 1
     params['should_val_unseen_sessions'] = False  # Val split from unseen sessions, otherwise uses seen session (sess0)
     params['should_test_unseen_subjects'] = False
+    params['should_test_unseen_views'] = True
     params['num_unseen_sub'] = 3
 
     params['checkpoint_to_load'] = os.path.join(RUNS_INFO_PATH, 'backups/512_dim/d210601_h09m46_ṛun1_rep1_e58_best.pth')
@@ -149,67 +148,42 @@ def parameters():
 
 
 def multi_grid():
-    """"""
+    """
+    Run multiple grid searches. Specify the grids in the grids list.
+
+    Overrides parameter(), however,  not all params are cleared to work, might e.g. be problematic if a param is a list.
+    """
 
     grids = [
-
-
         {
-           'num_repeats': 1,
-            'loss_margin': 0.1,
+            'num_repeats': 3,
+            'loss_margin': 0.5,
             'class_loss_margin': 0.1,
-            'penalise_view': False,
+            'penalise_view': True,
             'batch_size': 64,
             'loss_type': 'triplet',
             'num_epochs': 250,
-            'use_fc_layer': False,
-            'embedding_dims': 512,
-            'bad_val_lim_first': 12,
-            'bad_val_lim': 5,
+            'use_fc_layer': True,
+            'embedding_dims': 10,
+            'bad_val_lim_first': 5,
+            'bad_val_lim': 3,
+            'label_type': 'full'
         },
-
-
-
-
-
     ]
 
-
-    scores = {
-        "precision_at_1": [],
-        "r_precision": [],
-        "mean_average_precision_at_r": [],
-        "silhouette": [],
-
-    }
-
+    # Loop over all grids
     num_grids = len(grids)
     for grid_idx, grid in enumerate(grids):
         print(f"| Grid {grid_idx+1}/{num_grids}")
         multi_results = grid_search(grid_idx, grid)
         print(f"| ", "_____-----"*10)
-    '''
-        for grid_idxa, grid_result in multi_results.items():
-            if isinstance(grid_idxa, int):
-                [scores[name].append(score) for name, (score, conf) in
-                 grid_result['confidence_scores'].items() if name != 'ch' and name != 'accuracy']
 
-    print(scores)
-
-    for key, score_a in scores.items():
-        score = mean_confidence_interval(score_a)
-
-        if key != 'silhouette':
-            print(
-                f"{round(score[0] * 100, 2)} $\pm$ {round(score[1] * 100, 2)} &", end=' ')
-        else:
-            print(f"{round(score[0], 2)} $\pm$ {round(score[1], 2) } &", end=' ')
-    '''
 
 def grid_search(outer_grid_idx=-1, grid=None):
     multi_start = datetime.datetime.now()  # Date and time of start
     multi_start_time = time.time()  # Time of start
 
+    # Set a grid if this function wasn't called from multi_grid()
     if grid is None:
         # Override any parameter in parameter()
         grid = {
@@ -220,7 +194,6 @@ def grid_search(outer_grid_idx=-1, grid=None):
             # 'max_norm': [0.01, 0.1, 1]
             # 'num_epochs': 2
             # 'loss_margin': [50, 100]
-
         }
 
     # Wrap every value in a list if it isn't already the case
@@ -518,13 +491,71 @@ def run_network(params: dict = None) -> dict:
         test_loader = DataLoader(test_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
         comparison_loader = DataLoader(test_dataset, params['batch_size'], sampler=comparison_sampler, num_workers=4)
 
+    if params['should_test_unseen_views']:
+
+        learn_views, test_view = generate_random_class_split(len(DATA_LOAD_LIMITER.views), 1)
+
+        data_limiter = DataLimiter(
+            subjects=data_limiter.subjects,
+            sessions=[0],
+            views=learn_views,
+        )
+
+        test_limiter = DataLimiter(
+            subjects=data_limiter.subjects,
+            sessions=[0],
+            views=test_view,
+        )
+
+        print("| Running on unseen subjects")
+        print(f'| Learning Views: {data_limiter.views} | Testing View: {test_limiter.views}')
+
+        train_dataset = FOIKinematicPoseDataset(
+            data=LOADED_DATA,
+            json_path=JSON_PATH_SSD,
+            sequence_len=params['sequence_len'],
+            data_limiter=data_limiter,
+            transform=composed,
+            label_type=params['label_type']
+        )
+
+        test_dataset = FOIKinematicPoseDataset(
+            data=LOADED_DATA,
+            json_path=JSON_PATH_SSD,
+            sequence_len=params['sequence_len'],
+            data_limiter=test_limiter,
+            transform=composed,
+            label_type=params['label_type']
+        )
+
+        train_sampler, _, val_sampler = create_samplers(
+            dataset_len=len(train_dataset),
+            train_split=.85,
+            val_split=.15,
+            val_from_train=False,
+            shuffle=True,
+        )
+
+        comparison_sampler, test_sampler, _ = create_samplers(
+            dataset_len=len(test_dataset),
+            train_split=.7,
+            val_split=.0,
+            val_from_train=False,
+            shuffle=True,
+        )
+
+        train_loader = DataLoader(train_dataset, params['batch_size'], sampler=train_sampler, num_workers=4)
+        val_loader = DataLoader(train_dataset, params['batch_size'], sampler=val_sampler, num_workers=4)
+        test_loader = DataLoader(test_dataset, params['batch_size'], sampler=test_sampler, num_workers=4)
+        comparison_loader = DataLoader(test_dataset, params['batch_size'], sampler=comparison_sampler, num_workers=4)
+
     # Use cuda if possible
     # TODO: Bug - Not everything is being sent to the cpu, fix in other parts of the scripts
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     cudnn.benchmark = torch.cuda.is_available()
 
     # The recurrent neural net model, RNN, GRU or LSTM
-    model = GenNet(
+    model = GenRNNNet(
         input_size=params['input_size'],
         hidden_size=params['hidden_size'],
         num_layers=params['num_layers'],
@@ -573,8 +604,8 @@ def run_network(params: dict = None) -> dict:
                 class_loss_function = losses.TripletMarginLoss(margin=params['class_loss_margin'], distance=distance, reducer=reducer)
 
         elif params['loss_type'] == 'n_pairs':
-            loss_function = losses.NPairsLoss()
-
+            #loss_function = losses.NPairsLoss()
+            raise NotImplementedError
     else:
         if params['loss_type'] == "single":
             loss_function = nn.CrossEntropyLoss()
