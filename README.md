@@ -3,9 +3,11 @@
 This part of the repo contains the code and other necessities from Isak Engström's master thesis, taking place during the spring and summer of 2021. 
 
 
-## The task
+## The Task
 The goal of this thesis is to investigate automated gait analysis using deep metric learning.
 
+## The Paper
+The (yet unpublished) paper of the thesis can be read here: [Thesis - unpublished version](./master_thesis-isak_engstrom-unpublished.pdf)
 
 ## Understanding the data/code 
 The following section aims to clear up the naming of data, datasets and code.  
