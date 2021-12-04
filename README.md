@@ -1,7 +1,6 @@
-# isaeng | Isak Engström
+# Master's Thesis | Automated Gait Analysis - Using Deep Metric Learning
 
 This part of the repo contains the code and other necessities from Isak Engström's master thesis, taking place during the spring and summer of 2021. 
-
 
 ## The Task
 The goal of this thesis is to investigate automated gait analysis using deep metric learning.
